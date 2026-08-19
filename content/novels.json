@@ -7,6 +7,12 @@
     "status": "Ongoing",
     "synopsis": "my testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testing",
     "createdAt": "2026-08-19T13:44:20.436Z",
-    "chapters": []
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "my testing",
+        "file": "content/chapters/my-testing-ch-1.md"
+      }
+    ]
   }
 ]
