@@ -7,6 +7,12 @@
     "status": "Ongoing",
     "synopsis": "final testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testing",
     "createdAt": "2026-08-20T02:40:03.009Z",
-    "chapters": []
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "",
+        "file": "content/chapters/final-testing-ch-1.md"
+      }
+    ]
   }
 ]
