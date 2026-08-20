@@ -23,6 +23,12 @@
     "status": "Ongoing",
     "synopsis": "second testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testing",
     "createdAt": "2026-08-20T03:17:30.780Z",
-    "chapters": []
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "second testing",
+        "file": "content/chapters/second-testing-ch-1.md"
+      }
+    ]
   }
 ]
