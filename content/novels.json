@@ -1,18 +1,12 @@
 [
   {
-    "slug": "final-testing",
-    "title": "final testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787193608/azi9oxt9g01dts8okexc.png",
-    "genre": "Sci-Fi, Supernatural, Drama",
-    "status": "Ongoing",
-    "synopsis": "final testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testing",
-    "createdAt": "2026-08-20T02:40:03.009Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/final-testing-ch-1.md"
-      }
-    ]
+    "slug": "first-testing",
+    "title": "first testing",
+    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787194971/rlyoh3urnlvxfxvkp5jl.jpg",
+    "genre": "Martial Arts, Slice of Life, Psychological",
+    "status": "Completed",
+    "synopsis": "first testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testing",
+    "createdAt": "2026-08-20T03:02:45.841Z",
+    "chapters": []
   }
 ]
