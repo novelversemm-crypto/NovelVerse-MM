@@ -12,6 +12,11 @@
         "chapter_number": 1,
         "title": "cloud testing",
         "file": "content/chapters/cloud-testing-ch-1.md"
+      },
+      {
+        "chapter_number": 2,
+        "title": "cloud testing",
+        "file": "content/chapters/cloud-testing-ch-2.md"
       }
     ]
   },
@@ -28,6 +33,11 @@
         "chapter_number": 1,
         "title": "first testing",
         "file": "content/chapters/first-testing-ch-1.md"
+      },
+      {
+        "chapter_number": 2,
+        "title": "first testing",
+        "file": "content/chapters/first-testing-ch-2.md"
       }
     ]
   },
