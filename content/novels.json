@@ -1,21 +1,5 @@
 [
   {
-    "slug": "fourth-testing",
-    "title": "fourth testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787188569/odwdphnvwep8anfc9h0h.png",
-    "genre": "Action, Horror, Supernatural",
-    "status": "Ongoing",
-    "synopsis": "fourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testingfourth testing",
-    "createdAt": "2026-08-20T01:16:03.793Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "fourth testing",
-        "file": "content/chapters/fourth-testing-ch-1.md"
-      }
-    ]
-  },
-  {
     "slug": "my-testing",
     "title": "my testing",
     "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787147064/n0mirnlktornn09x4k79.jpg",
@@ -44,22 +28,6 @@
         "chapter_number": 1,
         "title": "second testing",
         "file": "content/chapters/second-testing-ch-1.md"
-      }
-    ]
-  },
-  {
-    "slug": "third-testing",
-    "title": "third testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787186024/t78xhszqkmatg3uts4br.png",
-    "genre": "Fantasy, Drama, BL",
-    "status": "Ongoing",
-    "synopsis": "third testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testing",
-    "createdAt": "2026-08-20T00:33:39.395Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "third testing",
-        "file": "content/chapters/third-testing-ch-1.md"
       }
     ]
   }
