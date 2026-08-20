@@ -1,18 +1,12 @@
 [
   {
-    "slug": "my-testing",
-    "title": "my testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787147064/n0mirnlktornn09x4k79.jpg",
-    "genre": "Action, System, Yuri",
+    "slug": "final-testing",
+    "title": "final testing",
+    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787193608/azi9oxt9g01dts8okexc.png",
+    "genre": "Sci-Fi, Supernatural, Drama",
     "status": "Ongoing",
-    "synopsis": "my testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testingmy testing",
-    "createdAt": "2026-08-19T13:44:20.436Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/my-testing-ch-1.md"
-      }
-    ]
+    "synopsis": "final testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testingfinal testing",
+    "createdAt": "2026-08-20T02:40:03.009Z",
+    "chapters": []
   }
 ]
