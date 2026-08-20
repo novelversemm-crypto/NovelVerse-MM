@@ -7,6 +7,12 @@
     "status": "Completed",
     "synopsis": "first testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testing",
     "createdAt": "2026-08-20T03:02:45.841Z",
-    "chapters": []
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "first testing",
+        "file": "content/chapters/first-testing-ch-1.md"
+      }
+    ]
   }
 ]
