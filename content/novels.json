@@ -14,5 +14,15 @@
         "file": "content/chapters/my-testing-ch-1.md"
       }
     ]
+  },
+  {
+    "slug": "second-testing",
+    "title": "second testing",
+    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787184512/nymllbqho8qowshekpkp.jpg",
+    "genre": "Action, System, Comedy",
+    "status": "Ongoing",
+    "synopsis": "second testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testing",
+    "createdAt": "2026-08-20T00:08:27.539Z",
+    "chapters": []
   }
 ]
