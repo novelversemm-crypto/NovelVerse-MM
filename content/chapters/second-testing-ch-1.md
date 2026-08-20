@@ -1,8 +1,0 @@
----
-novel_slug: "second-testing"
-chapter_number: 1
-title: "second testing"
-created_at: "2026-08-20T00:09:00.258Z"
----
-
-second testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testing
