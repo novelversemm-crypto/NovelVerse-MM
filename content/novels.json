@@ -7,7 +7,13 @@
     "status": "Ongoing",
     "synopsis": "cloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testing",
     "createdAt": "2026-08-20T03:51:01.269Z",
-    "chapters": []
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "cloud testing",
+        "file": "content/chapters/cloud-testing-ch-1.md"
+      }
+    ]
   },
   {
     "slug": "first-testing",
