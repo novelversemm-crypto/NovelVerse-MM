@@ -30,5 +30,15 @@
         "file": "content/chapters/second-testing-ch-1.md"
       }
     ]
+  },
+  {
+    "slug": "third-testing",
+    "title": "third testing",
+    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787196357/yfaoalyivbxbniuzl50n.jpg",
+    "genre": "Murim, Romance, Yuri",
+    "status": "Ongoing",
+    "synopsis": "third testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testing",
+    "createdAt": "2026-08-20T03:25:51.924Z",
+    "chapters": []
   }
 ]
