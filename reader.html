@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading - NovelVerse</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 1. Reader Header Bar -->
+    <header class="top-header">
+        <a href="javascript:history.back()" class="icon-btn" id="back-to-novel-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-title" id="reader-header-title" style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">
+            Loading...
+        </div>
+        <!-- Font Controls (A- / A+) -->
+        <div class="font-controls">
+            <button class="font-btn" onclick="changeFontSize(-1)">A-</button>
+            <button class="font-btn" onclick="changeFontSize(1)">A+</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+
+        <!-- Chapter Title Section -->
+        <div class="reader-chapter-title" id="chapter-title">
+            <!-- JS မှ Chapter ခေါင်းစဉ် ရေးပေးမည် -->
+        </div>
+
+        <!-- Ad Slot 1: Top Ad Slot -->
+        <section class="ad-section">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-container" id="ad-slot-header">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter Reading Content Body -->
+        <article class="reader-content" id="chapter-content">
+            <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">စာစဉ်ကို ရယူနေသည်...</p>
+        </article>
+
+        <!-- Ad Slot 2: Content Middle Ad Slot -->
+        <section class="ad-section">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-container" id="ad-slot-middle">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Native Ad
+                </div>
+            </div>
+        </section>
+
+        <!-- Chapter Navigation Bar (Prev / List / Next) -->
+        <div class="chapter-nav-bar">
+            <button class="nav-btn" id="prev-ch-btn" onclick="navigateToChapter('prev')">
+                <i class="fa-solid fa-chevron-left"></i> ရှေ့အပိုင်း
+            </button>
+            <a href="#" class="nav-btn" id="novel-details-btn">
+                <i class="fa-solid fa-list-ul"></i> မာတိကာ
+            </a>
+            <button class="nav-btn" id="next-ch-btn" onclick="navigateToChapter('next')">
+                နောက်အပိုင်း <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Ad Slot 3: Below Navigation Bar Ad Slot -->
+        <section class="ad-section" style="margin-top: 15px;">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-container" id="ad-slot-grid">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                </div>
+            </div>
+        </section>
+
+        <!-- Ad Slot 4: Bottom Banner Ad Slot -->
+        <section class="ad-section" style="margin-top: 10px;">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-container" id="ad-slot-bottom">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Files -->
+    <script src="ads.js"></script>
+    <script src="reader.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Details - NovelVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="top-header">
+        <a href="javascript:history.back()" class="icon-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <div class="logo-area">
+            <img src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png" alt="NovelVerse Logo" class="logo-img">
+            <span class="logo-title">NovelVerse</span>
+        </div>
+        <a href="search.html" class="icon-btn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </a>
+    </header>
+
+    <main class="main-container">
+
+        <section class="novel-detail-header" id="novel-header-container">
+            <div class="loading-text">Loading Novel Info...</div>
+        </section>
+
+        <section class="ad-section">
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-container" id="ad-slot-header">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                </div>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h3 class="section-title"><i class="fa-solid fa-book-open"></i> အညွှန်း (Synopsis)</h3>
+            <div class="synopsis-box" id="novel-synopsis">
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-list-ol"></i> စာစဉ်များ (<span id="chapter-count">0</span>)</h3>
+                <button class="sort-btn" onclick="toggleChapterSort()" id="sort-btn">
+                    <i class="fa-solid fa-arrow-down-short-wide"></i> New
+                </button>
+            </div>
+            
+            <div class="chapter-list" id="chapter-list-container">
+            </div>
+        </section>
+
+        <section class="ad-section">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-container" id="ad-slot-bottom">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Native Ad
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="search.html" class="nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="admin.html" class="nav-item">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Admin</span>
+        </a>
+    </nav>
+
+    <!-- JavaScript Files -->
+    <script src="ads.js"></script>
+    <script src="novel.js"></script>
+
+</body>
+</html>

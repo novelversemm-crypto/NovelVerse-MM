@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search & Filter - NovelVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="top-header search-header">
+        <div class="logo-area">
+            <img src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png" alt="NovelVerse Logo" class="logo-img">
+            <span class="logo-title">NovelVerse</span>
+        </div>
+        <div class="search-box-wrap" style="margin-top: 10px;">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-input" placeholder="နိုဗယ်ခေါင်းစဉ် ရှာရန်..." oninput="filterNovels()">
+        </div>
+    </header>
+
+    <main class="main-container">
+
+        <section class="ad-section top-ad-slot">
+            <div class="ad-label"></div>
+            <div class="ad-container" id="ad-slot-header">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Loading Ad...
+                </div>
+            </div>
+        </section>
+
+        <section class="filter-section">
+            <div class="filter-title">Status အလိုက်ကြည့်ရန်</div>
+            <div class="status-tags">
+                <button class="status-btn active" data-status="all" onclick="setStatusFilter('all', this)">All</button>
+                <button class="status-btn" data-status="Ongoing" onclick="setStatusFilter('Ongoing', this)">Ongoing</button>
+                <button class="status-btn" data-status="Completed" onclick="setStatusFilter('Completed', this)">Completed</button>
+            </div>
+        </section>
+
+        <section class="filter-section">
+            <div class="filter-title" style="display: flex; justify-content: space-between; align-items: center;">
+                <span>Genres / အမျိုးအစားများ</span>
+                <button onclick="clearAllGenres()" style="background: none; border: none; color: #2ec1ac; font-size: 0.8rem; cursor: pointer;">Reset</button>
+            </div>
+            <div class="genre-grid">
+                <button class="genre-chip active" data-genre="all" onclick="toggleGenreFilter('all', this)">
+                    <i class="fa-solid fa-border-all"></i> All
+                </button>
+                <button class="genre-chip" data-genre="Action" onclick="toggleGenreFilter('Action', this)">
+                    <i class="fa-solid fa-burst"></i> Action
+                </button>
+                <button class="genre-chip" data-genre="Adventure" onclick="toggleGenreFilter('Adventure', this)">
+                    <i class="fa-solid fa-compass"></i> Adventure
+                </button>
+                <button class="genre-chip" data-genre="Fantasy" onclick="toggleGenreFilter('Fantasy', this)">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Fantasy
+                </button>
+                <button class="genre-chip" data-genre="System" onclick="toggleGenreFilter('System', this)">
+                    <i class="fa-solid fa-microchip"></i> System
+                </button>
+                <button class="genre-chip" data-genre="Murim" onclick="toggleGenreFilter('Murim', this)">
+                    <i class="fa-solid fa-yin-yang"></i> Murim
+                </button>
+                <button class="genre-chip" data-genre="Martial Arts" onclick="toggleGenreFilter('Martial Arts', this)">
+                    <i class="fa-solid fa-hand-fist"></i> Martial Arts
+                </button>
+                <button class="genre-chip" data-genre="Rebirth" onclick="toggleGenreFilter('Rebirth', this)">
+                    <i class="fa-solid fa-rotate-left"></i> Rebirth
+                </button>
+                <button class="genre-chip" data-genre="Xianxia" onclick="toggleGenreFilter('Xianxia', this)">
+                    <i class="fa-solid fa-dragon"></i> Xianxia
+                </button>
+                <button class="genre-chip" data-genre="Romance" onclick="toggleGenreFilter('Romance', this)">
+                    <i class="fa-solid fa-heart"></i> Romance
+                </button>
+                <button class="genre-chip" data-genre="Comedy" onclick="toggleGenreFilter('Comedy', this)">
+                    <i class="fa-solid fa-face-laugh-beam"></i> Comedy
+                </button>
+                <button class="genre-chip" data-genre="Sci-Fi" onclick="toggleGenreFilter('Sci-Fi', this)">
+                    <i class="fa-solid fa-robot"></i> Sci-Fi
+                </button>
+                <button class="genre-chip" data-genre="Mystery" onclick="toggleGenreFilter('Mystery', this)">
+                    <i class="fa-solid fa-user-secret"></i> Mystery
+                </button>
+                <button class="genre-chip" data-genre="Horror" onclick="toggleGenreFilter('Horror', this)">
+                    <i class="fa-solid fa-ghost"></i> Horror
+                </button>
+                <button class="genre-chip" data-genre="Supernatural" onclick="toggleGenreFilter('Supernatural', this)">
+                    <i class="fa-solid fa-skull"></i> Supernatural
+                </button>
+                <button class="genre-chip" data-genre="Isekai" onclick="toggleGenreFilter('Isekai', this)">
+                    <i class="fa-solid fa-door-open"></i> Isekai
+                </button>
+                <button class="genre-chip" data-genre="Harem" onclick="toggleGenreFilter('Harem', this)">
+                    <i class="fa-solid fa-users"></i> Harem
+                </button>
+                <button class="genre-chip" data-genre="Slice of Life" onclick="toggleGenreFilter('Slice of Life', this)">
+                    <i class="fa-solid fa-mug-hot"></i> Slice of Life
+                </button>
+                <button class="genre-chip" data-genre="Drama" onclick="toggleGenreFilter('Drama', this)">
+                    <i class="fa-solid fa-masks-theater"></i> Drama
+                </button>
+                <button class="genre-chip" data-genre="BL" onclick="toggleGenreFilter('BL', this)">
+                    <i class="fa-solid fa-heart-circle-bolt"></i> BL
+                </button>
+                <button class="genre-chip" data-genre="Yuri" onclick="toggleGenreFilter('Yuri', this)">
+                    <i class="fa-solid fa-heart-pulse"></i> Yuri
+                </button>
+                <button class="genre-chip" data-genre="Psychological" onclick="toggleGenreFilter('Psychological', this)">
+                    <i class="fa-solid fa-brain"></i> Psychological
+                </button>
+                <button class="genre-chip" data-genre="Thriller" onclick="toggleGenreFilter('Thriller', this)">
+                    <i class="fa-solid fa-bolt"></i> Thriller
+                </button>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-list-ul"></i> ရလဒ်များ (<span id="result-count">0</span>)</h3>
+            </div>
+            
+            <div class="novel-grid" id="search-results-grid">
+            </div>
+        </section>
+
+        <section class="ad-section bottom-ad-slot">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-container" id="ad-slot-bottom">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Loading Ad...
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="search.html" class="nav-item active">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="admin.html" class="nav-item">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Admin</span>
+        </a>
+    </nav>
+
+    <script src="ads.js"></script>
+    <script src="search.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovelVerse-Myanmar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="logo-area">
+            <img src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png" alt="NovelVerse Logo" class="logo-img">
+            <span class="logo-title">NovelVerse</span>
+        </div>
+        <div class="header-actions">
+            <a href="search.html" class="icon-btn" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+        </div>
+    </header>
+
+    <section class="ad-section top-ad-slot">
+        <div class="ad-label"></div>
+        <div class="ad-container" id="ad-slot-header">
+            <div class="ad-placeholder">
+                <i class="fa-solid fa-rectangle-ad"></i> Loading Ad...
+            </div>
+        </div>
+    </section>
+
+    <main class="main-container">
+
+        <!-- Hero Section (Featured Novel) -->
+        <section class="hero-section">
+            <div class="hero-card" id="featured-hero">
+                <div class="hero-badge">Featured</div>
+                <div class="hero-overlay"></div>
+                <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop" alt="Shadow Hunter" class="hero-bg" id="hero-img">
+                <div class="hero-content">
+                    <h2 class="hero-title" id="hero-title">Shadow Hunter</h2>
+                    <p class="hero-desc" id="hero-desc">The world is full of shadows, but I am the hunter who stalks the dark...</p>
+                    <a href="novel.html" class="btn-primary" id="hero-link">
+                        <i class="fa-solid fa-play"></i> ဖတ်ရန်
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Continue Reading Section (LocalStorage မှ မှတ်သားထားသည်များကို ပြရန်) -->
+        <section class="section-block" id="continue-reading-section" style="display: none;">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-clock-rotate-left"></i> ဆက်လက်ဖတ်ရှုရန်</h3>
+            </div>
+            <div class="continue-card" id="continue-card">
+                <!-- Dynamically loaded via app.js -->
+            </div>
+        </section>
+
+        <section class="ad-section">
+            <div class="ad-label"></div>
+            <div class="ad-container" id="ad-slot-middle">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Loading Ad...
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Updates Chapter Grid -->
+        <section class="section-block">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-fire"></i> နောက်ဆုံးထွက် chapter များ</h3>
+                <a href="search.html" class="view-all">အားလုံး <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="novel-grid" id="latest-updates-grid">
+                <div class="novel-card-skeleton"></div>
+                <div class="novel-card-skeleton"></div>
+                <div class="novel-card-skeleton"></div>
+                <div class="novel-card-skeleton"></div>
+            </div>
+        </section>
+
+        <!-- Popular Novels List -->
+        <section class="section-block">
+            <div class="section-header">
+                <h3 class="section-title"><i class="fa-solid fa-chart-line"></i> လူကြိုက်အများဆုံး</h3>
+                <a href="search.html" class="view-all">အားလုံး <i class="fa-solid fa-chevron-right"></i></a>
+            </div>
+            <div class="popular-list" id="popular-list">
+                <!-- Dynamically loaded via app.js -->
+            </div>
+        </section>
+
+        <section class="ad-section bottom-ad-slot">
+            <div class="ad-label"></div>
+            <div class="ad-container" id="ad-slot-bottom">
+                <div class="ad-placeholder">
+                    <i class="fa-solid fa-rectangle-ad"></i> Loading Ad...
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+        <a href="search.html" class="nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+        <a href="admin.html" class="nav-item">
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Admin</span>
+        </a>
+    </nav>
+
+    <script src="ads.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
