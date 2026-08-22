@@ -100,7 +100,7 @@ async function loadLatestUpdates() {
                         <h4 style="font-size:0.85rem; font-weight:600; margin:4px 0 2px 0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                             ${novel.title || 'Untitled'}
                         </h4>
-                        <span style="font-size:0.7rem; color:#a8b3cf;">${novel.genre ? novel.genre.split(',')[0] : 'Novel'}</span>
+                        <span style="font-size:0.7rem; color:#a8b3cf;">${novel.genre ? novel.genre : 'Novel'}</span>
                     </div>
                 </div>
             `;
