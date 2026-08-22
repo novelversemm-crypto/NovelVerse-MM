@@ -424,8 +424,24 @@ async function loadNovelsDropdown() {
 
         for (const file of files) {
             if (file.name.endsWith('.md')) {
+                // ဖိုင်ရဲ့ content ကို အရင်ဖတ်မယ်
+                const fileRes = await fetch(file.download_url);
+                const markdownText = await fileRes.text();
+                
+                // Frontmatter ထဲက title ကို ရှာမယ်
+                let title = file.name.replace('.md', ''); // default
+                const parts = markdownText.split('---');
+                if (parts.length >= 3) {
+                    parts[1].split('\n').forEach(line => {
+                        if (line.startsWith('title:')) {
+                            title = line.replace('title:', '').trim().replace(/^["']|["']$/g, '');
+                        }
+                    });
+                }
+                
                 const slug = file.name.replace('.md', '');
-                options += `<option value="${slug}">${slug}</option>`;
+                // Dropdown မှာ title (မြန်မာစာ) ကို ပြပေးမယ်၊ value ကတော့ slug အတိုင်းထားမယ်
+                options += `<option value="${slug}">${title}</option>`;
             }
         }
         dropdown.innerHTML = options;
@@ -507,26 +523,44 @@ function renderAdminNovelsList(novels) {
         return;
     }
 
-    let html = '';
+    // Clear container first
+    container.innerHTML = '';
+
     novels.forEach(novel => {
-        html += `
-            <div class="admin-novel-item" style="display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 12px; margin-bottom: 10px; border-radius: 8px; gap: 10px; flex-wrap: wrap;">
-                <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px;">
-                    <img src="${novel.coverUrl}" class="admin-cover" style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/50x70?text=No+Image'">
-                    <div>
-                        <div class="admin-novel-title" style="font-weight: 600; color: #fff;">${novel.title}</div>
-                        <div class="admin-novel-meta" style="font-size: 0.8rem; color: #a8b3cf;">${novel.genre} • ${novel.status}</div>
-                    </div>
-                </div>
-                <div style="display: flex; gap: 6px;">
-                    <button onclick="openChaptersManager('${novel.slug}', '${escapeHtml(novel.title)}')" class="submit-btn" style="padding: 6px 10px; font-size: 0.8rem; background: #3b82f6;"><i class="fa-solid fa-book-open"></i> Chapters</button>
-                    <button onclick="openEditModal('${novel.slug}', '${escapeHtml(novel.title)}', '${novel.status}', '${escapeHtml(novel.synopsis)}')" class="submit-btn" style="padding: 6px 10px; font-size: 0.8rem; background: #eab308;"><i class="fa-solid fa-pen"></i> Edit</button>
-                    <button onclick="deleteNovel('${novel.slug}', '${escapeHtml(novel.title)}')" class="submit-btn" style="padding: 6px 10px; font-size: 0.8rem; background: #ef4444;"><i class="fa-solid fa-trash"></i> Delete</button>
+        const itemDiv = document.createElement('div');
+        itemDiv.className = 'admin-novel-item';
+        itemDiv.style.cssText = 'display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 12px; margin-bottom: 10px; border-radius: 8px; gap: 10px; flex-wrap: wrap;';
+
+        itemDiv.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px;">
+                <img src="${novel.coverUrl}" class="admin-cover" style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/50x70?text=No+Image'">
+                <div>
+                    <div class="admin-novel-title" style="font-weight: 600; color: #fff;">${novel.title}</div>
+                    <div class="admin-novel-meta" style="font-size: 0.8rem; color: #a8b3cf;">${novel.genre} • ${novel.status}</div>
                 </div>
             </div>
+            <div style="display: flex; gap: 6px;" class="admin-action-btns">
+                <button class="submit-btn btn-chapters" style="padding: 6px 10px; font-size: 0.8rem; background: #3b82f6;"><i class="fa-solid fa-book-open"></i> Chapters</button>
+                <button class="submit-btn btn-edit" style="padding: 6px 10px; font-size: 0.8rem; background: #eab308;"><i class="fa-solid fa-pen"></i> Edit</button>
+                <button class="submit-btn btn-delete" style="padding: 6px 10px; font-size: 0.8rem; background: #ef4444;"><i class="fa-solid fa-trash"></i> Delete</button>
+            </div>
         `;
+
+        // Event Listener များ သုံးခြင်းဖြင့် Quote (Single/Double quotes) ကြောင့် Syntax Error တက်ခြင်းကို ၁၀၀% ကာကွယ်ပေးသည်
+        itemDiv.querySelector('.btn-chapters').addEventListener('click', () => {
+            openChaptersManager(novel.slug, novel.title);
+        });
+
+        itemDiv.querySelector('.btn-edit').addEventListener('click', () => {
+            openEditModal(novel.slug, novel.title, novel.status, novel.synopsis);
+        });
+
+        itemDiv.querySelector('.btn-delete').addEventListener('click', () => {
+            deleteNovel(novel.slug, novel.title);
+        });
+
+        container.appendChild(itemDiv);
     });
-    container.innerHTML = html;
 }
 
 function filterAdminNovels() {
