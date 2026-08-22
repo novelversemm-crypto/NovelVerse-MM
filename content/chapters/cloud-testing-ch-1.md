@@ -1,8 +1,0 @@
----
-novel_slug: "cloud-testing"
-chapter_number: 1
-title: "cloud testing"
-created_at: "2026-08-20T03:51:35.346Z"
----
-
-cloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testing
