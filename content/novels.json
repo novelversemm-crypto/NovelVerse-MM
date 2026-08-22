@@ -28,17 +28,6 @@
     "status": "Ongoing",
     "synopsis": "third testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testingthird testing",
     "createdAt": "2026-08-20T03:25:51.924Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "third testing",
-        "file": "content/chapters/third-testing-ch-1.md"
-      },
-      {
-        "chapter_number": 2,
-        "title": "third testing",
-        "file": "content/chapters/third-testing-ch-2.md"
-      }
-    ]
+    "chapters": []
   }
 ]
