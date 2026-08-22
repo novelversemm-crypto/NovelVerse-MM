@@ -1,8 +1,0 @@
----
-novel_slug: "first-testing"
-chapter_number: 2
-title: "first testing"
-created_at: "2026-08-20T06:28:35.019Z"
----
-
-first testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testingfirst testing
