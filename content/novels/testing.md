@@ -1,9 +1,0 @@
----
-title: "testing"
-cover_url: "https://res.cloudinary.com/n1rewvpg/image/upload/v1787389712/rkuv8dkvgvraybhklcgh.png"
-genre: "Adventure, Comedy, Slice of Life"
-status: "Ongoing"
-created_at: "2026-08-22T09:08:26.961Z"
----
-
-testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting
