@@ -1,15 +1,16 @@
 let currentNovelId = null;
 let chaptersData = [];
 let isAscending = false; 
+let currentChapterPage = 1;
+const chaptersPerPage = 30; // တစ်မျက်နှာလျှင် ပြမည့် Chapter အရေအတွက်
 
 document.addEventListener('DOMContentLoaded', () => {
-    // URL မှ Novel ID ကို ဆွဲယူမည်
     const urlParams = new URLSearchParams(window.location.search);
     currentNovelId = urlParams.get('id');
 
-    // HTML onclick များ အလုပ်လုပ်နိုင်ရန် Global Window အဖြစ် ချိတ်ဆက်ပေးခြင်း
     window.toggleChapterSort = toggleChapterSort;
     window.triggerChapterAd = triggerChapterAd;
+    window.changeChapterPage = changeChapterPage; // Page ပြောင်းရန် ဖန်ရှင်ချိတ်ခြင်း
 
     if (currentNovelId) {
         fetchNovelData(currentNovelId);
@@ -29,20 +30,16 @@ async function fetchNovelData(novelId) {
         if (!response.ok) throw new Error('Network response was not ok');
         
         const data = await response.json();
-        
-        // Data ကို Array သို့မဟုတ် Object ပုံစံအပေါ်မူတည်၍ ရှာဖွေနိုင်ရန် ပြင်ဆင်ခြင်း
         let novels = Array.isArray(data) ? data : Object.values(data);
-        
-        // ID သို့မဟုတ် Slug ဖြင့် သက်ဆိုင်ရာ Novel ကို ရှာမည်
         let novel = novels.find(n => (n.id && String(n.id) === String(novelId)) || (n.slug && String(n.slug) === String(novelId)));
 
         if (!novel) {
             if (headerContainer) headerContainer.innerHTML = '<p>Novel ရှာမတွေ့ပါ။</p>';
             if (listContainer) listContainer.innerHTML = '<p class="empty-msg">စာစဉ်များ မရှိသေးပါ။</p>';
+            renderChapterPagination(0);
             return;
         }
 
-        // Header HTML တည်ဆောက်ခြင်း (coverUrl သို့ ပြင်ဆင်ပြီး)
         if (headerContainer) {
             headerContainer.innerHTML = `
                 <div class="novel-detail-card">
@@ -57,16 +54,13 @@ async function fetchNovelData(novelId) {
             `;
         }
 
-        // Synopsis ထည့်ခြင်း
         const synopsisEl = document.getElementById('novel-synopsis');
         if (synopsisEl) {
             synopsisEl.innerText = novel.synopsis || 'အညွှန်း မရှိသေးပါ။';
         }
 
-        // Chapters များကို ထည့်သွင်းခြင်း
         chaptersData = novel.chapters && Array.isArray(novel.chapters) ? novel.chapters : [];
 
-        // Chapter Number အလိုက် စီပေးမည် (Default: Newest first -> Descending)
         chaptersData.sort((a, b) => {
             return isAscending 
                 ? (a.chapter_number - b.chapter_number) 
@@ -76,34 +70,73 @@ async function fetchNovelData(novelId) {
         const countEl = document.getElementById('chapter-count');
         if (countEl) countEl.innerText = chaptersData.length;
 
+        currentChapterPage = 1;
         renderChapters();
 
     } catch (error) {
         console.error("Fetch novel data error:", error);
-        if (headerContainer) headerContainer.innerHTML = '<p>အချက်အလက်များ ရယူရာတွင် အမှားအယွင်း ရှိပါသည်ဖတ်ရှု၍ မရပါ။</p>';
+        if (headerContainer) headerContainer.innerHTML = '<p>အချက်အလက်များ ရယူရာတွင် အမှားအယွင်း ရှိပါသည်။</p>';
         if (listContainer) listContainer.innerHTML = '<p class="empty-msg">စာစဉ်များ ဆွဲယူရာတွင် အမှားအယွင်း ရှိပါသည်။</p>';
+        renderChapterPagination(0);
     }
 }
 
-// 2. Chapter စာရင်းများကို UI ပေါ်တွင် ပြသခြင်း
+// 2. Chapter စာရင်းများကို UI ပေါ်တွင် ပြသခြင်း (Pagination ဖြင့်)
 function renderChapters() {
     const listContainer = document.getElementById('chapter-list-container');
     if (!listContainer) return;
 
     if (chaptersData.length === 0) {
         listContainer.innerHTML = '<p class="empty-msg">စာစဉ်များ မရှိသေးပါ။</p>';
+        renderChapterPagination(0);
         return;
     }
     
-    listContainer.innerHTML = chaptersData.map(ch => `
+    const startIndex = (currentChapterPage - 1) * chaptersPerPage;
+    const currentChapters = chaptersData.slice(startIndex, startIndex + chaptersPerPage);
+
+    listContainer.innerHTML = currentChapters.map(ch => `
         <a href="reader.html?id=${ch.id || ch.chapter_number}" class="chapter-item" onclick="triggerChapterAd(event, 'reader.html?id=${ch.id || ch.chapter_number}')">
             <div class="ch-title">Chapter ${ch.chapter_number} - ${ch.title || ''}</div>
             <div class="ch-date"><i class="fa-solid fa-chevron-right"></i></div>
         </a>
     `).join('');
+
+    renderChapterPagination(chaptersData.length);
 }
 
-// 3. Chapter စီစဉ်မှု (Newest / Oldest) ပြောင်းလဲရန်
+// 3. Chapter Pagination ခလုတ်များ ဖန်တီးခြင်း (အမြဲပေါ်နေမည်)
+function renderChapterPagination(totalItems) {
+    const paginationContainer = document.getElementById('chapter-pagination-container');
+    if (!paginationContainer) return;
+
+    const totalPages = Math.max(1, Math.ceil(totalItems / chaptersPerPage));
+    let paginationHTML = '';
+    
+    // Previous Button
+    paginationHTML += `<button onclick="changeChapterPage(${currentChapterPage - 1})" ${currentChapterPage === 1 ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} style="background:var(--card-bg); color:var(--text-main); border:1px solid var(--border-color); padding:6px 12px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-chevron-left"></i></button>`;
+    
+    // Page Numbers
+    for (let i = 1; i <= totalPages; i++) {
+        paginationHTML += `<button onclick="changeChapterPage(${i})" style="background:${i === currentChapterPage ? 'var(--primary-purple)' : 'var(--card-bg)'}; color:#fff; border:1px solid var(--border-color); padding:6px 12px; border-radius:8px; cursor:pointer;">${i}</button>`;
+    }
+    
+    // Next Button
+    paginationHTML += `<button onclick="changeChapterPage(${currentChapterPage + 1})" ${currentChapterPage === totalPages ? 'disabled style="opacity:0.5; cursor:not-allowed;"' : ''} style="background:var(--card-bg); color:var(--text-main); border:1px solid var(--border-color); padding:6px 12px; border-radius:8px; cursor:pointer;"><i class="fa-solid fa-chevron-right"></i></button>`;
+    
+    paginationContainer.innerHTML = paginationHTML;
+}
+
+// 4. Chapter Page ပြောင်းသည့် Function
+function changeChapterPage(page) {
+    const totalPages = Math.ceil(chaptersData.length / chaptersPerPage) || 1;
+    if (page < 1 || page > totalPages) return;
+
+    currentChapterPage = page;
+    renderChapters();
+}
+
+// 5. Chapter စီစဉ်မှု (Newest / Oldest) ပြောင်းလဲရန်
 function toggleChapterSort() {
     isAscending = !isAscending;
     const sortBtn = document.getElementById('sort-btn');
@@ -117,10 +150,11 @@ function toggleChapterSort() {
     }
     
     chaptersData.reverse();
+    currentChapterPage = 1; // Sort ပြောင်းပါက ပထမစာမျက်နှာသို့ ပြန်သွားမည်
     renderChapters();
 }
 
-// 4. Chapter နှိပ်လိုက်တိုင်း Adsterra / Smartlink Trigger ပြုလုပ်ခြင်း
+// 6. Chapter နှိပ်လိုက်တိုင်း Adsterra / Smartlink Trigger ပြုလုပ်ခြင်း
 function triggerChapterAd(event, targetUrl) {
     if (typeof triggerInterstitialAd === 'function') {
         triggerInterstitialAd(event, targetUrl);
