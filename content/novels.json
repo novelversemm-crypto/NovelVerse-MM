@@ -1,26 +1,5 @@
 [
   {
-    "slug": "cloud-testing",
-    "title": "cloud testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787197866/ovfknlcgt2euooc4yujy.jpg",
-    "genre": "Action, Murim, Comedy",
-    "status": "Ongoing",
-    "synopsis": "cloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testingcloud testing",
-    "createdAt": "2026-08-20T03:51:01.269Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/cloud-testing-ch-1.md"
-      },
-      {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/cloud-testing-ch-2.md"
-      }
-    ]
-  },
-  {
     "slug": "first-testing",
     "title": "first testing",
     "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787194971/rlyoh3urnlvxfxvkp5jl.jpg",
@@ -38,22 +17,6 @@
         "chapter_number": 2,
         "title": "first testing",
         "file": "content/chapters/first-testing-ch-2.md"
-      }
-    ]
-  },
-  {
-    "slug": "second-testing",
-    "title": "second testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787195856/rxace6zypp5hysd6mfck.png",
-    "genre": "Fantasy, Romance, Supernatural",
-    "status": "Ongoing",
-    "synopsis": "second testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testingsecond testing",
-    "createdAt": "2026-08-20T03:17:30.780Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "second testing",
-        "file": "content/chapters/second-testing-ch-1.md"
       }
     ]
   },
