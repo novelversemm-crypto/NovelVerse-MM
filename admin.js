@@ -319,7 +319,11 @@ async function handleAddNovel(e) {
             selectedGenres.push(cb.value);
         });
 
-        const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        // မြန်မာစာနဲ့ Space များကို အဆင်ပြေအောင် ပြောင်းလဲပေးခြင်း
+let slug = title.trim().replace(/\s+/g, '-').replace(/[\/\\?%*:|"<>]/g, '');
+if (!slug || slug === '-') {
+    slug = 'novel-' + Date.now(); // အကယ်၍ ပြောင်းလို့မရရင် Timestamp အသုံးပြုမည်
+}
 
         const markdownContent = `---
 title: "${title}"
