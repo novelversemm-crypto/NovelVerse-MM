@@ -10,12 +10,12 @@
     "chapters": [
       {
         "chapter_number": 1,
-        "title": "cloud testing",
+        "title": "",
         "file": "content/chapters/cloud-testing-ch-1.md"
       },
       {
-        "chapter_number": 2,
-        "title": "cloud testing",
+        "chapter_number": 1,
+        "title": "",
         "file": "content/chapters/cloud-testing-ch-2.md"
       }
     ]
