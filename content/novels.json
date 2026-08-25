@@ -248,6 +248,11 @@
         "chapter_number": 1,
         "title": "အညံ့ဆုံး ဂိုက် (Guide)",
         "file": "content/chapters/SSS-Rank-ဂိုက်အဖြစ်-ကမ္ဘာသစ်မှာ-ဒုတိယအကြိမ်-ch-1.md"
+      },
+      {
+        "chapter_number": 2,
+        "title": "စနစ်၏ နိုးထခြင်း",
+        "file": "content/chapters/SSS-Rank-ဂိုက်အဖြစ်-ကမ္ဘာသစ်မှာ-ဒုတိယအကြိမ်-ch-2.md"
       }
     ]
   },
@@ -548,6 +553,11 @@
         "chapter_number": 29,
         "title": "\"အလုပ်\" နှင့် အိမ်ငှားခများမှာ အရေးကြီးသော ကိစ္စများ ဖြစ်သည်",
         "file": "content/chapters/လျှို့ဝှက်နက်နဲမှုများ၏-အရှင်-ch-29.md"
+      },
+      {
+        "chapter_number": 30,
+        "title": "သစ်လွင်သော အစပြုခြင်း",
+        "file": "content/chapters/လျှို့ဝှက်နက်နဲမှုများ၏-အရှင်-ch-30.md"
       }
     ]
   },
