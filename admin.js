@@ -175,12 +175,12 @@ async function deleteFromGitHub(filePath, commitMessage) {
 }
 
 // ==========================================
-// 🔄 HELPER: AUTOMATICALLY UPDATE novels.json (Fixed Novel Chapter Overlap Bug)
+// 🔄 HELPER: AUTOMATICALLY UPDATE novels.json
 // ==========================================
 async function updateNovelsJsonFile() {
     const token = getToken();
-    const novelsDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/novels?per_page=1000`;
-    const chaptersDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/chapters?per_page=1000`;
+    const novelsDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/novels`;
+    const chaptersDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/chapters`;
     
     try {
         const res = await fetch(novelsDirUrl, {
@@ -227,13 +227,11 @@ async function updateNovelsJsonFile() {
                 synopsis = parts.slice(2).join('---').trim();
             }
 
-            // 🛠️ တိကျသော Slug ကိုသာ Regex ဖြင့် စစ်ထုတ်ခြင်း (အခြား Novel များနှင့် မရောထွေးစေရန်)
-            let novelChapters = [];
-            const escapedSlug = slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-            const exactMatchedChapters = allChapterFiles.filter(ch => {
-                const regex = new RegExp(`^${escapedSlug}-ch-\\d+\\.md$`, 'i');
-                return regex.test(ch.name);
-            });
+            // slug နဲ့ အစပြုပြီး -ch- ပါတဲ့ chapter ဖိုင်န်များကို တိကျစွာ စစ်ထုတ်ခြင်း
+let novelChapters = [];
+const exactMatchedChapters = allChapterFiles.filter(ch => {
+    return ch.name.startsWith(`${slug}-ch-`) && ch.name.endsWith('.md');
+});
             
             for (const chFile of exactMatchedChapters) {
                 const chRes = await fetch(chFile.download_url);
@@ -272,7 +270,7 @@ async function updateNovelsJsonFile() {
         }
 
         const jsonContent = JSON.stringify(allNovelsData, null, 2);
-        await uploadToGitHub('content/novels.json', jsonContent, 'Auto-update novels.json with accurate chapters');
+        await uploadToGitHub('content/novels.json', jsonContent, 'Auto-update novels.json with chapters');
 
     } catch (err) {
         console.error("Error updating novels.json:", err);
