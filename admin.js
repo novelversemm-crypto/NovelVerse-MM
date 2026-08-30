@@ -175,12 +175,12 @@ async function deleteFromGitHub(filePath, commitMessage) {
 }
 
 // ==========================================
-// 🔄 HELPER: AUTOMATICALLY UPDATE novels.json
+// 🔄 HELPER: AUTOMATICALLY UPDATE novels.json (Fixed Novel Chapter Overlap Bug)
 // ==========================================
 async function updateNovelsJsonFile() {
     const token = getToken();
-    const novelsDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/novels`;
-    const chaptersDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/chapters`;
+    const novelsDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/novels?per_page=1000`;
+    const chaptersDirUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/chapters?per_page=1000`;
     
     try {
         const res = await fetch(novelsDirUrl, {
@@ -227,11 +227,12 @@ async function updateNovelsJsonFile() {
                 synopsis = parts.slice(2).join('---').trim();
             }
 
-            // 🛠️ FIX: Novel တစ်ခုချင်းစီ၏ slug နှင့် တိကျမှန်ကန်သော Chapter ဖိုင်များကိုသာ ခွဲထုတ်ခြင်း
+            // 🛠️ တိကျသော Slug ကိုသာ Regex ဖြင့် စစ်ထုတ်ခြင်း (အခြား Novel များနှင့် မရောထွေးစေရန်)
             let novelChapters = [];
+            const escapedSlug = slug.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const exactMatchedChapters = allChapterFiles.filter(ch => {
-                // ဥပမာ - slug က 'abc' ဆိုရင် 'abc-ch-1.md' ကိုပဲ ယူမည် (အခြား 'abcd-ch-1.md' တွေပါ မပါသွားစေရန် -ch- ပုံစံကို တိကျအောင်စစ်သည်)
-                return ch.name.startsWith(`${slug}-ch-`) && ch.name.endsWith('.md');
+                const regex = new RegExp(`^${escapedSlug}-ch-\\d+\\.md$`, 'i');
+                return regex.test(ch.name);
             });
             
             for (const chFile of exactMatchedChapters) {
@@ -256,7 +257,6 @@ async function updateNovelsJsonFile() {
                 });
             }
 
-            // Chapter နံပါတ်အလိုက် ကြီးစဉ်ငယ်လိုက် စီခြင်း
             novelChapters.sort((a, b) => a.chapter_number - b.chapter_number);
 
             allNovelsData.push({ 
@@ -272,7 +272,7 @@ async function updateNovelsJsonFile() {
         }
 
         const jsonContent = JSON.stringify(allNovelsData, null, 2);
-        await uploadToGitHub('content/novels.json', jsonContent, 'Auto-update novels.json with chapters');
+        await uploadToGitHub('content/novels.json', jsonContent, 'Auto-update novels.json with accurate chapters');
 
     } catch (err) {
         console.error("Error updating novels.json:", err);
