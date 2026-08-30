@@ -81,7 +81,7 @@ async function fetchNovelData(novelId) {
     }
 }
 
-// 2. Chapter စာရင်းများကို UI ပળပေါ်တွင် ပြသခြင်း (Pagination ဖြင့်)
+// 2. Chapter စာရင်းများကို UI ပေါ်တွင် ပြသခြင်း (Pagination ဖြင့်)
 function renderChapters() {
     const listContainer = document.getElementById('chapter-list-container');
     if (!listContainer) return;
@@ -95,16 +95,12 @@ function renderChapters() {
     const startIndex = (currentChapterPage - 1) * chaptersPerPage;
     const currentChapters = chaptersData.slice(startIndex, startIndex + chaptersPerPage);
 
-    listContainer.innerHTML = currentChapters.map(ch => {
-        // file လမ်းကြောင်းမှ content/chapters/ ကို ဖြုတ်ပြီး pure file name သို့မဟုတ် file တစ်ခုလုံးကို ID အဖြစ်သုံးရန်
-        const fileParam = ch.file ? ch.file.replace('content/chapters/', '') : ch.chapter_number;
-        return `
-            <a href="reader.html?id=${fileParam}" class="chapter-item" onclick="triggerChapterAd(event, 'reader.html?id=${fileParam}')">
-                <div class="ch-title">Chapter ${ch.chapter_number} - ${ch.title || ''}</div>
-                <div class="ch-date"><i class="fa-solid fa-chevron-right"></i></div>
-            </a>
-        `;
-    }).join('');
+    listContainer.innerHTML = currentChapters.map(ch => `
+        <a href="reader.html?id=${ch.id || ch.chapter_number}" class="chapter-item" onclick="triggerChapterAd(event, 'reader.html?id=${ch.id || ch.chapter_number}')">
+            <div class="ch-title">Chapter ${ch.chapter_number} - ${ch.title || ''}</div>
+            <div class="ch-date"><i class="fa-solid fa-chevron-right"></i></div>
+        </a>
+    `).join('');
 
     renderChapterPagination(chaptersData.length);
 }
