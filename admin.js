@@ -227,11 +227,12 @@ async function updateNovelsJsonFile() {
                 synopsis = parts.slice(2).join('---').trim();
             }
 
-            // slug နဲ့ အစပြုပြီး -ch- ပါတဲ့ chapter ဖိုင်န်များကို တိကျစွာ စစ်ထုတ်ခြင်း
-let novelChapters = [];
-const exactMatchedChapters = allChapterFiles.filter(ch => {
-    return ch.name.startsWith(`${slug}-ch-`) && ch.name.endsWith('.md');
-});
+            // 🛠️ FIX: Novel တစ်ခုချင်းစီ၏ slug နှင့် တိကျမှန်ကန်သော Chapter ဖိုင်များကိုသာ ခွဲထုတ်ခြင်း
+            let novelChapters = [];
+            const exactMatchedChapters = allChapterFiles.filter(ch => {
+                // ဥပမာ - slug က 'abc' ဆိုရင် 'abc-ch-1.md' ကိုပဲ ယူမည် (အခြား 'abcd-ch-1.md' တွေပါ မပါသွားစေရန် -ch- ပုံစံကို တိကျအောင်စစ်သည်)
+                return ch.name.startsWith(`${slug}-ch-`) && ch.name.endsWith('.md');
+            });
             
             for (const chFile of exactMatchedChapters) {
                 const chRes = await fetch(chFile.download_url);
@@ -255,6 +256,7 @@ const exactMatchedChapters = allChapterFiles.filter(ch => {
                 });
             }
 
+            // Chapter နံပါတ်အလိုက် ကြီးစဉ်ငယ်လိုက် စီခြင်း
             novelChapters.sort((a, b) => a.chapter_number - b.chapter_number);
 
             allNovelsData.push({ 
