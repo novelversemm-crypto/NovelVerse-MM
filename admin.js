@@ -319,10 +319,15 @@ async function handleAddNovel(e) {
             selectedGenres.push(cb.value);
         });
 
-        // မြန်မာစာနဲ့ Space များကို အဆင်ပြေအောင် ပြောင်းလဲပေးခြင်း
-let slug = title.trim().replace(/\s+/g, '-').replace(/[\/\\?%*:|"<>]/g, '');
+        // 🛠️ အင်္ဂလိပ်စာလုံး သို့မဟုတ် နံပါတ်သီးသန့် Slug ဖြစ်အောင် ဖန်တီးခြင်း (မြန်မာစာလုံး လုံးဝမပါစေရန်)
+let slug = title.trim()
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // အင်္ဂလိပ်စာနှင့် နံပါတ်မှလွဲ၍ ကျန်သည်များကို ဖြုတ်ပစ်ရန်
+    .replace(/\s+/g, '-');
+
+// အကယ်၍ Novel နာမည်က မြန်မာလိုသီးသန့်ဖြစ်နေလို့ slug က အလွတ်ဖြစ်သွားရင် ID တစ်ခုပေးရန်
 if (!slug || slug === '-') {
-    slug = 'novel-' + Date.now(); // အကယ်၍ ပြောင်းလို့မရရင် Timestamp အသုံးပြုမည်
+    slug = 'novel-' + Date.now();
 }
 
         const markdownContent = `---
