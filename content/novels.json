@@ -252,6 +252,22 @@
     ]
   },
   {
+    "slug": "novel-1788135429455",
+    "title": "စမ်းသပ်ခြင်း",
+    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1788135428/fpk2a4p5rpbypjnj86xd.jpg",
+    "genre": "Adventure, Xianxia, Sci-Fi, Horror",
+    "status": "Ongoing",
+    "synopsis": "စမ်းသပ်ခြင်း",
+    "createdAt": "2026-08-31T00:17:09.455Z",
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "စမ်းသပ်ခြင်း",
+        "file": "content/chapters/novel-1788135429455-ch-1.md"
+      }
+    ]
+  },
+  {
     "slug": "ကြည်နောက်ကွဲပြား-ချစ်ကြေကွဲ",
     "title": "ကြည်နောက်ကွဲပြား ချစ်ကြေကွဲ",
     "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1787392521/hcb2yd0olykkowrltuxu.jpg",
