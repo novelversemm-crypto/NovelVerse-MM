@@ -474,6 +474,16 @@
         "chapter_number": 2,
         "title": "",
         "file": "content/chapters/s-class--ch-2.md"
+      },
+      {
+        "chapter_number": 3,
+        "title": "",
+        "file": "content/chapters/s-class--ch-3.md"
+      },
+      {
+        "chapter_number": 4,
+        "title": "",
+        "file": "content/chapters/s-class--ch-4.md"
       }
     ]
   },
