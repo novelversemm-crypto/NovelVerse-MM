@@ -755,6 +755,21 @@
         "chapter_number": 11,
         "title": "ထွက်ပေါ်လာသည့် အရာများ",
         "file": "content/chapters/sss-rank--ch-11.md"
+      },
+      {
+        "chapter_number": 12,
+        "title": "မြို့ရိုး နှစ်ကြိမ်မြောက် ပြိုလဲခြင်း",
+        "file": "content/chapters/sss-rank--ch-12.md"
+      },
+      {
+        "chapter_number": 13,
+        "title": "ထိုအရာက မည်သို့ သိနေသနည်း",
+        "file": "content/chapters/sss-rank--ch-13.md"
+      },
+      {
+        "chapter_number": 14,
+        "title": "ဝိုင်းရံပိတ်ဆို့ခံရခြင်း",
+        "file": "content/chapters/sss-rank--ch-14.md"
       }
     ]
   }
