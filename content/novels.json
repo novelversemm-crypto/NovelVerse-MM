@@ -750,6 +750,11 @@
         "chapter_number": 10,
         "title": "မြို့ရိုးပေါ်မှ မျက်နှာတစ်ခု",
         "file": "content/chapters/sss-rank--ch-10.md"
+      },
+      {
+        "chapter_number": 11,
+        "title": "ထွက်ပေါ်လာသည့် အရာများ",
+        "file": "content/chapters/sss-rank--ch-11.md"
       }
     ]
   }
