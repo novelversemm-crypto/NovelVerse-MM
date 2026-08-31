@@ -9,21 +9,6 @@
     "createdAt": "2026-08-22T11:40:47.867Z",
     "chapters": [
       {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-1.md"
-      },
-      {
-        "chapter_number": 2,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-2.md"
-      },
-      {
-        "chapter_number": 3,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-3.md"
-      },
-      {
         "chapter_number": 4,
         "title": "",
         "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-4.md"
@@ -52,136 +37,6 @@
         "chapter_number": 9,
         "title": "",
         "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-9.md"
-      },
-      {
-        "chapter_number": 10,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-10.md"
-      },
-      {
-        "chapter_number": 11,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-11.md"
-      },
-      {
-        "chapter_number": 12,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-12.md"
-      },
-      {
-        "chapter_number": 13,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-13.md"
-      },
-      {
-        "chapter_number": 14,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-14.md"
-      },
-      {
-        "chapter_number": 15,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-15.md"
-      },
-      {
-        "chapter_number": 16,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-16.md"
-      },
-      {
-        "chapter_number": 17,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-17.md"
-      },
-      {
-        "chapter_number": 18,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-18.md"
-      },
-      {
-        "chapter_number": 19,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-19.md"
-      },
-      {
-        "chapter_number": 20,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-20.md"
-      },
-      {
-        "chapter_number": 21,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-21.md"
-      },
-      {
-        "chapter_number": 22,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-22.md"
-      },
-      {
-        "chapter_number": 23,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-23.md"
-      },
-      {
-        "chapter_number": 24,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-24.md"
-      },
-      {
-        "chapter_number": 25,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-25.md"
-      },
-      {
-        "chapter_number": 26,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-26.md"
-      },
-      {
-        "chapter_number": 27,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-27.md"
-      },
-      {
-        "chapter_number": 28,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-28.md"
-      },
-      {
-        "chapter_number": 29,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-29.md"
-      },
-      {
-        "chapter_number": 30,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-30.md"
-      },
-      {
-        "chapter_number": 31,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-31.md"
-      },
-      {
-        "chapter_number": 32,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-32.md"
-      },
-      {
-        "chapter_number": 33,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-33.md"
-      },
-      {
-        "chapter_number": 34,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-34.md"
-      },
-      {
-        "chapter_number": 35,
-        "title": "",
-        "file": "content/chapters/S-Class-ဟန်တာ၏-အလုပ်ထွက်စာ-ch-35.md"
       },
       {
         "chapter_number": 36,
@@ -393,22 +248,6 @@
         "chapter_number": 30,
         "title": "မိပြီ",
         "file": "content/chapters/SSS-Rank-ဂိုက်အဖြစ်-ကမ္ဘာသစ်မှာ-ဒုတိယအကြိမ်-ch-30.md"
-      }
-    ]
-  },
-  {
-    "slug": "novel-1788106901122",
-    "title": "စမ်းသပ်ခြင်း",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1788106900/vwd2o68utwdhfewbwhz8.jpg",
-    "genre": "Fantasy, Murim, Romance, BL",
-    "status": "Ongoing",
-    "synopsis": "စမ်းသပ်ခြင်းအချိတ်အဆက်တွေကို ဘယ်လိုကိုင်တွယ်မလဲ (၁၂)**အချိတ်အဆက်တွေကို ဘယ်လိုကိုင်တွယ်မလဲ (၁၂)**အချိတ်အဆက်တွေကို ဘယ်လိုကိုင်တွယ်မလဲ (၁၂)**အချိတ်အဆက်တွေကို ဘယ်လိုကိုင်တွယ်မလဲ (၁၂)**အချိတ်အဆက်တွေကို ဘယ်လိုကိုင်တွယ်မလဲ (၁၂)**အချိတ်အဆက်တွေကို ဘယ်လိုကိုင်တွယ်မလဲ (၁၂)**",
-    "createdAt": "2026-08-30T16:21:41.126Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/novel-1788106901122-ch-1.md"
       }
     ]
   },
