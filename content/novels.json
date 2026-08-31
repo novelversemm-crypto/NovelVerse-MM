@@ -679,6 +679,16 @@
         "chapter_number": 43,
         "title": "",
         "file": "content/chapters/s-class--ch-43.md"
+      },
+      {
+        "chapter_number": 44,
+        "title": "",
+        "file": "content/chapters/s-class--ch-44.md"
+      },
+      {
+        "chapter_number": 45,
+        "title": "",
+        "file": "content/chapters/s-class--ch-45.md"
       }
     ]
   },
@@ -700,6 +710,11 @@
         "chapter_number": 2,
         "title": "စနစ်၏ နိုးထခြင်း",
         "file": "content/chapters/sss-rank--ch-2.md"
+      },
+      {
+        "chapter_number": 3,
+        "title": "SSS-Rank",
+        "file": "content/chapters/sss-rank--ch-3.md"
       }
     ]
   }
