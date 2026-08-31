@@ -1,24 +1,26 @@
 let currentChapterId = null;
+let currentNovelIdParam = null;
 let currentChapterData = null;
 let currentFontSize = 15;
 
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     currentChapterId = urlParams.get('id');
+    currentNovelIdParam = urlParams.get('novel_id') || urlParams.get('novel');
 
     // Global Window တွင် ချိတ်ဆက်ပေးခြင်း
     window.navigateToChapter = navigateToChapter;
     window.changeFontSize = changeFontSize;
 
     if (currentChapterId) {
-        fetchChapterContent(currentChapterId);
+        fetchChapterContent(currentChapterId, currentNovelIdParam);
     } else {
         const contentBox = document.getElementById('chapter-content');
         if (contentBox) contentBox.innerHTML = '<p style="text-align:center;">စာစဉ် မရှိပါ။</p>';
     }
 });
 
-async function fetchChapterContent(chapterId) {
+async function fetchChapterContent(chapterId, novelId) {
     try {
         const response = await fetch('content/novels.json?' + new Date().getTime());
         if (!response.ok) throw new Error('Network response was not ok');
@@ -29,18 +31,41 @@ async function fetchChapterContent(chapterId) {
         let foundChapter = null;
         let foundNovel = null;
 
-        for (let novel of novels) {
-            if (novel.chapters && Array.isArray(novel.chapters)) {
-                const ch = novel.chapters.find(c => String(c.chapter_number) === String(chapterId) || c.file === chapterId || c.id === chapterId);
-                if (ch) {
-                    foundChapter = ch;
-                    foundNovel = novel;
-                    break;
+        // ၁။ novel_id ပါလာပါက သက်ဆိုင်ရာ ဇာတ်လမ်းကို ဦးစားပေးရှာမည်
+        if (novelId) {
+            foundNovel = novels.find(n => 
+                String(n.id) === String(novelId) || 
+                String(n.slug) === String(novelId) || 
+                (n.title && n.title.toLowerCase() === String(novelId).toLowerCase())
+            );
+            if (foundNovel && foundNovel.chapters && Array.isArray(foundNovel.chapters)) {
+                foundChapter = foundNovel.chapters.find(c => 
+                    String(c.chapter_number) === String(chapterId) || 
+                    String(c.file) === String(chapterId) || 
+                    String(c.id) === String(chapterId)
+                );
+            }
+        }
+
+        // ၂။ novel_id မပါ (သို့) ရှာမတွေ့ပါက အခြား Novel များထဲမှ လိုက်လံရှာဖွေမည်
+        if (!foundChapter) {
+            for (let novel of novels) {
+                if (novel.chapters && Array.isArray(novel.chapters)) {
+                    const ch = novel.chapters.find(c => 
+                        String(c.chapter_number) === String(chapterId) || 
+                        String(c.file) === String(chapterId) || 
+                        String(c.id) === String(chapterId)
+                    );
+                    if (ch) {
+                        foundChapter = ch;
+                        foundNovel = novel;
+                        break;
+                    }
                 }
             }
         }
 
-        if (!foundChapter) {
+        if (!foundChapter || !foundNovel) {
             document.getElementById('chapter-content').innerHTML = '<p style="text-align:center;">စာစဉ် ရှာမတွေ့ပါ။</p>';
             return;
         }
@@ -56,14 +81,13 @@ async function fetchChapterContent(chapterId) {
         const detailsBtn = document.getElementById('novel-details-btn');
         const backBtn = document.getElementById('back-to-novel-btn');
         
-        const novelId = foundNovel.slug || foundNovel.id;
-        if (detailsBtn) detailsBtn.href = `novel.html?id=${novelId}`;
-        if (backBtn) backBtn.href = `novel.html?id=${novelId}`;
+        const activeNovelId = foundNovel.slug || foundNovel.id;
+        if (detailsBtn) detailsBtn.href = `novel.html?id=${activeNovelId}`;
+        if (backBtn) backBtn.href = `novel.html?id=${activeNovelId}`;
 
         // .md ဖိုင် (သို့မဟုတ်) ဖိုင်လမ်းကြောင်းမှ စာသားများကို ဆွဲယူခြင်း
         if (foundChapter.file) {
             let filePath = foundChapter.file;
-            // ရှေ့ဆုံးတွင် ./ ထည့်ပေးခြင်းဖြင့် Local တွင် လမ်းကြောင်းမှန်စေရန်
             if (!filePath.startsWith('./') && !filePath.startsWith('content/')) {
                 filePath = './content/' + filePath;
             } else if (filePath.startsWith('content/')) {
@@ -74,12 +98,12 @@ async function fetchChapterContent(chapterId) {
             if (mdRes.ok) {
                 const mdText = await mdRes.text();
                 
-                // Frontmatter (--- ဖြင့်စပြီး --- ဖြင့်ဆုံးသော အပိုင်း) ကို ဖယ်ထုတ်ခြင်း
+                // Frontmatter ကို ဖယ်ထုတ်ခြင်း
                 let cleanText = mdText;
                 if (mdText.startsWith('---')) {
                     const parts = mdText.split('---');
                     if (parts.length >= 3) {
-                        cleanText = parts.slice(2).join('---'); // Metadata ပြီးနောက်ပိုင်း စာသားများကိုသာ ယူရန်
+                        cleanText = parts.slice(2).join('---');
                     }
                 }
 
@@ -88,14 +112,12 @@ async function fetchChapterContent(chapterId) {
                     .filter(paragraph => paragraph.trim() !== '')
                     .map(paragraph => `<p>${paragraph}</p>`)
                     .join('');
-                
 
-        // Font Size အမှန်တကယ် သက်ရောက်စေရန်
-        const contentBox = document.getElementById('chapter-content');
-        if (contentBox) {
-            contentBox.style.fontSize = `${currentFontSize}px`;
-            contentBox.innerHTML = formattedContent;
-        }
+                const contentBox = document.getElementById('chapter-content');
+                if (contentBox) {
+                    contentBox.style.fontSize = `${currentFontSize}px`;
+                    contentBox.innerHTML = formattedContent;
+                }
             } else {
                 document.getElementById('chapter-content').innerHTML = '<p style="text-align:center;">စာသားဖိုင် (Markdown File) ကို ဖတ်၍ မရပါ။ လမ်းကြောင်း မှန်မမှန် စစ်ဆေးပါ။</p>';
             }
@@ -111,7 +133,7 @@ async function fetchChapterContent(chapterId) {
     }
 }
 
-// 2. Font Size ပြောင်းလဲရန် Function (အဓိက Error ဖြစ်နေသော နေရာ)
+// Font Size ပြောင်းလဲရန် Function
 function changeFontSize(delta) {
     currentFontSize += delta;
     if (currentFontSize < 12) currentFontSize = 12;
@@ -123,7 +145,7 @@ function changeFontSize(delta) {
     }
 }
 
-// 3. ရှေ့အပိုင်း/နောက်အပိုင်း ခလုတ်များ စစ်ဆေးပေးခြင်း
+// ရှေ့အပိုင်း/နောက်အပိုင်း ခလုတ်များ စစ်ဆေးပေးခြင်း
 function setupNavigationButtons(novel, currentChapterNum) {
     const prevBtn = document.getElementById('prev-ch-btn');
     const nextBtn = document.getElementById('next-ch-btn');
@@ -131,7 +153,7 @@ function setupNavigationButtons(novel, currentChapterNum) {
     if (!novel.chapters || !Array.isArray(novel.chapters)) return;
 
     const chapters = novel.chapters;
-    const currentIndex = chapters.findIndex(c => c.chapter_number == currentChapterNum);
+    const currentIndex = chapters.findIndex(c => String(c.chapter_number) === String(currentChapterNum));
 
     if (prevBtn) {
         if (currentIndex > 0) {
@@ -160,15 +182,19 @@ function setupNavigationButtons(novel, currentChapterNum) {
     }
 }
 
-// 4. Next/Prev ခလုတ် နှိပ်လိုက်သည့်အခါ သွားရောက်ခြင်း
+// Next/Prev ခလုတ် နှိပ်လိုက်သည့်အခါ novel_id ပါ ဆက်ပါသွားစေရန်
 function navigateToChapter(type, event) {
     const btn = type === 'prev' ? document.getElementById('prev-ch-btn') : document.getElementById('next-ch-btn');
     const targetId = btn ? btn.dataset.targetId : null;
 
     if (targetId) {
         const urlParams = new URLSearchParams(window.location.search);
-        const novelId = urlParams.get('id');
-        const targetUrl = `reader.html?id=${targetId}`;
+        const novelId = urlParams.get('novel_id') || urlParams.get('novel') || currentChapterData?.novel_id;
+        
+        let targetUrl = `reader.html?id=${targetId}`;
+        if (novelId) {
+            targetUrl = `reader.html?novel_id=${novelId}&id=${targetId}`;
+        }
         
         if (typeof triggerInterstitialAd === 'function') {
             triggerInterstitialAd(event, targetUrl);
