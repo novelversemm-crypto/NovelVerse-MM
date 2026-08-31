@@ -725,6 +725,21 @@
         "chapter_number": 5,
         "title": "မကောင်းသော ခံစားချက်",
         "file": "content/chapters/sss-rank--ch-5.md"
+      },
+      {
+        "chapter_number": 6,
+        "title": "တပ်မှူး",
+        "file": "content/chapters/sss-rank--ch-6.md"
+      },
+      {
+        "chapter_number": 7,
+        "title": "လေ့ကျင့်ရေး မဟုတ်ပါ",
+        "file": "content/chapters/sss-rank--ch-7.md"
+      },
+      {
+        "chapter_number": 8,
+        "title": "ပထမဆုံး စိစစ်တိုက်ခိုက်မှု",
+        "file": "content/chapters/sss-rank--ch-8.md"
       }
     ]
   }
