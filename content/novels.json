@@ -740,6 +740,16 @@
         "chapter_number": 8,
         "title": "ပထမဆုံး စိစစ်တိုက်ခိုက်မှု",
         "file": "content/chapters/sss-rank--ch-8.md"
+      },
+      {
+        "chapter_number": 9,
+        "title": "ပြန်လည် တိုက်ခိုက်လာသည့် အရာ",
+        "file": "content/chapters/sss-rank--ch-9.md"
+      },
+      {
+        "chapter_number": 10,
+        "title": "မြို့ရိုးပေါ်မှ မျက်နှာတစ်ခု",
+        "file": "content/chapters/sss-rank--ch-10.md"
       }
     ]
   }
