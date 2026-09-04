@@ -31,7 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.deleteNovel = deleteNovel;
     window.closeChaptersModal = closeChaptersModal;
     window.openChaptersManager = openChaptersManager; 
-    window.deleteChapter = deleteChapter;             
+    window.deleteChapter = deleteChapter;    
+    window.openEditChapterModal = openEditChapterModal;
+    window.closeEditChapterModal = closeEditChapterModal;
+    window.handleUpdateChapter = handleUpdateChapter;
 });
 
 function getToken() {
@@ -728,7 +731,10 @@ async function openChaptersManager(slug, title) {
                         <span style="font-weight: 600; color: #fff;">Chapter ${chNum}</span> 
                         <span style="color: #a8b3cf; font-size: 0.9rem;">${chTitle ? '- ' + chTitle : ''}</span>
                     </div>
-                    <button onclick="deleteChapter('${file.name}', '${slug}')" class="submit-btn" style="padding: 4px 8px; font-size: 0.75rem; background: #ef4444;"><i class="fa-solid fa-trash"></i> ဖျက်မည်</button>
+                    <div style="display: flex; gap: 6px;">
+                        <button onclick="openEditChapterModal('${file.name}', '${slug}')" class="submit-btn" style="padding: 4px 8px; font-size: 0.75rem; background: #eab308;"><i class="fa-solid fa-pen"></i> ပြင်မည်</button>
+                        <button onclick="deleteChapter('${file.name}', '${slug}')" class="submit-btn" style="padding: 4px 8px; font-size: 0.75rem; background: #ef4444;"><i class="fa-solid fa-trash"></i> ဖျက်မည်</button>
+                    </div>
                 </div>
             `;
         }
@@ -751,5 +757,97 @@ async function deleteChapter(fileName, slug) {
         openChaptersManager(slug, slug);
     } catch (err) {
         alert('Chapter ဖျက်ရာတွင် အမှားအယွင်းရှိပါသည်: ' + err.message);
+    }
+}
+
+// Chapter Edit Modal ဖွင့်ရန် (အချက်အလက်ဟောင်းများကို ဖတ်ယူခြင်း)
+async function openEditChapterModal(fileName, slug) {
+    try {
+        const token = getToken();
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/content/chapters/${fileName}`, {
+            headers: { "Authorization": `token ${token}` }
+        });
+        
+        if (!res.ok) throw new Error('Chapter ဖိုင်ကို ဖတ်မရပါ။');
+        
+        const data = await res.json();
+        const text = decodeURIComponent(escape(atob(data.content)));
+        const parts = text.split('---');
+        
+        let chTitle = '';
+        let chNum = 1;
+        let chContent = '';
+
+        if (parts.length >= 3) {
+            parts[1].split('\n').forEach(line => {
+                if (line.startsWith('title:')) chTitle = line.replace('title:', '').trim().replace(/^["']|["']$/g, '');
+                if (line.startsWith('chapter_number:')) chNum = parseInt(line.replace('chapter_number:', '').trim()) || 1;
+            });
+            chContent = parts.slice(2).join('---').trim();
+        }
+
+        document.getElementById('edit-chapter-filename').value = fileName;
+        document.getElementById('edit-chapter-slug').value = slug;
+        document.getElementById('edit-chapter-number').value = chNum;
+        document.getElementById('edit-chapter-title').value = chTitle;
+        document.getElementById('edit-chapter-content').value = chContent;
+
+        document.getElementById('edit-chapter-modal').style.display = 'flex';
+    } catch (err) {
+        alert('Chapter အချက်အလက်ယူရာတွင် အမှားရှိပါသည်: ' + err.message);
+    }
+}
+
+function closeEditChapterModal() {
+    document.getElementById('edit-chapter-modal').style.display = 'none';
+}
+
+// Chapter အသစ်ပြင်ဆင်မှုကို GitHub သို့ သိမ်းဆည်းရန်
+async function handleUpdateChapter(e) {
+    if (e) e.preventDefault();
+    const btn = document.getElementById('save-edit-chapter-btn');
+    if (btn) btn.disabled = true;
+
+    const fileName = document.getElementById('edit-chapter-filename').value;
+    const slug = document.getElementById('edit-chapter-slug').value;
+    const chNum = parseInt(document.getElementById('edit-chapter-number').value);
+    const chTitle = document.getElementById('edit-chapter-title').value.trim();
+    const chContent = document.getElementById('edit-chapter-content').value.trim();
+
+    try {
+        const newFileName = `${slug}-ch-${chNum}.md`;
+        const chapterFilePath = `content/chapters/${newFileName}`;
+
+        const markdownContent = `---
+novel_slug: "${slug}"
+chapter_number: ${chNum}
+title: "${chTitle}"
+created_at: "${new Date().toISOString()}"
+---
+
+${chContent}
+`;
+
+        // Chapter နံပါတ်ပြောင်းသွား၍ ဖိုင်နာမည် အဟောင်းနှင့် အသစ်မတူတော့လျှင် ဖိုင်အဟောင်းကို ဖျက်ပေးရန်
+        if (fileName !== newFileName) {
+            await deleteFromGitHub(`content/chapters/${fileName}`, `Remove old chapter file ${fileName}`);
+        }
+
+        await uploadToGitHub(chapterFilePath, markdownContent, `Update ${slug} Chapter ${chNum}`);
+        
+        if (btn) btn.innerText = 'novels.json ကို အပ်ဒိတ်လုပ်နေသည်...';
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        await updateNovelsJsonFile();
+
+        alert('Chapter အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!');
+        closeEditChapterModal();
+        openChaptersManager(slug, slug);
+    } catch (error) {
+        alert('Chapter ပြင်ဆင်ရာတွင် အမှားအယွင်းရှိပါသည်: ' + error.message);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerText = 'ပြင်ဆင်မည်';
+        }
     }
 }
