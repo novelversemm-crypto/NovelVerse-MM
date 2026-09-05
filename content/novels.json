@@ -14,16 +14,6 @@
         "file": "content/chapters/novel-1788145672065-ch-1.md"
       },
       {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/novel-1788145672065-ch-19.md"
-      },
-      {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/novel-1788145672065-ch-24.md"
-      },
-      {
         "chapter_number": 2,
         "title": "ခန္ဓာကိုယ်အသစ်နဲ့ အလွဲပေါင်းသောင်းခြောက်ထောင်",
         "file": "content/chapters/novel-1788145672065-ch-2.md"
@@ -109,6 +99,11 @@
         "file": "content/chapters/novel-1788145672065-ch-18.md"
       },
       {
+        "chapter_number": 19,
+        "title": "မနက်ခင်း အလင်းရောင်နှင့် စည်းမျဉ်းအသစ်များ",
+        "file": "content/chapters/novel-1788145672065-ch-19.md"
+      },
+      {
         "chapter_number": 20,
         "title": "အတွဲလိုက် စွန့်စားခန်းများ",
         "file": "content/chapters/novel-1788145672065-ch-20.md"
@@ -127,6 +122,11 @@
         "chapter_number": 23,
         "title": "လျင်မြန်သော စဝင်စွက်ဖက်မှုများ",
         "file": "content/chapters/novel-1788145672065-ch-23.md"
+      },
+      {
+        "chapter_number": 24,
+        "title": "ရှက်သွေးဖြန်းသည့် အဖျားနှင့် မလိုလားအပ်သော အသံများ",
+        "file": "content/chapters/novel-1788145672065-ch-24.md"
       },
       {
         "chapter_number": 25,
@@ -701,7 +701,13 @@
     "status": "Ongoing",
     "synopsis": "အယ်လ် (Elle) သည် ဖခင်ဖြစ်သူ၏ အေးစက်ဥပေက္ခာပြုမှု၊ မိသားစုသစ်၏ ပစ်ပယ်စော်ကားမှုတို့ကြားမှ ကြံ့ကြံ့ခံကာ ကြိုးစားရုန်းကန်နေသည့် မိန်းကလေးတစ်ဦးဖြစ်သည်။ သူမသည် ရင်ထဲမှ အသည်းကွဲနာကျင်မှု၊ ဝမ်းနည်းကြေကွဲမှုအားလုံးကို ကလောင်အမည်တစ်ခုအောက်တွင် စာလုံးများအဖြစ် ပုံသွင်းကာ ပရိသတ်အမြောက်အမြား၏ အားပေးမှုကို ရရှိခဲ့သည့် နာမည်ကြီးဝတ္ထုတစ်ပုဒ်ကို ဖန်တီးခဲ့သူလည်း ဖြစ်သည်။\nအာဒမ် (Adam) သည် စီးပွားရေးလောက၏ ထိပ်သီး MK ကုမ္ပဏီကြီး၏ အုပ်ချုပ်ရေးမှူးချုပ် (CEO) ဖြစ်ပြီး မည်သည့်ကိစ္စမဆို ပြီးပြည့်စုံအောင် ဆောင်ရွက်နိုင်သူတစ်ဦးဖြစ်သည်။ သို့သော် သူသည် သံမဏိလို အေးစက်ပြီး ခွင့်လွှတ်သည်ဟူ၍ မရှိသော သူတစ်ယောက်အဖြစ် သတ်မှတ်ခံထားရသူ ဖြစ်သည်။\nမထင်မှတ်ထားသော တိုက်ဆိုင်မှုတစ်ခုမှစ၍ ထိုသူနှစ်ဦး ဆုံတွေ့ခဲ့ကြသည်။ ထို့နောက် တစ်ယောက်၏ နှလုံးသားကို တစ်ယောက်က မထင်မှတ်ထားသော နည်းလမ်းများဖြင့် တို့ထိလှုပ်ခါမိသွားကြသောအခါ...",
     "createdAt": "2026-08-31T07:56:48.877Z",
-    "chapters": []
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "title": "အာဒမ် ဟေးစ်",
+        "file": "content/chapters/novel-1788163008877-ch-1.md"
+      }
+    ]
   },
   {
     "slug": "novel-1788163551822",
@@ -974,11 +980,6 @@
         "file": "content/chapters/sss-rank--ch-1.md"
       },
       {
-        "chapter_number": 1,
-        "title": "",
-        "file": "content/chapters/sss-rank--ch-26.md"
-      },
-      {
         "chapter_number": 2,
         "title": "စနစ်၏ နိုးထခြင်း",
         "file": "content/chapters/sss-rank--ch-2.md"
@@ -1097,6 +1098,11 @@
         "chapter_number": 25,
         "title": "လေထဲသို့ ပျောက်ကွယ်သွားခြင်း",
         "file": "content/chapters/sss-rank--ch-25.md"
+      },
+      {
+        "chapter_number": 26,
+        "title": "ကံကြမ္မာ၏ ဒုတိယအကြိမ် ရိုက်နှက်ချက်",
+        "file": "content/chapters/sss-rank--ch-26.md"
       },
       {
         "chapter_number": 27,
