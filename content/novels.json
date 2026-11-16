@@ -2266,6 +2266,11 @@
         "chapter_number": 103,
         "title": "",
         "file": "content/chapters/novel-1789477713294-ch-103.md"
+      },
+      {
+        "chapter_number": 104,
+        "title": "",
+        "file": "content/chapters/novel-1789477713294-ch-104.md"
       }
     ]
   },
@@ -2921,22 +2926,6 @@
         "chapter_number": 30,
         "title": "မိပြီ",
         "file": "content/chapters/sss-rank--ch-30.md"
-      }
-    ]
-  },
-  {
-    "slug": "testing",
-    "title": "Testing",
-    "coverUrl": "https://res.cloudinary.com/n1rewvpg/image/upload/v1794798448/jzh8x2zqhhpnseva3zvf.png",
-    "genre": "Adventure, Romance, Sci-Fi",
-    "status": "Ongoing",
-    "synopsis": "testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting",
-    "createdAt": "2026-11-16T03:06:58.625Z",
-    "chapters": [
-      {
-        "chapter_number": 1,
-        "title": "testing",
-        "file": "content/chapters/testing-ch-1.md"
       }
     ]
   }
