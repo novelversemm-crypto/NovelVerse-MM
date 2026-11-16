@@ -5,26 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>NovelVerse Myanmar | Read Your Next Story</title>
+    <meta name="theme-color" content="#0d0d12">
+    <meta name="description" content="NovelVerse MM - မြန်မာဘာသာဖြင့် Novel များကို အခမဲ့နှင့် Premium ဖတ်ရှုနိုင်သော Platform">
 
-    <meta
-        name="description"
-        content="NovelVerse Myanmar - Discover and read your favorite translated novels."
-    >
+    <title>NovelVerse MM | Read Your Favorite Novels</title>
 
-    <meta name="theme-color" content="#12111a">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    >
-
-    <!-- Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -35,130 +25,82 @@
 
 <body>
 
-    <!-- =========================================
+    <!-- ==========================================
          HEADER
-    ========================================== -->
+    =========================================== -->
     <header class="top-header">
 
-        <div class="logo-area">
+        <!-- Logo -->
+        <a href="index.html" class="logo-area">
+            <img
+                src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                alt="NovelVerse Logo"
+                class="logo-img"
+            >
+            <span class="logo-title">NovelVerse</span>
+        </a>
 
-            <a href="index.html" aria-label="NovelVerse Home">
-                <img
-                    src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
-                    alt="NovelVerse Logo"
-                    class="logo-img"
-                >
-            </a>
-
-            <a href="index.html" class="logo-title">
-                NovelVerse
-            </a>
-
-        </div>
-
+        <!-- Header Actions -->
         <div class="header-actions">
 
             <!-- Search -->
-            <a
-                href="search.html"
-                class="icon-btn"
-                aria-label="Search novels"
-                title="Search"
-            >
+            <a href="search.html"
+               class="icon-btn"
+               aria-label="Search">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </a>
 
-            <!-- User Account -->
-            <a
-                href="topup.html"
-                class="account-btn"
-                id="account-header-btn"
-                aria-label="My Account"
-            >
-                <i class="fa-regular fa-user"></i>
-                <span>Login</span>
-            </a>
+            <!-- Coin Wallet -->
+            <a href="topup.html"
+               class="header-coin"
+               id="header-coin-link"
+               aria-label="My Coin Wallet">
 
-            <!-- Coin Balance -->
-            <a
-                href="topup.html"
-                class="coin-balance-btn"
-                id="header-coin-balance"
-                style="display: none;"
-                aria-label="My Coin Balance"
-            >
                 <i class="fa-solid fa-coins"></i>
-                <span id="header-coin-amount">0</span>
+
+                <span id="header-coin-balance">0</span>
             </a>
 
-            <!-- More Menu -->
-            <details class="header-more-menu">
+            <!-- User Account -->
+            <a href="topup.html"
+               class="icon-btn account-btn"
+               id="header-account-link"
+               aria-label="My Account">
 
-                <summary
-                    class="icon-btn"
-                    aria-label="More options"
-                    title="More"
-                >
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </summary>
-
-                <div class="header-menu-dropdown">
-
-                    <a href="topup.html">
-                        <i class="fa-solid fa-wallet"></i>
-                        <span>My Account</span>
-                    </a>
-
-                    <a href="#library-section">
-                        <i class="fa-solid fa-bookmark"></i>
-                        <span>My Library</span>
-                    </a>
-
-                    <div class="menu-divider"></div>
-
-                    <!-- Discreet Admin Entry -->
-                    <a href="admin.html" class="admin-menu-link">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>Admin Panel</span>
-                    </a>
-
-                </div>
-
-            </details>
+                <i class="fa-regular fa-circle-user"
+                   id="header-account-icon"></i>
+            </a>
 
         </div>
-
     </header>
 
 
-    <!-- =========================================
+    <!-- ==========================================
          TOP ADVERTISEMENT
-    ========================================== -->
+    =========================================== -->
     <section class="ad-section top-ad-slot">
 
         <div class="ad-label"></div>
 
         <div class="ad-container" id="ad-slot-header">
-
             <div class="ad-placeholder">
                 <i class="fa-solid fa-rectangle-ad"></i>
                 Loading Ad...
             </div>
-
         </div>
 
     </section>
 
 
-    <!-- =========================================
+    <!-- ==========================================
          MAIN CONTENT
-    ========================================== -->
+    =========================================== -->
     <main class="main-container">
 
 
-        <!-- =====================================
-             FEATURED NOVEL
-        ====================================== -->
+        <!-- ======================================
+             FEATURED NOVEL / HERO SECTION
+        ======================================= -->
         <section class="hero-section">
 
             <div class="hero-card" id="featured-hero">
@@ -174,11 +116,6 @@
 
                 <div class="hero-content">
 
-                    <span class="hero-label">
-                        <i class="fa-solid fa-crown"></i>
-                        FEATURED NOVEL
-                    </span>
-
                     <h2 class="hero-title" id="hero-title">
                         Shadow Hunter
                     </h2>
@@ -187,27 +124,26 @@
                         The world is full of shadows, but I am the hunter who stalks the dark...
                     </p>
 
-                    <a
-                        href="novel.html"
-                        class="btn-primary"
-                        id="hero-link"
-                    >
+                    <a href="novel.html"
+                       class="btn-primary"
+                       id="hero-link">
+
                         <i class="fa-solid fa-book-open"></i>
-                        ဖတ်ရှုရန်
+                        ဖတ်ရန်
+
                     </a>
 
                 </div>
-
             </div>
 
         </section>
 
 
-        <!-- =====================================
+        <!-- ======================================
              CONTINUE READING
-        ====================================== -->
+        ======================================= -->
         <section
-            class="section-block continue-reading-block"
+            class="section-block"
             id="continue-reading-section"
             style="display: none;"
         >
@@ -221,105 +157,33 @@
 
             </div>
 
-            <div
-                class="continue-card"
-                id="continue-card"
-            >
+            <div class="continue-card" id="continue-card">
                 <!-- Dynamically loaded via app.js -->
             </div>
 
         </section>
 
 
-        <!-- =====================================
-             MY LIBRARY
-        ====================================== -->
-        <section
-            class="section-block library-section"
-            id="library-section"
-            hidden
-        >
-
-            <div class="section-header">
-
-                <div class="library-heading">
-
-                    <h3 class="section-title">
-                        <i class="fa-solid fa-bookmark"></i>
-                        My Library
-                    </h3>
-
-                    <p class="section-subtitle">
-                        ကိုယ်ကြိုက်နှစ်သက်တဲ့ Novel များ
-                    </p>
-
-                </div>
-
-                <a href="search.html" class="view-all">
-                    Novel ရှာရန်
-                    <i class="fa-solid fa-chevron-right"></i>
-                </a>
-
-            </div>
-
-            <!-- Saved Novels will be rendered here -->
-            <div
-                class="novel-grid library-grid"
-                id="library-grid"
-            >
-                <!-- Dynamically loaded saved novels -->
-            </div>
-
-            <!-- Empty Library Message -->
-            <div
-                class="library-empty-state"
-                id="library-empty-state"
-                hidden
-            >
-
-                <div class="library-empty-icon">
-                    <i class="fa-regular fa-bookmark"></i>
-                </div>
-
-                <h4>Library ထဲမှာ Novel မရှိသေးပါ</h4>
-
-                <p>
-                    ကြိုက်နှစ်သက်တဲ့ Novel တွေကို Bookmark လုပ်ပြီး
-                    ဒီနေရာမှာ ပြန်လည်ဖတ်ရှုနိုင်ပါတယ်။
-                </p>
-
-                <a href="search.html" class="btn-primary">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    Novel ရှာဖွေရန်
-                </a>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================
+        <!-- ======================================
              MIDDLE ADVERTISEMENT
-        ====================================== -->
-        <section class="ad-section middle-ad-slot">
+        ======================================= -->
+        <section class="ad-section">
 
             <div class="ad-label"></div>
 
             <div class="ad-container" id="ad-slot-middle">
-
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Loading Ad...
                 </div>
-
             </div>
 
         </section>
 
 
-        <!-- =====================================
-             LATEST CHAPTERS
-        ====================================== -->
+        <!-- ======================================
+             LATEST CHAPTER UPDATES
+        ======================================= -->
         <section class="section-block">
 
             <div class="section-header">
@@ -330,16 +194,13 @@
                 </h3>
 
                 <a href="search.html" class="view-all">
-                    အားလုံးကြည့်ရန်
+                    အားလုံး
                     <i class="fa-solid fa-chevron-right"></i>
                 </a>
 
             </div>
 
-            <div
-                class="novel-grid"
-                id="latest-updates-grid"
-            >
+            <div class="novel-grid" id="latest-updates-grid">
 
                 <div class="novel-card-skeleton"></div>
                 <div class="novel-card-skeleton"></div>
@@ -351,28 +212,26 @@
         </section>
 
 
-        <!-- =====================================
+        <!-- ======================================
              BOTTOM ADVERTISEMENT
-        ====================================== -->
+        ======================================= -->
         <section class="ad-section bottom-ad-slot">
 
             <div class="ad-label"></div>
 
             <div class="ad-container" id="ad-slot-bottom">
-
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Loading Ad...
                 </div>
-
             </div>
 
         </section>
 
 
-        <!-- =====================================
+        <!-- ======================================
              POPULAR NOVELS
-        ====================================== -->
+        ======================================= -->
         <section class="section-block">
 
             <div class="section-header">
@@ -383,39 +242,31 @@
                 </h3>
 
                 <a href="search.html" class="view-all">
-                    အားလုံးကြည့်ရန်
+                    အားလုံး
                     <i class="fa-solid fa-chevron-right"></i>
                 </a>
 
             </div>
 
-            <div
-                class="popular-list"
-                id="popular-list"
-            >
+            <div class="popular-list" id="popular-list">
                 <!-- Dynamically loaded via app.js -->
             </div>
 
         </section>
 
 
-        <!-- =====================================
-             SECOND BOTTOM ADVERTISEMENT
-        ====================================== -->
+        <!-- ======================================
+             ADDITIONAL ADVERTISEMENT
+        ======================================= -->
         <section class="ad-section bottom-ad-slot">
 
             <div class="ad-label"></div>
 
-            <div
-                class="ad-container"
-                id="ad-slot-bottom-secondary"
-            >
-
+            <div class="ad-container" id="ad-slot-popular-bottom">
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Loading Ad...
                 </div>
-
             </div>
 
         </section>
@@ -423,48 +274,69 @@
     </main>
 
 
-    <!-- =========================================
+    <!-- ==========================================
          BOTTOM NAVIGATION
-    ========================================== -->
-    <nav class="bottom-nav" aria-label="Main navigation">
+    =========================================== -->
+    <nav class="bottom-nav" aria-label="Main Navigation">
 
-        <a
-            href="index.html"
-            class="nav-item active"
-            aria-current="page"
-        >
+        <!-- Home -->
+        <a href="index.html"
+           class="nav-item active"
+           aria-label="Home">
+
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
+
         </a>
 
-        <a
-            href="search.html"
-            class="nav-item"
-        >
+
+        <!-- Search -->
+        <a href="search.html"
+           class="nav-item"
+           aria-label="Search">
+
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Search</span>
+
         </a>
 
-        <a
-            href="topup.html"
-            class="nav-item account-nav-item"
-        >
-            <i class="fa-solid fa-wallet"></i>
+
+        <!-- My Library -->
+        <a href="library.html"
+           class="nav-item"
+           aria-label="My Library">
+
+            <i class="fa-solid fa-bookmark"></i>
+            <span>Library</span>
+
+        </a>
+
+
+        <!-- Account -->
+        <a href="topup.html"
+           class="nav-item"
+           id="bottom-account-link"
+           aria-label="My Account">
+
+            <i class="fa-solid fa-user"></i>
             <span>Account</span>
+
         </a>
 
     </nav>
 
 
-    <!-- =========================================
+    <!-- ==========================================
          JAVASCRIPT
-    ========================================== -->
+    =========================================== -->
 
-    <!-- Existing Scripts -->
+    <!-- Advertisement System -->
     <script src="ads.js"></script>
+
+    <!-- Main Website System -->
     <script src="app.js"></script>
 
-    <!-- Paid System Script -->
+    <!-- Account & Coin System -->
     <script src="coin.js"></script>
 
 </body>
