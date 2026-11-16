@@ -79,9 +79,7 @@
                 <span>Login</span>
             </a>
 
-            <!-- Coin Balance
-                 coin.js will control this area later.
-            -->
+            <!-- Coin Balance -->
             <a
                 href="topup.html"
                 class="coin-balance-btn"
@@ -92,6 +90,41 @@
                 <i class="fa-solid fa-coins"></i>
                 <span id="header-coin-amount">0</span>
             </a>
+
+            <!-- More Menu -->
+            <details class="header-more-menu">
+
+                <summary
+                    class="icon-btn"
+                    aria-label="More options"
+                    title="More"
+                >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </summary>
+
+                <div class="header-menu-dropdown">
+
+                    <a href="topup.html">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>My Account</span>
+                    </a>
+
+                    <a href="#library-section">
+                        <i class="fa-solid fa-bookmark"></i>
+                        <span>My Library</span>
+                    </a>
+
+                    <div class="menu-divider"></div>
+
+                    <!-- Discreet Admin Entry -->
+                    <a href="admin.html" class="admin-menu-link">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Admin Panel</span>
+                    </a>
+
+                </div>
+
+            </details>
 
         </div>
 
@@ -193,6 +226,73 @@
                 id="continue-card"
             >
                 <!-- Dynamically loaded via app.js -->
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MY LIBRARY
+        ====================================== -->
+        <section
+            class="section-block library-section"
+            id="library-section"
+            hidden
+        >
+
+            <div class="section-header">
+
+                <div class="library-heading">
+
+                    <h3 class="section-title">
+                        <i class="fa-solid fa-bookmark"></i>
+                        My Library
+                    </h3>
+
+                    <p class="section-subtitle">
+                        ကိုယ်ကြိုက်နှစ်သက်တဲ့ Novel များ
+                    </p>
+
+                </div>
+
+                <a href="search.html" class="view-all">
+                    Novel ရှာရန်
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+
+            </div>
+
+            <!-- Saved Novels will be rendered here -->
+            <div
+                class="novel-grid library-grid"
+                id="library-grid"
+            >
+                <!-- Dynamically loaded saved novels -->
+            </div>
+
+            <!-- Empty Library Message -->
+            <div
+                class="library-empty-state"
+                id="library-empty-state"
+                hidden
+            >
+
+                <div class="library-empty-icon">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+
+                <h4>Library ထဲမှာ Novel မရှိသေးပါ</h4>
+
+                <p>
+                    ကြိုက်နှစ်သက်တဲ့ Novel တွေကို Bookmark လုပ်ပြီး
+                    ဒီနေရာမှာ ပြန်လည်ဖတ်ရှုနိုင်ပါတယ်။
+                </p>
+
+                <a href="search.html" class="btn-primary">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Novel ရှာဖွေရန်
+                </a>
+
             </div>
 
         </section>
@@ -364,9 +464,7 @@
     <script src="ads.js"></script>
     <script src="app.js"></script>
 
-    <!-- Paid System Script
-         Add this file when coin.js is ready.
-    -->
+    <!-- Paid System Script -->
     <script src="coin.js"></script>
 
 </body>
