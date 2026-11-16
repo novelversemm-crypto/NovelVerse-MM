@@ -11,6 +11,7 @@
         name="description"
         content="NovelVerse Myanmar - Discover and read your favorite translated novels."
     >
+
     <meta name="theme-color" content="#12111a">
 
     <!-- Icons -->
@@ -21,7 +22,7 @@
 
     <!-- Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
 
@@ -40,6 +41,7 @@
     <header class="top-header">
 
         <div class="logo-area">
+
             <a href="index.html" aria-label="NovelVerse Home">
                 <img
                     src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
@@ -51,10 +53,12 @@
             <a href="index.html" class="logo-title">
                 NovelVerse
             </a>
+
         </div>
 
         <div class="header-actions">
 
+            <!-- Search -->
             <a
                 href="search.html"
                 class="icon-btn"
@@ -62,6 +66,31 @@
                 title="Search"
             >
                 <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+
+            <!-- User Account -->
+            <a
+                href="topup.html"
+                class="account-btn"
+                id="account-header-btn"
+                aria-label="My Account"
+            >
+                <i class="fa-regular fa-user"></i>
+                <span>Login</span>
+            </a>
+
+            <!-- Coin Balance
+                 coin.js will control this area later.
+            -->
+            <a
+                href="topup.html"
+                class="coin-balance-btn"
+                id="header-coin-balance"
+                style="display: none;"
+                aria-label="My Coin Balance"
+            >
+                <i class="fa-solid fa-coins"></i>
+                <span id="header-coin-amount">0</span>
             </a>
 
         </div>
@@ -113,6 +142,7 @@
                 <div class="hero-content">
 
                     <span class="hero-label">
+                        <i class="fa-solid fa-crown"></i>
                         FEATURED NOVEL
                     </span>
 
@@ -144,7 +174,7 @@
              CONTINUE READING
         ====================================== -->
         <section
-            class="section-block"
+            class="section-block continue-reading-block"
             id="continue-reading-section"
             style="display: none;"
         >
@@ -316,11 +346,11 @@
         </a>
 
         <a
-            href="admin.html"
-            class="nav-item"
+            href="topup.html"
+            class="nav-item account-nav-item"
         >
-            <i class="fa-solid fa-user-gear"></i>
-            <span>Admin</span>
+            <i class="fa-solid fa-wallet"></i>
+            <span>Account</span>
         </a>
 
     </nav>
@@ -329,8 +359,15 @@
     <!-- =========================================
          JAVASCRIPT
     ========================================== -->
+
+    <!-- Existing Scripts -->
     <script src="ads.js"></script>
     <script src="app.js"></script>
+
+    <!-- Paid System Script
+         Add this file when coin.js is ready.
+    -->
+    <script src="coin.js"></script>
 
 </body>
 </html>
