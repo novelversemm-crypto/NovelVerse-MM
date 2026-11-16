@@ -1,13 +1,14 @@
 
 /* =========================================================
-   NOVELVERSE — PREMIUM DARK UI SYSTEM
-   Shared stylesheet for:
+   NOVELVERSE — COMPLETE PREMIUM UI SYSTEM
+   Shared CSS for:
    Home / Search / Novel Details / Reader / Admin
+   Version: 2.0
    ========================================================= */
 
 
 /* =========================================================
-   1. ROOT VARIABLES & RESET
+   01. ROOT VARIABLES
    ========================================================= */
 
 :root {
@@ -53,22 +54,31 @@
     --transition: 0.25s ease;
 }
 
+
+/* =========================================================
+   02. RESET & GLOBAL
+   ========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
     -webkit-tap-highlight-color: transparent;
 }
 
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 85px;
+
+    overflow-x: hidden;
 }
 
 body {
     min-height: 100vh;
     width: 100%;
     max-width: 100%;
+
     position: relative;
 
     background: var(--bg-color);
@@ -82,7 +92,7 @@ body {
 
     overflow-x: hidden;
 
-   user-select: none;
+    user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -99,12 +109,15 @@ button {
     color: inherit;
 }
 
-img {
+img,
+video,
+iframe {
     max-width: 100%;
 }
 
 a {
     color: inherit;
+    text-decoration: none;
 }
 
 ::selection {
@@ -119,7 +132,7 @@ a {
 
 
 /* =========================================================
-   2. SCROLLBAR
+   03. SCROLLBAR
    ========================================================= */
 
 ::-webkit-scrollbar {
@@ -142,7 +155,7 @@ a {
 
 
 /* =========================================================
-   3. HEADER & TOP BAR
+   04. HEADER & TOP BAR
    ========================================================= */
 
 .top-header {
@@ -155,11 +168,12 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
 
+    gap: 12px;
     padding: 12px 22px;
 
-    background: rgba(20, 19, 33, 0.94);
+    background: rgba(20, 19, 33, 0.96);
+
     border-bottom: 1px solid var(--border-color);
 
     backdrop-filter: blur(18px);
@@ -177,8 +191,10 @@ a {
 .logo-img {
     width: 36px;
     height: 36px;
+
     object-fit: contain;
     border-radius: 9px;
+
     flex-shrink: 0;
 }
 
@@ -216,6 +232,7 @@ a {
 
     color: var(--text-main);
     font-size: 16px;
+
     text-decoration: none;
 
     transition: var(--transition);
@@ -233,13 +250,15 @@ a {
 
 
 /* =========================================================
-   4. SEARCH HEADER
+   05. SEARCH HEADER
    ========================================================= */
 
 .search-header {
     padding: 13px 20px;
+
     flex-direction: column;
     align-items: stretch;
+
     gap: 12px;
 }
 
@@ -249,7 +268,9 @@ a {
 
 .search-box-wrap {
     position: relative;
+
     width: 100%;
+
     display: flex;
     align-items: center;
 }
@@ -272,6 +293,7 @@ a {
     padding: 0 16px 0 43px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: 13px;
 
@@ -279,6 +301,7 @@ a {
     font-size: 13px;
 
     outline: none;
+
     transition: var(--transition);
 }
 
@@ -288,13 +311,15 @@ a {
 
 #search-input:focus {
     border-color: var(--primary-purple);
+
     background: var(--card-hover);
+
     box-shadow: 0 0 0 3px var(--purple-soft);
 }
 
 
 /* =========================================================
-   5. MAIN CONTAINER
+   06. MAIN CONTAINER
    ========================================================= */
 
 .main-container {
@@ -306,21 +331,24 @@ a {
 
     display: flex;
     flex-direction: column;
+
     gap: 23px;
 }
 
 
 /* =========================================================
-   6. ADVERTISEMENT
+   07. ADVERTISEMENT
    ========================================================= */
 
 .ad-section {
     width: 100%;
+
     padding: 9px;
 
     text-align: center;
 
     background: var(--ad-bg);
+
     border: 1px dashed var(--border-color);
     border-radius: var(--radius-md);
 
@@ -331,6 +359,7 @@ a {
     margin-bottom: 5px;
 
     color: var(--text-dim);
+
     font-size: 9px;
     font-weight: 600;
 
@@ -358,6 +387,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 8px;
 
     color: var(--text-dim);
@@ -366,7 +396,7 @@ a {
 
 
 /* =========================================================
-   7. HERO SECTION
+   08. HERO SECTION
    ========================================================= */
 
 .hero-section {
@@ -385,10 +415,12 @@ a {
     padding: 24px;
 
     overflow: hidden;
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
 
     background: var(--card-bg);
+
     box-shadow: var(--shadow-md);
 }
 
@@ -400,6 +432,7 @@ a {
     height: 100%;
 
     object-fit: cover;
+
     z-index: 1;
 
     transition: transform 0.8s ease;
@@ -412,6 +445,7 @@ a {
 .hero-overlay {
     position: absolute;
     inset: 0;
+
     z-index: 2;
 
     background: linear-gradient(
@@ -426,16 +460,20 @@ a {
     position: absolute;
     top: 17px;
     left: 17px;
+
     z-index: 3;
 
     padding: 6px 13px;
 
     background: var(--primary-purple);
+
     border-radius: 20px;
 
     color: white;
+
     font-size: 10px;
     font-weight: 700;
+
     text-transform: uppercase;
 }
 
@@ -450,22 +488,27 @@ a {
     margin-bottom: 8px;
 
     color: white;
+
     font-size: clamp(20px, 3vw, 31px);
     font-weight: 800;
+
     line-height: 1.35;
 }
 
 .hero-desc {
     max-width: 500px;
+
     margin-bottom: 16px;
 
     color: #d0cbdc;
+
     font-size: 12px;
     line-height: 1.8;
 
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
+
     overflow: hidden;
 }
 
@@ -473,6 +516,7 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 9px;
 
     padding: 10px 21px;
@@ -487,16 +531,20 @@ a {
     border-radius: 11px;
 
     color: white;
+
     font-size: 12px;
     font-weight: 700;
+
     text-decoration: none;
 
     box-shadow: var(--shadow-purple);
+
     transition: var(--transition);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
+
     box-shadow: 0 10px 28px rgba(149, 101, 245, 0.3);
 }
 
@@ -506,7 +554,7 @@ a {
 
 
 /* =========================================================
-   8. SECTION HEADINGS
+   09. SECTION HEADINGS
    ========================================================= */
 
 .section-block {
@@ -514,6 +562,7 @@ a {
 
     display: flex;
     flex-direction: column;
+
     gap: 15px;
 }
 
@@ -521,15 +570,18 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 12px;
 }
 
 .section-title {
     display: flex;
     align-items: center;
+
     gap: 10px;
 
     color: var(--text-main);
+
     font-size: 16px;
     font-weight: 700;
 }
@@ -541,9 +593,12 @@ a {
 
 .view-all {
     color: var(--accent-purple);
+
     font-size: 11px;
     font-weight: 600;
+
     text-decoration: none;
+
     transition: var(--transition);
 }
 
@@ -553,36 +608,49 @@ a {
 
 
 /* =========================================================
-   9. NOVEL GRID
+   10. NOVEL GRID
    ========================================================= */
 
-.novel-grid {
+.novel-grid,
+#search-results-grid {
     width: 100%;
 
     display: grid;
-    grid-template-columns: repeat(
-        auto-fill,
-        minmax(145px, 1fr)
-    );
+
+    grid-template-columns: repeat(5, minmax(0, 1fr));
 
     gap: 18px;
+
+    align-items: stretch;
+
     padding: 4px 0;
 }
 
-.novel-grid > * {
+.novel-grid > *,
+#search-results-grid > * {
     min-width: 0;
+    max-width: 100%;
 }
+
+
+/* =========================================================
+   11. NOVEL CARD
+   ========================================================= */
 
 .novel-card {
     position: relative;
 
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
     display: flex;
     flex-direction: column;
 
-    min-width: 0;
     overflow: hidden;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
 
@@ -615,6 +683,7 @@ a {
     transform: translateY(-5px);
 
     border-color: var(--border-purple);
+
     box-shadow: var(--shadow-purple);
 }
 
@@ -622,37 +691,75 @@ a {
     transform: scale(0.98);
 }
 
+
+/* =========================================================
+   12. NOVEL COVER IMAGE
+   ========================================================= */
+
 .novel-cover-wrap,
 .card-cover-wrapper {
     position: relative;
 
+    display: block;
+
     width: 100%;
     height: auto;
+
     aspect-ratio: 2 / 3;
 
+    flex-shrink: 0;
+
     overflow: hidden;
+
     background: #252237;
 }
 
-.novel-cover,
-.card-cover-wrapper img {
+.novel-cover-wrap img,
+.card-cover-wrapper img,
+.novel-cover {
+    display: block;
+
     width: 100%;
     height: 100%;
 
-    display: block;
-
     object-fit: cover;
+    object-position: center;
+
     transition: transform 0.5s ease;
 }
 
-.novel-card:hover .novel-cover,
-.novel-card:hover .card-cover-wrapper img {
-    transform: scale(1.06);
+/* Direct image inside card */
+
+.novel-card > img:first-child {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 2 / 3;
+
+    object-fit: cover;
+    object-position: center;
+
+    flex-shrink: 0;
+
+    background: #252237;
 }
 
-.card-cover-wrapper::after,
-.novel-cover-wrap::after {
-    content: '';
+/* Cover hover */
+
+.novel-card:hover .novel-cover,
+.novel-card:hover .novel-cover-wrap img,
+.novel-card:hover .card-cover-wrapper img,
+.novel-card:hover > img:first-child {
+    transform: scale(1.045);
+}
+
+/* Cover gradient */
+
+.novel-cover-wrap::after,
+.card-cover-wrapper::after {
+    content: "";
 
     position: absolute;
     inset: 0;
@@ -666,53 +773,94 @@ a {
     pointer-events: none;
 }
 
+
+/* =========================================================
+   13. NOVEL CARD BADGES
+   ========================================================= */
+
 .chapter-badge {
     position: absolute;
+
     right: 8px;
     bottom: 8px;
-    z-index: 2;
+
+    z-index: 3;
+
+    max-width: calc(100% - 16px);
 
     padding: 4px 8px;
 
     background: rgba(0, 0, 0, 0.78);
+
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 7px;
 
     color: #d6c4ff;
+
     font-size: 9px;
     font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     backdrop-filter: blur(6px);
 }
 
+
+/* =========================================================
+   14. NOVEL INFORMATION
+   ========================================================= */
+
 .novel-info {
+    width: 100%;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+
     padding: 11px;
 }
 
 .novel-name {
+    width: 100%;
+
     margin-bottom: 5px;
 
     color: var(--text-main);
+
     font-size: 12px;
     font-weight: 700;
+
     line-height: 1.5;
 
     display: -webkit-box;
+
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 
     overflow: hidden;
+
+    overflow-wrap: anywhere;
 }
 
 .novel-meta {
+    width: 100%;
+
     color: var(--text-muted);
+
     font-size: 10px;
     line-height: 1.6;
+
+    overflow: hidden;
+    overflow-wrap: anywhere;
 }
 
 
 /* =========================================================
-   10. CONTINUE READING
+   15. CONTINUE READING
    ========================================================= */
 
 #continue-reading-section {
@@ -725,6 +873,7 @@ a {
 
     display: flex;
     align-items: center;
+
     gap: 15px;
 
     padding: 14px;
@@ -743,12 +892,13 @@ a {
 
 .continue-card:hover {
     background: #272039;
+
     transform: translateY(-2px);
 }
 
 
 /* =========================================================
-   11. SEARCH & FILTER
+   16. SEARCH FILTER
    ========================================================= */
 
 .filter-section {
@@ -756,17 +906,20 @@ a {
 
     display: flex;
     flex-direction: column;
+
     gap: 12px;
 
     padding: 19px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
 }
 
 .filter-title {
     color: var(--text-muted);
+
     font-size: 12px;
     font-weight: 700;
 }
@@ -774,6 +927,7 @@ a {
 .status-tags {
     display: flex;
     flex-wrap: wrap;
+
     gap: 9px;
 }
 
@@ -783,14 +937,17 @@ a {
     padding: 7px 17px;
 
     background: var(--surface-color);
+
     border: 1px solid var(--border-color);
     border-radius: 10px;
 
     color: var(--text-muted);
+
     font-size: 11px;
     font-weight: 600;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -807,6 +964,7 @@ a {
     );
 
     border-color: transparent;
+
     color: white;
 
     box-shadow: var(--shadow-purple);
@@ -814,7 +972,9 @@ a {
 
 .genre-grid {
     display: grid;
+
     grid-template-columns: repeat(4, minmax(0, 1fr));
+
     gap: 9px;
 }
 
@@ -824,36 +984,45 @@ a {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
     gap: 8px;
 
     padding: 8px 11px;
 
     background: var(--surface-color);
+
     border: 1px solid var(--border-color);
     border-radius: 10px;
 
     color: var(--text-muted);
+
     font-size: 10px;
     font-weight: 500;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .genre-chip i {
     flex-shrink: 0;
+
     color: var(--primary-purple);
 }
 
 .genre-chip:hover {
     background: var(--purple-soft);
+
     border-color: var(--border-purple);
+
     color: white;
 }
 
 .genre-chip.active {
     background: rgba(149, 101, 245, 0.16);
+
     border-color: var(--primary-purple);
+
     color: var(--accent-purple);
 }
 
@@ -863,7 +1032,25 @@ a {
 
 
 /* =========================================================
-   12. NOVEL DETAILS
+   17. SEARCH RESULTS
+   ========================================================= */
+
+#result-count {
+    color: var(--text-muted);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+#search-results-grid {
+    margin-top: 14px;
+}
+
+
+/* =========================================================
+   18. NOVEL DETAILS
    ========================================================= */
 
 .novel-detail-header {
@@ -872,9 +1059,11 @@ a {
 
 .novel-detail-card {
     width: 100%;
+    min-width: 0;
 
     display: flex;
     align-items: center;
+
     gap: 22px;
 
     padding: 20px;
@@ -892,12 +1081,17 @@ a {
 }
 
 .detail-cover {
+    display: block;
+
     width: 145px;
     height: 205px;
 
     flex-shrink: 0;
 
     object-fit: cover;
+    object-position: center;
+
+    background: #252237;
 
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
@@ -906,19 +1100,24 @@ a {
 }
 
 .detail-info {
+    flex: 1;
     min-width: 0;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     gap: 11px;
 }
 
 .detail-title {
     color: var(--text-main);
+
     font-size: 21px;
     font-weight: 800;
+
     line-height: 1.45;
+
     overflow-wrap: anywhere;
 }
 
@@ -926,9 +1125,11 @@ a {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+
     gap: 7px;
 
     color: var(--text-muted);
+
     font-size: 11px;
 }
 
@@ -942,12 +1143,15 @@ a {
     padding: 5px 11px;
 
     background: var(--purple-soft);
+
     border: 1px solid var(--border-purple);
     border-radius: 20px;
 
     color: var(--accent-purple);
+
     font-size: 10px;
     font-weight: 700;
+
     text-transform: uppercase;
 }
 
@@ -957,26 +1161,30 @@ a {
     padding: 19px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
 
     color: #c3bed0;
+
     font-size: 13px;
     line-height: 2;
 
     white-space: pre-line;
+
     overflow-wrap: anywhere;
     word-break: break-word;
 }
 
 
 /* =========================================================
-   13. CHAPTER LIST
+   19. CHAPTER LIST
    ========================================================= */
 
 .chapter-list {
     display: flex;
     flex-direction: column;
+
     gap: 9px;
 }
 
@@ -987,15 +1195,18 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 12px;
 
     padding: 12px 16px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
 
     color: var(--text-main);
+
     text-decoration: none;
 
     transition: var(--transition);
@@ -1003,7 +1214,9 @@ a {
 
 .chapter-item:hover {
     background: var(--card-hover);
+
     border-color: var(--border-purple);
+
     transform: translateX(3px);
 }
 
@@ -1015,6 +1228,7 @@ a {
     min-width: 0;
 
     color: var(--text-main);
+
     font-size: 12px;
     font-weight: 600;
 
@@ -1025,6 +1239,7 @@ a {
     flex-shrink: 0;
 
     color: var(--text-dim);
+
     font-size: 10px;
 }
 
@@ -1032,19 +1247,23 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 7px;
 
     padding: 8px 12px;
 
     background: var(--purple-soft);
+
     border: 1px solid var(--border-purple);
     border-radius: 9px;
 
     color: var(--accent-purple);
+
     font-size: 11px;
     font-weight: 600;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -1059,13 +1278,14 @@ a {
     padding: 30px 15px;
 
     color: var(--text-muted);
+
     font-size: 12px;
     text-align: center;
 }
 
 
 /* =========================================================
-   14. PAGINATION
+   20. PAGINATION
    ========================================================= */
 
 #pagination-container,
@@ -1074,6 +1294,7 @@ a {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+
     gap: 8px;
 
     margin-top: 20px;
@@ -1093,14 +1314,18 @@ a {
     padding: 0 11px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: 9px;
 
     color: var(--text-muted);
+
     font-size: 11px;
+
     text-decoration: none;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -1115,49 +1340,16 @@ a {
 #pagination-container .active,
 #chapter-pagination-container .active {
     background: var(--primary-purple);
+
     border-color: var(--primary-purple);
+
     color: white;
 }
 
 
 /* =========================================================
-   15. READER HEADER & FONT CONTROLS
+   21. READER HEADER
    ========================================================= */
-
-.font-controls {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    flex-shrink: 0;
-}
-
-.font-btn {
-    min-width: 38px;
-    height: 34px;
-
-    padding: 0 9px;
-
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 9px;
-
-    color: var(--text-main);
-    font-size: 12px;
-    font-weight: 700;
-
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.font-btn:hover {
-    background: var(--purple-soft);
-    border-color: var(--border-purple);
-    color: var(--accent-purple);
-}
-
-.font-btn:active {
-    transform: scale(0.95);
-}
 
 #reader-header-title {
     flex: 1;
@@ -1168,163 +1360,361 @@ a {
     text-overflow: ellipsis;
 
     text-align: center;
+
+    color: var(--text-main);
+
     font-size: 13px;
     font-weight: 600;
 }
 
+.font-controls {
+    display: flex;
+    align-items: center;
 
-/* =========================================================
-   16. READER CHAPTER TITLE
-   ========================================================= */
+    gap: 7px;
 
-.reader-chapter-title {
-    width: 100%;
+    flex-shrink: 0;
+}
 
-    padding: 14px 8px;
+.font-btn {
+    min-width: 38px;
+    height: 36px;
+
+    padding: 0 9px;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+
+    color: var(--text-main);
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.font-btn:hover {
+    background: var(--purple-soft);
+
+    border-color: var(--border-purple);
 
     color: var(--accent-purple);
-    font-size: 19px;
-    font-weight: 800;
-    line-height: 1.6;
+}
 
-    text-align: center;
-    overflow-wrap: anywhere;
+.font-btn:active {
+    transform: scale(0.95);
 }
 
 
 /* =========================================================
-   17. READER CONTENT
+   22. READER CHAPTER TITLE
    ========================================================= */
 
-.reader-content {
-    --reader-bg: #eee4cf;
-    --reader-text: #29241e;
+.reader-chapter-title,
+#chapter-title {
+    display: block;
 
     width: 100%;
     max-width: 850px;
 
     margin: 0 auto;
 
-    padding: clamp(20px, 4vw, 42px);
+    padding: 17px 10px;
+
+    color: var(--accent-purple);
+
+    font-family: 'Noto Sans Myanmar', sans-serif;
+
+    font-size: clamp(17px, 2.2vw, 22px);
+    font-weight: 800;
+
+    line-height: 1.7;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   23. READER CONTENT — IMPORTANT
+   ========================================================= */
+
+/*
+   Supports both:
+   .reader-content
+   #chapter-content
+
+   Reader background: Soft warm paper
+   Reader text: Dark readable text
+*/
+
+.reader-content,
+#chapter-content {
+    --reader-bg: #f0e7d5;
+    --reader-text: #29251f;
+
+    display: block;
+
+    width: 100%;
+    max-width: 850px;
+
+    min-height: 300px;
+
+    margin: 0 auto;
+
+    padding: clamp(22px, 5vw, 52px);
 
     background: var(--reader-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: var(--radius-lg);
 
     color: var(--reader-text);
 
     font-family: 'Noto Sans Myanmar', sans-serif;
-    font-size: 16px;
+
+    font-size: 17px;
     font-weight: 400;
+
     line-height: 2.15;
 
     text-align: left;
 
-    overflow-wrap: anywhere;
+    white-space: normal;
+
+    overflow-wrap: break-word;
     word-break: normal;
 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.reader-content p {
-    margin-bottom: 20px;
+/* Reader paragraphs */
 
-    color: inherit;
-    font: inherit;
+.reader-content p,
+#chapter-content p {
+    display: block;
+
+    margin-bottom: 22px;
+
+    color: #29251f;
+
+    font-family: 'Noto Sans Myanmar', sans-serif;
+
+    font-size: inherit;
+    font-weight: 400;
+
     line-height: inherit;
 
     text-indent: 1.5em;
+
+    overflow-wrap: break-word;
 }
 
-.reader-content p:last-child {
+.reader-content p:last-child,
+#chapter-content p:last-child {
     margin-bottom: 0;
 }
 
-.reader-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 9px;
-}
-
-.reader-content a {
-    color: #6842bd;
-    text-decoration: underline;
-}
+/* Reader headings */
 
 .reader-content h1,
 .reader-content h2,
 .reader-content h3,
-.reader-content h4 {
-    margin: 22px 0 13px;
+.reader-content h4,
+#chapter-content h1,
+#chapter-content h2,
+#chapter-content h3,
+#chapter-content h4 {
+    display: block;
+
+    margin: 25px 0 15px;
 
     color: #211b2d;
-    line-height: 1.6;
+
+    font-family: 'Noto Sans Myanmar', sans-serif;
+
+    font-weight: 800;
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
 }
 
-.reader-content blockquote {
+/* Reader links */
+
+.reader-content a,
+#chapter-content a {
+    color: #6944b8;
+
+    text-decoration: underline;
+}
+
+/* Reader images */
+
+.reader-content img,
+#chapter-content img {
+    display: block;
+
+    max-width: 100%;
+    height: auto;
+
+    margin: 18px auto;
+
+    border-radius: 9px;
+}
+
+/* Reader blockquote */
+
+.reader-content blockquote,
+#chapter-content blockquote {
     margin: 18px 0;
+
     padding: 12px 17px;
 
     background: rgba(0, 0, 0, 0.05);
+
     border-left: 4px solid #8b62d9;
     border-radius: 5px;
+
+    color: #393044;
 }
 
+/* Reader lists */
+
 .reader-content ul,
-.reader-content ol {
+.reader-content ol,
+#chapter-content ul,
+#chapter-content ol {
     padding-left: 28px;
+
     margin-bottom: 18px;
 }
 
-.reader-content li {
+.reader-content li,
+#chapter-content li {
     margin-bottom: 8px;
+
+    line-height: 2;
+}
+
+/* Reader tables */
+
+.reader-content table,
+#chapter-content table {
+    width: 100%;
+    max-width: 100%;
+
+    margin: 18px 0;
+
+    border-collapse: collapse;
+
+    color: #29251f;
+}
+
+.reader-content th,
+.reader-content td,
+#chapter-content th,
+#chapter-content td {
+    padding: 9px;
+
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+    text-align: left;
 }
 
 
 /* =========================================================
-   18. CHAPTER NAVIGATION
+   24. READER PAGE LAYOUT
+   ========================================================= */
+
+body:has(#chapter-content) .main-container {
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 0 auto;
+
+    padding: 20px 22px;
+
+    gap: 20px;
+}
+
+body:has(#chapter-content) .top-header {
+    gap: 10px;
+}
+
+body:has(#chapter-content) .ad-section {
+    width: 100%;
+    max-width: 850px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+body:has(#chapter-content) .ad-container {
+    min-height: 60px;
+}
+
+
+/* =========================================================
+   25. CHAPTER NAVIGATION
    ========================================================= */
 
 .chapter-nav-bar {
     width: 100%;
+    max-width: 850px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 10px;
 
-    margin-top: 18px;
+    margin: 20px auto 0;
 }
 
 .nav-btn {
     flex: 1;
+
     min-width: 0;
     min-height: 45px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 7px;
 
     padding: 9px 10px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: 11px;
 
     color: var(--text-main);
+
     font-size: 11px;
     font-weight: 600;
+
     text-align: center;
+
     text-decoration: none;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .nav-btn:hover:not([disabled]) {
     background: var(--purple-soft);
+
     border-color: var(--border-purple);
+
     color: var(--accent-purple);
 }
 
@@ -1337,18 +1727,73 @@ a {
     cursor: not-allowed;
 }
 
+/* Actual reader navigation IDs */
+
+#prev-ch-btn,
+#novel-details-btn,
+#next-ch-btn {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 45px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    padding: 9px 10px;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+
+    color: var(--text-main);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+#prev-ch-btn:hover,
+#novel-details-btn:hover,
+#next-ch-btn:hover {
+    background: var(--purple-soft);
+
+    border-color: var(--border-purple);
+
+    color: var(--accent-purple);
+}
+
+#prev-ch-btn:disabled,
+#next-ch-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 
 /* =========================================================
-   19. ADMIN — LOGIN & DASHBOARD
+   26. ADMIN LOGIN
    ========================================================= */
 
 #login-section {
     width: min(100% - 30px, 420px);
 
     margin: 35px auto;
+
     padding: 25px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-xl);
 
@@ -1358,6 +1803,7 @@ a {
 #dashboard-section {
     width: 100%;
     max-width: 1200px;
+
     margin: 0 auto;
 }
 
@@ -1369,13 +1815,16 @@ a {
     padding: 8px 12px;
 
     background: rgba(255, 100, 124, 0.1);
+
     border: 1px solid rgba(255, 100, 124, 0.2);
     border-radius: 9px;
 
     color: var(--danger);
+
     font-size: 13px;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -1385,43 +1834,51 @@ a {
 
 
 /* =========================================================
-   20. ADMIN TABS
+   27. ADMIN TABS
    ========================================================= */
 
 .admin-tabs {
     width: 100%;
 
     display: flex;
+
     gap: 9px;
 
     margin-bottom: 20px;
     padding-bottom: 5px;
 
     overflow-x: auto;
+
     scrollbar-width: thin;
 }
 
 .tab-btn {
     min-height: 42px;
+
     flex: 1 0 auto;
 
     display: flex;
     align-items: center;
     justify-content: center;
+
     gap: 8px;
 
     padding: 10px 15px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: 11px;
 
     color: var(--text-muted);
+
     font-size: 11px;
     font-weight: 600;
 
     white-space: nowrap;
+
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -1438,6 +1895,7 @@ a {
     );
 
     border-color: transparent;
+
     color: white;
 
     box-shadow: var(--shadow-purple);
@@ -1445,7 +1903,7 @@ a {
 
 
 /* =========================================================
-   21. ADMIN CARDS
+   28. ADMIN CARDS
    ========================================================= */
 
 .admin-card {
@@ -1453,9 +1911,11 @@ a {
     max-width: 100%;
 
     margin-bottom: 20px;
+
     padding: 21px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
 
@@ -1465,11 +1925,13 @@ a {
 .admin-title {
     display: flex;
     align-items: center;
+
     gap: 10px;
 
     margin-bottom: 19px;
 
     color: var(--text-main);
+
     font-size: 15px;
     font-weight: 700;
 }
@@ -1480,12 +1942,13 @@ a {
 
 
 /* =========================================================
-   22. FORMS & INPUTS
+   29. FORMS & INPUTS
    ========================================================= */
 
 .form-group {
     display: flex;
     flex-direction: column;
+
     gap: 7px;
 
     margin-bottom: 16px;
@@ -1493,6 +1956,7 @@ a {
 
 .form-group label {
     color: var(--text-muted);
+
     font-size: 11px;
     font-weight: 600;
 }
@@ -1507,13 +1971,16 @@ a {
     padding: 12px 14px;
 
     background: var(--input-bg);
+
     border: 1px solid var(--border-color);
     border-radius: 10px;
 
     color: var(--text-main);
+
     font-size: 12px;
 
     outline: none;
+
     transition: var(--transition);
 }
 
@@ -1528,7 +1995,9 @@ a {
 .form-group textarea:focus,
 #login-form input:focus {
     background: #191628;
+
     border-color: var(--primary-purple);
+
     box-shadow: 0 0 0 3px var(--purple-soft);
 }
 
@@ -1543,7 +2012,9 @@ a {
 
 .form-group textarea {
     min-height: 110px;
+
     resize: vertical;
+
     line-height: 1.8;
 }
 
@@ -1554,6 +2025,7 @@ a {
 .form-group input[type="checkbox"],
 .form-group input[type="radio"] {
     width: auto;
+
     accent-color: var(--primary-purple);
 }
 
@@ -1568,7 +2040,7 @@ a {
 
 
 /* =========================================================
-   23. BUTTONS
+   30. ADMIN BUTTONS
    ========================================================= */
 
 .submit-btn {
@@ -1578,9 +2050,11 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 9px;
 
     margin-top: 8px;
+
     padding: 12px 18px;
 
     background: linear-gradient(
@@ -1593,15 +2067,18 @@ a {
     border-radius: 11px;
 
     color: white;
+
     font-size: 12px;
     font-weight: 700;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
 .submit-btn:hover:not(:disabled) {
     transform: translateY(-2px);
+
     box-shadow: var(--shadow-purple);
 }
 
@@ -1616,12 +2093,13 @@ a {
 
 
 /* =========================================================
-   24. ADMIN NOVEL LIST
+   31. ADMIN NOVEL LIST
    ========================================================= */
 
 .admin-novel-list {
     display: flex;
     flex-direction: column;
+
     gap: 11px;
 }
 
@@ -1630,11 +2108,13 @@ a {
 
     display: flex;
     align-items: center;
+
     gap: 13px;
 
     padding: 12px;
 
     background: var(--surface-color);
+
     border: 1px solid var(--border-color);
     border-radius: 12px;
 
@@ -1643,6 +2123,7 @@ a {
 
 .admin-novel-item:hover {
     background: var(--card-hover);
+
     border-color: var(--border-purple);
 }
 
@@ -1653,6 +2134,7 @@ a {
     flex-shrink: 0;
 
     object-fit: cover;
+
     border-radius: 7px;
 }
 
@@ -1663,8 +2145,10 @@ a {
 
 .admin-novel-title {
     color: var(--text-main);
+
     font-size: 12px;
     font-weight: 700;
+
     line-height: 1.5;
 
     overflow-wrap: anywhere;
@@ -1674,6 +2158,7 @@ a {
     margin-top: 5px;
 
     color: var(--text-muted);
+
     font-size: 10px;
 }
 
@@ -1681,19 +2166,23 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     gap: 6px;
 
     padding: 8px 11px;
 
     background: rgba(255, 100, 124, 0.1);
+
     border: 1px solid rgba(255, 100, 124, 0.25);
     border-radius: 8px;
 
     color: var(--danger);
+
     font-size: 11px;
     font-weight: 600;
 
     cursor: pointer;
+
     transition: var(--transition);
 }
 
@@ -1703,7 +2192,7 @@ a {
 
 
 /* =========================================================
-   25. MODALS
+   32. MODALS
    ========================================================= */
 
 #edit-novel-modal,
@@ -1711,28 +2200,25 @@ a {
 #manage-chapters-modal {
     position: fixed;
     inset: 0;
+
     z-index: 2000;
 
     display: none;
+
     align-items: center;
     justify-content: center;
 
     padding: 18px;
 
     background: rgba(0, 0, 0, 0.76);
+
     backdrop-filter: blur(8px);
 }
 
-#edit-novel-modal[style*="display: block"],
-#edit-chapter-modal[style*="display: block"],
-#manage-chapters-modal[style*="display: block"] {
+#edit-novel-modal[style*="display: flex"],
+#edit-chapter-modal[style*="display: flex"],
+#manage-chapters-modal[style*="display: flex"] {
     overflow-y: auto;
-}
-
-#edit-novel-modal > *,
-#edit-chapter-modal > *,
-#manage-chapters-modal > * {
-    max-width: 100%;
 }
 
 .modal-content,
@@ -1745,6 +2231,7 @@ a {
     padding: 22px;
 
     background: var(--card-bg);
+
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
 
@@ -1753,12 +2240,13 @@ a {
 
 
 /* =========================================================
-   26. POPULAR LIST
+   33. POPULAR LIST
    ========================================================= */
 
 .popular-list {
     display: flex;
     flex-direction: column;
+
     gap: 10px;
 }
 
@@ -1768,11 +2256,12 @@ a {
 
 
 /* =========================================================
-   27. BOTTOM NAVIGATION
+   34. BOTTOM NAVIGATION
    ========================================================= */
 
 .bottom-nav {
     position: fixed;
+
     z-index: 1500;
 
     left: 0;
@@ -1788,7 +2277,8 @@ a {
 
     padding: 5px max(10px, calc((100% - 600px) / 2));
 
-    background: rgba(20, 19, 33, 0.96);
+    background: rgba(20, 19, 33, 0.97);
+
     border-top: 1px solid var(--border-color);
 
     backdrop-filter: blur(18px);
@@ -1804,11 +2294,14 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     gap: 4px;
 
     color: var(--text-dim);
+
     font-size: 10px;
     font-weight: 500;
+
     text-decoration: none;
 
     transition: var(--transition);
@@ -1816,6 +2309,7 @@ a {
 
 .nav-item i {
     font-size: 18px;
+
     transition: var(--transition);
 }
 
@@ -1826,12 +2320,15 @@ a {
 
 .nav-item.active i {
     transform: translateY(-2px);
-    filter: drop-shadow(0 0 7px rgba(149, 101, 245, 0.45));
+
+    filter: drop-shadow(
+        0 0 7px rgba(149, 101, 245, 0.45)
+    );
 }
 
 
 /* =========================================================
-   28. SKELETON LOADING
+   35. SKELETON LOADING
    ========================================================= */
 
 .skeleton,
@@ -1844,7 +2341,9 @@ a {
     );
 
     background-size: 200% 100%;
+
     animation: skeletonLoading 1.5s infinite;
+
     border-radius: 10px;
 }
 
@@ -1860,7 +2359,7 @@ a {
 
 
 /* =========================================================
-   29. ACCESSIBILITY & MOTION
+   36. GLOBAL BUTTON STATES
    ========================================================= */
 
 button:disabled {
@@ -1868,36 +2367,22 @@ button:disabled {
     cursor: not-allowed;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
-}
-
 
 /* =========================================================
-   30. TABLET RESPONSIVE
+   37. TABLET RESPONSIVE
    ========================================================= */
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
 
     .main-container {
         max-width: 100%;
         padding: 18px;
     }
 
-    .novel-grid {
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(135px, 1fr)
-        );
-
-        gap: 14px;
+    .novel-grid,
+    #search-results-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 15px;
     }
 
     .genre-grid {
@@ -1913,7 +2398,7 @@ button:disabled {
 
 
 /* =========================================================
-   31. MOBILE RESPONSIVE
+   38. MOBILE RESPONSIVE
    ========================================================= */
 
 @media (max-width: 600px) {
@@ -1940,10 +2425,14 @@ button:disabled {
         gap: 18px;
     }
 
+    /* Hero */
+
     .hero-card {
         min-height: 225px;
         height: 245px;
+
         padding: 17px;
+
         border-radius: 16px;
     }
 
@@ -1962,16 +2451,27 @@ button:disabled {
 
     .hero-desc {
         font-size: 11px;
+
         -webkit-line-clamp: 2;
     }
+
+    /* Section */
 
     .section-title {
         font-size: 14px;
     }
 
-    .novel-grid {
+    /* Novel Cards */
+
+    .novel-grid,
+    #search-results-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+
         gap: 12px;
+    }
+
+    .novel-card {
+        border-radius: 11px;
     }
 
     .novel-info {
@@ -1986,31 +2486,43 @@ button:disabled {
         font-size: 9px;
     }
 
+    /* Search */
+
     .filter-section {
         padding: 15px;
+
         border-radius: 14px;
     }
 
     .genre-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+
         gap: 8px;
     }
 
     .genre-chip {
         min-height: 39px;
+
         padding: 7px 9px;
+
         font-size: 10px;
     }
 
     .status-btn {
         padding: 7px 13px;
+
         font-size: 10px;
     }
 
+    /* Novel Details */
+
     .novel-detail-card {
         align-items: flex-start;
+
         gap: 14px;
+
         padding: 14px;
+
         border-radius: 15px;
     }
 
@@ -2033,12 +2545,16 @@ button:disabled {
 
     .synopsis-box {
         padding: 14px;
+
         font-size: 12px;
         line-height: 1.9;
     }
 
+    /* Chapter List */
+
     .chapter-item {
         min-height: 53px;
+
         padding: 10px 12px;
     }
 
@@ -2050,27 +2566,57 @@ button:disabled {
         font-size: 9px;
     }
 
-    .reader-chapter-title {
-        font-size: 16px;
+    /* Reader */
+
+    body:has(#chapter-content) .main-container {
+        padding: 14px 10px;
+        gap: 16px;
     }
 
+    #chapter-title,
+    .reader-chapter-title {
+        font-size: 16px;
+        padding: 13px 8px;
+    }
+
+    #chapter-content,
     .reader-content {
-        padding: 20px 16px;
+        min-height: 250px;
+
+        padding: 22px 17px;
+
         font-size: 15px;
         line-height: 2.05;
-        border-radius: 12px;
+
+        border-radius: 11px;
     }
+
+    #chapter-content p,
+    .reader-content p {
+        margin-bottom: 19px;
+        text-indent: 1em;
+    }
+
+    /* Reader Navigation */
 
     .chapter-nav-bar {
         gap: 6px;
     }
 
+    #prev-ch-btn,
+    #novel-details-btn,
+    #next-ch-btn,
     .nav-btn {
         min-height: 42px;
+
         padding: 8px 5px;
+
         gap: 4px;
+
         font-size: 10px;
     }
+
+    /* Admin */
 
     .admin-card {
         padding: 15px;
@@ -2082,22 +2628,25 @@ button:disabled {
 
     .tab-btn {
         padding: 9px 11px;
+
         font-size: 10px;
+    }
+
+    /* Bottom Navigation */
+
+    :root {
+        --nav-height: 64px;
     }
 
     .bottom-nav {
         height: 64px;
     }
 
-    :root {
-        --nav-height: 64px;
-    }
-
 }
 
 
 /* =========================================================
-   32. SMALL MOBILE
+   39. SMALL MOBILE
    ========================================================= */
 
 @media (max-width: 380px) {
@@ -2106,12 +2655,17 @@ button:disabled {
         padding: 12px 10px;
     }
 
-    .novel-grid {
+    .novel-grid,
+    #search-results-grid {
         gap: 9px;
     }
 
     .novel-info {
         padding: 8px;
+    }
+
+    .novel-name {
+        font-size: 10px;
     }
 
     .genre-chip {
@@ -2128,14 +2682,18 @@ button:disabled {
         font-size: 13px;
     }
 
+    #chapter-content,
     .reader-content {
-        padding: 17px 13px;
+        padding: 18px 13px;
+
         font-size: 14px;
+        line-height: 2;
     }
 
     .font-btn {
         min-width: 34px;
         height: 32px;
+
         padding: 0 7px;
     }
 
@@ -2147,20 +2705,18 @@ button:disabled {
 
 
 /* =========================================================
-   33. DESKTOP ENHANCEMENTS
+   40. DESKTOP ENHANCEMENTS
    ========================================================= */
 
-@media (min-width: 1100px) {
+@media (min-width: 1200px) {
 
     .main-container {
         padding: 25px 28px;
     }
 
-    .novel-grid {
-        grid-template-columns: repeat(
-            auto-fill,
-            minmax(165px, 1fr)
-        );
+    .novel-grid,
+    #search-results-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
 
         gap: 21px;
     }
@@ -2170,10 +2726,55 @@ button:disabled {
         height: 230px;
     }
 
+    #chapter-content,
     .reader-content {
         padding: 45px 55px;
+
         font-size: 17px;
         line-height: 2.2;
     }
 
+}
+
+
+/* =========================================================
+   41. ACCESSIBILITY & MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+
+/* =========================================================
+   42. FINAL GLOBAL SAFETY
+   ========================================================= */
+
+/* Requested copy-selection restriction */
+
+body,
+body * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Prevent horizontal overflow */
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
