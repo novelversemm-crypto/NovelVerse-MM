@@ -1,21 +1,22 @@
 
 // ==========================================
-// 🐙 GITHUB REPOSITORY CONFIGURATION
+// 🐙 NOVELVERSE ADMIN CONFIGURATION
 // ==========================================
+
 const GITHUB_OWNER = "novelversemm-crypto";
 const GITHUB_REPO = "NovelVerse-MM";
 
-// ==========================================
-// ☁️ CLOUDINARY CONFIGURATION
-// ==========================================
 const CLOUDINARY_CLOUD_NAME = "n1rewvpg";
 const CLOUDINARY_UPLOAD_PRESET = "novel_covers";
 
 const GITHUB_API = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}`;
 
+const PAID_CHAPTER_PRICE = 1;
+
 // ==========================================
 // DOM LOADED
 // ==========================================
+
 document.addEventListener("DOMContentLoaded", () => {
     const savedToken = localStorage.getItem("github_token");
 
@@ -39,6 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
     window.closeEditChapterModal = closeEditChapterModal;
     window.handleUpdateChapter = handleUpdateChapter;
 });
+
+// ==========================================
+// GLOBAL VARIABLES
+// ==========================================
+
+let allAdminNovels = [];
+
+// ==========================================
+// TOKEN
+// ==========================================
 
 function getToken() {
     return localStorage.getItem("github_token") || "";
@@ -67,7 +78,10 @@ function yamlQuote(value) {
     return JSON.stringify(String(value ?? ""));
 }
 
-// Parse simple YAML frontmatter used by this project.
+// ==========================================
+// FRONTMATTER PARSER
+// ==========================================
+
 function parseFrontmatter(markdown) {
     const match = markdown.match(/^---\s*\r?\n([\s\S]*?)\r?\n---/);
 
@@ -82,6 +96,7 @@ function parseFrontmatter(markdown) {
 
     match[1].split(/\r?\n/).forEach(line => {
         const index = line.indexOf(":");
+
         if (index === -1) return;
 
         const key = line.slice(0, index).trim();
@@ -89,19 +104,13 @@ function parseFrontmatter(markdown) {
 
         if (!key) return;
 
-        if (
-            value.startsWith('"') &&
-            value.endsWith('"')
-        ) {
+        if (value.startsWith('"') && value.endsWith('"')) {
             try {
                 value = JSON.parse(value);
             } catch {
                 value = value.slice(1, -1);
             }
-        } else if (
-            value.startsWith("'") &&
-            value.endsWith("'")
-        ) {
+        } else if (value.startsWith("'") && value.endsWith("'")) {
             value = value.slice(1, -1);
         } else if (value === "true") {
             value = true;
@@ -120,6 +129,10 @@ function parseFrontmatter(markdown) {
     };
 }
 
+// ==========================================
+// MARKDOWN GENERATOR
+// ==========================================
+
 function makeMarkdown(metadata, body) {
     const frontmatter = Object.entries(metadata)
         .map(([key, value]) => {
@@ -133,6 +146,10 @@ function makeMarkdown(metadata, body) {
 
     return `---\n${frontmatter}\n---\n\n${body}\n`;
 }
+
+// ==========================================
+// GET GITHUB FILE
+// ==========================================
 
 async function getGitHubFile(filePath) {
     const response = await fetch(
@@ -148,11 +165,19 @@ async function getGitHubFile(filePath) {
 
     const data = await response.json();
 
+    if (!data.content) {
+        throw new Error(`ဖိုင် Content မရရှိပါ: ${filePath}`);
+    }
+
     return {
         ...data,
         text: decodeBase64(data.content)
     };
 }
+
+// ==========================================
+// GET GITHUB DIRECTORY
+// ==========================================
 
 async function getGitHubDirectory(path) {
     const response = await fetch(
@@ -172,7 +197,10 @@ async function getGitHubDirectory(path) {
         throw new Error(`${path} သည် Folder မဟုတ်ပါ။`);
     }
 
-    return data.filter(file => file.type === "file" && file.name.endsWith(".md"));
+    return data.filter(file =>
+        file.type === "file" &&
+        file.name.endsWith(".md")
+    );
 }
 
 // ==========================================
@@ -182,14 +210,16 @@ async function getGitHubDirectory(path) {
 function handleLogin(e) {
     if (e) e.preventDefault();
 
-    const tokenInput = document.getElementById("github-token-input").value.trim();
+    const tokenInput = document
+        .getElementById("github-token-input")
+        .value.trim();
 
     if (!tokenInput) {
         alert("ကျေးဇူးပြု၍ GitHub Token ထည့်ပါ။");
         return;
     }
 
-    fetch(`${GITHUB_API}`, {
+    fetch(GITHUB_API, {
         headers: {
             Authorization: `Bearer ${tokenInput}`,
             Accept: "application/vnd.github+json"
@@ -197,15 +227,23 @@ function handleLogin(e) {
     })
     .then(res => {
         if (!res.ok) {
-            throw new Error("Token မှားယွင်းနေပါသည်။ သို့မဟုတ် Permission မရှိပါ။");
+            throw new Error(
+                "Token မှားယွင်းနေပါသည်။ သို့မဟုတ် Permission မရှိပါ။"
+            );
         }
 
         localStorage.setItem("github_token", tokenInput);
+
         alert("Admin Panel သို့ အောင်မြင်စွာ ဝင်ရောက်လိုက်ပါပြီ!");
+
         showDashboard();
     })
     .catch(err => alert(err.message));
 }
+
+// ==========================================
+// DASHBOARD
+// ==========================================
 
 function showDashboard() {
     const loginSec = document.getElementById("login-section");
@@ -236,6 +274,10 @@ function handleLogout() {
         showLogin();
     }
 }
+
+// ==========================================
+// TAB SWITCHING
+// ==========================================
 
 function switchTab(tabId) {
     document.querySelectorAll(".tab-content").forEach(el => {
@@ -298,6 +340,10 @@ async function uploadToGitHub(filePath, fileContent, commitMessage) {
     return response.json();
 }
 
+// ==========================================
+// GITHUB DELETE
+// ==========================================
+
 async function deleteFromGitHub(filePath, commitMessage) {
     const url = `${GITHUB_API}/contents/${filePath}`;
 
@@ -332,13 +378,12 @@ async function deleteFromGitHub(filePath, commitMessage) {
 }
 
 // ==========================================
-// 🔒 SAFE novels.json UPDATE
-// မူရင်း Novel / Chapter Field များကို ထိန်းသိမ်းမည်
+// SAFE novels.json UPDATE
+// Preserve existing Novel / Chapter fields
 // ==========================================
 
 async function updateNovelsJsonFile() {
     try {
-        // 1. မူရင်း JSON ကို အရင်ဖတ်မည်
         const existingFile = await getGitHubFile("content/novels.json");
 
         let existingNovels = [];
@@ -362,14 +407,15 @@ async function updateNovelsJsonFile() {
             existingNovels.map(novel => [novel.slug, novel])
         );
 
-        // 2. Novel / Chapter Markdown ဖိုင်များ ရယူမည်
         const novelFiles = await getGitHubDirectory("content/novels");
         const chapterFiles = await getGitHubDirectory("content/chapters");
 
         const allNovelsData = [];
 
         for (const file of novelFiles) {
-            const novelFile = await getGitHubFile(`content/novels/${file.name}`);
+            const novelFile = await getGitHubFile(
+                `content/novels/${file.name}`
+            );
 
             if (!novelFile) continue;
 
@@ -379,8 +425,6 @@ async function updateNovelsJsonFile() {
             const slug = file.name.replace(/\.md$/, "");
             const oldNovel = oldNovelMap.get(slug) || {};
 
-            // မူရင်း Novel Field အားလုံးကို ထိန်းသိမ်းပြီး
-            // Markdown ထဲက လက်ရှိအချက်အလက်များကိုသာ Update လုပ်မည်
             const novelData = {
                 ...oldNovel,
                 slug,
@@ -389,28 +433,25 @@ async function updateNovelsJsonFile() {
                 genre: meta.genre ?? oldNovel.genre ?? "Fantasy",
                 status: meta.status ?? oldNovel.status ?? "Ongoing",
                 synopsis: parsedNovel.body ?? oldNovel.synopsis ?? "",
-                createdAt: meta.created_at ?? oldNovel.createdAt ?? new Date().toISOString()
+                createdAt:
+                    meta.created_at ??
+                    oldNovel.createdAt ??
+                    new Date().toISOString()
             };
 
             const oldChapters = Array.isArray(oldNovel.chapters)
                 ? oldNovel.chapters
                 : [];
 
-            const oldChapterMap = new Map(
-                oldChapters.map(ch => [
-                    ch.file || `${slug}-ch-${ch.chapter_number}.md`,
-                    ch
-                ])
-            );
-
-            const matchedChapterFiles = chapterFiles.filter(chFile => {
-                return chFile.name.startsWith(`${slug}-ch-`);
-            });
-
             const novelChapters = [];
+
+            const matchedChapterFiles = chapterFiles.filter(chFile =>
+                chFile.name.startsWith(`${slug}-ch-`)
+            );
 
             for (const chFile of matchedChapterFiles) {
                 const chapterPath = `content/chapters/${chFile.name}`;
+
                 const chapterFile = await getGitHubFile(chapterPath);
 
                 if (!chapterFile) continue;
@@ -419,13 +460,31 @@ async function updateNovelsJsonFile() {
                 const chMeta = parsedChapter.metadata;
 
                 const chNum = Number(chMeta.chapter_number) || 1;
-                const oldChapter = oldChapterMap.get(chapterPath) || {};
 
-                const isLocked = chMeta.is_locked === true ||
-                    chMeta.is_locked === "true";
+                const oldChapter =
+                    oldChapters.find(ch => ch.file === chapterPath) ||
+                    oldChapters.find(ch =>
+                        Number(ch.chapter_number) === chNum
+                    ) ||
+                    {};
+
+                let isLocked;
+
+                if (
+                    Object.prototype.hasOwnProperty.call(
+                        chMeta,
+                        "is_locked"
+                    )
+                ) {
+                    isLocked =
+                        chMeta.is_locked === true ||
+                        chMeta.is_locked === "true";
+                } else {
+                    isLocked = oldChapter.is_locked === true;
+                }
 
                 const coinPrice = isLocked
-                    ? Math.max(1, Number(chMeta.coin_price) || 1)
+                    ? PAID_CHAPTER_PRICE
                     : 0;
 
                 novelChapters.push({
@@ -438,13 +497,15 @@ async function updateNovelsJsonFile() {
                 });
             }
 
-            novelChapters.sort((a, b) => a.chapter_number - b.chapter_number);
+            novelChapters.sort(
+                (a, b) => a.chapter_number - b.chapter_number
+            );
 
             novelData.chapters = novelChapters;
+
             allNovelsData.push(novelData);
         }
 
-        // 3. မူရင်း JSON ကို Field မပျောက်စေဘဲ Update လုပ်မည်
         const jsonContent = JSON.stringify(allNovelsData, null, 2);
 
         await uploadToGitHub(
@@ -464,31 +525,39 @@ async function updateNovelsJsonFile() {
 }
 
 // ==========================================
-// 3. ADD NOVEL
+// ADD NOVEL
 // ==========================================
 
 async function handleAddNovel(e) {
     if (e) e.preventDefault();
 
     const btn = document.getElementById("save-novel-btn");
+
     if (btn) btn.disabled = true;
 
     const title = document.getElementById("novel-title").value.trim();
+
     const fileInput = document.getElementById("novel-cover-file");
     const file = fileInput ? fileInput.files[0] : null;
+
     const status = document.getElementById("novel-status").value;
+
     const synopsis = document.getElementById("novel-synopsis").value.trim();
 
     if (!title || !file) {
         alert("Novel Title နှင့် Cover Image ရွေးချယ်ပေးပါ။");
+
         if (btn) btn.disabled = false;
         return;
     }
 
     try {
-        if (btn) btn.innerText = "Cloudinary သို့ Cover Image တင်နေသည်...";
+        if (btn) {
+            btn.innerText = "Cloudinary သို့ Cover Image တင်နေသည်...";
+        }
 
         const formData = new FormData();
+
         formData.append("file", file);
         formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
@@ -503,15 +572,19 @@ async function handleAddNovel(e) {
         const uploadData = await uploadRes.json();
 
         if (!uploadRes.ok) {
-            throw new Error(uploadData.error?.message || "Cloudinary Upload မှားယွင်းနေပါသည်။");
+            throw new Error(
+                uploadData.error?.message ||
+                "Cloudinary Upload မှားယွင်းနေပါသည်။"
+            );
         }
 
         const coverUrl = uploadData.secure_url;
 
         const selectedGenres = [];
 
-        document.querySelectorAll('input[name="novel-genre-chip"]:checked')
-            .forEach(cb => selectedGenres.push(cb.value));
+        document.querySelectorAll(
+            'input[name="novel-genre-chip"]:checked'
+        ).forEach(cb => selectedGenres.push(cb.value));
 
         let slug = title.toLowerCase()
             .replace(/[^\w\s-]/g, "")
@@ -519,6 +592,15 @@ async function handleAddNovel(e) {
 
         if (!slug || slug === "-") {
             slug = "novel-" + Date.now();
+        }
+
+        const novelPath = `content/novels/${slug}.md`;
+
+        // Prevent accidental overwrite of an existing novel
+        const existingNovel = await getGitHubFile(novelPath);
+
+        if (existingNovel) {
+            throw new Error("ဒီ Novel ရဲ့ Slug ရှိပြီးသားဖြစ်နေပါသည်။");
         }
 
         const markdownContent = makeMarkdown({
@@ -529,15 +611,19 @@ async function handleAddNovel(e) {
             created_at: new Date().toISOString()
         }, synopsis);
 
-        if (btn) btn.innerText = "GitHub သို့ Novel သိမ်းဆည်းနေသည်...";
+        if (btn) {
+            btn.innerText = "GitHub သို့ Novel သိမ်းဆည်းနေသည်...";
+        }
 
         await uploadToGitHub(
-            `content/novels/${slug}.md`,
+            novelPath,
             markdownContent,
             `Add novel: ${title}`
         );
 
-        if (btn) btn.innerText = "novels.json Update လုပ်နေသည်...";
+        if (btn) {
+            btn.innerText = "novels.json Update လုပ်နေသည်...";
+        }
 
         await updateNovelsJsonFile();
 
@@ -551,6 +637,7 @@ async function handleAddNovel(e) {
     } catch (err) {
         alert("အမှားအယွင်းရှိပါသည်: " + err.message);
         console.error(err);
+
     } finally {
         if (btn) {
             btn.disabled = false;
@@ -560,34 +647,46 @@ async function handleAddNovel(e) {
 }
 
 // ==========================================
-// 4. ADD CHAPTER + LOCK / COIN
+// ADD CHAPTER + FIXED 1 COIN
 // ==========================================
 
 async function handleAddChapter(e) {
     if (e) e.preventDefault();
 
     const btn = document.getElementById("save-chapter-btn");
+
     if (btn) btn.disabled = true;
 
-    const novelSlug = document.getElementById("select-novel-dropdown").value;
-    const chNum = parseInt(document.getElementById("chapter-number").value);
-    const chTitle = document.getElementById("chapter-title-input").value.trim();
-    const chContent = document.getElementById("chapter-content-input").value.trim();
+    const novelSlug =
+        document.getElementById("select-novel-dropdown").value;
 
-    const lockInput = document.getElementById("chapter-is-locked");
-    const priceInput = document.getElementById("chapter-coin-price");
+    const chNum = parseInt(
+        document.getElementById("chapter-number").value,
+        10
+    );
+
+    const chTitle =
+        document.getElementById("chapter-title-input").value.trim();
+
+    const chContent =
+        document.getElementById("chapter-content-input").value.trim();
+
+    const lockInput =
+        document.getElementById("chapter-is-locked");
 
     const isLocked = lockInput ? lockInput.checked : false;
-    const coinPrice = isLocked ? parseInt(priceInput?.value) || 0 : 0;
 
-    if (!novelSlug || !Number.isInteger(chNum) || chNum < 1 || !chTitle || !chContent) {
+    const coinPrice = isLocked ? PAID_CHAPTER_PRICE : 0;
+
+    if (
+        !novelSlug ||
+        !Number.isInteger(chNum) ||
+        chNum < 1 ||
+        !chTitle ||
+        !chContent
+    ) {
         alert("Novel, Chapter Number, Title နှင့် Content အားလုံး ဖြည့်ပါ။");
-        if (btn) btn.disabled = false;
-        return;
-    }
 
-    if (isLocked && coinPrice < 1) {
-        alert("Locked Chapter အတွက် Coin Price ကို 1 နှင့်အထက် ထည့်ပါ။");
         if (btn) btn.disabled = false;
         return;
     }
@@ -596,7 +695,6 @@ async function handleAddChapter(e) {
         const chapterFileName = `${novelSlug}-ch-${chNum}.md`;
         const chapterFilePath = `content/chapters/${chapterFileName}`;
 
-        // ရှိပြီးသား Chapter ကို မတော်တဆ overwrite မဖြစ်စေရန်
         const existing = await getGitHubFile(chapterFilePath);
 
         if (existing) {
@@ -612,27 +710,43 @@ async function handleAddChapter(e) {
             created_at: new Date().toISOString()
         }, chContent);
 
+        if (btn) {
+            btn.innerText = "GitHub သို့ သိမ်းဆည်းနေသည်...";
+        }
+
         await uploadToGitHub(
             chapterFilePath,
             markdownContent,
             `Add ${novelSlug} Chapter ${chNum}`
         );
 
-        if (btn) btn.innerText = "novels.json Update လုပ်နေသည်...";
+        if (btn) {
+            btn.innerText = "novels.json Update လုပ်နေသည်...";
+        }
 
         await updateNovelsJsonFile();
 
-        alert(`Chapter ${chNum} တင်ပြီးပါပြီ!`);
+        alert(
+            isLocked
+                ? `Chapter ${chNum} ကို Locked (1 Coin) အဖြစ် တင်ပြီးပါပြီ!`
+                : `Chapter ${chNum} ကို Free အဖြစ် တင်ပြီးပါပြီ!`
+        );
 
         document.getElementById("chapter-number").value = chNum + 1;
         document.getElementById("chapter-title-input").value = "";
         document.getElementById("chapter-content-input").value = "";
 
         if (lockInput) lockInput.checked = false;
-        if (priceInput) priceInput.value = 0;
+
+        const priceInput =
+            document.getElementById("chapter-coin-price");
+
+        if (priceInput) priceInput.value = PAID_CHAPTER_PRICE;
 
     } catch (error) {
         alert("Chapter တင်ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+        console.error(error);
+
     } finally {
         if (btn) {
             btn.disabled = false;
@@ -642,11 +756,12 @@ async function handleAddChapter(e) {
 }
 
 // ==========================================
-// 5. NOVEL DROPDOWN
+// NOVEL DROPDOWN
 // ==========================================
 
 async function loadNovelsDropdown() {
     const dropdown = document.getElementById("select-novel-dropdown");
+
     if (!dropdown) return;
 
     try {
@@ -655,48 +770,66 @@ async function loadNovelsDropdown() {
         let options = '<option value="">-- Novel ရွေးပါ --</option>';
 
         for (const file of files) {
-            const novelFile = await getGitHubFile(`content/novels/${file.name}`);
+            const novelFile = await getGitHubFile(
+                `content/novels/${file.name}`
+            );
+
             if (!novelFile) continue;
 
-            const { metadata } = parseFrontmatter(novelFile.text);
-            const title = metadata.title || file.name.replace(".md", "");
+            const parsed = parseFrontmatter(novelFile.text);
+
+            const title =
+                parsed.metadata.title ||
+                file.name.replace(".md", "");
+
             const slug = file.name.replace(".md", "");
 
-            options += `<option value="${slug}">${escapeHtml(title)}</option>`;
+            options += `
+                <option value="${escapeHtml(slug)}">
+                    ${escapeHtml(title)}
+                </option>
+            `;
         }
 
         dropdown.innerHTML = options;
 
     } catch (error) {
         console.error("Dropdown load error:", error);
-        dropdown.innerHTML = '<option value="">Novel များ ရယူမရပါ</option>';
+
+        dropdown.innerHTML =
+            '<option value="">Novel များ ရယူမရပါ</option>';
     }
 }
 
 // ==========================================
-// 6. MANAGE NOVELS
+// MANAGE NOVELS
 // ==========================================
-
-let allAdminNovels = [];
 
 async function loadManageNovelsList() {
     const container = document.getElementById("admin-novel-list");
+
     if (!container) return;
 
-    container.innerHTML = '<p style="color:#aaa;text-align:center;">Novel များကို ရယူနေသည်...</p>';
+    container.innerHTML =
+        '<p style="color:#aaa;text-align:center;">Novel များကို ရယူနေသည်...</p>';
 
     try {
         const files = await getGitHubDirectory("content/novels");
 
         if (files.length === 0) {
-            container.innerHTML = '<p style="color:#aaa;text-align:center;">Novel များ မရှိသေးပါ။</p>';
+            container.innerHTML =
+                '<p style="color:#aaa;text-align:center;">Novel များ မရှိသေးပါ။</p>';
+
             return;
         }
 
         allAdminNovels = [];
 
         for (const file of files) {
-            const novelFile = await getGitHubFile(`content/novels/${file.name}`);
+            const novelFile = await getGitHubFile(
+                `content/novels/${file.name}`
+            );
+
             if (!novelFile) continue;
 
             const parsed = parseFrontmatter(novelFile.text);
@@ -716,16 +849,25 @@ async function loadManageNovelsList() {
 
     } catch (error) {
         console.error(error);
-        container.innerHTML = '<p style="color:#ef4444;text-align:center;">ဒေတာရယူရာတွင် အမှားရှိပါသည်။</p>';
+
+        container.innerHTML =
+            '<p style="color:#ef4444;text-align:center;">ဒေတာရယူရာတွင် အမှားရှိပါသည်။</p>';
     }
 }
 
+// ==========================================
+// RENDER NOVELS
+// ==========================================
+
 function renderAdminNovelsList(novels) {
     const container = document.getElementById("admin-novel-list");
+
     if (!container) return;
 
     if (!novels.length) {
-        container.innerHTML = '<p style="color:#aaa;text-align:center;">ရှာမတွေ့ပါ။</p>';
+        container.innerHTML =
+            '<p style="color:#aaa;text-align:center;">ရှာမတွေ့ပါ။</p>';
+
         return;
     }
 
@@ -735,6 +877,7 @@ function renderAdminNovelsList(novels) {
         const itemDiv = document.createElement("div");
 
         itemDiv.className = "admin-novel-item";
+
         itemDiv.style.cssText =
             "display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);padding:12px;margin-bottom:10px;border-radius:8px;gap:10px;flex-wrap:wrap;";
 
@@ -744,8 +887,12 @@ function renderAdminNovelsList(novels) {
                     class="admin-cover"
                     style="width:50px;height:70px;object-fit:cover;border-radius:4px;"
                     onerror="this.src='https://via.placeholder.com/50x70?text=No+Image'">
+
                 <div>
-                    <div style="font-weight:600;color:#fff;">${escapeHtml(novel.title)}</div>
+                    <div style="font-weight:600;color:#fff;">
+                        ${escapeHtml(novel.title)}
+                    </div>
+
                     <div style="font-size:0.8rem;color:#a8b3cf;">
                         ${escapeHtml(novel.genre)} • ${escapeHtml(novel.status)}
                     </div>
@@ -753,13 +900,18 @@ function renderAdminNovelsList(novels) {
             </div>
 
             <div style="display:flex;gap:6px;" class="admin-action-btns">
-                <button class="submit-btn btn-chapters" style="padding:6px 10px;font-size:0.8rem;background:#3b82f6;">
+                <button class="submit-btn btn-chapters"
+                    style="padding:6px 10px;font-size:0.8rem;background:#3b82f6;">
                     <i class="fa-solid fa-book-open"></i> Chapters
                 </button>
-                <button class="submit-btn btn-edit" style="padding:6px 10px;font-size:0.8rem;background:#eab308;">
+
+                <button class="submit-btn btn-edit"
+                    style="padding:6px 10px;font-size:0.8rem;background:#eab308;">
                     <i class="fa-solid fa-pen"></i> Edit
                 </button>
-                <button class="submit-btn btn-delete" style="padding:6px 10px;font-size:0.8rem;background:#ef4444;">
+
+                <button class="submit-btn btn-delete"
+                    style="padding:6px 10px;font-size:0.8rem;background:#ef4444;">
                     <i class="fa-solid fa-trash"></i> Delete
                 </button>
             </div>
@@ -770,7 +922,12 @@ function renderAdminNovelsList(novels) {
         });
 
         itemDiv.querySelector(".btn-edit").addEventListener("click", () => {
-            openEditModal(novel.slug, novel.title, novel.status, novel.synopsis);
+            openEditModal(
+                novel.slug,
+                novel.title,
+                novel.status,
+                novel.synopsis
+            );
         });
 
         itemDiv.querySelector(".btn-delete").addEventListener("click", () => {
@@ -781,8 +938,15 @@ function renderAdminNovelsList(novels) {
     });
 }
 
+// ==========================================
+// FILTER NOVELS
+// ==========================================
+
 function filterAdminNovels() {
     const input = document.getElementById("admin-search-novel");
+
+    if (!input) return;
+
     const query = input.value.toLowerCase();
 
     const filtered = allAdminNovels.filter(novel =>
@@ -791,6 +955,10 @@ function filterAdminNovels() {
 
     renderAdminNovelsList(filtered);
 }
+
+// ==========================================
+// HTML ESCAPE
+// ==========================================
 
 function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
@@ -803,7 +971,7 @@ function escapeHtml(value) {
 }
 
 // ==========================================
-// 7. EDIT NOVEL
+// EDIT NOVEL
 // ==========================================
 
 function openEditModal(slug, title, status, synopsis) {
@@ -811,6 +979,7 @@ function openEditModal(slug, title, status, synopsis) {
     document.getElementById("edit-novel-title").value = title;
     document.getElementById("edit-novel-status").value = status;
     document.getElementById("edit-novel-synopsis").value = synopsis;
+
     document.getElementById("edit-novel-modal").style.display = "flex";
 }
 
@@ -818,21 +987,39 @@ function closeEditModal() {
     document.getElementById("edit-novel-modal").style.display = "none";
 }
 
+// ==========================================
+// UPDATE NOVEL
+// ==========================================
+
 async function handleUpdateNovel(e) {
     if (e) e.preventDefault();
 
     const slug = document.getElementById("edit-novel-id").value;
-    const title = document.getElementById("edit-novel-title").value.trim();
-    const status = document.getElementById("edit-novel-status").value;
-    const synopsis = document.getElementById("edit-novel-synopsis").value.trim();
+
+    const title =
+        document.getElementById("edit-novel-title").value.trim();
+
+    const status =
+        document.getElementById("edit-novel-status").value;
+
+    const synopsis =
+        document.getElementById("edit-novel-synopsis").value.trim();
 
     try {
+        if (!title) {
+            throw new Error("Novel Title ဖြည့်ပေးပါ။");
+        }
+
         const path = `content/novels/${slug}.md`;
+
         const existing = await getGitHubFile(path);
 
-        if (!existing) throw new Error("Novel ဖိုင်ကို ရှာမတွေ့ပါ။");
+        if (!existing) {
+            throw new Error("Novel ဖိုင်ကို ရှာမတွေ့ပါ။");
+        }
 
-        const { metadata } = parseFrontmatter(existing.text);
+        const parsed = parseFrontmatter(existing.text);
+        const metadata = parsed.metadata;
 
         const markdownContent = makeMarkdown({
             ...metadata,
@@ -840,29 +1027,39 @@ async function handleUpdateNovel(e) {
             cover_url: metadata.cover_url || "",
             genre: metadata.genre || "Action",
             status,
-            created_at: metadata.created_at || new Date().toISOString()
+            created_at:
+                metadata.created_at ||
+                new Date().toISOString()
         }, synopsis);
 
-        await uploadToGitHub(path, markdownContent, `Update novel: ${title}`);
+        await uploadToGitHub(
+            path,
+            markdownContent,
+            `Update novel: ${title}`
+        );
 
         await updateNovelsJsonFile();
 
         alert("Novel အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!");
 
         closeEditModal();
-        loadManageNovelsList();
+
+        await loadManageNovelsList();
 
     } catch (err) {
         alert("ပြင်ဆင်ရာတွင် အမှားအယွင်းရှိပါသည်: " + err.message);
+        console.error(err);
     }
 }
 
 // ==========================================
-// 8. DELETE NOVEL
+// DELETE NOVEL
 // ==========================================
 
 async function deleteNovel(slug, title) {
-    if (!confirm(`"${title}" နှင့် ဆက်စပ်သော Chapter များအားလုံးကို ဖျက်ရန် သေချာပါသလား?`)) {
+    if (!confirm(
+        `"${title}" နှင့် ဆက်စပ်သော Chapter များအားလုံးကို ဖျက်ရန် သေချာပါသလား?`
+    )) {
         return;
     }
 
@@ -889,21 +1086,24 @@ async function deleteNovel(slug, title) {
 
         alert("Novel နှင့် ဆက်စပ် Chapter အားလုံး ဖျက်ပြီးပါပြီ!");
 
-        loadManageNovelsList();
-        loadNovelsDropdown();
+        await loadManageNovelsList();
+        await loadNovelsDropdown();
 
     } catch (err) {
         alert("ဖျက်ရာတွင် အမှားရှိပါသည်: " + err.message);
+        console.error(err);
     }
 }
 
 // ==========================================
-// 9. CHAPTER MANAGER
+// CHAPTER MANAGER
 // ==========================================
 
 async function openChaptersManager(slug, title) {
     const modal = document.getElementById("manage-chapters-modal");
     const listContainer = document.getElementById("admin-chapter-list");
+
+    if (!modal || !listContainer) return;
 
     listContainer.innerHTML =
         `<p style="color:#aaa;text-align:center;">"${escapeHtml(title)}" ၏ Chapter များကို ရှာနေသည်...</p>`;
@@ -920,23 +1120,32 @@ async function openChaptersManager(slug, title) {
         if (!chapterFiles.length) {
             listContainer.innerHTML =
                 '<p style="color:#aaa;text-align:center;">Chapter များ မရှိသေးပါ။</p>';
+
             return;
         }
 
         const chapters = [];
 
         for (const file of chapterFiles) {
-            const chapterFile = await getGitHubFile(`content/chapters/${file.name}`);
+            const chapterFile = await getGitHubFile(
+                `content/chapters/${file.name}`
+            );
+
             if (!chapterFile) continue;
 
-            const { metadata } = parseFrontmatter(chapterFile.text);
+            const parsed = parseFrontmatter(chapterFile.text);
+            const metadata = parsed.metadata;
+
+            const isLocked =
+                metadata.is_locked === true ||
+                metadata.is_locked === "true";
 
             chapters.push({
                 fileName: file.name,
                 number: Number(metadata.chapter_number) || 1,
                 title: metadata.title || "",
-                isLocked: metadata.is_locked === true || metadata.is_locked === "true",
-                coinPrice: Number(metadata.coin_price) || 0
+                isLocked,
+                coinPrice: isLocked ? PAID_CHAPTER_PRICE : 0
             });
         }
 
@@ -951,26 +1160,30 @@ async function openChaptersManager(slug, title) {
                 "display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);padding:10px;border-radius:6px;gap:10px;flex-wrap:wrap;";
 
             const statusText = chapter.isLocked
-                ? `<span style="color:#f87171;font-weight:600;">🔒 LOCKED · ${chapter.coinPrice} Coins</span>`
-                : `<span style="color:#4ade80;font-weight:600;">🔓 FREE</span>`;
+                ? '<span style="color:#f87171;font-weight:600;">🔒 LOCKED · 1 Coin</span>'
+                : '<span style="color:#4ade80;font-weight:600;">🔓 FREE</span>';
 
             item.innerHTML = `
                 <div style="min-width:180px;flex:1;">
                     <div style="font-weight:600;color:#fff;">
                         Chapter ${chapter.number}
                     </div>
+
                     <div style="color:#a8b3cf;font-size:0.9rem;">
                         ${escapeHtml(chapter.title)}
                     </div>
+
                     <div style="font-size:0.8rem;margin-top:5px;">
                         ${statusText}
                     </div>
                 </div>
+
                 <div style="display:flex;gap:6px;">
                     <button class="submit-btn btn-edit-chapter"
                         style="padding:4px 8px;font-size:0.75rem;background:#eab308;">
                         <i class="fa-solid fa-pen"></i> ပြင်မည်
                     </button>
+
                     <button class="submit-btn btn-delete-chapter"
                         style="padding:4px 8px;font-size:0.75rem;background:#ef4444;">
                         <i class="fa-solid fa-trash"></i> ဖျက်မည်
@@ -991,21 +1204,28 @@ async function openChaptersManager(slug, title) {
 
     } catch (err) {
         console.error(err);
+
         listContainer.innerHTML =
             '<p style="color:#ef4444;text-align:center;">Chapter စာရင်းရယူရာတွင် အမှားရှိပါသည်။</p>';
     }
 }
+
+// ==========================================
+// CLOSE CHAPTER MANAGER
+// ==========================================
 
 function closeChaptersModal() {
     document.getElementById("manage-chapters-modal").style.display = "none";
 }
 
 // ==========================================
-// 10. DELETE CHAPTER
+// DELETE CHAPTER
 // ==========================================
 
 async function deleteChapter(fileName, slug) {
-    if (!confirm("ဤ Chapter ကို ဖျက်ရန် သေချာပါသလား?")) return;
+    if (!confirm("ဤ Chapter ကို ဖျက်ရန် သေချာပါသလား?")) {
+        return;
+    }
 
     try {
         await deleteFromGitHub(
@@ -1018,102 +1238,145 @@ async function deleteChapter(fileName, slug) {
         alert("Chapter အောင်မြင်စွာ ဖျက်ပြီးပါပြီ!");
 
         const novel = allAdminNovels.find(n => n.slug === slug);
-        openChaptersManager(slug, novel?.title || slug);
+
+        await openChaptersManager(
+            slug,
+            novel?.title || slug
+        );
 
     } catch (err) {
         alert("Chapter ဖျက်ရာတွင် အမှားရှိပါသည်: " + err.message);
+        console.error(err);
     }
 }
 
 // ==========================================
-// 11. OPEN EDIT CHAPTER MODAL
+// OPEN EDIT CHAPTER MODAL
 // ==========================================
 
 async function openEditChapterModal(fileName, slug) {
     try {
-        const chapterFile = await getGitHubFile(`content/chapters/${fileName}`);
+        const chapterFile = await getGitHubFile(
+            `content/chapters/${fileName}`
+        );
 
-        if (!chapterFile) throw new Error("Chapter ဖိုင်ကို ရှာမတွေ့ပါ။");
+        if (!chapterFile) {
+            throw new Error("Chapter ဖိုင်ကို ရှာမတွေ့ပါ။");
+        }
 
         const parsed = parseFrontmatter(chapterFile.text);
         const meta = parsed.metadata;
 
-        const chTitle = meta.title || "";
-        const chNum = Number(meta.chapter_number) || 1;
-        const chContent = parsed.body || "";
+        const isLocked =
+            meta.is_locked === true ||
+            meta.is_locked === "true";
 
-        document.getElementById("edit-chapter-filename").value = fileName;
-        document.getElementById("edit-chapter-slug").value = slug;
-        document.getElementById("edit-chapter-number").value = chNum;
-        document.getElementById("edit-chapter-title").value = chTitle;
-        document.getElementById("edit-chapter-content").value = chContent;
+        document.getElementById("edit-chapter-filename").value =
+            fileName;
 
-        // Lock / Coin fields
-        const lockInput = document.getElementById("edit-chapter-is-locked");
-        const priceInput = document.getElementById("edit-chapter-coin-price");
+        document.getElementById("edit-chapter-slug").value =
+            slug;
+
+        document.getElementById("edit-chapter-number").value =
+            Number(meta.chapter_number) || 1;
+
+        document.getElementById("edit-chapter-title").value =
+            meta.title || "";
+
+        document.getElementById("edit-chapter-content").value =
+            parsed.body || "";
+
+        const lockInput =
+            document.getElementById("edit-chapter-is-locked");
+
+        const priceInput =
+            document.getElementById("edit-chapter-coin-price");
 
         if (lockInput) {
-            lockInput.checked =
-                meta.is_locked === true || meta.is_locked === "true";
+            lockInput.checked = isLocked;
         }
 
         if (priceInput) {
-            priceInput.value = Number(meta.coin_price) || 0;
+            priceInput.value = PAID_CHAPTER_PRICE;
         }
 
-        document.getElementById("edit-chapter-modal").style.display = "flex";
+        document.getElementById("edit-chapter-modal").style.display =
+            "flex";
 
     } catch (err) {
         alert("Chapter အချက်အလက်ယူရာတွင် အမှားရှိပါသည်: " + err.message);
+        console.error(err);
     }
 }
+
+// ==========================================
+// CLOSE EDIT CHAPTER MODAL
+// ==========================================
 
 function closeEditChapterModal() {
     document.getElementById("edit-chapter-modal").style.display = "none";
 }
 
 // ==========================================
-// 12. UPDATE CHAPTER + LOCK / COIN
+// UPDATE CHAPTER + FIXED 1 COIN
 // ==========================================
 
 async function handleUpdateChapter(e) {
     if (e) e.preventDefault();
 
     const btn = document.getElementById("save-edit-chapter-btn");
+
     if (btn) btn.disabled = true;
 
-    const fileName = document.getElementById("edit-chapter-filename").value;
-    const slug = document.getElementById("edit-chapter-slug").value;
-    const chNum = parseInt(document.getElementById("edit-chapter-number").value);
-    const chTitle = document.getElementById("edit-chapter-title").value.trim();
-    const chContent = document.getElementById("edit-chapter-content").value.trim();
+    const fileName =
+        document.getElementById("edit-chapter-filename").value;
 
-    const lockInput = document.getElementById("edit-chapter-is-locked");
-    const priceInput = document.getElementById("edit-chapter-coin-price");
+    const slug =
+        document.getElementById("edit-chapter-slug").value;
+
+    const chNum = parseInt(
+        document.getElementById("edit-chapter-number").value,
+        10
+    );
+
+    const chTitle =
+        document.getElementById("edit-chapter-title").value.trim();
+
+    const chContent =
+        document.getElementById("edit-chapter-content").value.trim();
+
+    const lockInput =
+        document.getElementById("edit-chapter-is-locked");
 
     const isLocked = lockInput ? lockInput.checked : false;
-    const coinPrice = isLocked ? parseInt(priceInput?.value) || 0 : 0;
+
+    const coinPrice = isLocked ? PAID_CHAPTER_PRICE : 0;
 
     try {
-        if (!Number.isInteger(chNum) || chNum < 1 || !chTitle || !chContent) {
-            throw new Error("Chapter Number, Title နှင့် Content ကို မှန်ကန်စွာ ဖြည့်ပါ။");
-        }
-
-        if (isLocked && coinPrice < 1) {
-            throw new Error("Locked Chapter အတွက် Coin Price ကို 1 နှင့်အထက် ထည့်ပါ။");
+        if (
+            !Number.isInteger(chNum) ||
+            chNum < 1 ||
+            !chTitle ||
+            !chContent
+        ) {
+            throw new Error(
+                "Chapter Number, Title နှင့် Content ကို မှန်ကန်စွာ ဖြည့်ပါ။"
+            );
         }
 
         const oldPath = `content/chapters/${fileName}`;
+
         const oldFile = await getGitHubFile(oldPath);
 
-        if (!oldFile) throw new Error("မူရင်း Chapter ဖိုင်ကို ရှာမတွေ့ပါ။");
+        if (!oldFile) {
+            throw new Error("မူရင်း Chapter ဖိုင်ကို ရှာမတွေ့ပါ။");
+        }
 
         const parsedOld = parseFrontmatter(oldFile.text);
 
         const newFileName = `${slug}-ch-${chNum}.md`;
         const newPath = `content/chapters/${newFileName}`;
 
-        // မူရင်း Chapter Metadata အခြား Field များကို ထိန်းသိမ်းမည်
         const metadata = {
             ...parsedOld.metadata,
             novel_slug: slug,
@@ -1121,28 +1384,39 @@ async function handleUpdateChapter(e) {
             title: chTitle,
             is_locked: isLocked,
             coin_price: coinPrice,
-            created_at: parsedOld.metadata.created_at || new Date().toISOString()
+            created_at:
+                parsedOld.metadata.created_at ||
+                new Date().toISOString()
         };
 
-        const markdownContent = makeMarkdown(metadata, chContent);
+        const markdownContent = makeMarkdown(
+            metadata,
+            chContent
+        );
 
-        // နံပါတ်ပြောင်းပါက ဖိုင်အသစ် ရှိပြီးသားလား စစ်မည်
+        // Prevent duplicate chapter filename
         if (fileName !== newFileName) {
             const existingNewFile = await getGitHubFile(newPath);
 
             if (existingNewFile) {
-                throw new Error(`Chapter ${chNum} ရှိပြီးသားဖြစ်နေပါသည်။`);
+                throw new Error(
+                    `Chapter ${chNum} ရှိပြီးသားဖြစ်နေပါသည်။`
+                );
             }
         }
 
-        // အရေးကြီး: ဖိုင်အသစ်ကို အရင်သိမ်းမည်
+        if (btn) {
+            btn.innerText = "Chapter သိမ်းဆည်းနေသည်...";
+        }
+
+        // Upload new file first
         await uploadToGitHub(
             newPath,
             markdownContent,
             `Update ${slug} Chapter ${chNum}`
         );
 
-        // အသစ်အောင်မြင်မှသာ ဖိုင်အဟောင်းကို ဖျက်မည်
+        // Delete old file only after successful upload
         if (fileName !== newFileName) {
             await deleteFromGitHub(
                 oldPath,
@@ -1150,20 +1424,35 @@ async function handleUpdateChapter(e) {
             );
         }
 
-        if (btn) btn.innerText = "novels.json Update လုပ်နေသည်...";
+        if (btn) {
+            btn.innerText = "novels.json Update လုပ်နေသည်...";
+        }
 
         await updateNovelsJsonFile();
 
-        alert("Chapter အောင်မြင်စွာ ပြင်ဆင်ပြီးပါပြီ!");
+        alert(
+            isLocked
+                ? `Chapter ${chNum} ကို Locked (1 Coin) အဖြစ် ပြင်ဆင်ပြီးပါပြီ!`
+                : `Chapter ${chNum} ကို Free အဖြစ် ပြင်ဆင်ပြီးပါပြီ!`
+        );
 
         closeEditChapterModal();
 
         const novel = allAdminNovels.find(n => n.slug === slug);
-        openChaptersManager(slug, novel?.title || slug);
+
+        await openChaptersManager(
+            slug,
+            novel?.title || slug
+        );
 
     } catch (error) {
-        alert("Chapter ပြင်ဆင်ရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+        alert(
+            "Chapter ပြင်ဆင်ရာတွင် အမှားအယွင်းရှိပါသည်: " +
+            error.message
+        );
+
         console.error(error);
+
     } finally {
         if (btn) {
             btn.disabled = false;
