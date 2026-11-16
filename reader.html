@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Reading - NovelVerse</title>
+    <title>Reading - NovelVerse MM</title>
     <meta name="description" content="Read your favorite novels on NovelVerse Myanmar.">
     <meta name="theme-color" content="#11101a">
 
@@ -29,6 +29,7 @@
             --reader-muted: #a6a1b5;
             --reader-purple: #9b78ff;
             --reader-purple-dark: #7651dc;
+            --reader-gold: #f5c76b;
             --reading-font-size: 17px;
             --reading-line-height: 2.15;
         }
@@ -54,20 +55,18 @@
             font: inherit;
         }
 
-        /* =========================
-           HEADER
-        ========================= */
+        /* HEADER */
 
         .top-header {
             position: sticky;
             top: 0;
             z-index: 100;
-            height: 62px;
+            min-height: 62px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 0 5%;
+            gap: 10px;
+            padding: 8px 5%;
             background: rgba(17,16,26,0.96);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--reader-border);
@@ -101,14 +100,35 @@
             flex: 1;
             min-width: 0;
             text-align: center;
-            font-size: 13px !important;
+            font-size: 13px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             color: #eee9fa;
         }
 
-        /* Font controls */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .reader-wallet {
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 10px;
+            border: 1px solid rgba(245,199,107,0.22);
+            border-radius: 10px;
+            background: rgba(245,199,107,0.09);
+            color: var(--reader-gold);
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        /* FONT CONTROLS */
 
         .font-controls {
             display: flex;
@@ -140,18 +160,14 @@
             transform: scale(0.95);
         }
 
-        /* =========================
-           MAIN LAYOUT
-        ========================= */
+        /* MAIN LAYOUT */
 
         .main-container {
             width: min(100% - 32px, 850px);
             margin: 0 auto;
         }
 
-        /* =========================
-           ADVERTISEMENTS
-        ========================= */
+        /* ADS */
 
         .ad-section {
             width: min(100% - 32px, 850px);
@@ -187,9 +203,7 @@
             font-size: 12px;
         }
 
-        /* =========================
-           CHAPTER TITLE
-        ========================= */
+        /* CHAPTER TITLE */
 
         .reader-chapter-title {
             margin: 25px 0 20px;
@@ -208,9 +222,97 @@
             overflow-wrap: anywhere;
         }
 
-        /* =========================
-           READING CONTENT
-        ========================= */
+        /* PREMIUM CHAPTER LOCK */
+
+        .chapter-lock-section {
+            display: none;
+            margin: 25px 0;
+            padding: 32px 22px;
+            text-align: center;
+            border: 1px solid rgba(245,199,107,0.18);
+            border-radius: 17px;
+            background:
+                radial-gradient(circle at top, rgba(245,199,107,0.09), transparent 70%),
+                var(--reader-card);
+        }
+
+        .chapter-lock-icon {
+            width: 68px;
+            height: 68px;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            background: rgba(245,199,107,0.12);
+            color: var(--reader-gold);
+            font-size: 27px;
+        }
+
+        .chapter-lock-section h2 {
+            margin: 0 0 10px;
+            color: #f7e8c7;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 19px;
+        }
+
+        .chapter-lock-section p {
+            margin: 0 0 18px;
+            color: var(--reader-muted);
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .lock-price {
+            margin: 18px 0;
+            color: var(--reader-gold);
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .lock-price i {
+            margin-right: 6px;
+        }
+
+        .unlock-btn {
+            width: 100%;
+            max-width: 300px;
+            min-height: 48px;
+            margin: 8px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #b38a42, #e8bf70);
+            color: #241b0b;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .topup-btn {
+            width: 100%;
+            max-width: 300px;
+            min-height: 45px;
+            margin: 5px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid rgba(155,120,255,0.25);
+            border-radius: 12px;
+            background: rgba(155,120,255,0.1);
+            color: #cdbaff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* READING CONTENT */
 
         .reader-content {
             margin: 22px 0;
@@ -267,9 +369,7 @@
             text-decoration: underline;
         }
 
-        /* =========================
-           CHAPTER NAVIGATION
-        ========================= */
+        /* CHAPTER NAVIGATION */
 
         .chapter-nav-bar {
             display: grid;
@@ -318,15 +418,14 @@
             cursor: not-allowed;
         }
 
-        /* =========================
-           MOBILE RESPONSIVE
-        ========================= */
+        /* MOBILE */
 
         @media (max-width: 600px) {
+
             .top-header {
-                height: 58px;
-                padding: 0 12px;
-                gap: 8px;
+                min-height: 58px;
+                padding: 7px 10px;
+                gap: 7px;
             }
 
             .main-container {
@@ -377,13 +476,23 @@
             }
 
             #reader-header-title {
-                font-size: 11px !important;
+                font-size: 11px;
+            }
+
+            .reader-wallet {
+                padding: 0 7px;
+                font-size: 11px;
+            }
+
+            .chapter-lock-section {
+                padding: 26px 16px;
             }
         }
 
         @media (max-width: 360px) {
+
             .top-header {
-                padding: 0 8px;
+                padding: 7px 8px;
             }
 
             .chapter-nav-bar {
@@ -404,7 +513,10 @@
 
 <body>
 
-    <!-- Reader Header -->
+    <!-- ==========================================
+         READER HEADER
+    =========================================== -->
+
     <header class="top-header">
 
         <a
@@ -420,8 +532,34 @@
             Loading...
         </div>
 
-        <!-- Font Size Controls -->
+        <div class="header-actions">
+
+            <!-- Coin Wallet -->
+            <a
+                href="topup.html"
+                class="reader-wallet"
+                id="reader-coin-link"
+                aria-label="My Coin Wallet"
+            >
+                <i class="fa-solid fa-coins"></i>
+                <span id="header-coin-balance">0</span>
+            </a>
+
+            <!-- Account -->
+            <a
+                href="topup.html"
+                class="icon-btn"
+                id="reader-account-link"
+                aria-label="My Account"
+            >
+                <i class="fa-solid fa-user"></i>
+            </a>
+
+        </div>
+
+        <!-- Font Controls -->
         <div class="font-controls">
+
             <button
                 class="font-btn"
                 type="button"
@@ -439,62 +577,151 @@
             >
                 A+
             </button>
+
         </div>
 
     </header>
 
-    <!-- Top Sponsored Ad -->
+
+    <!-- ==========================================
+         TOP ADVERTISEMENT
+    =========================================== -->
+
     <section class="ad-section">
+
         <div class="ad-label">Sponsored</div>
 
         <div class="ad-container" id="ad-slot-grid">
+
             <div class="ad-placeholder">
                 <i class="fa-solid fa-rectangle-ad"></i>
                 Banner Ad Slot
             </div>
+
         </div>
+
     </section>
+
+
+    <!-- ==========================================
+         MAIN READER
+    =========================================== -->
 
     <main class="main-container">
 
         <!-- Chapter Title -->
-        <div class="reader-chapter-title" id="chapter-title">
-            <!-- JavaScript will insert chapter title -->
+        <div
+            class="reader-chapter-title"
+            id="chapter-title"
+        >
+            <!-- JavaScript inserts chapter title -->
         </div>
 
-        <!-- Chapter Top Advertisement -->
+
+        <!-- Chapter Advertisement -->
         <section class="ad-section">
+
             <div class="ad-label">Advertisement</div>
 
             <div class="ad-container" id="ad-slot-header">
+
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Banner Ad Slot
                 </div>
+
             </div>
+
         </section>
 
-        <!-- Reading Content -->
-        <article class="reader-content" id="chapter-content">
+
+        <!-- ======================================
+             PREMIUM CHAPTER LOCK
+        ======================================= -->
+
+        <section
+            class="chapter-lock-section"
+            id="chapter-lock-section"
+            aria-live="polite"
+        >
+
+            <div class="chapter-lock-icon">
+                <i class="fa-solid fa-lock"></i>
+            </div>
+
+            <h2>Premium Chapter</h2>
+
+            <p>
+                ဤစာစဉ်သည် Premium Chapter ဖြစ်ပါသည်။
+                ဆက်လက်ဖတ်ရှုရန် Coin ဖြင့် Unlock လုပ်ပေးပါ။
+            </p>
+
+            <div class="lock-price">
+                <i class="fa-solid fa-coins"></i>
+                <span id="chapter-unlock-price">0</span>
+                Coins
+            </div>
+
+            <button
+                type="button"
+                class="unlock-btn"
+                id="unlock-chapter-btn"
+            >
+                <i class="fa-solid fa-unlock-keyhole"></i>
+                Coin ဖြင့် Unlock လုပ်ရန်
+            </button>
+
+            <button
+                type="button"
+                class="topup-btn"
+                id="chapter-topup-btn"
+                onclick="window.location.href='topup.html'"
+            >
+                <i class="fa-solid fa-wallet"></i>
+                Coin ထပ်ဖြည့်ရန်
+            </button>
+
+        </section>
+
+
+        <!-- ======================================
+             READING CONTENT
+        ======================================= -->
+
+        <article
+            class="reader-content"
+            id="chapter-content"
+        >
+
             <p style="text-align:center; color:var(--reader-muted); padding:40px 0;">
                 <i class="fa-solid fa-spinner fa-spin"></i>
                 စာစဉ်ကို ရယူနေသည်...
             </p>
+
         </article>
+
 
         <!-- Middle Advertisement -->
         <section class="ad-section">
+
             <div class="ad-label">Sponsored</div>
 
             <div class="ad-container" id="ad-slot-middle">
+
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Native Ad
                 </div>
+
             </div>
+
         </section>
 
-        <!-- Chapter Navigation -->
+
+        <!-- ======================================
+             CHAPTER NAVIGATION
+        ======================================= -->
+
         <div class="chapter-nav-bar">
 
             <button
@@ -528,35 +755,54 @@
 
         </div>
 
-        <!-- Below Navigation Advertisement -->
+
+        <!-- Bottom Navigation Advertisement -->
         <section class="ad-section">
+
             <div class="ad-label">Sponsored</div>
 
             <div class="ad-container" id="ad-slot-grid-bottom">
+
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Banner Ad Slot
                 </div>
+
             </div>
+
         </section>
+
 
         <!-- Bottom Advertisement -->
         <section class="ad-section">
+
             <div class="ad-label">Advertisement</div>
 
             <div class="ad-container" id="ad-slot-bottom">
+
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
                     Banner Ad Slot
                 </div>
+
             </div>
+
         </section>
 
     </main>
 
-    <!-- JavaScript -->
+
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
     <script src="ads.js"></script>
+
+    <!-- Reader Logic -->
     <script src="reader.js"></script>
+
+    <!-- Account & Coin Logic will be integrated here
+         after the reader.js compatibility update -->
 
 </body>
 </html>
