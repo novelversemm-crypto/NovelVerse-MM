@@ -3,262 +3,693 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b0b14">
-    <meta name="description" content="NovelVerse Admin Dashboard - Manage novels and chapters.">
 
-    <title>Admin Dashboard | NovelVerse</title>
+    <title>Admin Dashboard - NovelVerse</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Favicon -->
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="./favicon.png">
+
+    <style>
+        /* =========================================
+           NOVELVERSE ADMIN - PREMIUM DASHBOARD
+        ========================================= */
+
+        :root {
+            --admin-bg: #0b0b12;
+            --admin-surface: #13131f;
+            --admin-card: #191927;
+            --admin-card-hover: #202034;
+            --admin-border: rgba(255,255,255,0.075);
+
+            --admin-primary: #8b5cf6;
+            --admin-primary-light: #a78bfa;
+            --admin-primary-dark: #6d28d9;
+
+            --admin-text: #f5f3ff;
+            --admin-muted: #9695aa;
+
+            --admin-green: #34d399;
+            --admin-red: #fb7185;
+
+            --admin-radius: 18px;
+            --admin-shadow: 0 15px 45px rgba(0,0,0,0.25);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 0%, rgba(109,40,217,0.12), transparent 35%),
+                radial-gradient(circle at 90% 30%, rgba(139,92,246,0.07), transparent 30%),
+                var(--admin-bg);
+            color: var(--admin-text);
+            font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif;
+            padding-bottom: 100px;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* HEADER */
+
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            min-height: 72px;
+            padding: 12px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(13,13,22,0.88);
+            border-bottom: 1px solid var(--admin-border);
+            backdrop-filter: blur(18px);
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .logo-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .logo-title::after {
+            content: "ADMIN";
+            display: inline-block;
+            margin-left: 9px;
+            padding: 4px 7px;
+            background: rgba(139,92,246,0.15);
+            color: #b99cff;
+            border: 1px solid rgba(139,92,246,0.25);
+            border-radius: 6px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            vertical-align: middle;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(251,113,133,0.12) !important;
+            transform: translateY(-2px);
+        }
+
+        /* MAIN LAYOUT */
+
+        .main-container {
+            width: min(100% - 32px, 1050px);
+            margin: 35px auto;
+        }
+
+        /* GENERAL CARD */
+
+        .admin-card {
+            background: linear-gradient(145deg, #1b1b2b, #151521);
+            border: 1px solid var(--admin-border);
+            border-radius: var(--admin-radius);
+            padding: 28px;
+            box-shadow: var(--admin-shadow);
+        }
+
+        .admin-title {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 0 0 25px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .admin-title i {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: rgba(139,92,246,0.15);
+            color: var(--admin-primary-light);
+            font-size: 16px;
+        }
+
+        /* LOGIN */
+
+        #login-section {
+            width: min(100%, 440px);
+            margin: 75px auto;
+            padding: 35px;
+        }
+
+        #login-section .admin-title {
+            font-size: 22px;
+        }
+
+        #login-section .form-group {
+            margin-bottom: 25px;
+        }
+
+        /* FORM */
+
+        .form-group {
+            margin-bottom: 23px;
+        }
+
+        .form-group > label {
+            display: block;
+            margin-bottom: 9px;
+            color: #e5e2f0;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 9px;
+            color: var(--admin-muted) !important;
+            font-size: 11px !important;
+            line-height: 1.7;
+        }
+
+        .form-group input:not([type="checkbox"]),
+        .form-group input:not([type="file"]),
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 15px;
+            color: #fff;
+            background: #10101a;
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 11px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-size: 13px;
+        }
+
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 13px;
+            color: var(--admin-muted);
+            background: #10101a;
+            border: 1px dashed rgba(167,139,250,0.4);
+            border-radius: 11px;
+            font-size: 12px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--admin-primary) !important;
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.12);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666579;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.8;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #191927;
+            color: #fff;
+        }
+
+        /* BUTTONS */
+
+        .submit-btn {
+            width: 100%;
+            min-height: 49px;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 7px 20px rgba(109,40,217,0.22);
+        }
+
+        .submit-btn:hover {
+            filter: brightness(1.13);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(109,40,217,0.3);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* TABS */
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 22px;
+            padding: 7px;
+            overflow-x: auto;
+            background: rgba(19,19,31,0.9);
+            border: 1px solid var(--admin-border);
+            border-radius: 15px;
+            scrollbar-width: thin;
+        }
+
+        .tab-btn {
+            flex: 1;
+            min-width: max-content;
+            padding: 13px 17px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--admin-muted);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn i {
+            margin-right: 7px;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: linear-gradient(135deg, #7543db, #5b21b6);
+            border-color: rgba(196,181,253,0.2);
+            box-shadow: 0 5px 15px rgba(109,40,217,0.2);
+        }
+
+        .tab-content {
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(7px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* GENRE CHIPS */
+
+        .genre-checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px !important;
+            padding: 15px;
+            background: #10101a;
+            border: 1px solid var(--admin-border);
+            border-radius: 12px;
+        }
+
+        .genre-checkbox-group label {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 7px !important;
+            padding: 8px 11px;
+            margin: 0;
+            background: #1b1b2b;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 8px;
+            color: #c5c2d5;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .genre-checkbox-group label:has(input:checked) {
+            color: #d9c9ff;
+            background: rgba(139,92,246,0.18);
+            border-color: rgba(167,139,250,0.5);
+        }
+
+        .genre-checkbox-group input[type="checkbox"] {
+            accent-color: var(--admin-primary);
+            cursor: pointer;
+        }
+
+        /* SEARCH */
+
+        #admin-search-novel {
+            padding-left: 42px !important;
+        }
+
+        /* NOVEL LIST */
+
+        .admin-novel-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        /* MODALS */
+
+        #edit-novel-modal,
+        #edit-chapter-modal,
+        #manage-chapters-modal {
+            background: rgba(5,5,12,0.82) !important;
+            backdrop-filter: blur(8px);
+            overflow-y: auto;
+        }
+
+        #edit-novel-modal > .admin-card,
+        #edit-chapter-modal > .admin-card,
+        #manage-chapters-modal > .admin-card {
+            background: linear-gradient(145deg, #1d1d2d, #141420) !important;
+            border: 1px solid rgba(167,139,250,0.2);
+            border-radius: 18px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            margin: auto;
+        }
+
+        #edit-novel-modal .admin-title,
+        #edit-chapter-modal .admin-title,
+        #manage-chapters-modal .admin-title {
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--admin-border);
+        }
+
+        #manage-chapters-modal .admin-title {
+            font-size: 17px;
+        }
+
+        #manage-chapters-modal > .admin-card {
+            width: min(100%, 650px) !important;
+        }
+
+        /* BOTTOM NAV */
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 200;
+            width: 100%;
+            min-height: 67px;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: center;
+            background: rgba(15,15,25,0.94);
+            border-top: 1px solid var(--admin-border);
+            backdrop-filter: blur(20px);
+        }
+
+        .bottom-nav form {
+            width: min(100%, 500px);
+            display: flex !important;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-item {
+            min-width: 75px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            text-decoration: none;
+            color: #77768c;
+            font-size: 10px;
+            transition: 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            color: #b99cff;
+        }
+
+        .nav-item.active i {
+            filter: drop-shadow(0 0 7px rgba(167,139,250,0.5));
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 650px) {
+            .top-header {
+                min-height: 62px;
+                padding: 10px 17px;
+            }
+
+            .logo-img {
+                width: 36px;
+                height: 36px;
+            }
+
+            .logo-title {
+                font-size: 15px;
+            }
+
+            .main-container {
+                width: calc(100% - 22px);
+                margin: 20px auto;
+            }
+
+            .admin-card {
+                padding: 20px 16px;
+                border-radius: 15px;
+            }
+
+            .admin-title {
+                font-size: 17px;
+                margin-bottom: 20px;
+            }
+
+            .admin-title i {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+            }
+
+            .admin-tabs {
+                gap: 6px;
+                padding: 5px;
+            }
+
+            .tab-btn {
+                padding: 12px 13px;
+                font-size: 11px;
+            }
+
+            .genre-checkbox-group {
+                padding: 11px;
+                gap: 7px !important;
+            }
+
+            .genre-checkbox-group label {
+                padding: 7px 9px;
+                font-size: 10px;
+            }
+
+            #login-section {
+                margin: 50px auto;
+                padding: 25px 19px;
+            }
+
+            #edit-novel-modal,
+            #edit-chapter-modal,
+            #manage-chapters-modal {
+                padding: 10px !important;
+            }
+
+            #edit-novel-modal > .admin-card,
+            #edit-chapter-modal > .admin-card,
+            #manage-chapters-modal > .admin-card {
+                max-height: 88vh !important;
+                padding: 20px 16px;
+            }
+
+            .bottom-nav {
+                min-height: 62px;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .main-container {
+                margin-top: 45px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ==========================================
-         ADMIN HEADER
-    =========================================== -->
-
+    <!-- HEADER -->
     <header class="top-header">
-
         <div class="logo-area">
             <img
                 src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
                 alt="NovelVerse Logo"
                 class="logo-img"
             >
-
-            <div class="logo-text-area">
-                <span class="logo-title">NovelVerse</span>
-                <span class="logo-subtitle">ADMIN CONTROL PANEL</span>
-            </div>
+            <span class="logo-title">NovelVerse</span>
         </div>
 
         <button
-            type="button"
             id="logout-btn"
             class="icon-btn"
             onclick="handleLogout()"
-            aria-label="Logout"
+            style="display: none; background: transparent; border: none; color: #ff4d4d; font-size: 1.2rem; cursor: pointer;"
             title="Logout"
-            style="display: none;"
         >
             <i class="fa-solid fa-right-from-bracket"></i>
         </button>
-
     </header>
 
 
-    <!-- ==========================================
-         MAIN CONTAINER
-    =========================================== -->
-
+    <!-- MAIN -->
     <main class="main-container">
 
-        <!-- Dashboard Introduction -->
+        <!-- LOGIN -->
+        <section class="admin-card" id="login-section">
 
-        <div class="admin-welcome">
-            <div class="welcome-content">
-                <span class="welcome-label">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    SECURE ADMIN AREA
-                </span>
-
-                <h1>Admin Dashboard</h1>
-
-                <p>
-                    NovelVerse ရဲ့ Novel နှင့် Chapter များကို
-                    တစ်နေရာတည်းမှ စီမံခန့်ခွဲနိုင်ပါပြီ။
-                </p>
-            </div>
-
-            <div class="welcome-icon">
-                <i class="fa-solid fa-layer-group"></i>
-            </div>
-        </div>
-
-
-        <!-- ==========================================
-             ADMIN LOGIN
-        =========================================== -->
-
-        <section class="admin-card login-card" id="login-section">
-
-            <div class="login-icon">
+            <h3 class="admin-title">
                 <i class="fa-solid fa-shield-halved"></i>
-            </div>
-
-            <div class="login-heading">
-                <h3 class="admin-title">
-                    Admin Login
-                </h3>
-
-                <p class="section-description">
-                    GitHub Personal Access Token ဖြင့်
-                    Dashboard သို့ ဝင်ရောက်ပါ။
-                </p>
-            </div>
+                Admin Login
+            </h3>
 
             <form id="login-form" onsubmit="handleLogin(event)">
 
                 <div class="form-group">
-
                     <label for="github-token-input">
-                        <i class="fa-brands fa-github"></i>
                         GitHub Personal Access Token *
                     </label>
 
-                    <div class="input-with-icon">
-                        <i class="fa-solid fa-key"></i>
+                    <input
+                        type="password"
+                        id="github-token-input"
+                        placeholder="ghp_xxxxxxxxxxxx"
+                        required
+                    >
 
-                        <input
-                            type="password"
-                            id="github-token-input"
-                            placeholder="ghp_xxxxxxxxxxxx"
-                            autocomplete="off"
-                            required
-                        >
-                    </div>
-
-                    <small class="input-hint">
-                        သင့်ရဲ့ GitHub Token ကို ထည့်သွင်းပါ။
-                        Token ကို အခြားသူများနှင့် မမျှဝေပါနှင့်။
+                    <small>
+                        <i class="fa-solid fa-circle-info"></i>
+                        အစောက ထုတ်ထားသော GitHub Token ကို ထည့်ပါ။
                     </small>
-
                 </div>
 
-                <button
-                    type="submit"
-                    class="submit-btn login-submit-btn"
-                    id="login-btn"
-                >
+                <button type="submit" class="submit-btn" id="login-btn">
                     <i class="fa-solid fa-right-to-bracket"></i>
                     Login ဝင်မည်
                 </button>
 
             </form>
-
-            <div class="security-note">
-                <i class="fa-solid fa-lock"></i>
-                Secure Admin Access
-            </div>
-
         </section>
 
 
-        <!-- ==========================================
-             DASHBOARD
-        =========================================== -->
-
+        <!-- DASHBOARD -->
         <div id="dashboard-section" style="display: none;">
 
-            <!-- Dashboard Section Header -->
-
-            <div class="dashboard-heading">
-
-                <div>
-                    <span class="dashboard-eyebrow">
-                        MANAGEMENT CENTER
-                    </span>
-
-                    <h2>
-                        Welcome Back, Admin
-                    </h2>
-
-                    <p>
-                        သင့်ရဲ့ NovelVerse Content များကို
-                        စီမံခန့်ခွဲလိုက်ပါ။
-                    </p>
-                </div>
-
-                <div class="dashboard-heading-icon">
-                    <i class="fa-solid fa-gauge-high"></i>
-                </div>
-
-            </div>
-
-
-            <!-- ======================================
-                 ADMIN TABS
-            ======================================= -->
-
-            <nav class="admin-tabs" aria-label="Admin Management Tabs">
+            <!-- NAVIGATION TABS -->
+            <div class="admin-tabs">
 
                 <button
-                    type="button"
                     class="tab-btn active"
                     onclick="switchTab('add-novel')"
                 >
                     <i class="fa-solid fa-book-medical"></i>
-                    <span>Novel သစ်တင်ရန်</span>
+                    Novel သစ်တင်ရန်
                 </button>
 
                 <button
-                    type="button"
                     class="tab-btn"
                     onclick="switchTab('add-chapter')"
                 >
                     <i class="fa-solid fa-file-circle-plus"></i>
-                    <span>Chapter တင်ရန်</span>
+                    Chapter တင်ရန်
                 </button>
 
                 <button
-                    type="button"
                     class="tab-btn"
                     onclick="switchTab('manage-novels')"
                 >
                     <i class="fa-solid fa-list-check"></i>
-                    <span>Novels & Chapters</span>
+                    စီမံရန်
                 </button>
 
-            </nav>
+            </div>
 
 
-            <!-- ======================================
-                 TAB 1: ADD NOVEL
-            ======================================= -->
+            <!-- =================================
+                 ADD NOVEL
+            ================================== -->
+            <section class="admin-card tab-content" id="tab-add-novel">
 
-            <section
-                class="admin-card tab-content"
-                id="tab-add-novel"
-            >
-
-                <div class="section-heading">
-
-                    <div class="section-heading-icon">
-                        <i class="fa-solid fa-book-medical"></i>
-                    </div>
-
-                    <div>
-                        <h3 class="admin-title">
-                            နိုဗယ် အသစ်ဖန်တီးရန်
-                        </h3>
-
-                        <p class="section-description">
-                            Novel အသစ်တစ်ခုကို Website ပေါ်သို့ တင်ပါ။
-                        </p>
-                    </div>
-
-                </div>
-
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    နိုဗယ် အသစ်ဖန်တီးရန်
+                </h3>
 
                 <form id="add-novel-form" onsubmit="handleAddNovel(event)">
 
-                    <!-- Novel Title -->
-
                     <div class="form-group">
-
                         <label for="novel-title">
                             Novel ခေါင်းစဉ် *
                         </label>
@@ -269,46 +700,27 @@
                             placeholder="ဥပမာ - Shadow Monarch"
                             required
                         >
-
                     </div>
 
-
-                    <!-- Cover Upload -->
 
                     <div class="form-group">
-
                         <label for="novel-cover-file">
                             <i class="fa-solid fa-image"></i>
-                            Cover Image *
+                            Cover Image File *
                         </label>
 
-                        <div class="upload-area">
+                        <input
+                            type="file"
+                            id="novel-cover-file"
+                            accept="image/*"
+                            required
+                        >
 
-                            <div class="upload-icon">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
-                            </div>
-
-                            <div class="upload-text">
-                                <strong>Cover Image ရွေးချယ်ပါ</strong>
-
-                                <small>
-                                    JPG, PNG, WEBP စသည့် Image Files များ
-                                </small>
-                            </div>
-
-                            <input
-                                type="file"
-                                id="novel-cover-file"
-                                accept="image/*"
-                                required
-                            >
-
-                        </div>
-
+                        <small>
+                            Novel Cover Image ကို ရွေးချယ်ပါ။
+                        </small>
                     </div>
 
-
-                    <!-- Genres -->
 
                     <div class="form-group">
 
@@ -317,69 +729,49 @@
                             Genres / အမျိုးအစားများ *
                         </label>
 
-                        <p class="field-description">
-                            ကြိုက်နှစ်သက်ရာ Genre များကို
-                            တစ်ခုထက်ပို၍ ရွေးချယ်နိုင်သည်။
-                        </p>
-
                         <div class="genre-checkbox-group">
 
-                            <label><input type="checkbox" name="novel-genre-chip" value="Action"> <span>Action</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Adventure"> <span>Adventure</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Fantasy"> <span>Fantasy</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="System"> <span>System</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Murim"> <span>Murim</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Martial Arts"> <span>Martial Arts</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Rebirth"> <span>Rebirth</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Xianxia"> <span>Xianxia</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Romance"> <span>Romance</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Comedy"> <span>Comedy</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Sci-Fi"> <span>Sci-Fi</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Mystery"> <span>Mystery</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Horror"> <span>Horror</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Supernatural"> <span>Supernatural</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Isekai"> <span>Isekai</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Harem"> <span>Harem</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Slice of Life"> <span>Slice of Life</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Drama"> <span>Drama</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="BL"> <span>BL</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Yuri"> <span>Yuri</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Psychological"> <span>Psychological</span></label>
-                            <label><input type="checkbox" name="novel-genre-chip" value="Thriller"> <span>Thriller</span></label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Action"> Action</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Adventure"> Adventure</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Fantasy"> Fantasy</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="System"> System</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Murim"> Murim</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Martial Arts"> Martial Arts</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Rebirth"> Rebirth</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Xianxia"> Xianxia</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Romance"> Romance</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Comedy"> Comedy</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Sci-Fi"> Sci-Fi</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Mystery"> Mystery</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Horror"> Horror</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Supernatural"> Supernatural</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Isekai"> Isekai</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Harem"> Harem</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Slice of Life"> Slice of Life</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Drama"> Drama</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="BL"> BL</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Yuri"> Yuri</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Psychological"> Psychological</label>
+                            <label><input type="checkbox" name="novel-genre-chip" value="Thriller"> Thriller</label>
 
                         </div>
-
                     </div>
 
 
-                    <!-- Status -->
-
                     <div class="form-group">
-
                         <label for="novel-status">
-                            <i class="fa-solid fa-signal"></i>
+                            <i class="fa-solid fa-circle-check"></i>
                             Novel Status
                         </label>
 
                         <select id="novel-status">
-
-                            <option value="Ongoing">
-                                Ongoing
-                            </option>
-
-                            <option value="Completed">
-                                Completed
-                            </option>
-
+                            <option value="Ongoing">Ongoing</option>
+                            <option value="Completed">Completed</option>
                         </select>
-
                     </div>
 
 
-                    <!-- Synopsis -->
-
                     <div class="form-group">
-
                         <label for="novel-synopsis">
                             <i class="fa-solid fa-align-left"></i>
                             အညွှန်း (Synopsis)
@@ -390,80 +782,52 @@
                             rows="5"
                             placeholder="နိုဗယ်အကြောင်း အကျဉ်းချုပ် ရေးပါ..."
                         ></textarea>
-
                     </div>
 
-
-                    <!-- Submit -->
 
                     <button
                         type="submit"
                         class="submit-btn"
                         id="save-novel-btn"
                     >
-                        <i class="fa-solid fa-floppy-disk"></i>
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
                         Novel သိမ်းဆည်းမည်
                     </button>
 
                 </form>
-
             </section>
 
 
-            <!-- ======================================
-                 TAB 2: ADD CHAPTER
-            ======================================= -->
 
+            <!-- =================================
+                 ADD CHAPTER
+            ================================== -->
             <section
                 class="admin-card tab-content"
                 id="tab-add-chapter"
                 style="display: none;"
             >
 
-                <div class="section-heading">
-
-                    <div class="section-heading-icon">
-                        <i class="fa-solid fa-file-circle-plus"></i>
-                    </div>
-
-                    <div>
-                        <h3 class="admin-title">
-                            Chapter အသစ်ထည့်ရန်
-                        </h3>
-
-                        <p class="section-description">
-                            ရှိပြီးသား Novel များအတွက် Chapter အသစ်တင်ပါ။
-                        </p>
-                    </div>
-
-                </div>
-
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-file-pen"></i>
+                    Chapter အသစ်ထည့်ရန်
+                </h3>
 
                 <form id="add-chapter-form" onsubmit="handleAddChapter(event)">
 
                     <div class="form-group">
-
                         <label for="select-novel-dropdown">
                             <i class="fa-solid fa-book"></i>
                             Novel ရွေးချယ်ပါ *
                         </label>
 
-                        <select
-                            id="select-novel-dropdown"
-                            required
-                        >
-
-                            <option value="">
-                                -- Novel ရွေးပါ --
-                            </option>
-
+                        <select id="select-novel-dropdown" required>
+                            <option value="">-- Novel ရွေးပါ --</option>
                         </select>
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label for="chapter-number">
                             Chapter နံပါတ် *
                         </label>
@@ -473,15 +837,12 @@
                             id="chapter-number"
                             placeholder="1"
                             min="1"
-                            step="1"
                             required
                         >
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label for="chapter-title-input">
                             Chapter ခေါင်းစဉ်
                         </label>
@@ -491,29 +852,25 @@
                             id="chapter-title-input"
                             placeholder="ဥပမာ - The Beginning"
                         >
-
                     </div>
 
 
                     <div class="form-group">
-
                         <label for="chapter-content-input">
-                            <i class="fa-solid fa-align-left"></i>
-                            Chapter စာသားများ (Content) *
+                            <i class="fa-solid fa-file-lines"></i>
+                            Chapter စာသားများ *
                         </label>
 
                         <textarea
                             id="chapter-content-input"
                             rows="14"
-                            placeholder="Chapter စာသားများကို ဒီမှာ ကူးထည့်ပါ..."
+                            placeholder="စာစဉ်ပါ စာသားများကို ဒီမှာ ကူးထည့်ပါ..."
                             required
                         ></textarea>
 
-                        <small class="input-hint">
-                            Chapter Content ကို မတင်ခင်
-                            မှန်ကန်ကြောင်း စစ်ဆေးပါ။
+                        <small>
+                            Chapter Content ကို မတင်မီ သေချာစစ်ဆေးပါ။
                         </small>
-
                     </div>
 
 
@@ -527,74 +884,59 @@
                     </button>
 
                 </form>
-
             </section>
 
 
-            <!-- ======================================
-                 TAB 3: MANAGE NOVELS & CHAPTERS
-            ======================================= -->
 
+            <!-- =================================
+                 MANAGE NOVELS
+            ================================== -->
             <section
                 class="admin-card tab-content"
                 id="tab-manage-novels"
                 style="display: none;"
             >
 
-                <div class="section-heading">
-
-                    <div class="section-heading-icon">
-                        <i class="fa-solid fa-list-check"></i>
-                    </div>
-
-                    <div>
-                        <h3 class="admin-title">
-                            Novels & Chapters စီမံရန်
-                        </h3>
-
-                        <p class="section-description">
-                            Novel များကို ရှာဖွေ၊ ပြင်ဆင်၊
-                            Chapter များကို စီမံနိုင်သည်။
-                        </p>
-                    </div>
-
-                </div>
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-list-check"></i>
+                    Novels & Chapters စီမံရန်
+                </h3>
 
 
-                <!-- Novel Search -->
-
-                <div class="form-group admin-search-group">
+                <div class="form-group" style="margin-bottom: 22px;">
 
                     <label for="admin-search-novel">
                         Novel ရှာဖွေရန်
                     </label>
 
-                    <div class="admin-search-box">
+                    <div style="position: relative;">
 
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span style="
+                            position: absolute;
+                            left: 15px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            color: #9695aa;
+                        ">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
 
                         <input
-                            type="search"
+                            type="text"
                             id="admin-search-novel"
                             placeholder="Novel အမည်ဖြင့် ရှာရန်..."
                             oninput="filterAdminNovels()"
+                            style="padding-left: 43px;"
                         >
 
                     </div>
-
                 </div>
 
-
-                <!-- Dynamic Novel List -->
 
                 <div
                     id="admin-novel-list"
                     class="admin-novel-list"
-                >
-
-                    <!-- Novel items rendered by admin.js -->
-
-                </div>
+                ></div>
 
             </section>
 
@@ -603,32 +945,39 @@
     </main>
 
 
-    <!-- ==========================================
-         EDIT NOVEL MODAL
-    =========================================== -->
 
+    <!-- =========================================
+         EDIT NOVEL MODAL
+    ========================================== -->
     <div
         id="edit-novel-modal"
-        class="admin-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="edit-novel-heading"
-        style="display: none;"
+        style="
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        "
     >
 
-        <div class="admin-card modal-card">
+        <div
+            class="admin-card"
+            style="
+                width: 100%;
+                max-width: 500px;
+                max-height: 90vh;
+                overflow-y: auto;
+                position: relative;
+            "
+        >
 
-            <div class="modal-heading">
-
-                <div class="section-heading-icon">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </div>
-
-                <h3 class="admin-title" id="edit-novel-heading">
-                    Novel ပြင်ဆင်ရန်
-                </h3>
-
-            </div>
+            <h3 class="admin-title">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Novel ပြင်ဆင်ရန်
+            </h3>
 
 
             <form id="edit-novel-form" onsubmit="handleUpdateNovel(event)">
@@ -637,7 +986,6 @@
 
 
                 <div class="form-group">
-
                     <label for="edit-novel-title">
                         Novel ခေါင်းစဉ် *
                     </label>
@@ -647,29 +995,22 @@
                         id="edit-novel-title"
                         required
                     >
-
                 </div>
 
 
                 <div class="form-group">
-
                     <label for="edit-novel-status">
                         Status
                     </label>
 
                     <select id="edit-novel-status">
-
                         <option value="Ongoing">Ongoing</option>
-
                         <option value="Completed">Completed</option>
-
                     </select>
-
                 </div>
 
 
                 <div class="form-group">
-
                     <label for="edit-novel-synopsis">
                         အညွှန်း (Synopsis)
                     </label>
@@ -678,24 +1019,29 @@
                         id="edit-novel-synopsis"
                         rows="5"
                     ></textarea>
-
                 </div>
 
 
-                <div class="modal-actions">
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
 
                     <button
                         type="submit"
                         class="submit-btn"
+                        style="flex: 1;"
                     >
-                        <i class="fa-solid fa-floppy-disk"></i>
+                        <i class="fa-solid fa-check"></i>
                         ပြင်ဆင်မည်
                     </button>
 
                     <button
                         type="button"
-                        class="submit-btn cancel-btn"
+                        class="submit-btn"
                         onclick="closeEditModal()"
+                        style="
+                            flex: 1;
+                            background: #383849;
+                            box-shadow: none;
+                        "
                     >
                         ပိတ်မည်
                     </button>
@@ -705,47 +1051,51 @@
             </form>
 
         </div>
-
     </div>
 
 
-    <!-- ==========================================
-         EDIT CHAPTER MODAL
-    =========================================== -->
 
+    <!-- =========================================
+         EDIT CHAPTER MODAL
+    ========================================== -->
     <div
         id="edit-chapter-modal"
-        class="admin-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="edit-chapter-heading"
-        style="display: none;"
+        style="
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        "
     >
 
-        <div class="admin-card modal-card modal-card-large">
+        <div
+            class="admin-card"
+            style="
+                width: 100%;
+                max-width: 600px;
+                max-height: 90vh;
+                overflow-y: auto;
+                position: relative;
+            "
+        >
 
-            <div class="modal-heading">
-
-                <div class="section-heading-icon">
-                    <i class="fa-solid fa-file-pen"></i>
-                </div>
-
-                <h3 class="admin-title" id="edit-chapter-heading">
-                    Chapter ပြင်ဆင်ရန်
-                </h3>
-
-            </div>
+            <h3 class="admin-title">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Chapter ပြင်ဆင်ရန်
+            </h3>
 
 
             <form id="edit-chapter-form" onsubmit="handleUpdateChapter(event)">
 
                 <input type="hidden" id="edit-chapter-filename">
-
                 <input type="hidden" id="edit-chapter-slug">
 
 
                 <div class="form-group">
-
                     <label for="edit-chapter-number">
                         Chapter နံပါတ် *
                     </label>
@@ -754,15 +1104,12 @@
                         type="number"
                         id="edit-chapter-number"
                         min="1"
-                        step="1"
                         required
                     >
-
                 </div>
 
 
                 <div class="form-group">
-
                     <label for="edit-chapter-title">
                         Chapter ခေါင်းစဉ်
                     </label>
@@ -772,14 +1119,12 @@
                         id="edit-chapter-title"
                         placeholder="ဥပမာ - The Beginning"
                     >
-
                 </div>
 
 
                 <div class="form-group">
-
                     <label for="edit-chapter-content">
-                        Chapter စာသားများ (Content) *
+                        Chapter စာသားများ *
                     </label>
 
                     <textarea
@@ -787,25 +1132,30 @@
                         rows="14"
                         required
                     ></textarea>
-
                 </div>
 
 
-                <div class="modal-actions">
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
 
                     <button
                         type="submit"
-                        class="submit-btn edit-save-btn"
+                        class="submit-btn"
                         id="save-edit-chapter-btn"
+                        style="flex: 1;"
                     >
-                        <i class="fa-solid fa-floppy-disk"></i>
+                        <i class="fa-solid fa-check"></i>
                         ပြင်ဆင်မည်
                     </button>
 
                     <button
                         type="button"
-                        class="submit-btn cancel-btn"
+                        class="submit-btn"
                         onclick="closeEditChapterModal()"
+                        style="
+                            flex: 1;
+                            background: #383849;
+                            box-shadow: none;
+                        "
                     >
                         ပိတ်မည်
                     </button>
@@ -815,48 +1165,62 @@
             </form>
 
         </div>
-
     </div>
 
 
-    <!-- ==========================================
-         MANAGE CHAPTERS MODAL
-    =========================================== -->
 
+    <!-- =========================================
+         MANAGE CHAPTERS MODAL
+    ========================================== -->
     <div
         id="manage-chapters-modal"
-        class="admin-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="manage-chapters-heading"
-        style="display: none;"
+        style="
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        "
     >
 
-        <div class="admin-card modal-card modal-card-large">
+        <div
+            class="admin-card"
+            style="
+                width: 100%;
+                max-width: 600px;
+                max-height: 90vh;
+                overflow-y: auto;
+                position: relative;
+            "
+        >
 
-            <div class="modal-heading modal-heading-between">
+            <div style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+            ">
 
-                <div class="modal-title-group">
-
-                    <div class="section-heading-icon">
-                        <i class="fa-solid fa-book-open"></i>
-                    </div>
-
-                    <h3
-                        class="admin-title"
-                        id="manage-chapters-heading"
-                    >
-                        Chapter များ စီမံရန်
-                    </h3>
-
-                </div>
-
+                <h3 class="admin-title" style="margin: 0;">
+                    <i class="fa-solid fa-book-open"></i>
+                    Chapter များ စီမံရန်
+                </h3>
 
                 <button
-                    type="button"
-                    class="modal-close-btn"
                     onclick="closeChaptersModal()"
-                    aria-label="Close Chapters Modal"
+                    style="
+                        width: 35px;
+                        height: 35px;
+                        background: rgba(255,255,255,0.06);
+                        border: 1px solid var(--admin-border);
+                        border-radius: 9px;
+                        color: #fff;
+                        cursor: pointer;
+                    "
+                    title="Close"
                 >
                     <i class="fa-solid fa-xmark"></i>
                 </button>
@@ -864,69 +1228,50 @@
             </div>
 
 
-            <!-- Dynamic Chapter List -->
-
             <div
                 id="admin-chapter-list"
-                class="admin-chapter-list"
+                style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                "
             >
-
-                <!--
-                    Chapter Lists
-                    Edit / Delete Buttons
-                    Rendered dynamically through admin.js
-                -->
-
+                <!-- Chapter lists rendered by admin.js -->
             </div>
 
         </div>
-
     </div>
 
 
-    <!-- ==========================================
+
+    <!-- =========================================
          BOTTOM NAVIGATION
-    =========================================== -->
+    ========================================== -->
+    <nav class="bottom-nav">
 
-    <nav class="bottom-nav" aria-label="Main Navigation">
+        <form style="display: contents;">
 
-        <a href="index.html" class="nav-item">
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
 
-            <i class="fa-solid fa-house"></i>
+            <a href="search.html" class="nav-item">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Search</span>
+            </a>
 
-            <span>Home</span>
+            <a href="admin.html" class="nav-item active">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>Admin</span>
+            </a>
 
-        </a>
-
-
-        <a href="search.html" class="nav-item">
-
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-            <span>Search</span>
-
-        </a>
-
-
-        <a
-            href="admin.html"
-            class="nav-item active"
-            aria-current="page"
-        >
-
-            <i class="fa-solid fa-user-gear"></i>
-
-            <span>Admin</span>
-
-        </a>
+        </form>
 
     </nav>
 
 
-    <!-- ==========================================
-         ADMIN JAVASCRIPT
-    =========================================== -->
-
+    <!-- ORIGINAL JAVASCRIPT -->
     <script src="admin.js"></script>
 
 </body>
