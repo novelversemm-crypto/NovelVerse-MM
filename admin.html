@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="my">
 <head>
@@ -164,7 +164,7 @@
                         <input type="text" id="chapter-title-input" placeholder="ဥပမာ - The Beginning">
                     </div>
 
-                    <!-- NEW: CHAPTER PAYMENT SETTINGS -->
+                    <!-- CHAPTER PAYMENT SETTINGS -->
                     <div class="form-group">
                         <label style="display: flex; align-items: center; gap: 8px;">
                             <input type="checkbox" id="chapter-is-locked">
@@ -172,29 +172,17 @@
                             Paid Chapter အဖြစ် သတ်မှတ်မည်
                         </label>
 
-                        <small style="display: block; color: #aaa; margin-top: 5px;">
-                            အမှန်ခြစ်ထားပါက Coin ဖြင့် ဝယ်ယူဖတ်ရှုရမည့် Chapter ဖြစ်ပါမည်။
-                        </small>
-                    </div>
-
-                    <div class="form-group">
-                        <label>
+                        <div style="margin-top: 10px; padding: 12px; background: rgba(240,173,78,0.08); border: 1px solid rgba(240,173,78,0.25); border-radius: 8px;">
                             <i class="fa-solid fa-coins" style="color: #f0ad4e;"></i>
-                            Chapter ဖတ်ရှုခ (Coins)
-                        </label>
+                            <strong style="color: #f0ad4e;">1 Coin</strong>
+                            <small style="display: block; color: #aaa; margin-top: 5px;">
+                                Paid Chapter အဖြစ် သတ်မှတ်ပါက Chapter တစ်ခုလျှင် 1 Coin ကျသင့်ပါမည်။
+                                အမှန်မခြစ်ထားပါက Free Chapter ဖြစ်ပါမည်။
+                            </small>
+                        </div>
 
-                        <input
-                            type="number"
-                            id="chapter-coin-price"
-                            min="0"
-                            step="1"
-                            value="0"
-                            placeholder="ဥပမာ - 5"
-                        >
-
-                        <small style="color: #aaa; font-size: 0.8rem;">
-                            Free Chapter ဖြစ်ပါက 0 ထားပါ။
-                        </small>
+                        <!-- JS Compatibility: Fixed price -->
+                        <input type="hidden" id="chapter-coin-price" value="1">
                     </div>
 
                     <div class="form-group">
@@ -313,41 +301,25 @@
                     <input type="text" id="edit-chapter-title" placeholder="ဥပမာ - The Beginning">
                 </div>
 
-                <!-- NEW: EDIT CHAPTER PAYMENT SETTINGS -->
+                <!-- EDIT CHAPTER PAYMENT SETTINGS -->
                 <div class="form-group">
-
                     <label style="display: flex; align-items: center; gap: 8px;">
                         <input type="checkbox" id="edit-chapter-is-locked">
                         <i class="fa-solid fa-lock" style="color: #f0ad4e;"></i>
                         Paid Chapter အဖြစ် သတ်မှတ်မည်
                     </label>
 
-                    <small style="display: block; color: #aaa; margin-top: 5px;">
-                        အမှန်ခြစ်ထားပါက ဤ Chapter ကို Coin ဖြင့် ဝယ်ယူဖတ်ရှုရပါမည်။
-                    </small>
-
-                </div>
-
-                <div class="form-group">
-
-                    <label>
+                    <div style="margin-top: 10px; padding: 12px; background: rgba(240,173,78,0.08); border: 1px solid rgba(240,173,78,0.25); border-radius: 8px;">
                         <i class="fa-solid fa-coins" style="color: #f0ad4e;"></i>
-                        Chapter ဖတ်ရှုခ (Coins)
-                    </label>
+                        <strong style="color: #f0ad4e;">1 Coin</strong>
+                        <small style="display: block; color: #aaa; margin-top: 5px;">
+                            Paid Chapter အဖြစ် သတ်မှတ်ပါက Chapter တစ်ခုလျှင် 1 Coin ကျသင့်ပါမည်။
+                            အမှန်မခြစ်ထားပါက Free Chapter ဖြစ်ပါမည်။
+                        </small>
+                    </div>
 
-                    <input
-                        type="number"
-                        id="edit-chapter-coin-price"
-                        min="0"
-                        step="1"
-                        value="0"
-                        placeholder="ဥပမာ - 5"
-                    >
-
-                    <small style="color: #aaa; font-size: 0.8rem;">
-                        Free Chapter ဖြစ်ပါက 0 ထားပါ။
-                    </small>
-
+                    <!-- JS Compatibility: Fixed price -->
+                    <input type="hidden" id="edit-chapter-coin-price" value="1">
                 </div>
 
                 <div class="form-group">
@@ -423,3 +395,4 @@
 
 </body>
 </html>
+```
