@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
@@ -6,635 +7,29 @@
 
     <title>NovelVerse Myanmar | Read Your Next Story</title>
 
-    <meta name="description" content="NovelVerse Myanmar - Discover and read your favorite translated novels.">
-    <meta name="theme-color" content="#0c0b14">
+    <meta
+        name="description"
+        content="NovelVerse Myanmar - Discover and read your favorite translated novels."
+    >
+    <meta name="theme-color" content="#12111a">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="./favicon.png">
-
-    <style>
-        /* ==========================================
-           NOVELVERSE - HOMEPAGE PREMIUM UI
-        ========================================== */
-
-        :root {
-            --home-bg: #0c0b14;
-            --home-surface: #151421;
-            --home-card: #1a1928;
-            --home-border: rgba(255,255,255,0.07);
-
-            --home-primary: #9565f5;
-            --home-primary-light: #b99aff;
-
-            --home-text: #f6f3ff;
-            --home-muted: #9995ad;
-
-            --home-radius: 16px;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            padding-bottom: 85px;
-
-            color: var(--home-text);
-
-            background:
-                radial-gradient(
-                    ellipse at 50% -15%,
-                    rgba(111,66,193,0.15),
-                    transparent 45%
-                ),
-                var(--home-bg);
-
-            font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button {
-            font: inherit;
-        }
-
-        /* HEADER */
-
-        .top-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-
-            width: 100%;
-            min-height: 68px;
-            padding: 10px 5%;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            background: rgba(13,12,22,0.88);
-            border-bottom: 1px solid var(--home-border);
-
-            backdrop-filter: blur(18px);
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-        }
-
-        .logo-img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 11px;
-        }
-
-        .logo-title {
-            color: #fff;
-            font-size: 19px;
-            font-weight: 700;
-            letter-spacing: -0.6px;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .icon-btn {
-            width: 41px;
-            height: 41px;
-
-            display: grid;
-            place-items: center;
-
-            color: #ddd6f5;
-            background: rgba(255,255,255,0.06);
-
-            border: 1px solid var(--home-border);
-            border-radius: 12px;
-
-            font-size: 15px;
-            transition: 0.2s;
-        }
-
-        .icon-btn:hover {
-            color: #fff;
-            background: rgba(149,101,245,0.2);
-            border-color: rgba(185,154,255,0.4);
-        }
-
-        /* MAIN CONTAINER */
-
-        .main-container {
-            width: min(100% - 32px, 1150px);
-            margin: 0 auto;
-        }
-
-        /* ADVERTISEMENT */
-
-        .ad-section {
-            width: min(100% - 32px, 1000px);
-            margin: 20px auto;
-        }
-
-        .ad-label {
-            color: #6e6a7d;
-            font-size: 9px;
-            text-align: center;
-            letter-spacing: 1.5px;
-        }
-
-        .ad-container {
-            width: 100%;
-            min-height: 75px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            overflow: hidden;
-
-            background: rgba(255,255,255,0.018);
-            border: 1px dashed rgba(255,255,255,0.09);
-            border-radius: 12px;
-        }
-
-        .ad-placeholder {
-            color: #777386;
-            font-size: 11px;
-        }
-
-        .ad-placeholder i {
-            margin-right: 6px;
-        }
-
-        /* HERO SECTION */
-
-        .hero-section {
-            margin: 25px 0 35px;
-        }
-
-        .hero-card {
-            position: relative;
-
-            width: 100%;
-            min-height: 350px;
-
-            overflow: hidden;
-            display: flex;
-            align-items: flex-end;
-
-            background: #1a1727;
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 22px;
-
-            isolation: isolate;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-
-            z-index: -2;
-
-            width: 100%;
-            height: 100%;
-
-            object-fit: cover;
-            object-position: center 35%;
-
-            transition: transform 0.7s;
-        }
-
-        .hero-card:hover .hero-bg {
-            transform: scale(1.035);
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(10,9,18,0.95) 0%,
-                    rgba(10,9,18,0.76) 42%,
-                    rgba(10,9,18,0.15) 100%
-                ),
-                linear-gradient(
-                    0deg,
-                    rgba(10,9,18,0.65),
-                    transparent 65%
-                );
-        }
-
-        .hero-content {
-            width: min(580px, 85%);
-            padding: 40px;
-        }
-
-        .hero-content::before {
-            content: "FEATURED NOVEL";
-
-            display: inline-block;
-            margin-bottom: 15px;
-            padding: 6px 11px;
-
-            color: #d9c7ff;
-            background: rgba(149,101,245,0.2);
-
-            border: 1px solid rgba(185,154,255,0.3);
-            border-radius: 6px;
-
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-        }
-
-        .hero-title {
-            margin: 0 0 12px;
-
-            color: #fff;
-            font-size: clamp(25px, 4vw, 42px);
-            font-weight: 800;
-            line-height: 1.35;
-        }
-
-        .hero-desc {
-            max-width: 480px;
-            margin: 0 0 23px;
-
-            color: #d2cede;
-            font-size: 13px;
-            line-height: 1.9;
-
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            min-height: 43px;
-            padding: 11px 21px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-
-            color: #fff;
-            background: linear-gradient(135deg, #9867f6, #7138d5);
-
-            border-radius: 10px;
-
-            font-size: 12px;
-            font-weight: 700;
-
-            box-shadow: 0 7px 20px rgba(113,56,213,0.28);
-            transition: 0.2s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.12);
-        }
-
-        /* SECTION */
-
-        .section-block {
-            margin: 35px 0;
-        }
-
-        .section-header {
-            margin-bottom: 19px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .section-title {
-            margin: 0;
-
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            color: #f7f3ff;
-            font-size: 17px;
-            font-weight: 700;
-        }
-
-        .section-title i {
-            color: var(--home-primary-light);
-            font-size: 17px;
-        }
-
-        .view-all {
-            flex-shrink: 0;
-
-            display: flex;
-            align-items: center;
-            gap: 7px;
-
-            color: #a995d7;
-            font-size: 11px;
-            font-weight: 600;
-
-            transition: 0.2s;
-        }
-
-        .view-all:hover {
-            color: #fff;
-        }
-
-        /* CONTINUE READING */
-
-        #continue-reading-section {
-            animation: homeFade 0.3s ease;
-        }
-
-        .continue-card {
-            overflow: hidden;
-
-            background: linear-gradient(
-                110deg,
-                rgba(112,69,185,0.2),
-                rgba(26,25,40,0.95)
-            );
-
-            border: 1px solid rgba(167,139,250,0.2);
-            border-radius: 15px;
-        }
-
-        /* LATEST NOVELS GRID */
-
-        .novel-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 17px;
-        }
-
-        .novel-card-skeleton {
-            min-height: 220px;
-
-            background: linear-gradient(
-                110deg,
-                #171624 8%,
-                #242237 18%,
-                #171624 33%
-            );
-
-            background-size: 200% 100%;
-            border: 1px solid var(--home-border);
-            border-radius: 13px;
-
-            animation: skeletonLoading 1.5s linear infinite;
-        }
-
-        @keyframes skeletonLoading {
-            to {
-                background-position-x: -200%;
-            }
-        }
-
-        /* POPULAR LIST */
-
-        .popular-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* FOOTER NAVIGATION */
-
-        .bottom-nav {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-
-            z-index: 200;
-
-            width: 100%;
-            min-height: 66px;
-            padding: 8px 15px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background: rgba(15,14,24,0.94);
-            border-top: 1px solid var(--home-border);
-
-            backdrop-filter: blur(20px);
-        }
-
-        .bottom-nav .nav-item {
-            min-width: 85px;
-
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-
-            padding: 5px 12px;
-
-            color: #777487;
-            font-size: 10px;
-
-            transition: 0.2s;
-        }
-
-        .bottom-nav .nav-item i {
-            font-size: 18px;
-        }
-
-        .bottom-nav .nav-item.active,
-        .bottom-nav .nav-item:hover {
-            color: #b99aff;
-        }
-
-        .bottom-nav .nav-item.active i {
-            filter: drop-shadow(0 0 7px rgba(185,154,255,0.5));
-        }
-
-        /* ANIMATION */
-
-        @keyframes homeFade {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* RESPONSIVE */
-
-        @media (max-width: 850px) {
-            .novel-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-                gap: 13px;
-            }
-
-            .hero-card {
-                min-height: 320px;
-            }
-
-            .hero-content {
-                padding: 30px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .top-header {
-                min-height: 60px;
-                padding: 9px 16px;
-            }
-
-            .logo-img {
-                width: 35px;
-                height: 35px;
-            }
-
-            .logo-title {
-                font-size: 17px;
-            }
-
-            .main-container {
-                width: calc(100% - 22px);
-            }
-
-            .hero-section {
-                margin: 17px 0 28px;
-            }
-
-            .hero-card {
-                min-height: 300px;
-                border-radius: 17px;
-            }
-
-            .hero-overlay {
-                background:
-                    linear-gradient(
-                        0deg,
-                        rgba(9,8,16,0.97) 0%,
-                        rgba(9,8,16,0.75) 48%,
-                        rgba(9,8,16,0.1) 100%
-                    );
-            }
-
-            .hero-content {
-                width: 100%;
-                padding: 22px;
-            }
-
-            .hero-content::before {
-                margin-bottom: 10px;
-                font-size: 8px;
-            }
-
-            .hero-title {
-                font-size: 25px;
-            }
-
-            .hero-desc {
-                font-size: 11px;
-                line-height: 1.8;
-                margin-bottom: 17px;
-            }
-
-            .section-block {
-                margin: 28px 0;
-            }
-
-            .section-header {
-                margin-bottom: 14px;
-            }
-
-            .section-title {
-                font-size: 14px;
-                gap: 8px;
-            }
-
-            .section-title i {
-                font-size: 14px;
-            }
-
-            .view-all {
-                font-size: 10px;
-            }
-
-            .novel-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 11px;
-            }
-
-            .novel-card-skeleton {
-                min-height: 190px;
-            }
-
-            .ad-section {
-                width: calc(100% - 22px);
-                margin: 17px auto;
-            }
-
-            .ad-container {
-                min-height: 65px;
-            }
-
-            .bottom-nav {
-                min-height: 62px;
-                padding: 6px 10px;
-            }
-
-            .bottom-nav .nav-item {
-                min-width: 72px;
-                font-size: 9px;
-            }
-
-            .bottom-nav .nav-item i {
-                font-size: 17px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .hero-title {
-                font-size: 22px;
-            }
-
-            .section-title {
-                font-size: 12px;
-            }
-
-            .novel-grid {
-                gap: 8px;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -645,13 +40,17 @@
     <header class="top-header">
 
         <div class="logo-area">
-            <img
-                src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
-                alt="NovelVerse Logo"
-                class="logo-img"
-            >
+            <a href="index.html" aria-label="NovelVerse Home">
+                <img
+                    src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                    alt="NovelVerse Logo"
+                    class="logo-img"
+                >
+            </a>
 
-            <span class="logo-title">NovelVerse</span>
+            <a href="index.html" class="logo-title">
+                NovelVerse
+            </a>
         </div>
 
         <div class="header-actions">
@@ -668,7 +67,6 @@
         </div>
 
     </header>
-
 
 
     <!-- =========================================
@@ -690,14 +88,15 @@
     </section>
 
 
-
     <!-- =========================================
          MAIN CONTENT
     ========================================== -->
     <main class="main-container">
 
 
-        <!-- FEATURED NOVEL -->
+        <!-- =====================================
+             FEATURED NOVEL
+        ====================================== -->
         <section class="hero-section">
 
             <div class="hero-card" id="featured-hero">
@@ -712,6 +111,10 @@
                 >
 
                 <div class="hero-content">
+
+                    <span class="hero-label">
+                        FEATURED NOVEL
+                    </span>
 
                     <h2 class="hero-title" id="hero-title">
                         Shadow Hunter
@@ -737,8 +140,9 @@
         </section>
 
 
-
-        <!-- CONTINUE READING -->
+        <!-- =====================================
+             CONTINUE READING
+        ====================================== -->
         <section
             class="section-block"
             id="continue-reading-section"
@@ -764,9 +168,10 @@
         </section>
 
 
-
-        <!-- MIDDLE ADVERTISEMENT -->
-        <section class="ad-section">
+        <!-- =====================================
+             MIDDLE ADVERTISEMENT
+        ====================================== -->
+        <section class="ad-section middle-ad-slot">
 
             <div class="ad-label"></div>
 
@@ -782,8 +187,9 @@
         </section>
 
 
-
-        <!-- LATEST CHAPTERS -->
+        <!-- =====================================
+             LATEST CHAPTERS
+        ====================================== -->
         <section class="section-block">
 
             <div class="section-header">
@@ -800,7 +206,6 @@
 
             </div>
 
-
             <div
                 class="novel-grid"
                 id="latest-updates-grid"
@@ -816,8 +221,9 @@
         </section>
 
 
-
-        <!-- BOTTOM ADVERTISEMENT -->
+        <!-- =====================================
+             BOTTOM ADVERTISEMENT
+        ====================================== -->
         <section class="ad-section bottom-ad-slot">
 
             <div class="ad-label"></div>
@@ -834,8 +240,9 @@
         </section>
 
 
-
-        <!-- POPULAR NOVELS -->
+        <!-- =====================================
+             POPULAR NOVELS
+        ====================================== -->
         <section class="section-block">
 
             <div class="section-header">
@@ -852,7 +259,6 @@
 
             </div>
 
-
             <div
                 class="popular-list"
                 id="popular-list"
@@ -863,13 +269,17 @@
         </section>
 
 
-
-        <!-- SECOND BOTTOM ADVERTISEMENT -->
+        <!-- =====================================
+             SECOND BOTTOM ADVERTISEMENT
+        ====================================== -->
         <section class="ad-section bottom-ad-slot">
 
             <div class="ad-label"></div>
 
-            <div class="ad-container" id="ad-slot-bottom">
+            <div
+                class="ad-container"
+                id="ad-slot-bottom-secondary"
+            >
 
                 <div class="ad-placeholder">
                     <i class="fa-solid fa-rectangle-ad"></i>
@@ -880,27 +290,35 @@
 
         </section>
 
-
     </main>
-
 
 
     <!-- =========================================
          BOTTOM NAVIGATION
     ========================================== -->
-    <nav class="bottom-nav">
+    <nav class="bottom-nav" aria-label="Main navigation">
 
-        <a href="index.html" class="nav-item active">
+        <a
+            href="index.html"
+            class="nav-item active"
+            aria-current="page"
+        >
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
 
-        <a href="search.html" class="nav-item">
+        <a
+            href="search.html"
+            class="nav-item"
+        >
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Search</span>
         </a>
 
-        <a href="admin.html" class="nav-item">
+        <a
+            href="admin.html"
+            class="nav-item"
+        >
             <i class="fa-solid fa-user-gear"></i>
             <span>Admin</span>
         </a>
@@ -908,8 +326,9 @@
     </nav>
 
 
-
-    <!-- ORIGINAL JAVASCRIPT FILES -->
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
     <script src="ads.js"></script>
     <script src="app.js"></script>
 
