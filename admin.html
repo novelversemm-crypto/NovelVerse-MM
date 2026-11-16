@@ -1,47 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Admin Dashboard - NovelVerse</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="./favicon.png">
 
     <style>
-        /* =========================================
-           NOVELVERSE ADMIN - PREMIUM DASHBOARD
-        ========================================= */
-
         :root {
             --admin-bg: #0b0b12;
             --admin-surface: #13131f;
             --admin-card: #191927;
             --admin-card-hover: #202034;
             --admin-border: rgba(255,255,255,0.075);
-
             --admin-primary: #8b5cf6;
             --admin-primary-light: #a78bfa;
             --admin-primary-dark: #6d28d9;
-
             --admin-text: #f5f3ff;
             --admin-muted: #9695aa;
-
             --admin-green: #34d399;
             --admin-red: #fb7185;
-
+            --admin-yellow: #fbbf24;
+            --admin-blue: #60a5fa;
             --admin-radius: 18px;
             --admin-shadow: 0 15px 45px rgba(0,0,0,0.25);
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -55,18 +45,8 @@
             padding-bottom: 100px;
         }
 
-        button,
-        input,
-        select,
-        textarea {
-            font: inherit;
-        }
-
-        button {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* HEADER */
+        button, input, select, textarea { font: inherit; }
+        button { -webkit-tap-highlight-color: transparent; }
 
         .top-header {
             position: sticky;
@@ -83,18 +63,8 @@
             backdrop-filter: blur(18px);
         }
 
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-img {
-            width: 42px;
-            height: 42px;
-            object-fit: contain;
-            border-radius: 12px;
-        }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 42px; height: 42px; object-fit: contain; border-radius: 12px; }
 
         .logo-title {
             font-size: 18px;
@@ -131,14 +101,10 @@
             transform: translateY(-2px);
         }
 
-        /* MAIN LAYOUT */
-
         .main-container {
-            width: min(100% - 32px, 1050px);
+            width: min(100% - 32px, 1150px);
             margin: 35px auto;
         }
-
-        /* GENERAL CARD */
 
         .admin-card {
             background: linear-gradient(145deg, #1b1b2b, #151521);
@@ -167,9 +133,8 @@
             background: rgba(139,92,246,0.15);
             color: var(--admin-primary-light);
             font-size: 16px;
+            flex-shrink: 0;
         }
-
-        /* LOGIN */
 
         #login-section {
             width: min(100%, 440px);
@@ -177,19 +142,10 @@
             padding: 35px;
         }
 
-        #login-section .admin-title {
-            font-size: 22px;
-        }
+        #login-section .admin-title { font-size: 22px; }
+        #login-section .form-group { margin-bottom: 25px; }
 
-        #login-section .form-group {
-            margin-bottom: 25px;
-        }
-
-        /* FORM */
-
-        .form-group {
-            margin-bottom: 23px;
-        }
+        .form-group { margin-bottom: 23px; }
 
         .form-group > label {
             display: block;
@@ -207,8 +163,7 @@
             line-height: 1.7;
         }
 
-        .form-group input:not([type="checkbox"]),
-        .form-group input:not([type="file"]),
+        .form-group input:not([type="checkbox"]):not([type="file"]),
         .form-group select,
         .form-group textarea {
             width: 100%;
@@ -241,9 +196,7 @@
         }
 
         .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #666579;
-        }
+        .form-group textarea::placeholder { color: #666579; }
 
         .form-group textarea {
             min-height: 120px;
@@ -251,16 +204,8 @@
             line-height: 1.8;
         }
 
-        .form-group select {
-            cursor: pointer;
-        }
-
-        .form-group select option {
-            background: #191927;
-            color: #fff;
-        }
-
-        /* BUTTONS */
+        .form-group select { cursor: pointer; }
+        .form-group select option { background: #191927; color: #fff; }
 
         .submit-btn {
             width: 100%;
@@ -283,21 +228,13 @@
             box-shadow: 0 10px 25px rgba(109,40,217,0.3);
         }
 
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        .submit-btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* TABS */
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
 
         .admin-tabs {
             display: flex;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
             margin-bottom: 22px;
             padding: 7px;
             overflow-x: auto;
@@ -308,9 +245,9 @@
         }
 
         .tab-btn {
-            flex: 1;
+            flex: 1 0 auto;
             min-width: max-content;
-            padding: 13px 17px;
+            padding: 12px 15px;
             border: 1px solid transparent;
             border-radius: 10px;
             background: transparent;
@@ -321,14 +258,8 @@
             transition: 0.2s;
         }
 
-        .tab-btn i {
-            margin-right: 7px;
-        }
-
-        .tab-btn:hover {
-            color: #fff;
-            background: rgba(255,255,255,0.04);
-        }
+        .tab-btn i { margin-right: 7px; }
+        .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.04); }
 
         .tab-btn.active {
             color: #fff;
@@ -337,22 +268,12 @@
             box-shadow: 0 5px 15px rgba(109,40,217,0.2);
         }
 
-        .tab-content {
-            animation: fadeIn 0.25s ease;
-        }
+        .tab-content { animation: fadeIn 0.25s ease; }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(7px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(7px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        /* GENRE CHIPS */
 
         .genre-checkbox-group {
             display: flex;
@@ -391,21 +312,13 @@
             cursor: pointer;
         }
 
-        /* SEARCH */
-
-        #admin-search-novel {
-            padding-left: 42px !important;
-        }
-
-        /* NOVEL LIST */
+        #admin-search-novel { padding-left: 42px !important; }
 
         .admin-novel-list {
             display: flex;
             flex-direction: column;
             gap: 13px;
         }
-
-        /* MODALS */
 
         #edit-novel-modal,
         #edit-chapter-modal,
@@ -432,15 +345,230 @@
             border-bottom: 1px solid var(--admin-border);
         }
 
-        #manage-chapters-modal .admin-title {
-            font-size: 17px;
+        #manage-chapters-modal .admin-title { font-size: 17px; }
+        #manage-chapters-modal > .admin-card { width: min(100%, 650px) !important; }
+
+        /* NEW ADMIN UI */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
-        #manage-chapters-modal > .admin-card {
-            width: min(100%, 650px) !important;
+        .section-heading .admin-title { margin: 0; }
+
+        .section-description {
+            color: var(--admin-muted);
+            font-size: 12px;
+            line-height: 1.8;
+            margin: -12px 0 22px;
         }
 
-        /* BOTTOM NAV */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            min-width: 0;
+            padding: 19px;
+            background: linear-gradient(145deg, #202034, #171725);
+            border: 1px solid var(--admin-border);
+            border-radius: 15px;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            background: rgba(139,92,246,0.15);
+            color: var(--admin-primary-light);
+        }
+
+        .stat-card p {
+            margin: 0 0 6px;
+            color: var(--admin-muted);
+            font-size: 11px;
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .stat-note {
+            margin-top: 8px;
+            color: var(--admin-muted);
+            font-size: 10px;
+        }
+
+        .admin-subcard {
+            padding: 20px;
+            background: rgba(16,16,26,0.7);
+            border: 1px solid var(--admin-border);
+            border-radius: 14px;
+            margin-bottom: 18px;
+        }
+
+        .admin-subcard h4 {
+            margin: 0 0 15px;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .admin-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid var(--admin-border);
+            border-radius: 12px;
+        }
+
+        .admin-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .admin-table th,
+        .admin-table td {
+            padding: 14px 13px;
+            text-align: left;
+            border-bottom: 1px solid var(--admin-border);
+            white-space: nowrap;
+        }
+
+        .admin-table th {
+            color: #c4b5fd;
+            background: rgba(139,92,246,0.09);
+            font-weight: 600;
+        }
+
+        .admin-table td { color: #d4d1e2; }
+        .admin-table tr:last-child td { border-bottom: none; }
+
+        .empty-state {
+            padding: 28px 15px;
+            text-align: center;
+            color: var(--admin-muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .empty-state i {
+            display: block;
+            margin-bottom: 12px;
+            color: #77718f;
+            font-size: 28px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .status-pending { color: #fcd34d; background: rgba(251,191,36,0.12); }
+        .status-approved { color: #6ee7b7; background: rgba(52,211,153,0.12); }
+        .status-rejected { color: #fda4af; background: rgba(251,113,133,0.12); }
+        .status-active { color: #6ee7b7; background: rgba(52,211,153,0.12); }
+
+        .admin-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 34px;
+            padding: 7px 11px;
+            border: 1px solid var(--admin-border);
+            border-radius: 8px;
+            color: #fff;
+            background: #252538;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .admin-action-btn:hover { filter: brightness(1.2); }
+        .admin-action-btn.approve { background: rgba(52,211,153,0.13); color: #6ee7b7; }
+        .admin-action-btn.reject { background: rgba(251,113,133,0.12); color: #fda4af; }
+
+        .admin-filter-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .admin-filter-row .form-group {
+            flex: 1;
+            min-width: 170px;
+            margin: 0;
+        }
+
+        .admin-filter-row input,
+        .admin-filter-row select {
+            width: 100%;
+            min-height: 43px;
+            padding: 10px 12px;
+            color: #fff;
+            background: #10101a;
+            border: 1px solid var(--admin-border);
+            border-radius: 9px;
+            outline: none;
+            font-size: 12px;
+        }
+
+        .inline-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .notice-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(96,165,250,0.2);
+            border-radius: 11px;
+            background: rgba(96,165,250,0.07);
+            color: #bfdbfe;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        .notice-box i { margin-top: 3px; }
+
+        .danger-zone {
+            border-color: rgba(251,113,133,0.2);
+            background: rgba(251,113,133,0.04);
+        }
+
+        .danger-zone h4 { color: #fda4af; }
 
         .bottom-nav {
             position: fixed;
@@ -477,104 +605,43 @@
             transition: 0.2s;
         }
 
-        .nav-item i {
-            font-size: 18px;
-        }
+        .nav-item i { font-size: 18px; }
+        .nav-item.active, .nav-item:hover { color: #b99cff; }
+        .nav-item.active i { filter: drop-shadow(0 0 7px rgba(167,139,250,0.5)); }
 
-        .nav-item.active,
-        .nav-item:hover {
-            color: #b99cff;
+        @media (max-width: 900px) {
+            .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-
-        .nav-item.active i {
-            filter: drop-shadow(0 0 7px rgba(167,139,250,0.5));
-        }
-
-        /* RESPONSIVE */
 
         @media (max-width: 650px) {
-            .top-header {
-                min-height: 62px;
-                padding: 10px 17px;
-            }
-
-            .logo-img {
-                width: 36px;
-                height: 36px;
-            }
-
-            .logo-title {
-                font-size: 15px;
-            }
-
-            .main-container {
-                width: calc(100% - 22px);
-                margin: 20px auto;
-            }
-
-            .admin-card {
-                padding: 20px 16px;
-                border-radius: 15px;
-            }
-
-            .admin-title {
-                font-size: 17px;
-                margin-bottom: 20px;
-            }
-
-            .admin-title i {
-                width: 34px;
-                height: 34px;
-                font-size: 14px;
-            }
-
-            .admin-tabs {
-                gap: 6px;
-                padding: 5px;
-            }
-
-            .tab-btn {
-                padding: 12px 13px;
-                font-size: 11px;
-            }
-
-            .genre-checkbox-group {
-                padding: 11px;
-                gap: 7px !important;
-            }
-
-            .genre-checkbox-group label {
-                padding: 7px 9px;
-                font-size: 10px;
-            }
-
-            #login-section {
-                margin: 50px auto;
-                padding: 25px 19px;
-            }
-
-            #edit-novel-modal,
-            #edit-chapter-modal,
-            #manage-chapters-modal {
-                padding: 10px !important;
-            }
-
+            .top-header { min-height: 62px; padding: 10px 17px; }
+            .logo-img { width: 36px; height: 36px; }
+            .logo-title { font-size: 15px; }
+            .main-container { width: calc(100% - 22px); margin: 20px auto; }
+            .admin-card { padding: 20px 16px; border-radius: 15px; }
+            .admin-title { font-size: 17px; margin-bottom: 20px; }
+            .admin-title i { width: 34px; height: 34px; font-size: 14px; }
+            .admin-tabs { gap: 6px; padding: 5px; }
+            .tab-btn { padding: 11px 12px; font-size: 11px; }
+            .genre-checkbox-group { padding: 11px; gap: 7px !important; }
+            .genre-checkbox-group label { padding: 7px 9px; font-size: 10px; }
+            #login-section { margin: 50px auto; padding: 25px 19px; }
+            #edit-novel-modal, #edit-chapter-modal, #manage-chapters-modal { padding: 10px !important; }
             #edit-novel-modal > .admin-card,
             #edit-chapter-modal > .admin-card,
             #manage-chapters-modal > .admin-card {
                 max-height: 88vh !important;
                 padding: 20px 16px;
             }
-
-            .bottom-nav {
-                min-height: 62px;
-            }
+            .bottom-nav { min-height: 62px; }
+            .stat-card { padding: 14px; }
+            .stat-card h3 { font-size: 20px; }
+            .inline-grid { grid-template-columns: 1fr; gap: 0; }
+            .admin-subcard { padding: 15px; }
         }
 
         @media (min-width: 900px) {
-            .main-container {
-                margin-top: 45px;
-            }
+            .main-container { margin-top: 45px; }
         }
     </style>
 </head>
@@ -584,102 +651,199 @@
     <!-- HEADER -->
     <header class="top-header">
         <div class="logo-area">
-            <img
-                src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
-                alt="NovelVerse Logo"
-                class="logo-img"
-            >
+            <img src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                 alt="NovelVerse Logo" class="logo-img">
             <span class="logo-title">NovelVerse</span>
         </div>
 
-        <button
-            id="logout-btn"
-            class="icon-btn"
-            onclick="handleLogout()"
-            style="display: none; background: transparent; border: none; color: #ff4d4d; font-size: 1.2rem; cursor: pointer;"
-            title="Logout"
-        >
+        <button id="logout-btn" class="icon-btn"
+                onclick="handleLogout()"
+                style="display:none;background:transparent;border:none;color:#ff4d4d;font-size:1.2rem;cursor:pointer;"
+                title="Logout">
             <i class="fa-solid fa-right-from-bracket"></i>
         </button>
     </header>
 
-
-    <!-- MAIN -->
     <main class="main-container">
 
         <!-- LOGIN -->
         <section class="admin-card" id="login-section">
-
             <h3 class="admin-title">
                 <i class="fa-solid fa-shield-halved"></i>
                 Admin Login
             </h3>
 
             <form id="login-form" onsubmit="handleLogin(event)">
-
                 <div class="form-group">
-                    <label for="github-token-input">
-                        GitHub Personal Access Token *
-                    </label>
-
-                    <input
-                        type="password"
-                        id="github-token-input"
-                        placeholder="ghp_xxxxxxxxxxxx"
-                        required
-                    >
-
-                    <small>
-                        <i class="fa-solid fa-circle-info"></i>
-                        GitHub Token ကို ထည့်ပါ။
-                    </small>
+                    <label for="github-token-input">GitHub Personal Access Token *</label>
+                    <input type="password" id="github-token-input"
+                           placeholder="ghp_xxxxxxxxxxxx" required>
+                    <small><i class="fa-solid fa-circle-info"></i> GitHub Token ကို ထည့်ပါ။</small>
                 </div>
 
                 <button type="submit" class="submit-btn" id="login-btn">
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    Login ဝင်မည်
+                    <i class="fa-solid fa-right-to-bracket"></i> Login ဝင်မည်
                 </button>
-
             </form>
         </section>
 
-
         <!-- DASHBOARD -->
-        <div id="dashboard-section" style="display: none;">
+        <div id="dashboard-section" style="display:none;">
 
-            <!-- NAVIGATION TABS -->
+            <!-- ADMIN TABS -->
             <div class="admin-tabs">
 
-                <button
-                    class="tab-btn active"
-                    onclick="switchTab('add-novel')"
-                >
-                    <i class="fa-solid fa-book-medical"></i>
-                    Novel သစ်တင်ရန်
+                <button class="tab-btn" onclick="switchTab('overview')">
+                    <i class="fa-solid fa-chart-pie"></i> Overview
                 </button>
 
-                <button
-                    class="tab-btn"
-                    onclick="switchTab('add-chapter')"
-                >
-                    <i class="fa-solid fa-file-circle-plus"></i>
-                    Chapter တင်ရန်
+                <button class="tab-btn active" onclick="switchTab('add-novel')">
+                    <i class="fa-solid fa-book-medical"></i> Novel သစ်တင်ရန်
                 </button>
 
-                <button
-                    class="tab-btn"
-                    onclick="switchTab('manage-novels')"
-                >
-                    <i class="fa-solid fa-list-check"></i>
-                    စီမံရန်
+                <button class="tab-btn" onclick="switchTab('add-chapter')">
+                    <i class="fa-solid fa-file-circle-plus"></i> Chapter တင်ရန်
+                </button>
+
+                <button class="tab-btn" onclick="switchTab('manage-novels')">
+                    <i class="fa-solid fa-list-check"></i> စီမံရန်
+                </button>
+
+                <button class="tab-btn" onclick="switchTab('users')">
+                    <i class="fa-solid fa-users"></i> Users
+                </button>
+
+                <button class="tab-btn" onclick="switchTab('payments')">
+                    <i class="fa-solid fa-money-bill-transfer"></i> Payments
+                </button>
+
+                <button class="tab-btn" onclick="switchTab('transactions')">
+                    <i class="fa-solid fa-receipt"></i> Transactions
+                </button>
+
+                <button class="tab-btn" onclick="switchTab('paid-chapters')">
+                    <i class="fa-solid fa-lock"></i> Paid Chapters
+                </button>
+
+                <button class="tab-btn" onclick="switchTab('admin-settings')">
+                    <i class="fa-solid fa-gear"></i> Settings
                 </button>
 
             </div>
 
+            <!-- =====================================
+                 OVERVIEW
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-overview" style="display:none;">
 
-            <!-- =================================
-                 ADD NOVEL
-            ================================== -->
+                <div class="section-heading">
+                    <h3 class="admin-title">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        Dashboard Overview
+                    </h3>
+                </div>
+
+                <p class="section-description">
+                    NovelVerse ရဲ့ Website အခြေအနေနဲ့ အရေးကြီးတဲ့ စာရင်းအင်းတွေကို ဒီနေရာမှာ ကြည့်ရှုနိုင်ပါတယ်။
+                </p>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon"><i class="fa-solid fa-book"></i></span>
+                        </div>
+                        <p>Total Novels</p>
+                        <h3 id="overview-total-novels">—</h3>
+                        <div class="stat-note">စုစုပေါင်း Novel အရေအတွက်</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon"><i class="fa-solid fa-file-lines"></i></span>
+                        </div>
+                        <p>Total Chapters</p>
+                        <h3 id="overview-total-chapters">—</h3>
+                        <div class="stat-note">စုစုပေါင်း Chapter အရေအတွက်</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon"><i class="fa-solid fa-users"></i></span>
+                        </div>
+                        <p>Total Users</p>
+                        <h3 id="overview-total-users">—</h3>
+                        <div class="stat-note">စာရင်းသွင်းထားသော User များ</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-top">
+                            <span class="stat-icon"><i class="fa-solid fa-wallet"></i></span>
+                        </div>
+                        <p>Pending Payments</p>
+                        <h3 id="overview-pending-payments">—</h3>
+                        <div class="stat-note">စစ်ဆေးရန် ကျန်ရှိသော Payment များ</div>
+                    </div>
+
+                </div>
+
+                <div class="admin-subcard">
+                    <h4><i class="fa-solid fa-clock-rotate-left"></i> နောက်ဆုံး Payment များ</h4>
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="overview-recent-payments">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="empty-state">
+                                            <i class="fa-solid fa-database"></i>
+                                            Backend ချိတ်ဆက်ပြီးမှ Payment စာရင်းများ ပြသပါမည်။
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="admin-subcard">
+                    <h4><i class="fa-solid fa-bolt"></i> Quick Actions</h4>
+                    <div class="inline-grid">
+                        <button type="button" class="admin-action-btn"
+                                onclick="switchTab('add-novel')">
+                            <i class="fa-solid fa-plus"></i> Novel အသစ်တင်ရန်
+                        </button>
+
+                        <button type="button" class="admin-action-btn"
+                                onclick="switchTab('add-chapter')">
+                            <i class="fa-solid fa-file-circle-plus"></i> Chapter တင်ရန်
+                        </button>
+
+                        <button type="button" class="admin-action-btn"
+                                onclick="switchTab('payments')">
+                            <i class="fa-solid fa-money-check-dollar"></i> Payment စစ်ဆေးရန်
+                        </button>
+
+                        <button type="button" class="admin-action-btn"
+                                onclick="switchTab('users')">
+                            <i class="fa-solid fa-users"></i> User များကြည့်ရန်
+                        </button>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                 ADD NOVEL - ORIGINAL
+            ====================================== -->
             <section class="admin-card tab-content" id="tab-add-novel">
 
                 <h3 class="admin-title">
@@ -690,47 +854,23 @@
                 <form id="add-novel-form" onsubmit="handleAddNovel(event)">
 
                     <div class="form-group">
-                        <label for="novel-title">
-                            Novel ခေါင်းစဉ် *
-                        </label>
-
-                        <input
-                            type="text"
-                            id="novel-title"
-                            placeholder="ဥပမာ - Shadow Monarch"
-                            required
-                        >
+                        <label for="novel-title">Novel ခေါင်းစဉ် *</label>
+                        <input type="text" id="novel-title"
+                               placeholder="ဥပမာ - Shadow Monarch" required>
                     </div>
-
 
                     <div class="form-group">
                         <label for="novel-cover-file">
-                            <i class="fa-solid fa-image"></i>
-                            Cover Image File *
+                            <i class="fa-solid fa-image"></i> Cover Image File *
                         </label>
-
-                        <input
-                            type="file"
-                            id="novel-cover-file"
-                            accept="image/*"
-                            required
-                        >
-
-                        <small>
-                            Novel Cover Image ကို ရွေးချယ်ပါ။
-                        </small>
+                        <input type="file" id="novel-cover-file" accept="image/*" required>
+                        <small>Novel Cover Image ကို ရွေးချယ်ပါ။</small>
                     </div>
 
-
                     <div class="form-group">
-
-                        <label>
-                            <i class="fa-solid fa-tags"></i>
-                            Genres / အမျိုးအစားများ *
-                        </label>
+                        <label><i class="fa-solid fa-tags"></i> Genres / အမျိုးအစားများ *</label>
 
                         <div class="genre-checkbox-group">
-
                             <label><input type="checkbox" name="novel-genre-chip" value="Action"> Action</label>
                             <label><input type="checkbox" name="novel-genre-chip" value="Adventure"> Adventure</label>
                             <label><input type="checkbox" name="novel-genre-chip" value="Fantasy"> Fantasy</label>
@@ -753,60 +893,38 @@
                             <label><input type="checkbox" name="novel-genre-chip" value="Yuri"> Yuri</label>
                             <label><input type="checkbox" name="novel-genre-chip" value="Psychological"> Psychological</label>
                             <label><input type="checkbox" name="novel-genre-chip" value="Thriller"> Thriller</label>
-
                         </div>
                     </div>
 
-
                     <div class="form-group">
                         <label for="novel-status">
-                            <i class="fa-solid fa-circle-check"></i>
-                            Novel Status
+                            <i class="fa-solid fa-circle-check"></i> Novel Status
                         </label>
-
                         <select id="novel-status">
                             <option value="Ongoing">Ongoing</option>
                             <option value="Completed">Completed</option>
                         </select>
                     </div>
 
-
                     <div class="form-group">
                         <label for="novel-synopsis">
-                            <i class="fa-solid fa-align-left"></i>
-                            အညွှန်း (Synopsis)
+                            <i class="fa-solid fa-align-left"></i> အညွှန်း (Synopsis)
                         </label>
-
-                        <textarea
-                            id="novel-synopsis"
-                            rows="5"
-                            placeholder="နိုဗယ်အကြောင်း အကျဉ်းချုပ် ရေးပါ..."
-                        ></textarea>
+                        <textarea id="novel-synopsis" rows="5"
+                                  placeholder="နိုဗယ်အကြောင်း အကျဉ်းချုပ် ရေးပါ..."></textarea>
                     </div>
 
-
-                    <button
-                        type="submit"
-                        class="submit-btn"
-                        id="save-novel-btn"
-                    >
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        Novel သိမ်းဆည်းမည်
+                    <button type="submit" class="submit-btn" id="save-novel-btn">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Novel သိမ်းဆည်းမည်
                     </button>
 
                 </form>
             </section>
 
-
-
-            <!-- =================================
-                 ADD CHAPTER
-            ================================== -->
-            <section
-                class="admin-card tab-content"
-                id="tab-add-chapter"
-                style="display: none;"
-            >
+            <!-- =====================================
+                 ADD CHAPTER - ORIGINAL
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-add-chapter" style="display:none;">
 
                 <h3 class="admin-title">
                     <i class="fa-solid fa-file-pen"></i>
@@ -817,440 +935,641 @@
 
                     <div class="form-group">
                         <label for="select-novel-dropdown">
-                            <i class="fa-solid fa-book"></i>
-                            Novel ရွေးချယ်ပါ *
+                            <i class="fa-solid fa-book"></i> Novel ရွေးချယ်ပါ *
                         </label>
-
                         <select id="select-novel-dropdown" required>
                             <option value="">-- Novel ရွေးပါ --</option>
                         </select>
                     </div>
 
-
                     <div class="form-group">
-                        <label for="chapter-number">
-                            Chapter နံပါတ် *
-                        </label>
-
-                        <input
-                            type="number"
-                            id="chapter-number"
-                            placeholder="1"
-                            min="1"
-                            required
-                        >
+                        <label for="chapter-number">Chapter နံပါတ် *</label>
+                        <input type="number" id="chapter-number"
+                               placeholder="1" min="1" required>
                     </div>
 
-
                     <div class="form-group">
-                        <label for="chapter-title-input">
-                            Chapter ခေါင်းစဉ်
-                        </label>
-
-                        <input
-                            type="text"
-                            id="chapter-title-input"
-                            placeholder="ဥပမာ - The Beginning"
-                        >
+                        <label for="chapter-title-input">Chapter ခေါင်းစဉ်</label>
+                        <input type="text" id="chapter-title-input"
+                               placeholder="ဥပမာ - The Beginning">
                     </div>
-
 
                     <div class="form-group">
                         <label for="chapter-content-input">
-                            <i class="fa-solid fa-file-lines"></i>
-                            Chapter စာသားများ *
+                            <i class="fa-solid fa-file-lines"></i> Chapter စာသားများ *
                         </label>
-
-                        <textarea
-                            id="chapter-content-input"
-                            rows="14"
-                            placeholder="စာစဉ်ပါ စာသားများကို ဒီမှာ ကူးထည့်ပါ..."
-                            required
-                        ></textarea>
-
-                        <small>
-                            Chapter Content ကို မတင်မီ သေချာစစ်ဆေးပါ။
-                        </small>
+                        <textarea id="chapter-content-input" rows="14"
+                                  placeholder="စာစဉ်ပါ စာသားများကို ဒီမှာ ကူးထည့်ပါ..."
+                                  required></textarea>
+                        <small>Chapter Content ကို မတင်မီ သေချာစစ်ဆေးပါ။</small>
                     </div>
 
-
-                    <button
-                        type="submit"
-                        class="submit-btn"
-                        id="save-chapter-btn"
-                    >
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        Chapter တင်မည်
+                    <button type="submit" class="submit-btn" id="save-chapter-btn">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Chapter တင်မည်
                     </button>
 
                 </form>
             </section>
 
-
-
-            <!-- =================================
-                 MANAGE NOVELS
-            ================================== -->
-            <section
-                class="admin-card tab-content"
-                id="tab-manage-novels"
-                style="display: none;"
-            >
+            <!-- =====================================
+                 MANAGE NOVELS - ORIGINAL
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-manage-novels" style="display:none;">
 
                 <h3 class="admin-title">
                     <i class="fa-solid fa-list-check"></i>
                     Novels & Chapters စီမံရန်
                 </h3>
 
-
-                <div class="form-group" style="margin-bottom: 22px;">
-
-                    <label for="admin-search-novel">
-                        Novel ရှာဖွေရန်
-                    </label>
-
-                    <div style="position: relative;">
-
-                        <span style="
-                            position: absolute;
-                            left: 15px;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            color: #9695aa;
-                        ">
+                <div class="form-group" style="margin-bottom:22px;">
+                    <label for="admin-search-novel">Novel ရှာဖွေရန်</label>
+                    <div style="position:relative;">
+                        <span style="position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#9695aa;">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </span>
-
-                        <input
-                            type="text"
-                            id="admin-search-novel"
-                            placeholder="Novel အမည်ဖြင့် ရှာရန်..."
-                            oninput="filterAdminNovels()"
-                            style="padding-left: 43px;"
-                        >
-
+                        <input type="text" id="admin-search-novel"
+                               placeholder="Novel အမည်ဖြင့် ရှာရန်..."
+                               oninput="filterAdminNovels()"
+                               style="padding-left:43px;">
                     </div>
                 </div>
 
+                <div id="admin-novel-list" class="admin-novel-list"></div>
+            </section>
 
-                <div
-                    id="admin-novel-list"
-                    class="admin-novel-list"
-                ></div>
+            <!-- =====================================
+                 USER MANAGEMENT
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-users" style="display:none;">
+
+                <div class="section-heading">
+                    <h3 class="admin-title">
+                        <i class="fa-solid fa-users"></i>
+                        User Management
+                    </h3>
+                </div>
+
+                <p class="section-description">
+                    Website မှာ စာရင်းသွင်းထားတဲ့ User များ၊ Coin လက်ကျန်နဲ့ Account အခြေအနေတွေကို စီမံရန်။
+                </p>
+
+                <div class="notice-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>
+                        User စာရင်းများကို Backend ချိတ်ဆက်ပြီးမှ ပြသပါမည်။
+                        User ရဲ့ Password သို့မဟုတ် PIN အစစ်ကို Admin Panel မှာ မပြသသင့်ပါ။
+                    </span>
+                </div>
+
+                <div class="admin-filter-row">
+                    <div class="form-group">
+                        <input type="search" id="admin-user-search"
+                               placeholder="Username သို့မဟုတ် Email ရှာရန်...">
+                    </div>
+
+                    <div class="form-group">
+                        <select id="admin-user-status-filter">
+                            <option value="">Account အားလုံး</option>
+                            <option value="active">Active</option>
+                            <option value="blocked">Blocked</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>User ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Coin Balance</th>
+                                <th>Joined Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-user-list">
+                            <tr>
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <i class="fa-solid fa-users"></i>
+                                        User Data များကို Backend ချိတ်ဆက်ပြီးမှ ပြသပါမည်။
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                 PAYMENT APPROVAL
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-payments" style="display:none;">
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    Payment Approval
+                </h3>
+
+                <p class="section-description">
+                    KBZPay / WavePay မှတစ်ဆင့် Coin ဝယ်ယူထားသော Order များကို စစ်ဆေးအတည်ပြုရန်။
+                </p>
+
+                <div class="notice-box">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span>
+                        ငွေလွှဲ Screenshot တစ်ခုတည်းကို မယုံကြည်ပါနှင့်။
+                        ငွေလက်ခံရရှိမှုကို ကိုယ်တိုင်စစ်ဆေးပြီးမှ Approve လုပ်ပါ။
+                        Approve လုပ်ပြီးမှသာ User ရဲ့ Coin Balance တိုးရပါမည်။
+                    </span>
+                </div>
+
+                <div class="admin-filter-row">
+                    <div class="form-group">
+                        <input type="search" id="admin-payment-search"
+                               placeholder="Order ID / User ရှာရန်...">
+                    </div>
+
+                    <div class="form-group">
+                        <select id="admin-payment-status-filter">
+                            <option value="">Payment အားလုံး</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select id="admin-payment-method-filter">
+                            <option value="">Payment Method အားလုံး</option>
+                            <option value="KBZPay">KBZPay</option>
+                            <option value="WavePay">WavePay</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>User</th>
+                                <th>Payment Method</th>
+                                <th>Amount (MMK)</th>
+                                <th>Coin Package</th>
+                                <th>Submitted Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-payment-list">
+                            <tr>
+                                <td colspan="8">
+                                    <div class="empty-state">
+                                        <i class="fa-solid fa-receipt"></i>
+                                        Payment Request များကို Backend ချိတ်ဆက်ပြီးမှ ပြသပါမည်။
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                 COIN TRANSACTIONS
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-transactions" style="display:none;">
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-receipt"></i>
+                    Coin Transactions
+                </h3>
+
+                <p class="section-description">
+                    User များ၏ Coin ဝယ်ယူမှု၊ Chapter ဝယ်ယူမှုနဲ့ Coin ပြောင်းလဲမှုမှတ်တမ်းများ။
+                </p>
+
+                <div class="admin-filter-row">
+                    <div class="form-group">
+                        <input type="search" id="admin-transaction-search"
+                               placeholder="Transaction ID / User ရှာရန်...">
+                    </div>
+
+                    <div class="form-group">
+                        <select id="admin-transaction-type-filter">
+                            <option value="">Transaction အားလုံး</option>
+                            <option value="topup">Coin Top-up</option>
+                            <option value="purchase">Chapter Purchase</option>
+                            <option value="refund">Refund</option>
+                            <option value="adjustment">Admin Adjustment</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction ID</th>
+                                <th>User</th>
+                                <th>Type</th>
+                                <th>Coin Change</th>
+                                <th>Balance After</th>
+                                <th>Reference</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-transaction-list">
+                            <tr>
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <i class="fa-solid fa-clock-rotate-left"></i>
+                                        Transaction မှတ်တမ်းများကို Backend ချိတ်ဆက်ပြီးမှ ပြသပါမည်။
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="admin-subcard" style="margin-top:20px;">
+                    <h4><i class="fa-solid fa-coins"></i> User Coin Adjustment</h4>
+
+                    <p class="section-description">
+                        လိုအပ်ပါက User တစ်ဦးချင်းစီ၏ Coin ကို Admin မှ ပြင်ဆင်ပေးနိုင်ရန်။
+                        လုပ်ဆောင်မှုတိုင်းကို Transaction မှတ်တမ်းအဖြစ် သိမ်းဆည်းရပါမည်။
+                    </p>
+
+                    <form id="admin-coin-adjustment-form">
+
+                        <div class="inline-grid">
+                            <div class="form-group">
+                                <label for="adjust-user-id">User ID</label>
+                                <input type="text" id="adjust-user-id"
+                                       placeholder="User ID">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="adjust-coin-amount">Coin ပမာဏ</label>
+                                <input type="number" id="adjust-coin-amount"
+                                       min="1" placeholder="ဥပမာ - 100">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adjust-coin-type">လုပ်ဆောင်ချက်</label>
+                            <select id="adjust-coin-type">
+                                <option value="add">Coin ထည့်ပေးမည်</option>
+                                <option value="deduct">Coin လျှော့မည်</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="adjust-coin-reason">အကြောင်းပြချက်</label>
+                            <textarea id="adjust-coin-reason" rows="3"
+                                      placeholder="ဘာကြောင့် Coin ပြင်ဆင်ပေးရသည်ကို ရေးပါ..."></textarea>
+                        </div>
+
+                        <button type="button" class="submit-btn" id="admin-coin-adjustment-btn">
+                            <i class="fa-solid fa-coins"></i> Coin ပြင်ဆင်ရန်
+                        </button>
+
+                    </form>
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                 PAID CHAPTER SETTINGS
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-paid-chapters" style="display:none;">
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-lock"></i>
+                    Paid Chapter Settings
+                </h3>
+
+                <p class="section-description">
+                    အခကြေးငွေပေးပြီးမှ ဖတ်ရှုနိုင်မည့် Chapter များကို သတ်မှတ်ရန်။
+                </p>
+
+                <div class="notice-box">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>
+                        Paid Chapter Content ကို Frontend မှာ ဖျောက်ထားရုံနဲ့ မလုံခြုံပါ။
+                        Backend က User ရဲ့ ဝယ်ယူခွင့်ကို စစ်ဆေးပြီးမှ Chapter Content ကို ပေးပို့ရပါမည်။
+                    </span>
+                </div>
+
+                <div class="admin-subcard">
+                    <h4><i class="fa-solid fa-tags"></i> Chapter ဈေးနှုန်း သတ်မှတ်ရန်</h4>
+
+                    <form id="paid-chapter-settings-form">
+
+                        <div class="form-group">
+                            <label for="paid-chapter-novel">Novel ရွေးချယ်ပါ</label>
+                            <select id="paid-chapter-novel">
+                                <option value="">-- Novel ရွေးပါ --</option>
+                            </select>
+                        </div>
+
+                        <div class="inline-grid">
+                            <div class="form-group">
+                                <label for="paid-chapter-number">Chapter နံပါတ်</label>
+                                <input type="number" id="paid-chapter-number"
+                                       min="1" placeholder="ဥပမာ - 25">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="paid-chapter-price">Coin ဈေးနှုန်း</label>
+                                <input type="number" id="paid-chapter-price"
+                                       min="0" placeholder="ဥပမာ - 10">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="paid-chapter-access">Chapter အမျိုးအစား</label>
+                            <select id="paid-chapter-access">
+                                <option value="free">Free Chapter</option>
+                                <option value="paid">Paid Chapter</option>
+                            </select>
+                            <small>Free Chapter ဖြစ်ပါက Coin မလိုအပ်ပါ။</small>
+                        </div>
+
+                        <button type="button" class="submit-btn" id="save-paid-chapter-btn">
+                            <i class="fa-solid fa-floppy-disk"></i> Setting သိမ်းဆည်းမည်
+                        </button>
+
+                    </form>
+                </div>
+
+                <div class="admin-subcard">
+                    <h4><i class="fa-solid fa-list"></i> Paid Chapter စာရင်း</h4>
+
+                    <div class="admin-filter-row">
+                        <div class="form-group">
+                            <input type="search" id="paid-chapter-search"
+                                   placeholder="Novel / Chapter ရှာရန်...">
+                        </div>
+                    </div>
+
+                    <div class="admin-table-wrap">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Novel</th>
+                                    <th>Chapter</th>
+                                    <th>Access Type</th>
+                                    <th>Coin Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-paid-chapter-list">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="empty-state">
+                                            <i class="fa-solid fa-lock"></i>
+                                            Paid Chapter စာရင်းကို Backend ချိတ်ဆက်ပြီးမှ ပြသပါမည်။
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                 ADMIN SETTINGS
+            ====================================== -->
+            <section class="admin-card tab-content" id="tab-admin-settings" style="display:none;">
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-gear"></i>
+                    Admin Settings
+                </h3>
+
+                <p class="section-description">
+                    Website ရဲ့ Payment နဲ့ Coin စနစ်ဆိုင်ရာ သတ်မှတ်ချက်များ။
+                </p>
+
+                <div class="notice-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>
+                        အောက်ပါ Setting များသည် UI အတွက်သာ ဖြစ်ပါသေးသည်။
+                        Backend ချိတ်ဆက်ပြီးမှ အမှန်တကယ် သိမ်းဆည်းနိုင်ပါမည်။
+                    </span>
+                </div>
+
+                <div class="admin-subcard">
+                    <h4><i class="fa-solid fa-wallet"></i> Payment Account Information</h4>
+
+                    <div class="form-group">
+                        <label for="settings-kbzpay-name">KBZPay Account Name</label>
+                        <input type="text" id="settings-kbzpay-name"
+                               placeholder="Account Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settings-kbzpay-number">KBZPay Phone Number</label>
+                        <input type="text" id="settings-kbzpay-number"
+                               placeholder="09xxxxxxxxx">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settings-wavepay-name">WavePay Account Name</label>
+                        <input type="text" id="settings-wavepay-name"
+                               placeholder="Account Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settings-wavepay-number">WavePay Phone Number</label>
+                        <input type="text" id="settings-wavepay-number"
+                               placeholder="09xxxxxxxxx">
+                    </div>
+
+                    <button type="button" class="submit-btn" id="save-payment-settings-btn">
+                        <i class="fa-solid fa-floppy-disk"></i> Payment Settings သိမ်းဆည်းမည်
+                    </button>
+                </div>
+
+                <div class="admin-subcard">
+                    <h4><i class="fa-solid fa-coins"></i> Coin System Information</h4>
+
+                    <div class="form-group">
+                        <label for="settings-coin-name">Coin အမည်</label>
+                        <input type="text" id="settings-coin-name"
+                               value="NovelVerse Coins">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="settings-min-topup">အနည်းဆုံး Top-up Amount (MMK)</label>
+                        <input type="number" id="settings-min-topup"
+                               min="0" placeholder="ဥပမာ - 1000">
+                    </div>
+
+                    <button type="button" class="submit-btn" id="save-coin-settings-btn">
+                        <i class="fa-solid fa-floppy-disk"></i> Coin Settings သိမ်းဆည်းမည်
+                    </button>
+                </div>
+
+                <div class="admin-subcard danger-zone">
+                    <h4><i class="fa-solid fa-shield-halved"></i> Security Information</h4>
+
+                    <p class="section-description">
+                        Admin Panel ကို URL မသိသူများ မဝင်နိုင်အောင် Link ဖျောက်ထားရုံဖြင့်
+                        လုံခြုံမှု မရှိပါ။ Backend မှာ Admin Authentication နဲ့ Permission စစ်ဆေးရန် လိုအပ်ပါသည်။
+                    </p>
+
+                    <ul style="color:var(--admin-muted);font-size:11px;line-height:2.1;padding-left:20px;">
+                        <li>Admin API များကို Server-side Authentication ဖြင့် ကာကွယ်ပါ။</li>
+                        <li>GitHub Token ကို Public JavaScript ထဲတွင် မထည့်ပါနှင့်။</li>
+                        <li>User Password / PIN ကို Plain Text အဖြစ် မသိမ်းပါနှင့်။</li>
+                        <li>Coin ပြောင်းလဲမှုတိုင်းကို Transaction Log သိမ်းပါ။</li>
+                        <li>Payment တစ်ခုကို နှစ်ကြိမ် Approve မဖြစ်စေရန် Backend မှ စစ်ဆေးပါ။</li>
+                    </ul>
+                </div>
 
             </section>
 
         </div>
-
     </main>
 
-
-
     <!-- =========================================
-         EDIT NOVEL MODAL
+         EDIT NOVEL MODAL - ORIGINAL
     ========================================== -->
-    <div
-        id="edit-novel-modal"
-        style="
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        "
-    >
+    <div id="edit-novel-modal"
+         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:15px;">
 
-        <div
-            class="admin-card"
-            style="
-                width: 100%;
-                max-width: 500px;
-                max-height: 90vh;
-                overflow-y: auto;
-                position: relative;
-            "
-        >
+        <div class="admin-card"
+             style="width:100%;max-width:500px;max-height:90vh;overflow-y:auto;position:relative;">
 
             <h3 class="admin-title">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Novel ပြင်ဆင်ရန်
+                <i class="fa-solid fa-pen-to-square"></i> Novel ပြင်ဆင်ရန်
             </h3>
 
-
             <form id="edit-novel-form" onsubmit="handleUpdateNovel(event)">
-
                 <input type="hidden" id="edit-novel-id">
 
-
                 <div class="form-group">
-                    <label for="edit-novel-title">
-                        Novel ခေါင်းစဉ် *
-                    </label>
-
-                    <input
-                        type="text"
-                        id="edit-novel-title"
-                        required
-                    >
+                    <label for="edit-novel-title">Novel ခေါင်းစဉ် *</label>
+                    <input type="text" id="edit-novel-title" required>
                 </div>
 
-
                 <div class="form-group">
-                    <label for="edit-novel-status">
-                        Status
-                    </label>
-
+                    <label for="edit-novel-status">Status</label>
                     <select id="edit-novel-status">
                         <option value="Ongoing">Ongoing</option>
                         <option value="Completed">Completed</option>
                     </select>
                 </div>
 
-
                 <div class="form-group">
-                    <label for="edit-novel-synopsis">
-                        အညွှန်း (Synopsis)
-                    </label>
-
-                    <textarea
-                        id="edit-novel-synopsis"
-                        rows="5"
-                    ></textarea>
+                    <label for="edit-novel-synopsis">အညွှန်း (Synopsis)</label>
+                    <textarea id="edit-novel-synopsis" rows="5"></textarea>
                 </div>
 
-
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-
-                    <button
-                        type="submit"
-                        class="submit-btn"
-                        style="flex: 1;"
-                    >
-                        <i class="fa-solid fa-check"></i>
-                        ပြင်ဆင်မည်
+                <div style="display:flex;gap:10px;margin-top:20px;">
+                    <button type="submit" class="submit-btn" style="flex:1;">
+                        <i class="fa-solid fa-check"></i> ပြင်ဆင်မည်
                     </button>
 
-                    <button
-                        type="button"
-                        class="submit-btn"
-                        onclick="closeEditModal()"
-                        style="
-                            flex: 1;
-                            background: #383849;
-                            box-shadow: none;
-                        "
-                    >
+                    <button type="button" class="submit-btn"
+                            onclick="closeEditModal()"
+                            style="flex:1;background:#383849;box-shadow:none;">
                         ပိတ်မည်
                     </button>
-
                 </div>
-
             </form>
-
         </div>
     </div>
 
-
-
     <!-- =========================================
-         EDIT CHAPTER MODAL
+         EDIT CHAPTER MODAL - ORIGINAL
     ========================================== -->
-    <div
-        id="edit-chapter-modal"
-        style="
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        "
-    >
+    <div id="edit-chapter-modal"
+         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:15px;">
 
-        <div
-            class="admin-card"
-            style="
-                width: 100%;
-                max-width: 600px;
-                max-height: 90vh;
-                overflow-y: auto;
-                position: relative;
-            "
-        >
+        <div class="admin-card"
+             style="width:100%;max-width:600px;max-height:90vh;overflow-y:auto;position:relative;">
 
             <h3 class="admin-title">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Chapter ပြင်ဆင်ရန်
+                <i class="fa-solid fa-pen-to-square"></i> Chapter ပြင်ဆင်ရန်
             </h3>
 
-
             <form id="edit-chapter-form" onsubmit="handleUpdateChapter(event)">
-
                 <input type="hidden" id="edit-chapter-filename">
                 <input type="hidden" id="edit-chapter-slug">
 
-
                 <div class="form-group">
-                    <label for="edit-chapter-number">
-                        Chapter နံပါတ် *
-                    </label>
-
-                    <input
-                        type="number"
-                        id="edit-chapter-number"
-                        min="1"
-                        required
-                    >
+                    <label for="edit-chapter-number">Chapter နံပါတ် *</label>
+                    <input type="number" id="edit-chapter-number" min="1" required>
                 </div>
 
-
                 <div class="form-group">
-                    <label for="edit-chapter-title">
-                        Chapter ခေါင်းစဉ်
-                    </label>
-
-                    <input
-                        type="text"
-                        id="edit-chapter-title"
-                        placeholder="ဥပမာ - The Beginning"
-                    >
+                    <label for="edit-chapter-title">Chapter ခေါင်းစဉ်</label>
+                    <input type="text" id="edit-chapter-title"
+                           placeholder="ဥပမာ - The Beginning">
                 </div>
 
-
                 <div class="form-group">
-                    <label for="edit-chapter-content">
-                        Chapter စာသားများ *
-                    </label>
-
-                    <textarea
-                        id="edit-chapter-content"
-                        rows="14"
-                        required
-                    ></textarea>
+                    <label for="edit-chapter-content">Chapter စာသားများ *</label>
+                    <textarea id="edit-chapter-content" rows="14" required></textarea>
                 </div>
 
-
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-
-                    <button
-                        type="submit"
-                        class="submit-btn"
-                        id="save-edit-chapter-btn"
-                        style="flex: 1;"
-                    >
-                        <i class="fa-solid fa-check"></i>
-                        ပြင်ဆင်မည်
+                <div style="display:flex;gap:10px;margin-top:20px;">
+                    <button type="submit" class="submit-btn"
+                            id="save-edit-chapter-btn" style="flex:1;">
+                        <i class="fa-solid fa-check"></i> ပြင်ဆင်မည်
                     </button>
 
-                    <button
-                        type="button"
-                        class="submit-btn"
-                        onclick="closeEditChapterModal()"
-                        style="
-                            flex: 1;
-                            background: #383849;
-                            box-shadow: none;
-                        "
-                    >
+                    <button type="button" class="submit-btn"
+                            onclick="closeEditChapterModal()"
+                            style="flex:1;background:#383849;box-shadow:none;">
                         ပိတ်မည်
                     </button>
-
                 </div>
-
             </form>
-
         </div>
     </div>
 
-
-
     <!-- =========================================
-         MANAGE CHAPTERS MODAL
+         MANAGE CHAPTERS MODAL - ORIGINAL
     ========================================== -->
-    <div
-        id="manage-chapters-modal"
-        style="
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        "
-    >
+    <div id="manage-chapters-modal"
+         style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:15px;">
 
-        <div
-            class="admin-card"
-            style="
-                width: 100%;
-                max-width: 600px;
-                max-height: 90vh;
-                overflow-y: auto;
-                position: relative;
-            "
-        >
+        <div class="admin-card"
+             style="width:100%;max-width:600px;max-height:90vh;overflow-y:auto;position:relative;">
 
-            <div style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 20px;
-            ">
-
-                <h3 class="admin-title" style="margin: 0;">
-                    <i class="fa-solid fa-book-open"></i>
-                    Chapter များ စီမံရန်
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                <h3 class="admin-title" style="margin:0;">
+                    <i class="fa-solid fa-book-open"></i> Chapter များ စီမံရန်
                 </h3>
 
-                <button
-                    onclick="closeChaptersModal()"
-                    style="
-                        width: 35px;
-                        height: 35px;
-                        background: rgba(255,255,255,0.06);
-                        border: 1px solid var(--admin-border);
-                        border-radius: 9px;
-                        color: #fff;
-                        cursor: pointer;
-                    "
-                    title="Close"
-                >
+                <button onclick="closeChaptersModal()"
+                        style="width:35px;height:35px;background:rgba(255,255,255,0.06);border:1px solid var(--admin-border);border-radius:9px;color:#fff;cursor:pointer;"
+                        title="Close">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-
             </div>
 
-
-            <div
-                id="admin-chapter-list"
-                style="
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                "
-            >
+            <div id="admin-chapter-list"
+                 style="display:flex;flex-direction:column;gap:10px;">
                 <!-- Chapter lists rendered by admin.js -->
             </div>
-
         </div>
     </div>
 
-
-
-    <!-- =========================================
-         BOTTOM NAVIGATION
-    ========================================== -->
+    <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
-
-        <form style="display: contents;">
-
+        <form style="display:contents;">
             <a href="index.html" class="nav-item">
                 <i class="fa-solid fa-house"></i>
                 <span>Home</span>
@@ -1265,11 +1584,8 @@
                 <i class="fa-solid fa-user-gear"></i>
                 <span>Admin</span>
             </a>
-
         </form>
-
     </nav>
-
 
     <!-- ORIGINAL JAVASCRIPT -->
     <script src="admin.js"></script>
