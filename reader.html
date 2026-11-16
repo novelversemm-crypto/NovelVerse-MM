@@ -1,113 +1,560 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Reading - NovelVerse</title>
-    <!-- Font Awesome Icons -->
+    <meta name="description" content="Read your favorite novels on NovelVerse Myanmar.">
+    <meta name="theme-color" content="#11101a">
+
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Main Style CSS -->
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="./favicon.png">
+
+    <style>
+        :root {
+            --reader-bg: #11101a;
+            --reader-card: #1b1927;
+            --reader-card-light: #242133;
+            --reader-border: rgba(255,255,255,0.08);
+            --reader-text: #e7e2ef;
+            --reader-muted: #a6a1b5;
+            --reader-purple: #9b78ff;
+            --reader-purple-dark: #7651dc;
+            --reading-font-size: 17px;
+            --reading-line-height: 2.15;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--reader-bg);
+            color: var(--reader-text);
+            font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif;
+            padding-bottom: 30px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 0 5%;
+            background: rgba(17,16,26,0.96);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--reader-border);
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: var(--reader-card);
+            border: 1px solid var(--reader-border);
+            color: #e8e2ff;
+            transition: 0.2s ease;
+        }
+
+        .icon-btn:hover {
+            background: var(--reader-purple-dark);
+            color: white;
+        }
+
+        .logo-title {
+            color: #f5f0ff;
+            font-weight: 700;
+        }
+
+        #reader-header-title {
+            flex: 1;
+            min-width: 0;
+            text-align: center;
+            font-size: 13px !important;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #eee9fa;
+        }
+
+        /* Font controls */
+
+        .font-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .font-btn {
+            min-width: 38px;
+            height: 35px;
+            padding: 0 9px;
+            border: 1px solid rgba(155,120,255,0.25);
+            border-radius: 9px;
+            background: rgba(155,120,255,0.1);
+            color: #cdbaff;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .font-btn:hover {
+            background: var(--reader-purple-dark);
+            color: white;
+        }
+
+        .font-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* =========================
+           MAIN LAYOUT
+        ========================= */
+
+        .main-container {
+            width: min(100% - 32px, 850px);
+            margin: 0 auto;
+        }
+
+        /* =========================
+           ADVERTISEMENTS
+        ========================= */
+
+        .ad-section {
+            width: min(100% - 32px, 850px);
+            margin: 18px auto;
+            text-align: center;
+        }
+
+        .ad-label {
+            margin-bottom: 7px;
+            color: #777286;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .ad-container {
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 1px dashed rgba(255,255,255,0.12);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.025);
+        }
+
+        .ad-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            color: #716c80;
+            font-size: 12px;
+        }
+
+        /* =========================
+           CHAPTER TITLE
+        ========================= */
+
+        .reader-chapter-title {
+            margin: 25px 0 20px;
+            padding: 23px 20px;
+            text-align: center;
+            border: 1px solid var(--reader-border);
+            border-radius: 17px;
+            background:
+                radial-gradient(circle at top, rgba(135,94,230,0.16), transparent 65%),
+                var(--reader-card);
+            color: #f4efff;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 19px;
+            font-weight: 700;
+            line-height: 1.8;
+            overflow-wrap: anywhere;
+        }
+
+        /* =========================
+           READING CONTENT
+        ========================= */
+
+        .reader-content {
+            margin: 22px 0;
+            padding: 34px 38px;
+            border: 1px solid var(--reader-border);
+            border-radius: 17px;
+            background: #1b1926;
+            color: var(--reader-text);
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: var(--reading-font-size);
+            line-height: var(--reading-line-height);
+            letter-spacing: 0.05px;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .reader-content p {
+            margin: 0 0 20px;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        .reader-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .reader-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .reader-content h1,
+        .reader-content h2,
+        .reader-content h3 {
+            color: #d7c5ff;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            line-height: 1.8;
+        }
+
+        .reader-content blockquote {
+            margin: 20px 0;
+            padding: 12px 17px;
+            border-left: 3px solid var(--reader-purple);
+            border-radius: 0 10px 10px 0;
+            background: rgba(155,120,255,0.08);
+            color: #c9bce0;
+        }
+
+        .reader-content a {
+            color: #b99dff;
+            text-decoration: underline;
+        }
+
+        /* =========================
+           CHAPTER NAVIGATION
+        ========================= */
+
+        .chapter-nav-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 28px 0;
+        }
+
+        .nav-btn {
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 8px;
+            border: 1px solid var(--reader-border);
+            border-radius: 12px;
+            background: var(--reader-card);
+            color: #ded7ed;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+            text-align: center;
+        }
+
+        .nav-btn:hover {
+            border-color: rgba(155,120,255,0.5);
+            background: rgba(155,120,255,0.12);
+            color: #fff;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.97);
+        }
+
+        #novel-details-btn {
+            background: rgba(155,120,255,0.13);
+            border-color: rgba(155,120,255,0.28);
+            color: #cbb8ff;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* =========================
+           MOBILE RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+            .top-header {
+                height: 58px;
+                padding: 0 12px;
+                gap: 8px;
+            }
+
+            .main-container {
+                width: calc(100% - 22px);
+            }
+
+            .ad-section {
+                width: calc(100% - 22px);
+                margin: 14px auto;
+            }
+
+            .reader-chapter-title {
+                margin: 18px 0 15px;
+                padding: 17px 13px;
+                font-size: 16px;
+                border-radius: 14px;
+            }
+
+            .reader-content {
+                margin: 16px 0;
+                padding: 22px 17px;
+                border-radius: 13px;
+                font-size: var(--reading-font-size);
+                line-height: 2.05;
+            }
+
+            .reader-content p {
+                margin-bottom: 17px;
+            }
+
+            .chapter-nav-bar {
+                gap: 7px;
+                margin: 22px 0;
+            }
+
+            .nav-btn {
+                min-height: 45px;
+                gap: 5px;
+                padding: 8px 4px;
+                font-size: 11px;
+            }
+
+            .font-btn {
+                min-width: 34px;
+                height: 33px;
+                padding: 0 7px;
+                font-size: 12px;
+            }
+
+            #reader-header-title {
+                font-size: 11px !important;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .top-header {
+                padding: 0 8px;
+            }
+
+            .chapter-nav-bar {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 5px;
+            }
+
+            .nav-btn {
+                font-size: 10px;
+            }
+
+            .reader-content {
+                padding: 18px 13px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- 1. Reader Header Bar -->
+    <!-- Reader Header -->
     <header class="top-header">
-        <a href="javascript:history.back()" class="icon-btn" id="back-to-novel-btn">
+
+        <a
+            href="javascript:history.back()"
+            class="icon-btn"
+            id="back-to-novel-btn"
+            aria-label="Go back"
+        >
             <i class="fa-solid fa-arrow-left"></i>
         </a>
-        <div class="logo-title" id="reader-header-title" style="font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 180px;">
+
+        <div class="logo-title" id="reader-header-title">
             Loading...
         </div>
-        <!-- Font Controls (A- / A+) -->
+
+        <!-- Font Size Controls -->
         <div class="font-controls">
-            <button class="font-btn" onclick="changeFontSize(-1)">A-</button>
-            <button class="font-btn" onclick="changeFontSize(1)">A+</button>
+            <button
+                class="font-btn"
+                type="button"
+                onclick="changeFontSize(-1)"
+                aria-label="Decrease font size"
+            >
+                A-
+            </button>
+
+            <button
+                class="font-btn"
+                type="button"
+                onclick="changeFontSize(1)"
+                aria-label="Increase font size"
+            >
+                A+
+            </button>
         </div>
+
     </header>
 
-    <section class="ad-section" style="margin-top: 15px;">
-            <div class="ad-label">Sponsored</div>
-            <div class="ad-container" id="ad-slot-grid">
-                <div class="ad-placeholder">
-                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
-                </div>
-            </div>
-        </section>
+    <!-- Top Sponsored Ad -->
+    <section class="ad-section">
+        <div class="ad-label">Sponsored</div>
 
-    <!-- Main Content Container -->
+        <div class="ad-container" id="ad-slot-grid">
+            <div class="ad-placeholder">
+                <i class="fa-solid fa-rectangle-ad"></i>
+                Banner Ad Slot
+            </div>
+        </div>
+    </section>
+
     <main class="main-container">
 
-        <!-- Chapter Title Section -->
+        <!-- Chapter Title -->
         <div class="reader-chapter-title" id="chapter-title">
-            <!-- JS မှ Chapter ခေါင်းစဉ် ရေးပေးမည် -->
+            <!-- JavaScript will insert chapter title -->
         </div>
 
-        <!-- Ad Slot 1: Top Ad Slot -->
+        <!-- Chapter Top Advertisement -->
         <section class="ad-section">
             <div class="ad-label">Advertisement</div>
+
             <div class="ad-container" id="ad-slot-header">
                 <div class="ad-placeholder">
-                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                    <i class="fa-solid fa-rectangle-ad"></i>
+                    Banner Ad Slot
                 </div>
             </div>
         </section>
 
-        <!-- Chapter Reading Content Body -->
+        <!-- Reading Content -->
         <article class="reader-content" id="chapter-content">
-            <p style="text-align: center; color: var(--text-muted); padding: 40px 0;">စာစဉ်ကို ရယူနေသည်...</p>
+            <p style="text-align:center; color:var(--reader-muted); padding:40px 0;">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                စာစဉ်ကို ရယူနေသည်...
+            </p>
         </article>
 
-        <!-- Ad Slot 2: Content Middle Ad Slot -->
+        <!-- Middle Advertisement -->
         <section class="ad-section">
             <div class="ad-label">Sponsored</div>
+
             <div class="ad-container" id="ad-slot-middle">
                 <div class="ad-placeholder">
-                    <i class="fa-solid fa-rectangle-ad"></i> Native Ad
+                    <i class="fa-solid fa-rectangle-ad"></i>
+                    Native Ad
                 </div>
             </div>
         </section>
 
-        <!-- Chapter Navigation Bar (Prev / List / Next) -->
+        <!-- Chapter Navigation -->
         <div class="chapter-nav-bar">
-            <button class="nav-btn" id="prev-ch-btn" onclick="navigateToChapter('prev')">
-                <i class="fa-solid fa-chevron-left"></i> ရှေ့အပိုင်း
+
+            <button
+                class="nav-btn"
+                id="prev-ch-btn"
+                type="button"
+                onclick="navigateToChapter('prev')"
+            >
+                <i class="fa-solid fa-chevron-left"></i>
+                ရှေ့အပိုင်း
             </button>
-            <a href="#" class="nav-btn" id="novel-details-btn">
-                <i class="fa-solid fa-list-ul"></i> မာတိကာ
+
+            <a
+                href="#"
+                class="nav-btn"
+                id="novel-details-btn"
+            >
+                <i class="fa-solid fa-list-ul"></i>
+                မာတိကာ
             </a>
-            <button class="nav-btn" id="next-ch-btn" onclick="navigateToChapter('next')">
-                နောက်အပိုင်း <i class="fa-solid fa-chevron-right"></i>
+
+            <button
+                class="nav-btn"
+                id="next-ch-btn"
+                type="button"
+                onclick="navigateToChapter('next')"
+            >
+                နောက်အပိုင်း
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
+
         </div>
 
-        <!-- Ad Slot 3: Below Navigation Bar Ad Slot -->
-        <section class="ad-section" style="margin-top: 15px;">
+        <!-- Below Navigation Advertisement -->
+        <section class="ad-section">
             <div class="ad-label">Sponsored</div>
-            <div class="ad-container" id="ad-slot-grid">
+
+            <div class="ad-container" id="ad-slot-grid-bottom">
                 <div class="ad-placeholder">
-                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                    <i class="fa-solid fa-rectangle-ad"></i>
+                    Banner Ad Slot
                 </div>
             </div>
         </section>
 
-        <!-- Ad Slot 4: Bottom Banner Ad Slot -->
-        <section class="ad-section" style="margin-top: 10px;">
+        <!-- Bottom Advertisement -->
+        <section class="ad-section">
             <div class="ad-label">Advertisement</div>
+
             <div class="ad-container" id="ad-slot-bottom">
                 <div class="ad-placeholder">
-                    <i class="fa-solid fa-rectangle-ad"></i> Banner Ad Slot
+                    <i class="fa-solid fa-rectangle-ad"></i>
+                    Banner Ad Slot
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- JavaScript Files -->
+    <!-- JavaScript -->
     <script src="ads.js"></script>
     <script src="reader.js"></script>
 
