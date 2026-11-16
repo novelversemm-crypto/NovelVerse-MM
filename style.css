@@ -1,915 +1,2179 @@
-/* ==========================================
-   1. Root Variables & Reset
-   ========================================== */
+
+/* =========================================================
+   NOVELVERSE — PREMIUM DARK UI SYSTEM
+   Shared stylesheet for:
+   Home / Search / Novel Details / Reader / Admin
+   ========================================================= */
+
+
+/* =========================================================
+   1. ROOT VARIABLES & RESET
+   ========================================================= */
+
 :root {
-  --bg-color: #0d0d12;
-  --surface-color: #161622;
-  --card-bg: #1e1e2d;
-  --primary-purple: #8a3ffc;
-  --primary-hover: #702cd8;
-  --accent-purple: #b388ff;
-  --text-main: #f0f0f5;
-  --text-muted: #9e9ea8;
-  --border-color: #2a2a3c;
-  --ad-bg: #12121c;
-  --nav-height: 62px;
+    color-scheme: dark;
+
+    --bg-color: #0c0b13;
+    --surface-color: #141321;
+    --card-bg: #1b1929;
+    --card-hover: #242137;
+    --input-bg: #11101c;
+
+    --primary-purple: #9565f5;
+    --primary-hover: #7d4de0;
+    --accent-purple: #c1a4ff;
+    --purple-soft: rgba(149, 101, 245, 0.14);
+
+    --success: #38d9a9;
+    --warning: #ffc76b;
+    --danger: #ff647c;
+    --info: #65b8ff;
+
+    --text-main: #f5f2ff;
+    --text-muted: #aaa5ba;
+    --text-dim: #777286;
+
+    --border-color: rgba(255, 255, 255, 0.075);
+    --border-purple: rgba(149, 101, 245, 0.35);
+
+    --ad-bg: #12111c;
+
+    --nav-height: 68px;
+    --header-height: 62px;
+
+    --radius-sm: 9px;
+    --radius-md: 13px;
+    --radius-lg: 18px;
+    --radius-xl: 23px;
+
+    --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.18);
+    --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.25);
+    --shadow-purple: 0 8px 24px rgba(149, 101, 245, 0.18);
+
+    --transition: 0.25s ease;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif;
-  -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  padding-bottom: calc(var(--nav-height) + 20px);
-  width: 100%;
-  max-width: 100%;
-  min-height: 100vh;
-  position: relative;
-   -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE 10+/Edge */
-  user-select: none;         /* Standard */
+    min-height: 100vh;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+
+    background: var(--bg-color);
+    color: var(--text-main);
+
+    font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+
+    padding-bottom: calc(var(--nav-height) + 20px);
+
+    overflow-x: hidden;
+
+   user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+}
+
+::selection {
+    background: rgba(149, 101, 245, 0.35);
+    color: white;
+}
+
+:focus-visible {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 3px;
 }
 
 
-/* ==========================================
-   2. Header & Top Bar
-   ========================================== */
+/* =========================================================
+   2. SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #39334e;
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-purple);
+}
+
+
+/* =========================================================
+   3. HEADER & TOP BAR
+   ========================================================= */
+
 .top-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 20px;
-  background-color: rgba(22, 22, 34, 0.95);
-  backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    min-height: var(--header-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 12px 22px;
+
+    background: rgba(20, 19, 33, 0.94);
+    border-bottom: 1px solid var(--border-color);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
 .logo-area {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    min-width: 0;
 }
 
 .logo-img {
-  height: 36px;
-  width: auto;
-  object-fit: contain;
-  border-radius: 6px;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 9px;
+    flex-shrink: 0;
 }
 
 .logo-title {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  background: linear-gradient(135deg, #ffffff, var(--accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+
+    background: linear-gradient(
+        120deg,
+        #ffffff,
+        #c9b3ff 55%,
+        #9565f5
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .icon-btn {
-  color: var(--text-main);
-  font-size: 18px;
-  text-decoration: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
+    width: 40px;
+    height: 40px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+
+    background: rgba(255, 255, 255, 0.045);
+
+    color: var(--text-main);
+    font-size: 16px;
+    text-decoration: none;
+
+    transition: var(--transition);
 }
 
-/* Search Header */
+.icon-btn:hover {
+    background: var(--purple-soft);
+    border-color: var(--border-purple);
+    color: var(--accent-purple);
+}
+
+.icon-btn:active {
+    transform: scale(0.94);
+}
+
+
+/* =========================================================
+   4. SEARCH HEADER
+   ========================================================= */
+
 .search-header {
-  padding: 12px 16px;
+    padding: 13px 20px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+.search-header .logo-area {
+    justify-content: center;
 }
 
 .search-box-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .search-icon {
-  position: absolute;
-  left: 14px;
-  color: var(--text-muted);
-  font-size: 14px;
+    position: absolute;
+    left: 16px;
+    z-index: 1;
+
+    color: var(--text-muted);
+    font-size: 14px;
+
+    pointer-events: none;
 }
 
 #search-input {
-  width: 100%;
-  padding: 10px 14px 10px 40px;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  color: var(--text-main);
-  font-size: 13px;
-  outline: none;
+    width: 100%;
+    height: 47px;
+
+    padding: 0 16px 0 43px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 13px;
+
+    color: var(--text-main);
+    font-size: 13px;
+
+    outline: none;
+    transition: var(--transition);
+}
+
+#search-input::placeholder {
+    color: var(--text-dim);
 }
 
 #search-input:focus {
-  border-color: var(--primary-purple);
+    border-color: var(--primary-purple);
+    background: var(--card-hover);
+    box-shadow: 0 0 0 3px var(--purple-soft);
 }
 
-/* ==========================================
-   3. Main Container & Ads
-   ========================================== */
+
+/* =========================================================
+   5. MAIN CONTAINER
+   ========================================================= */
+
 .main-container {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 20px 22px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
 }
+
+
+/* =========================================================
+   6. ADVERTISEMENT
+   ========================================================= */
 
 .ad-section {
-  background-color: var(--ad-bg);
-  border: 1px dashed var(--border-color);
-  border-radius: 12px;
-  padding: 8px;
-  text-align: center;
-  overflow: hidden;
+    width: 100%;
+    padding: 9px;
+
+    text-align: center;
+
+    background: var(--ad-bg);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-md);
+
+    overflow: hidden;
 }
 
 .ad-label {
-  font-size: 9px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  letter-spacing: 1px;
-  margin-bottom: 4px;
+    margin-bottom: 5px;
+
+    color: var(--text-dim);
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
 }
 
 .ad-container {
-  min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    min-height: 65px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+.ad-container img,
+.ad-container iframe {
+    max-width: 100%;
 }
 
 .ad-placeholder {
-  color: var(--text-muted);
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    color: var(--text-dim);
+    font-size: 11px;
 }
 
-/* ==========================================
-   4. Hero Banner Section
-   ========================================== */
+
+/* =========================================================
+   7. HERO SECTION
+   ========================================================= */
+
+.hero-section {
+    width: 100%;
+}
+
 .hero-card {
-  position: relative;
-  height: 220px;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  padding: 16px;
+    position: relative;
+
+    min-height: 260px;
+    height: clamp(220px, 32vw, 370px);
+
+    display: flex;
+    align-items: flex-end;
+
+    padding: 24px;
+
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+
+    background: var(--card-bg);
+    box-shadow: var(--shadow-md);
 }
 
 .hero-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    z-index: 1;
+
+    transition: transform 0.8s ease;
+}
+
+.hero-card:hover .hero-bg {
+    transform: scale(1.035);
 }
 
 .hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(13, 13, 18, 0.95) 10%, rgba(13, 13, 18, 0.2) 100%);
-  z-index: 2;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+
+    background: linear-gradient(
+        90deg,
+        rgba(12, 11, 19, 0.94) 0%,
+        rgba(12, 11, 19, 0.65) 50%,
+        rgba(12, 11, 19, 0.12) 100%
+    );
 }
 
 .hero-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  background: var(--primary-purple);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
-  z-index: 3;
-  text-transform: uppercase;
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    z-index: 3;
+
+    padding: 6px 13px;
+
+    background: var(--primary-purple);
+    border-radius: 20px;
+
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
 .hero-content {
-  position: relative;
-  z-index: 3;
+    position: relative;
+    z-index: 3;
+
+    width: min(100%, 520px);
 }
 
 .hero-title {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 4px;
+    margin-bottom: 8px;
+
+    color: white;
+    font-size: clamp(20px, 3vw, 31px);
+    font-weight: 800;
+    line-height: 1.35;
 }
 
 .hero-desc {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+    max-width: 500px;
+    margin-bottom: 16px;
+
+    color: #d0cbdc;
+    font-size: 12px;
+    line-height: 1.8;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--primary-purple);
-  color: #fff;
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(138, 63, 252, 0.4);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 10px 21px;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary-purple),
+        var(--primary-hover)
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 11px;
+
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+
+    box-shadow: var(--shadow-purple);
+    transition: var(--transition);
 }
 
-/* ==========================================
-   5. Sections & Modern Novel Grid Cards
-   ========================================== */
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(149, 101, 245, 0.3);
+}
+
+.btn-primary:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================================================
+   8. SECTION HEADINGS
+   ========================================================= */
+
 .section-block {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
 }
 
 .section-title {
-  font-size: 16px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--text-main);
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .section-title i {
-  color: var(--primary-purple);
+    color: var(--primary-purple);
+    font-size: 16px;
 }
 
 .view-all {
-  font-size: 12px;
-  color: var(--accent-purple);
-  text-decoration: none;
+    color: var(--accent-purple);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
 }
 
-/* Unified Novel Grid Layout */
+.view-all:hover {
+    color: white;
+}
+
+
+/* =========================================================
+   9. NOVEL GRID
+   ========================================================= */
+
 .novel-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
-  padding: 10px 0;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fill,
+        minmax(145px, 1fr)
+    );
+
+    gap: 18px;
+    padding: 4px 0;
 }
 
-@media (min-width: 768px) {
-  .novel-grid {
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 20px;
-  }
+.novel-grid > * {
+    min-width: 0;
 }
 
-/* Combined & Animated Novel Card */
 .novel-card {
-  position: relative;
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  overflow: hidden;
-  text-decoration: none;
-  color: var(--text-main);
-  display: flex;
-  flex-direction: column;
-  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  animation: cardFadeIn 0.5s ease-out forwards;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+    overflow: hidden;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    color: var(--text-main);
+    text-decoration: none;
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+
+    animation: cardFadeIn 0.4s ease both;
 }
 
 @keyframes cardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .novel-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: var(--primary-purple);
-  box-shadow: 0 12px 28px rgba(138, 63, 252, 0.25);
+    transform: translateY(-5px);
+
+    border-color: var(--border-purple);
+    box-shadow: var(--shadow-purple);
 }
 
 .novel-card:active {
-  transform: scale(0.98);
+    transform: scale(0.98);
 }
 
-.novel-cover-wrap, .card-cover-wrapper {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
+.novel-cover-wrap,
+.card-cover-wrapper {
+    position: relative;
+
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+
+    overflow: hidden;
+    background: #252237;
 }
 
-.novel-cover, .card-cover-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
+.novel-cover,
+.card-cover-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
 .novel-card:hover .novel-cover,
 .novel-card:hover .card-cover-wrapper img {
-  transform: scale(1.08);
+    transform: scale(1.06);
+}
+
+.card-cover-wrapper::after,
+.novel-cover-wrap::after {
+    content: '';
+
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        180deg,
+        transparent 55%,
+        rgba(0, 0, 0, 0.38) 100%
+    );
+
+    pointer-events: none;
 }
 
 .chapter-badge {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
-  color: var(--accent-purple);
-  font-size: 10px;
-  padding: 3px 8px;
-  border-radius: 6px;
-  z-index: 2;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 2;
+
+    padding: 4px 8px;
+
+    background: rgba(0, 0, 0, 0.78);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 7px;
+
+    color: #d6c4ff;
+    font-size: 9px;
+    font-weight: 600;
+
+    backdrop-filter: blur(6px);
 }
 
 .novel-info {
-  padding: 10px;
+    padding: 11px;
 }
 
 .novel-name {
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 4px;
+    margin-bottom: 5px;
+
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
 }
 
 .novel-meta {
-  font-size: 11px;
-  color: var(--text-muted);
+    color: var(--text-muted);
+    font-size: 10px;
+    line-height: 1.6;
 }
 
-/* Overlay Gradient for Card Cover */
-.card-cover-wrapper::after, .novel-cover-wrap::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, transparent 40%, rgba(0,0,0,0.8) 100%);
-  pointer-events: none;
+
+/* =========================================================
+   10. CONTINUE READING
+   ========================================================= */
+
+#continue-reading-section {
+    width: 100%;
 }
 
-/* ==========================================
-   6. Search & Filter Controls
-   ========================================== */
+.continue-card {
+    width: 100%;
+    min-height: 105px;
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 14px;
+
+    background: linear-gradient(
+        120deg,
+        #211a35,
+        #191626
+    );
+
+    border: 1px solid var(--border-purple);
+    border-radius: var(--radius-md);
+
+    transition: var(--transition);
+}
+
+.continue-card:hover {
+    background: #272039;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   11. SEARCH & FILTER
+   ========================================================= */
+
 .filter-section {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 19px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
 }
 
 .filter-title {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
 }
 
 .status-tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
 }
 
 .status-btn {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  padding: 6px 16px;
-  border-radius: 16px;
-  font-size: 12px;
-  cursor: pointer;
+    min-height: 36px;
+
+    padding: 7px 17px;
+
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.status-btn:hover {
+    border-color: var(--border-purple);
+    color: white;
 }
 
 .status-btn.active {
-  background: var(--primary-purple);
-  color: #fff;
-  border-color: var(--primary-purple);
+    background: linear-gradient(
+        135deg,
+        var(--primary-purple),
+        var(--primary-hover)
+    );
+
+    border-color: transparent;
+    color: white;
+
+    box-shadow: var(--shadow-purple);
 }
 
 .genre-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
 }
 
 .genre-chip {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 8px 12px;
-  border-radius: 10px;
-  font-size: 11px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+
+    padding: 8px 11px;
+
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: var(--transition);
 }
 
 .genre-chip i {
-  color: var(--primary-purple);
+    flex-shrink: 0;
+    color: var(--primary-purple);
+}
+
+.genre-chip:hover {
+    background: var(--purple-soft);
+    border-color: var(--border-purple);
+    color: white;
 }
 
 .genre-chip.active {
-  background: rgba(138, 63, 252, 0.2);
-  border-color: var(--primary-purple);
-  color: var(--accent-purple);
+    background: rgba(149, 101, 245, 0.16);
+    border-color: var(--primary-purple);
+    color: var(--accent-purple);
 }
 
-/* ==========================================
-   7. Novel Detail & Reader Screen
-   ========================================== */
+.genre-chip.active i {
+    color: var(--accent-purple);
+}
+
+
+/* =========================================================
+   12. NOVEL DETAILS
+   ========================================================= */
+
+.novel-detail-header {
+    width: 100%;
+}
+
 .novel-detail-card {
-  display: flex;
-  gap: 16px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 14px;
-  border-radius: 14px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 22px;
+
+    padding: 20px;
+
+    background: linear-gradient(
+        135deg,
+        #201b32,
+        #171523
+    );
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-md);
 }
 
 .detail-cover {
-  width: 110px;
-  height: 155px;
-  object-fit: cover;
-  border-radius: 10px;
-  flex-shrink: 0;
+    width: 145px;
+    height: 205px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    box-shadow: var(--shadow-md);
 }
 
 .detail-info {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  justify-content: center;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 11px;
 }
 
 .detail-title {
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1.3;
+    color: var(--text-main);
+    font-size: 21px;
+    font-weight: 800;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
 }
 
 .detail-meta {
-  font-size: 12px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 7px;
+
+    color: var(--text-muted);
+    font-size: 11px;
 }
 
 .detail-meta i {
-  color: var(--primary-purple);
+    color: var(--primary-purple);
 }
 
 .detail-badge {
-  align-self: flex-start;
-  background: rgba(138, 63, 252, 0.2);
-  color: var(--accent-purple);
-  border: 1px solid var(--primary-purple);
-  font-size: 10px;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
+    align-self: flex-start;
+
+    padding: 5px 11px;
+
+    background: var(--purple-soft);
+    border: 1px solid var(--border-purple);
+    border-radius: 20px;
+
+    color: var(--accent-purple);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 
-/* style.css ထဲမှ .synopsis-box ကို ဤအတိုင်း ပြောင်းလဲပါ */
 .synopsis-box {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 12px 14px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  white-space: pre-line;
-  
-  /*  👇 ဒီ ၂ ကြောင်းကို ထပ်ဖြည့်ပေးပါ */
-  word-break: break-word;
-  overflow-wrap: break-word;
+    width: 100%;
+
+    padding: 19px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    color: #c3bed0;
+    font-size: 13px;
+    line-height: 2;
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
-/* Chapter List */
-.sort-btn {
-  background: transparent;
-  border: none;
-  color: var(--accent-purple);
-  font-size: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+
+/* =========================================================
+   13. CHAPTER LIST
+   ========================================================= */
 
 .chapter-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
 }
 
 .chapter-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  padding: 12px 16px;
-  border-radius: 10px;
-  text-decoration: none;
-  color: var(--text-main);
-  transition: background 0.2s;
+    width: 100%;
+    min-height: 59px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+
+    padding: 12px 16px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+
+    color: var(--text-main);
+    text-decoration: none;
+
+    transition: var(--transition);
+}
+
+.chapter-item:hover {
+    background: var(--card-hover);
+    border-color: var(--border-purple);
+    transform: translateX(3px);
 }
 
 .chapter-item:active {
-  background: var(--border-color);
+    transform: scale(0.99);
 }
 
 .ch-title {
-  font-size: 13px;
-  font-weight: 500;
+    min-width: 0;
+
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: 600;
+
+    overflow-wrap: anywhere;
 }
 
 .ch-date {
-  font-size: 11px;
-  color: var(--text-muted);
+    flex-shrink: 0;
+
+    color: var(--text-dim);
+    font-size: 10px;
 }
 
-.empty-msg, .loading-text {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 12px;
-  padding: 20px;
+.sort-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 8px 12px;
+
+    background: var(--purple-soft);
+    border: 1px solid var(--border-purple);
+    border-radius: 9px;
+
+    color: var(--accent-purple);
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-/* Reader Screen Controls & Content */
+.sort-btn:hover {
+    background: rgba(149, 101, 245, 0.25);
+}
+
+.empty-msg,
+.loading-text {
+    width: 100%;
+
+    padding: 30px 15px;
+
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   14. PAGINATION
+   ========================================================= */
+
+#pagination-container,
+#chapter-pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+#pagination-container button,
+#pagination-container a,
+#chapter-pagination-container button,
+#chapter-pagination-container a {
+    min-width: 36px;
+    min-height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 11px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+
+    color: var(--text-muted);
+    font-size: 11px;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#pagination-container button:hover,
+#pagination-container a:hover,
+#chapter-pagination-container button:hover,
+#chapter-pagination-container a:hover {
+    border-color: var(--primary-purple);
+    color: white;
+}
+
+#pagination-container .active,
+#chapter-pagination-container .active {
+    background: var(--primary-purple);
+    border-color: var(--primary-purple);
+    color: white;
+}
+
+
+/* =========================================================
+   15. READER HEADER & FONT CONTROLS
+   ========================================================= */
+
 .font-controls {
-  display: flex;
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-shrink: 0;
 }
 
 .font-btn {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
+    min-width: 38px;
+    height: 34px;
+
+    padding: 0 9px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 9px;
+
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.font-btn:hover {
+    background: var(--purple-soft);
+    border-color: var(--border-purple);
+    color: var(--accent-purple);
 }
 
 .font-btn:active {
-  background: var(--primary-purple);
-  color: #fff;
+    transform: scale(0.95);
 }
+
+#reader-header-title {
+    flex: 1;
+    min-width: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   16. READER CHAPTER TITLE
+   ========================================================= */
 
 .reader-chapter-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--accent-purple);
-  margin-bottom: 12px;
-  line-height: 1.4;
-  text-align: center;
+    width: 100%;
+
+    padding: 14px 8px;
+
+    color: var(--accent-purple);
+    font-size: 19px;
+    font-weight: 800;
+    line-height: 1.6;
+
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
+
+/* =========================================================
+   17. READER CONTENT
+   ========================================================= */
+
 .reader-content {
-  font-size: 16px;
-  line-height: 2;
-  font-weight: 500;
-  
-  /*  !important ထည့်၍ Priority အမြင့်ဆုံး ပေးပါ */
-  color: #101116 !important;             /* စာသားအရောင် (ဥပမာ - အဖြူ) */
-  background-color: #e2c887 !important;  /* နောက်ခံအရောင် (ဥပမာ - အမှောင်) */
-  border: 1px solid #2a2a3c;
-  
-  width: calc(100% - 10px);
-  margin: 20px auto; 
-  padding: 16px; 
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  word-break: break-word;
+    --reader-bg: #eee4cf;
+    --reader-text: #29241e;
+
+    width: 100%;
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    padding: clamp(20px, 4vw, 42px);
+
+    background: var(--reader-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+
+    color: var(--reader-text);
+
+    font-family: 'Noto Sans Myanmar', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 2.15;
+
+    text-align: left;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .reader-content p {
-  text-indent: 1em;
+    margin-bottom: 20px;
+
+    color: inherit;
+    font: inherit;
+    line-height: inherit;
+
+    text-indent: 1.5em;
 }
 
+.reader-content p:last-child {
+    margin-bottom: 0;
+}
+
+.reader-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 9px;
+}
+
+.reader-content a {
+    color: #6842bd;
+    text-decoration: underline;
+}
+
+.reader-content h1,
+.reader-content h2,
+.reader-content h3,
+.reader-content h4 {
+    margin: 22px 0 13px;
+
+    color: #211b2d;
+    line-height: 1.6;
+}
+
+.reader-content blockquote {
+    margin: 18px 0;
+    padding: 12px 17px;
+
+    background: rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #8b62d9;
+    border-radius: 5px;
+}
+
+.reader-content ul,
+.reader-content ol {
+    padding-left: 28px;
+    margin-bottom: 18px;
+}
+
+.reader-content li {
+    margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   18. CHAPTER NAVIGATION
+   ========================================================= */
+
 .chapter-nav-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  margin-top: 20px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-top: 18px;
 }
 
 .nav-btn {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 10px 8px;
-  border-radius: 10px;
-  font-size: 12px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background 0.2s;
+    flex: 1;
+    min-width: 0;
+    min-height: 45px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 9px 10px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+
+    color: var(--text-main);
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav-btn:hover:not([disabled]) {
+    background: var(--purple-soft);
+    border-color: var(--border-purple);
+    color: var(--accent-purple);
 }
 
 .nav-btn:active:not([disabled]) {
-  background: var(--primary-purple);
-  color: #fff;
+    transform: scale(0.97);
 }
 
 .nav-btn[disabled] {
-  cursor: not-allowed;
+    opacity: 0.4;
+    cursor: not-allowed;
 }
 
-/* ==========================================
-   8. Admin Section Styles
-   ========================================== */
-#logout-btn {
-  font-size: 16px;
-  cursor: pointer;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
 
-#logout-btn:active {
-  background: rgba(255, 77, 77, 0.2);
-}
+/* =========================================================
+   19. ADMIN — LOGIN & DASHBOARD
+   ========================================================= */
 
 #login-section {
-  max-width: 400px;
-  margin: 20px auto;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    width: min(100% - 30px, 420px);
+
+    margin: 35px auto;
+    padding: 25px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+
+    box-shadow: var(--shadow-md);
 }
 
-#login-form .form-group {
-  margin-bottom: 16px;
+#dashboard-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-#login-form input {
-  width: 100%;
+#logout-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 8px 12px;
+
+    background: rgba(255, 100, 124, 0.1);
+    border: 1px solid rgba(255, 100, 124, 0.2);
+    border-radius: 9px;
+
+    color: var(--danger);
+    font-size: 13px;
+
+    cursor: pointer;
+    transition: var(--transition);
 }
+
+#logout-btn:hover {
+    background: rgba(255, 100, 124, 0.2);
+}
+
+
+/* =========================================================
+   20. ADMIN TABS
+   ========================================================= */
 
 .admin-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-  overflow-x: auto;
-  padding-bottom: 4px;
+    width: 100%;
+
+    display: flex;
+    gap: 9px;
+
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+
+    overflow-x: auto;
+    scrollbar-width: thin;
 }
 
 .tab-btn {
-  flex: 1;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-muted);
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 11px;
-  white-space: nowrap;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+    min-height: 42px;
+    flex: 1 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 15px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tab-btn:hover {
+    border-color: var(--border-purple);
+    color: white;
 }
 
 .tab-btn.active {
-  background: var(--primary-purple);
-  color: #ffffff;
-  border-color: var(--primary-purple);
-  font-weight: 600;
+    background: linear-gradient(
+        135deg,
+        var(--primary-purple),
+        var(--primary-hover)
+    );
+
+    border-color: transparent;
+    color: white;
+
+    box-shadow: var(--shadow-purple);
 }
 
-/* Admin Card Container အား Mobile တွင် မထွက်အောင် ထိန်းခြင်း */
+
+/* =========================================================
+   21. ADMIN CARDS
+   ========================================================= */
+
 .admin-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 20px;
-  
-  /* 👇 ဒီ ၂ ကြောင်း ထပ်ဖြည့်ပါ */
-  width: 100%;
-  box-sizing: border-border-box;
+    width: 100%;
+    max-width: 100%;
+
+    margin-bottom: 20px;
+    padding: 21px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-sm);
 }
 
 .admin-title {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 19px;
+
+    color: var(--text-main);
+    font-size: 15px;
+    font-weight: 700;
 }
 
 .admin-title i {
-  color: var(--primary-purple);
+    color: var(--primary-purple);
 }
 
+
+/* =========================================================
+   22. FORMS & INPUTS
+   ========================================================= */
+
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    margin-bottom: 16px;
 }
 
 .form-group label {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 500;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
 }
 
 .form-group input,
 .form-group select,
-.form-group textarea {
-  background: var(--surface-color);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 10px 12px;
-  color: var(--text-main);
-  font-size: 13px;
-  outline: none;
-  font-family: inherit;
-  transition: border-color 0.2s;
+.form-group textarea,
+#login-form input {
+    width: 100%;
+    min-width: 0;
+
+    padding: 12px 14px;
+
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+
+    color: var(--text-main);
+    font-size: 12px;
+
+    outline: none;
+    transition: var(--transition);
 }
 
-/* Dropdown ထဲရှိ option များ ဘောင်ကျော်မထွက်စေရန် */
-.form-group select option {
-  width: 100%;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal; /* စာသားရှည်ပါက အောက်ကြောင်းဆင်းပေးမည် */
-  word-wrap: break-word;
+.form-group input::placeholder,
+.form-group textarea::placeholder,
+#login-form input::placeholder {
+    color: var(--text-dim);
 }
 
 .form-group input:focus,
 .form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--primary-purple);
+.form-group textarea:focus,
+#login-form input:focus {
+    background: #191628;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 3px var(--purple-soft);
 }
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-group select option {
+    background: var(--card-bg);
+    color: var(--text-main);
+}
+
+.form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.8;
+}
+
+.form-group input[type="file"] {
+    padding: 10px;
+}
+
+.form-group input[type="checkbox"],
+.form-group input[type="radio"] {
+    width: auto;
+    accent-color: var(--primary-purple);
+}
+
+.form-group input[type="number"] {
+    appearance: textfield;
+}
+
+.form-group input[type="number"]::-webkit-inner-spin-button,
+.form-group input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+}
+
+
+/* =========================================================
+   23. BUTTONS
+   ========================================================= */
 
 .submit-btn {
-  width: 100%;
-  background: var(--primary-purple);
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: opacity 0.2s;
+    width: 100%;
+    min-height: 45px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    margin-top: 8px;
+    padding: 12px 18px;
+
+    background: linear-gradient(
+        135deg,
+        var(--primary-purple),
+        var(--primary-hover)
+    );
+
+    border: none;
+    border-radius: 11px;
+
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.submit-btn:active {
-  opacity: 0.8;
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-purple);
+}
+
+.submit-btn:active:not(:disabled) {
+    transform: scale(0.98);
 }
 
 .submit-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
+
+/* =========================================================
+   24. ADMIN NOVEL LIST
+   ========================================================= */
+
 .admin-novel-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
 }
 
 .admin-novel-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: var(--surface-color);
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 12px;
+
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+
+    transition: var(--transition);
+}
+
+.admin-novel-item:hover {
+    background: var(--card-hover);
+    border-color: var(--border-purple);
 }
 
 .admin-cover {
-  width: 45px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 6px;
+    width: 48px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    object-fit: cover;
+    border-radius: 7px;
 }
 
 .admin-info {
-  flex: 1;
+    flex: 1;
+    min-width: 0;
 }
 
 .admin-novel-title {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.3;
+    color: var(--text-main);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
 }
 
 .admin-novel-meta {
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-top: 4px;
+    margin-top: 5px;
+
+    color: var(--text-muted);
+    font-size: 10px;
 }
 
 .delete-btn {
-  background: rgba(255, 77, 77, 0.15);
-  color: #ff4d4d;
-  border: 1px solid #ff4d4d;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 12px;
-  transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+
+    padding: 8px 11px;
+
+    background: rgba(255, 100, 124, 0.1);
+    border: 1px solid rgba(255, 100, 124, 0.25);
+    border-radius: 8px;
+
+    color: var(--danger);
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-.delete-btn:active {
-  background: rgba(255, 77, 77, 0.3);
+.delete-btn:hover {
+    background: rgba(255, 100, 124, 0.2);
 }
 
-/* ==========================================
-   9. Bottom Navigation Bar
-   ========================================== */
+
+/* =========================================================
+   25. MODALS
+   ========================================================= */
+
+#edit-novel-modal,
+#edit-chapter-modal,
+#manage-chapters-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 18px;
+
+    background: rgba(0, 0, 0, 0.76);
+    backdrop-filter: blur(8px);
+}
+
+#edit-novel-modal[style*="display: block"],
+#edit-chapter-modal[style*="display: block"],
+#manage-chapters-modal[style*="display: block"] {
+    overflow-y: auto;
+}
+
+#edit-novel-modal > *,
+#edit-chapter-modal > *,
+#manage-chapters-modal > * {
+    max-width: 100%;
+}
+
+.modal-content,
+.edit-modal-content {
+    width: min(100%, 600px);
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   26. POPULAR LIST
+   ========================================================= */
+
+.popular-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.popular-list > * {
+    min-width: 0;
+}
+
+
+/* =========================================================
+   27. BOTTOM NAVIGATION
+   ========================================================= */
+
 .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #161622;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    z-index: 1500;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: var(--nav-height);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding: 5px max(10px, calc((100% - 600px) / 2));
+
+    background: rgba(20, 19, 33, 0.96);
+    border-top: 1px solid var(--border-color);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
 .nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 10px;
-  width: 25%;
+    width: 25%;
+    min-width: 55px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    color: var(--text-dim);
+    font-size: 10px;
+    font-weight: 500;
+    text-decoration: none;
+
+    transition: var(--transition);
 }
 
 .nav-item i {
-  font-size: 18px;
+    font-size: 18px;
+    transition: var(--transition);
 }
 
+.nav-item:hover,
 .nav-item.active {
-  color: var(--primary-purple);
-  font-weight: 600;
+    color: var(--accent-purple);
+}
+
+.nav-item.active i {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 7px rgba(149, 101, 245, 0.45));
+}
+
+
+/* =========================================================
+   28. SKELETON LOADING
+   ========================================================= */
+
+.skeleton,
+.skeleton-card {
+    background: linear-gradient(
+        90deg,
+        #1b1929 25%,
+        #29253b 50%,
+        #1b1929 75%
+    );
+
+    background-size: 200% 100%;
+    animation: skeletonLoading 1.5s infinite;
+    border-radius: 10px;
+}
+
+@keyframes skeletonLoading {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+
+/* =========================================================
+   29. ACCESSIBILITY & MOTION
+   ========================================================= */
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* =========================================================
+   30. TABLET RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .main-container {
+        max-width: 100%;
+        padding: 18px;
+    }
+
+    .novel-grid {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(135px, 1fr)
+        );
+
+        gap: 14px;
+    }
+
+    .genre-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .detail-cover {
+        width: 125px;
+        height: 180px;
+    }
+
+}
+
+
+/* =========================================================
+   31. MOBILE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 13px;
+    }
+
+    .top-header {
+        padding: 11px 14px;
+    }
+
+    .logo-img {
+        width: 31px;
+        height: 31px;
+    }
+
+    .logo-title {
+        font-size: 18px;
+    }
+
+    .main-container {
+        padding: 14px 12px;
+        gap: 18px;
+    }
+
+    .hero-card {
+        min-height: 225px;
+        height: 245px;
+        padding: 17px;
+        border-radius: 16px;
+    }
+
+    .hero-overlay {
+        background: linear-gradient(
+            to top,
+            rgba(12, 11, 19, 0.97) 0%,
+            rgba(12, 11, 19, 0.65) 55%,
+            rgba(12, 11, 19, 0.1) 100%
+        );
+    }
+
+    .hero-title {
+        font-size: 20px;
+    }
+
+    .hero-desc {
+        font-size: 11px;
+        -webkit-line-clamp: 2;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .novel-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .novel-info {
+        padding: 9px;
+    }
+
+    .novel-name {
+        font-size: 11px;
+    }
+
+    .novel-meta {
+        font-size: 9px;
+    }
+
+    .filter-section {
+        padding: 15px;
+        border-radius: 14px;
+    }
+
+    .genre-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .genre-chip {
+        min-height: 39px;
+        padding: 7px 9px;
+        font-size: 10px;
+    }
+
+    .status-btn {
+        padding: 7px 13px;
+        font-size: 10px;
+    }
+
+    .novel-detail-card {
+        align-items: flex-start;
+        gap: 14px;
+        padding: 14px;
+        border-radius: 15px;
+    }
+
+    .detail-cover {
+        width: 105px;
+        height: 150px;
+    }
+
+    .detail-title {
+        font-size: 15px;
+    }
+
+    .detail-info {
+        gap: 8px;
+    }
+
+    .detail-meta {
+        font-size: 10px;
+    }
+
+    .synopsis-box {
+        padding: 14px;
+        font-size: 12px;
+        line-height: 1.9;
+    }
+
+    .chapter-item {
+        min-height: 53px;
+        padding: 10px 12px;
+    }
+
+    .ch-title {
+        font-size: 11px;
+    }
+
+    .ch-date {
+        font-size: 9px;
+    }
+
+    .reader-chapter-title {
+        font-size: 16px;
+    }
+
+    .reader-content {
+        padding: 20px 16px;
+        font-size: 15px;
+        line-height: 2.05;
+        border-radius: 12px;
+    }
+
+    .chapter-nav-bar {
+        gap: 6px;
+    }
+
+    .nav-btn {
+        min-height: 42px;
+        padding: 8px 5px;
+        gap: 4px;
+        font-size: 10px;
+    }
+
+    .admin-card {
+        padding: 15px;
+    }
+
+    .admin-tabs {
+        gap: 7px;
+    }
+
+    .tab-btn {
+        padding: 9px 11px;
+        font-size: 10px;
+    }
+
+    .bottom-nav {
+        height: 64px;
+    }
+
+    :root {
+        --nav-height: 64px;
+    }
+
+}
+
+
+/* =========================================================
+   32. SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .main-container {
+        padding: 12px 10px;
+    }
+
+    .novel-grid {
+        gap: 9px;
+    }
+
+    .novel-info {
+        padding: 8px;
+    }
+
+    .genre-chip {
+        gap: 6px;
+        font-size: 9px;
+    }
+
+    .detail-cover {
+        width: 90px;
+        height: 130px;
+    }
+
+    .detail-title {
+        font-size: 13px;
+    }
+
+    .reader-content {
+        padding: 17px 13px;
+        font-size: 14px;
+    }
+
+    .font-btn {
+        min-width: 34px;
+        height: 32px;
+        padding: 0 7px;
+    }
+
+    #reader-header-title {
+        font-size: 11px;
+    }
+
+}
+
+
+/* =========================================================
+   33. DESKTOP ENHANCEMENTS
+   ========================================================= */
+
+@media (min-width: 1100px) {
+
+    .main-container {
+        padding: 25px 28px;
+    }
+
+    .novel-grid {
+        grid-template-columns: repeat(
+            auto-fill,
+            minmax(165px, 1fr)
+        );
+
+        gap: 21px;
+    }
+
+    .detail-cover {
+        width: 165px;
+        height: 230px;
+    }
+
+    .reader-content {
+        padding: 45px 55px;
+        font-size: 17px;
+        line-height: 2.2;
+    }
+
 }
