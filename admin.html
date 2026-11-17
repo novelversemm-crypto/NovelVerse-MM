@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="my">
 <head>
@@ -698,8 +697,8 @@
                     class="tab-btn"
                     onclick="switchTab('chapter-pricing')"
                 >
-                    <i class="fa-solid fa-tags"></i>
-                    Chapter Pricing
+                    <i class="fa-solid fa-lock"></i>
+                    Chapter Lock Management
                 </button>
 
                 <button
@@ -876,8 +875,8 @@
             >
 
                 <h3 class="admin-title">
-                    <i class="fa-solid fa-tags"></i>
-                    Chapter Pricing
+                    <i class="fa-solid fa-lock"></i>
+                    Chapter Lock Management
                 </h3>
 
                 <div class="form-group">
@@ -906,11 +905,17 @@
 
                 </div>
 
+                <p style="color: var(--admin-muted); font-size: 13px; line-height: 1.8; margin: 0 0 18px;">
+                    Novel တစ်ခုကို ရွေးပြီး Chapter တစ်ခုချင်းစီကို Free သို့မဟုတ် Premium အဖြစ် ပြောင်းနိုင်ပါသည်။
+                    Premium Chapter ဖတ်ရှုရန် User ထံမှ Coin 1 ခုသာ ကောက်ခံမည်ဖြစ်သည်။
+                </p>
+
                 <div
                     id="chapter-pricing-list"
                     class="admin-novel-list"
+                    aria-live="polite"
                 >
-                    <!-- Chapter pricing list will be loaded by admin.js -->
+                    <!-- Chapter lock status and controls will be loaded by admin.js -->
                 </div>
 
             </section>
