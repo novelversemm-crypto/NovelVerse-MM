@@ -5,651 +5,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Search & Filter - NovelVerse</title>
-    <meta name="description" content="Discover and search novels on NovelVerse Myanmar.">
+    <title>Search & Filter - NovelVerse MM</title>
+
+    <meta
+        name="description"
+        content="Discover and search novels on NovelVerse Myanmar."
+    >
+
     <meta name="theme-color" content="#11101a">
 
     <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="./favicon.png">
-
-    <style>
-        :root {
-            --search-bg: #11101a;
-            --search-card: #1b1927;
-            --search-card-light: #242133;
-            --search-border: rgba(255,255,255,0.08);
-            --search-text: #f5f3ff;
-            --search-muted: #a6a1b5;
-            --search-purple: #9b78ff;
-            --search-purple-dark: #7651dc;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--search-bg);
-            color: var(--search-text);
-            font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif;
-            padding-bottom: 90px;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        .top-header.search-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            min-height: 112px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            justify-content: center;
-            gap: 13px;
-            padding: 13px max(16px, calc((100% - 1000px) / 2));
-            background: rgba(17,16,26,0.96);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--search-border);
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-        }
-
-        .logo-img {
-            width: 31px;
-            height: 31px;
-            object-fit: contain;
-        }
-
-        .logo-title {
-            font-size: 19px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(110deg, #fff, #b99dff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        /* Header Actions */
-
-        .header-actions {
-            position: absolute;
-            top: 17px;
-            right: max(16px, calc((100% - 1000px) / 2));
-            display: flex;
-            align-items: center;
-            gap: 9px;
-        }
-
-        .header-action {
-            min-height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 6px 10px;
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 9px;
-            background: var(--search-card);
-            color: #cfc5e8;
-            font-size: 11px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.2s ease;
-        }
-
-        .header-action:hover {
-            border-color: var(--search-purple);
-            color: #fff;
-        }
-
-        .header-action.coin-action {
-            color: #e8c77a;
-        }
-
-        .header-action i {
-            font-size: 12px;
-        }
-
-        /* Search Input */
-
-        .search-box-wrap {
-            position: relative;
-            width: min(100%, 700px);
-            margin: 0 auto !important;
-        }
-
-        .search-box-wrap .search-icon {
-            position: absolute;
-            left: 17px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--search-purple);
-            font-size: 15px;
-            pointer-events: none;
-        }
-
-        #search-input {
-            width: 100%;
-            height: 48px;
-            padding: 0 18px 0 46px;
-            border: 1px solid rgba(155,120,255,0.22);
-            border-radius: 13px;
-            outline: none;
-            background: var(--search-card);
-            color: white;
-            font-family: 'Noto Sans Myanmar', sans-serif;
-            font-size: 13px;
-            transition: 0.2s ease;
-        }
-
-        #search-input::placeholder {
-            color: #827c91;
-        }
-
-        #search-input:focus {
-            border-color: var(--search-purple);
-            background: #211e30;
-            box-shadow: 0 0 0 3px rgba(155,120,255,0.1);
-        }
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        .main-container {
-            width: min(100% - 32px, 1000px);
-            margin: 0 auto;
-        }
-
-        /* =========================
-           ADVERTISEMENT
-        ========================= */
-
-        .ad-section {
-            margin: 18px 0;
-            text-align: center;
-        }
-
-        .ad-label {
-            margin-bottom: 7px;
-            color: #777286;
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .ad-container {
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            border: 1px dashed rgba(255,255,255,0.12);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.025);
-        }
-
-        .ad-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-            color: #716c80;
-            font-size: 12px;
-        }
-
-        /* =========================
-           FILTER SECTIONS
-        ========================= */
-
-        .filter-section {
-            margin: 20px 0;
-            padding: 20px;
-            border: 1px solid var(--search-border);
-            border-radius: 17px;
-            background: var(--search-card);
-        }
-
-        .filter-title {
-            margin-bottom: 16px;
-            color: #f0eaff;
-            font-family: 'Noto Sans Myanmar', sans-serif;
-            font-size: 14px;
-            font-weight: 700;
-        }
-
-        /* Status Filter */
-
-        .status-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 9px;
-        }
-
-        .status-btn {
-            min-width: 85px;
-            padding: 9px 17px;
-            border: 1px solid var(--search-border);
-            border-radius: 10px;
-            background: rgba(255,255,255,0.035);
-            color: #aaa4b9;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .status-btn:hover {
-            border-color: rgba(155,120,255,0.45);
-            color: white;
-        }
-
-        .status-btn.active {
-            border-color: var(--search-purple);
-            background: linear-gradient(135deg, #8060dc, #6846c2);
-            color: white;
-            box-shadow: 0 5px 15px rgba(118,81,220,0.18);
-        }
-
-        /* =========================
-           GENRE GRID
-        ========================= */
-
-        .genre-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 9px;
-        }
-
-        .genre-chip {
-            min-height: 43px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            gap: 9px;
-            padding: 9px 11px;
-            overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.065);
-            border-radius: 10px;
-            background: rgba(255,255,255,0.025);
-            color: #aaa4b9;
-            font-family: 'Poppins', sans-serif;
-            font-size: 11px;
-            font-weight: 500;
-            text-align: left;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .genre-chip i {
-            width: 15px;
-            flex-shrink: 0;
-            color: #8e7bb9;
-            text-align: center;
-            font-size: 12px;
-        }
-
-        .genre-chip:hover {
-            border-color: rgba(155,120,255,0.4);
-            background: rgba(155,120,255,0.07);
-            color: #fff;
-        }
-
-        .genre-chip.active {
-            border-color: rgba(155,120,255,0.65);
-            background: rgba(155,120,255,0.15);
-            color: #d5c5ff;
-            box-shadow: inset 0 0 0 1px rgba(155,120,255,0.08);
-        }
-
-        .genre-chip.active i {
-            color: #b99dff;
-        }
-
-        /* Reset Button */
-
-        .filter-title button {
-            color: #b99dff !important;
-            font-family: 'Poppins', sans-serif;
-            font-size: 11px !important;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s ease;
-        }
-
-        .filter-title button:hover {
-            color: white !important;
-        }
-
-        /* =========================
-           RESULTS
-        ========================= */
-
-        .section-block {
-            margin: 23px 0;
-            padding: 21px;
-            border: 1px solid var(--search-border);
-            border-radius: 17px;
-            background: var(--search-card);
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .section-title {
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 9px;
-            color: #f0eaff;
-            font-family: 'Noto Sans Myanmar', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-        }
-
-        .section-title i {
-            color: var(--search-purple);
-        }
-
-        #result-count {
-            color: var(--search-purple);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* Novel Cards */
-
-        .novel-grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 17px;
-        }
-
-        .novel-grid > * {
-            min-width: 0;
-        }
-
-        /* Pagination */
-
-        #pagination-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 24px;
-        }
-
-        #pagination-container button,
-        #pagination-container a {
-            min-width: 36px;
-            height: 36px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 10px;
-            border: 1px solid var(--search-border);
-            border-radius: 9px;
-            background: var(--search-card-light);
-            color: #d6d0e5;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        #pagination-container button:hover,
-        #pagination-container a:hover {
-            border-color: var(--search-purple);
-            color: white;
-        }
-
-        #pagination-container .active,
-        #pagination-container button.active,
-        #pagination-container a.active {
-            border-color: var(--search-purple);
-            background: var(--search-purple-dark);
-            color: white;
-        }
-
-        /* =========================
-           BOTTOM NAVIGATION
-        ========================= */
-
-        .bottom-nav {
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            height: 68px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 5px 8%;
-            background: rgba(25,23,36,0.96);
-            border-top: 1px solid var(--search-border);
-            backdrop-filter: blur(18px);
-        }
-
-        .nav-item {
-            min-width: 65px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            color: #817b91;
-            font-size: 10px;
-            transition: 0.2s ease;
-        }
-
-        .nav-item i {
-            font-size: 18px;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            color: #b99dff;
-        }
-
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
-        @media (max-width: 800px) {
-            .genre-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-
-            .novel-grid {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 550px) {
-            .top-header.search-header {
-                min-height: 105px;
-                padding: 11px 13px;
-                gap: 10px;
-            }
-
-            .logo-img {
-                width: 27px;
-                height: 27px;
-            }
-
-            .logo-title {
-                font-size: 17px;
-            }
-
-            .header-actions {
-                top: 12px;
-                right: 12px;
-                gap: 5px;
-            }
-
-            .header-action {
-                min-height: 29px;
-                padding: 5px 7px;
-                font-size: 10px;
-            }
-
-            .header-action span {
-                display: none;
-            }
-
-            .header-action i {
-                font-size: 13px;
-            }
-
-            #search-input {
-                height: 44px;
-                font-size: 12px;
-            }
-
-            .main-container {
-                width: calc(100% - 22px);
-            }
-
-            .filter-section {
-                padding: 15px;
-                margin: 15px 0;
-                border-radius: 14px;
-            }
-
-            .filter-title {
-                margin-bottom: 13px;
-                font-size: 13px;
-            }
-
-            .genre-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 8px;
-            }
-
-            .genre-chip {
-                min-height: 40px;
-                padding: 8px 9px;
-                gap: 7px;
-                font-size: 10px;
-            }
-
-            .genre-chip i {
-                font-size: 11px;
-            }
-
-            .status-btn {
-                min-width: 75px;
-                padding: 8px 12px;
-                font-size: 11px;
-            }
-
-            .section-block {
-                padding: 15px;
-                border-radius: 14px;
-            }
-
-            .section-title {
-                font-size: 13px;
-            }
-
-            .novel-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-                gap: 12px;
-            }
-
-            .bottom-nav {
-                padding: 5px 12%;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .genre-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
-            .genre-chip {
-                font-size: 9px;
-            }
-
-            .novel-grid {
-                gap: 9px;
-            }
-
-            .section-block {
-                padding: 12px;
-            }
-        }
-    </style>
 </head>
 
-<body>
+<body class="search-page">
 
-    <!-- =========================
+    <!-- ==========================================
          HEADER & SEARCH
-    ========================= -->
+    =========================================== -->
 
     <header class="top-header search-header">
 
+        <!-- Logo -->
         <div class="logo-area">
+
             <img
                 src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
                 alt="NovelVerse Logo"
                 class="logo-img"
             >
-            <span class="logo-title">NovelVerse</span>
+
+            <span class="logo-title">
+                NovelVerse
+            </span>
+
         </div>
+
 
         <!-- Coin & Account -->
         <div class="header-actions">
 
-            <a href="topup.html" class="header-action coin-action" id="header-coin-link">
-                <i class="fa-solid fa-coins"></i>
-                <span>
-                    <span id="header-coin-balance">0</span> Coins
-                </span>
-            </a>
-
+            <!-- Coin Wallet -->
             <a
                 href="topup.html"
+                class="header-action coin-action"
+                id="header-coin-link"
+                aria-label="My Coin Wallet"
+            >
+
+                <i class="fa-solid fa-coins"></i>
+
+                <span>
+                    <span id="header-coin-balance">0</span>
+                    Coins
+                </span>
+
+            </a>
+
+
+            <!-- Account -->
+            <a
+                href="profile.html"
                 class="header-action"
                 id="header-account-link"
                 aria-label="My Account"
             >
+
                 <i class="fa-solid fa-user"></i>
+
                 <span>Account</span>
+
             </a>
 
         </div>
+
 
         <!-- Search Input -->
         <div class="search-box-wrap">
@@ -662,44 +106,63 @@
                 placeholder="နိုဗယ်ခေါင်းစဉ် ရှာရန်..."
                 oninput="filterNovels()"
                 autocomplete="off"
+                aria-label="Search novels"
             >
 
         </div>
 
     </header>
 
-    <!-- =========================
+
+    <!-- ==========================================
          MAIN CONTENT
-    ========================= -->
+    =========================================== -->
 
     <main class="main-container">
 
-        <!-- Top Advertisement -->
+
+        <!-- ======================================
+             TOP ADVERTISEMENT
+        ======================================= -->
+
         <section class="ad-section top-ad-slot">
 
-            <div class="ad-label">Advertisement</div>
+            <div class="ad-label">
+                Advertisement
+            </div>
 
-            <div class="ad-container" id="ad-slot-header">
+            <div
+                class="ad-container"
+                id="ad-slot-header"
+            >
 
                 <div class="ad-placeholder">
+
                     <i class="fa-solid fa-rectangle-ad"></i>
+
                     Loading Ad...
+
                 </div>
 
             </div>
 
         </section>
 
-        <!-- =========================
+
+        <!-- ======================================
              STATUS FILTER
-        ========================= -->
+        ======================================= -->
 
         <section class="filter-section">
 
             <div class="filter-title">
+
                 <i class="fa-solid fa-filter"></i>
+
                 Status အလိုက်ကြည့်ရန်
+
             </div>
+
 
             <div class="status-tags">
 
@@ -712,6 +175,7 @@
                     All
                 </button>
 
+
                 <button
                     class="status-btn"
                     data-status="Ongoing"
@@ -720,6 +184,7 @@
                 >
                     Ongoing
                 </button>
+
 
                 <button
                     class="status-btn"
@@ -734,170 +199,373 @@
 
         </section>
 
-        <!-- =========================
+
+        <!-- ======================================
              GENRE FILTER
-        ========================= -->
+        ======================================= -->
 
         <section class="filter-section">
 
-            <div
-                class="filter-title"
-                style="display:flex; justify-content:space-between; align-items:center;"
-            >
+            <div class="filter-title genre-filter-title">
 
                 <span>
+
                     <i class="fa-solid fa-layer-group"></i>
+
                     Genres / အမျိုးအစားများ
+
                 </span>
 
+
                 <button
+                    class="genre-reset-btn"
                     onclick="clearAllGenres()"
                     type="button"
-                    style="background:none; border:none;"
                 >
                     Reset
                 </button>
 
             </div>
 
+
             <div class="genre-grid">
 
+                <!-- All -->
                 <button
                     class="genre-chip active"
                     data-genre="all"
                     onclick="toggleGenreFilter('all', this)"
                     type="button"
                 >
-                    <i class="fa-solid fa-border-all"></i> All
+                    <i class="fa-solid fa-border-all"></i>
+                    All
                 </button>
 
-                <button class="genre-chip" data-genre="Action" onclick="toggleGenreFilter('Action', this)" type="button">
-                    <i class="fa-solid fa-burst"></i> Action
+
+                <!-- Action -->
+                <button
+                    class="genre-chip"
+                    data-genre="Action"
+                    onclick="toggleGenreFilter('Action', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-burst"></i>
+                    Action
                 </button>
 
-                <button class="genre-chip" data-genre="Adventure" onclick="toggleGenreFilter('Adventure', this)" type="button">
-                    <i class="fa-solid fa-compass"></i> Adventure
+
+                <!-- Adventure -->
+                <button
+                    class="genre-chip"
+                    data-genre="Adventure"
+                    onclick="toggleGenreFilter('Adventure', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-compass"></i>
+                    Adventure
                 </button>
 
-                <button class="genre-chip" data-genre="Fantasy" onclick="toggleGenreFilter('Fantasy', this)" type="button">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Fantasy
+
+                <!-- Fantasy -->
+                <button
+                    class="genre-chip"
+                    data-genre="Fantasy"
+                    onclick="toggleGenreFilter('Fantasy', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Fantasy
                 </button>
 
-                <button class="genre-chip" data-genre="System" onclick="toggleGenreFilter('System', this)" type="button">
-                    <i class="fa-solid fa-microchip"></i> System
+
+                <!-- System -->
+                <button
+                    class="genre-chip"
+                    data-genre="System"
+                    onclick="toggleGenreFilter('System', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-microchip"></i>
+                    System
                 </button>
 
-                <button class="genre-chip" data-genre="Murim" onclick="toggleGenreFilter('Murim', this)" type="button">
-                    <i class="fa-solid fa-yin-yang"></i> Murim
+
+                <!-- Murim -->
+                <button
+                    class="genre-chip"
+                    data-genre="Murim"
+                    onclick="toggleGenreFilter('Murim', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-yin-yang"></i>
+                    Murim
                 </button>
 
-                <button class="genre-chip" data-genre="Martial Arts" onclick="toggleGenreFilter('Martial Arts', this)" type="button">
-                    <i class="fa-solid fa-hand-fist"></i> Martial Arts
+
+                <!-- Martial Arts -->
+                <button
+                    class="genre-chip"
+                    data-genre="Martial Arts"
+                    onclick="toggleGenreFilter('Martial Arts', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-hand-fist"></i>
+                    Martial Arts
                 </button>
 
-                <button class="genre-chip" data-genre="Rebirth" onclick="toggleGenreFilter('Rebirth', this)" type="button">
-                    <i class="fa-solid fa-rotate-left"></i> Rebirth
+
+                <!-- Rebirth -->
+                <button
+                    class="genre-chip"
+                    data-genre="Rebirth"
+                    onclick="toggleGenreFilter('Rebirth', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Rebirth
                 </button>
 
-                <button class="genre-chip" data-genre="Xianxia" onclick="toggleGenreFilter('Xianxia', this)" type="button">
-                    <i class="fa-solid fa-dragon"></i> Xianxia
+
+                <!-- Xianxia -->
+                <button
+                    class="genre-chip"
+                    data-genre="Xianxia"
+                    onclick="toggleGenreFilter('Xianxia', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-dragon"></i>
+                    Xianxia
                 </button>
 
-                <button class="genre-chip" data-genre="Romance" onclick="toggleGenreFilter('Romance', this)" type="button">
-                    <i class="fa-solid fa-heart"></i> Romance
+
+                <!-- Romance -->
+                <button
+                    class="genre-chip"
+                    data-genre="Romance"
+                    onclick="toggleGenreFilter('Romance', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-heart"></i>
+                    Romance
                 </button>
 
-                <button class="genre-chip" data-genre="Comedy" onclick="toggleGenreFilter('Comedy', this)" type="button">
-                    <i class="fa-solid fa-face-laugh-beam"></i> Comedy
+
+                <!-- Comedy -->
+                <button
+                    class="genre-chip"
+                    data-genre="Comedy"
+                    onclick="toggleGenreFilter('Comedy', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-face-laugh-beam"></i>
+                    Comedy
                 </button>
 
-                <button class="genre-chip" data-genre="Sci-Fi" onclick="toggleGenreFilter('Sci-Fi', this)" type="button">
-                    <i class="fa-solid fa-robot"></i> Sci-Fi
+
+                <!-- Sci-Fi -->
+                <button
+                    class="genre-chip"
+                    data-genre="Sci-Fi"
+                    onclick="toggleGenreFilter('Sci-Fi', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-robot"></i>
+                    Sci-Fi
                 </button>
 
-                <button class="genre-chip" data-genre="Mystery" onclick="toggleGenreFilter('Mystery', this)" type="button">
-                    <i class="fa-solid fa-user-secret"></i> Mystery
+
+                <!-- Mystery -->
+                <button
+                    class="genre-chip"
+                    data-genre="Mystery"
+                    onclick="toggleGenreFilter('Mystery', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-user-secret"></i>
+                    Mystery
                 </button>
 
-                <button class="genre-chip" data-genre="Horror" onclick="toggleGenreFilter('Horror', this)" type="button">
-                    <i class="fa-solid fa-ghost"></i> Horror
+
+                <!-- Horror -->
+                <button
+                    class="genre-chip"
+                    data-genre="Horror"
+                    onclick="toggleGenreFilter('Horror', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-ghost"></i>
+                    Horror
                 </button>
 
-                <button class="genre-chip" data-genre="Supernatural" onclick="toggleGenreFilter('Supernatural', this)" type="button">
-                    <i class="fa-solid fa-skull"></i> Supernatural
+
+                <!-- Supernatural -->
+                <button
+                    class="genre-chip"
+                    data-genre="Supernatural"
+                    onclick="toggleGenreFilter('Supernatural', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-skull"></i>
+                    Supernatural
                 </button>
 
-                <button class="genre-chip" data-genre="Isekai" onclick="toggleGenreFilter('Isekai', this)" type="button">
-                    <i class="fa-solid fa-door-open"></i> Isekai
+
+                <!-- Isekai -->
+                <button
+                    class="genre-chip"
+                    data-genre="Isekai"
+                    onclick="toggleGenreFilter('Isekai', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-door-open"></i>
+                    Isekai
                 </button>
 
-                <button class="genre-chip" data-genre="Harem" onclick="toggleGenreFilter('Harem', this)" type="button">
-                    <i class="fa-solid fa-users"></i> Harem
+
+                <!-- Harem -->
+                <button
+                    class="genre-chip"
+                    data-genre="Harem"
+                    onclick="toggleGenreFilter('Harem', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-users"></i>
+                    Harem
                 </button>
 
-                <button class="genre-chip" data-genre="Slice of Life" onclick="toggleGenreFilter('Slice of Life', this)" type="button">
-                    <i class="fa-solid fa-mug-hot"></i> Slice of Life
+
+                <!-- Slice of Life -->
+                <button
+                    class="genre-chip"
+                    data-genre="Slice of Life"
+                    onclick="toggleGenreFilter('Slice of Life', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-mug-hot"></i>
+                    Slice of Life
                 </button>
 
-                <button class="genre-chip" data-genre="Drama" onclick="toggleGenreFilter('Drama', this)" type="button">
-                    <i class="fa-solid fa-masks-theater"></i> Drama
+
+                <!-- Drama -->
+                <button
+                    class="genre-chip"
+                    data-genre="Drama"
+                    onclick="toggleGenreFilter('Drama', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-masks-theater"></i>
+                    Drama
                 </button>
 
-                <button class="genre-chip" data-genre="BL" onclick="toggleGenreFilter('BL', this)" type="button">
-                    <i class="fa-solid fa-heart-circle-bolt"></i> BL
+
+                <!-- BL -->
+                <button
+                    class="genre-chip"
+                    data-genre="BL"
+                    onclick="toggleGenreFilter('BL', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-heart-circle-bolt"></i>
+                    BL
                 </button>
 
-                <button class="genre-chip" data-genre="Yuri" onclick="toggleGenreFilter('Yuri', this)" type="button">
-                    <i class="fa-solid fa-heart-pulse"></i> Yuri
+
+                <!-- Yuri -->
+                <button
+                    class="genre-chip"
+                    data-genre="Yuri"
+                    onclick="toggleGenreFilter('Yuri', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    Yuri
                 </button>
 
-                <button class="genre-chip" data-genre="Psychological" onclick="toggleGenreFilter('Psychological', this)" type="button">
-                    <i class="fa-solid fa-brain"></i> Psychological
+
+                <!-- Psychological -->
+                <button
+                    class="genre-chip"
+                    data-genre="Psychological"
+                    onclick="toggleGenreFilter('Psychological', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-brain"></i>
+                    Psychological
                 </button>
 
-                <button class="genre-chip" data-genre="Thriller" onclick="toggleGenreFilter('Thriller', this)" type="button">
-                    <i class="fa-solid fa-bolt"></i> Thriller
+
+                <!-- Thriller -->
+                <button
+                    class="genre-chip"
+                    data-genre="Thriller"
+                    onclick="toggleGenreFilter('Thriller', this)"
+                    type="button"
+                >
+                    <i class="fa-solid fa-bolt"></i>
+                    Thriller
                 </button>
 
             </div>
 
         </section>
 
-        <!-- =========================
+
+        <!-- ======================================
              SEARCH RESULTS
-        ========================= -->
+        ======================================= -->
 
         <section class="section-block">
 
             <div class="section-header">
 
                 <h3 class="section-title">
+
                     <i class="fa-solid fa-list-ul"></i>
+
                     ရလဒ်များ
+
                     (<span id="result-count">0</span>)
+
                 </h3>
 
             </div>
 
+
             <!-- Results generated by search.js -->
-            <div class="novel-grid" id="search-results-grid">
+            <div
+                class="novel-grid"
+                id="search-results-grid"
+            >
             </div>
+
 
             <!-- Pagination -->
             <div id="pagination-container"></div>
 
         </section>
 
-        <!-- Bottom Advertisement -->
+
+        <!-- ======================================
+             BOTTOM ADVERTISEMENT
+        ======================================= -->
+
         <section class="ad-section bottom-ad-slot">
 
-            <div class="ad-label">Sponsored</div>
+            <div class="ad-label">
+                Sponsored
+            </div>
 
-            <div class="ad-container" id="ad-slot-bottom">
+            <div
+                class="ad-container"
+                id="ad-slot-bottom"
+            >
 
                 <div class="ad-placeholder">
+
                     <i class="fa-solid fa-rectangle-ad"></i>
+
                     Loading Ad...
+
                 </div>
 
             </div>
@@ -906,39 +574,60 @@
 
     </main>
 
-    <!-- =========================
+
+    <!-- ==========================================
          BOTTOM NAVIGATION
-    ========================= -->
+    =========================================== -->
 
-    <nav class="bottom-nav">
+    <nav class="bottom-nav" aria-label="Main navigation">
 
-        <a href="index.html" class="nav-item">
+        <a
+            href="index.html"
+            class="nav-item"
+        >
             <i class="fa-solid fa-house"></i>
             <span>Home</span>
         </a>
 
-        <a href="search.html" class="nav-item active">
+
+        <a
+            href="search.html"
+            class="nav-item active"
+            aria-current="page"
+        >
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Search</span>
         </a>
 
-        <a href="library.html" class="nav-item">
+
+        <a
+            href="library.html"
+            class="nav-item"
+        >
             <i class="fa-solid fa-bookmark"></i>
             <span>Library</span>
         </a>
 
-        <a href="topup.html" class="nav-item">
+
+        <a
+            href="profile.html"
+            class="nav-item"
+        >
             <i class="fa-solid fa-user"></i>
             <span>Account</span>
         </a>
 
     </nav>
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
 
+    <!-- ==========================================
+         JAVASCRIPT
+    =========================================== -->
+
+    <!-- Advertisement Logic -->
     <script src="ads.js"></script>
+
+    <!-- Search & Filter Logic -->
     <script src="search.js"></script>
 
 </body>
