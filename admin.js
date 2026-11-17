@@ -1346,3 +1346,843 @@ ${chContent}
         }
     }
 }
+
+
+// ===================================================
+// 18. ADMIN BACKEND API CONFIGURATION
+// ===================================================
+
+// Backend တည်ဆောက်ပြီးမှ Web App URL ထည့်ရန်
+// ဥပမာ: https://script.google.com/macros/s/XXXXX/exec
+const ADMIN_API_URL = '';
+
+let adminDashboardData = null;
+let adminUsersData = [];
+let adminPromoCodesData = [];
+let adminGeneratedPromoCodes = [];
+
+// ---------------------------------------------------
+// ADMIN API REQUEST
+// ---------------------------------------------------
+
+async function adminApiRequest(action, payload = {}) {
+    if (!ADMIN_API_URL) {
+        throw new Error(
+            'Admin Backend API မချိတ်ဆက်ရသေးပါ။ Backend တည်ဆောက်ပြီးမှ အသုံးပြုနိုင်ပါမည်။'
+        );
+    }
+
+    const response = await fetch(ADMIN_API_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify({
+            action,
+            ...payload
+        })
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || result.success === false) {
+        throw new Error(result.message || 'Backend Request မအောင်မြင်ပါ။');
+    }
+
+    return result;
+}
+
+// ---------------------------------------------------
+// COMMON ADMIN HELPERS
+// ---------------------------------------------------
+
+function adminGetElement(id) {
+    return document.getElementById(id);
+}
+
+function adminSetText(id, value) {
+    const element = adminGetElement(id);
+    if (element) element.textContent = value ?? '';
+}
+
+function adminShowMessage(container, message, type = 'error') {
+    if (!container) return;
+
+    const color = type === 'success' ? '#22c55e' : '#ef4444';
+
+    container.innerHTML = '';
+
+    const messageElement = document.createElement('p');
+    messageElement.style.color = color;
+    messageElement.textContent = message;
+
+    container.appendChild(messageElement);
+}
+
+function adminFormatNumber(value) {
+    return Number(value || 0).toLocaleString('en-US');
+}
+
+// ===================================================
+// 19. DASHBOARD STATISTICS
+// ===================================================
+
+async function loadAdminDashboard() {
+    try {
+        const result = await adminApiRequest('getAdminDashboard');
+
+        const stats = result.stats || result.data || {};
+
+        adminDashboardData = stats;
+
+        adminSetText(
+            'stat-total-users',
+            adminFormatNumber(stats.totalUsers)
+        );
+
+        adminSetText(
+            'stat-total-coins',
+            adminFormatNumber(stats.totalCoins)
+        );
+
+        adminSetText(
+            'stat-available-codes',
+            adminFormatNumber(stats.availableCodes)
+        );
+
+        adminSetText(
+            'stat-used-codes',
+            adminFormatNumber(stats.usedCodes)
+        );
+
+        const container = adminGetElement('admin-dashboard-content');
+
+        if (container) {
+            container.textContent = 'Dashboard အချက်အလက်များ အောင်မြင်စွာ ရယူပြီးပါပြီ။';
+        }
+
+    } catch (error) {
+        console.error('Dashboard Error:', error);
+
+        const container = adminGetElement('admin-dashboard-content');
+
+        if (container) {
+            adminShowMessage(container, error.message);
+        }
+    }
+}
+
+// ===================================================
+// 20. USER MANAGEMENT
+// ===================================================
+
+async function loadAdminUsers() {
+    const container = adminGetElement('admin-user-list');
+
+    if (container) {
+        container.textContent = 'User စာရင်း ရယူနေသည်...';
+    }
+
+    try {
+        const result = await adminApiRequest('getAdminUsers');
+
+        adminUsersData = Array.isArray(result.users)
+            ? result.users
+            : [];
+
+        renderAdminUsers(adminUsersData);
+
+        adminSetText(
+            'admin-user-summary',
+            `စုစုပေါင်း User ${adminFormatNumber(adminUsersData.length)} ယောက်`
+        );
+
+    } catch (error) {
+        console.error('User Loading Error:', error);
+
+        if (container) {
+            adminShowMessage(container, error.message);
+        }
+    }
+}
+
+function renderAdminUsers(users) {
+    const container = adminGetElement('admin-user-list');
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (!users.length) {
+        container.textContent = 'User မရှိသေးပါ။';
+        return;
+    }
+
+    users.forEach(user => {
+        const card = document.createElement('div');
+        card.className = 'admin-user-item';
+
+        const info = document.createElement('div');
+
+        const username = document.createElement('strong');
+        username.textContent = user.username || 'Unknown User';
+
+        const details = document.createElement('p');
+        details.textContent =
+            `Coins: ${adminFormatNumber(user.coins)} | Status: ${user.status || 'Active'}`;
+
+        info.append(username, details);
+
+        const actions = document.createElement('div');
+
+        const statusButton = document.createElement('button');
+        statusButton.type = 'button';
+        statusButton.textContent =
+            user.status === 'Suspended' ? 'Activate' : 'Suspend';
+
+        statusButton.addEventListener('click', () => {
+            updateAdminUserStatus(
+                user.userId,
+                user.status === 'Suspended' ? 'Active' : 'Suspended'
+            );
+        });
+
+        const coinButton = document.createElement('button');
+        coinButton.type = 'button';
+        coinButton.textContent = 'Adjust Coins';
+
+        coinButton.addEventListener('click', () => {
+            adjustAdminUserCoins(user.userId, user.username);
+        });
+
+        actions.append(statusButton, coinButton);
+        card.append(info, actions);
+
+        container.appendChild(card);
+    });
+}
+
+async function updateAdminUserStatus(userId, status) {
+    if (!userId) {
+        alert('User ID မရှိပါ။');
+        return;
+    }
+
+    if (!confirm(`ဒီ User ကို ${status} လုပ်မှာ သေချာပါသလား?`)) {
+        return;
+    }
+
+    try {
+        await adminApiRequest('updateUserStatus', {
+            userId,
+            status
+        });
+
+        alert('User Status ပြောင်းလဲပြီးပါပြီ။');
+
+        await loadAdminUsers();
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+async function adjustAdminUserCoins(userId, username) {
+    if (!userId) {
+        alert('User ID မရှိပါ။');
+        return;
+    }
+
+    const amountInput = prompt(
+        `${username || 'User'} အတွက် Coin အရေအတွက် ထည့်ပါ။\nအပေါင်း = ထည့်မည်၊ အနုတ် = လျှော့မည်`
+    );
+
+    if (amountInput === null) return;
+
+    const amount = Number(amountInput);
+
+    if (!Number.isSafeInteger(amount) || amount === 0) {
+        alert('မှန်ကန်သော Coin အရေအတွက် ထည့်ပါ။');
+        return;
+    }
+
+    const reason = prompt('Coin ပြောင်းလဲရသည့် အကြောင်းပြချက် ထည့်ပါ။');
+
+    if (!reason || !reason.trim()) {
+        alert('အကြောင်းပြချက် ထည့်ပေးပါ။');
+        return;
+    }
+
+    try {
+        await adminApiRequest('adjustUserCoins', {
+            userId,
+            amount,
+            reason: reason.trim()
+        });
+
+        alert('Coin ပြောင်းလဲပြီးပါပြီ။');
+
+        await loadAdminUsers();
+        await loadAdminDashboard();
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+function filterAdminUsers() {
+    const input = adminGetElement('admin-user-search');
+
+    if (!input) return;
+
+    const query = input.value.trim().toLowerCase();
+
+    const filtered = adminUsersData.filter(user =>
+        String(user.username || '').toLowerCase().includes(query)
+    );
+
+    renderAdminUsers(filtered);
+}
+
+// ===================================================
+// 21. CHAPTER PRICING
+// ===================================================
+
+async function loadChapterPricingNovelDropdown() {
+    const dropdown = adminGetElement('pricing-novel-select');
+
+    if (!dropdown) return;
+
+    try {
+        const novels = await getNovelsJsonData();
+
+        dropdown.innerHTML = '<option value="">-- Novel ရွေးပါ --</option>';
+
+        novels.forEach(novel => {
+            const option = document.createElement('option');
+
+            option.value = novel.slug;
+            option.textContent = novel.title || novel.slug;
+
+            dropdown.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error('Pricing Novel Dropdown Error:', error);
+    }
+}
+
+async function loadChapterPricing() {
+    const dropdown = adminGetElement('pricing-novel-select');
+    const container = adminGetElement('chapter-pricing-list');
+
+    if (!dropdown || !container) return;
+
+    const novelSlug = dropdown.value;
+
+    if (!novelSlug) {
+        container.textContent = 'Novel တစ်ခု ရွေးချယ်ပါ။';
+        return;
+    }
+
+    container.textContent = 'Chapter Pricing ရယူနေသည်...';
+
+    try {
+        const result = await adminApiRequest('getChapterPricing', {
+            novelSlug
+        });
+
+        const chapters = Array.isArray(result.chapters)
+            ? result.chapters
+            : [];
+
+        renderChapterPricing(novelSlug, chapters);
+
+    } catch (error) {
+        console.error('Chapter Pricing Error:', error);
+        adminShowMessage(container, error.message);
+    }
+}
+
+function renderChapterPricing(novelSlug, chapters) {
+    const container = adminGetElement('chapter-pricing-list');
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (!chapters.length) {
+        container.textContent = 'Chapter Pricing Data မရှိသေးပါ။';
+        return;
+    }
+
+    chapters.forEach(chapter => {
+        const row = document.createElement('div');
+        row.className = 'admin-pricing-item';
+
+        const title = document.createElement('span');
+
+        title.textContent =
+            `Chapter ${chapter.chapterNumber}: ${chapter.title || ''}`;
+
+        const priceInput = document.createElement('input');
+        priceInput.type = 'number';
+        priceInput.min = '0';
+        priceInput.step = '1';
+        priceInput.value = Number(chapter.price || 0);
+        priceInput.setAttribute('aria-label', 'Chapter Price');
+
+        const freeLabel = document.createElement('label');
+
+        const freeCheckbox = document.createElement('input');
+        freeCheckbox.type = 'checkbox';
+        freeCheckbox.checked = Number(chapter.price || 0) === 0;
+
+        freeCheckbox.addEventListener('change', () => {
+            if (freeCheckbox.checked) {
+                priceInput.value = '0';
+            }
+        });
+
+        freeLabel.append(freeCheckbox, document.createTextNode(' Free'));
+
+        freeCheckbox.addEventListener('change', () => {
+            priceInput.disabled = freeCheckbox.checked;
+        });
+
+        priceInput.disabled = freeCheckbox.checked;
+
+        const saveButton = document.createElement('button');
+        saveButton.type = 'button';
+        saveButton.textContent = 'Save';
+
+        saveButton.addEventListener('click', async () => {
+            const price = Number(priceInput.value);
+
+            if (!Number.isSafeInteger(price) || price < 0) {
+                alert('မှန်ကန်သော Coin Price ထည့်ပါ။');
+                return;
+            }
+
+            try {
+                saveButton.disabled = true;
+
+                await adminApiRequest('setChapterPrice', {
+                    novelSlug,
+                    chapterNumber: Number(chapter.chapterNumber),
+                    price
+                });
+
+                alert('Chapter Price သိမ်းဆည်းပြီးပါပြီ။');
+
+            } catch (error) {
+                alert(error.message);
+
+            } finally {
+                saveButton.disabled = false;
+            }
+        });
+
+        row.append(title, priceInput, freeLabel, saveButton);
+        container.appendChild(row);
+    });
+}
+
+// ===================================================
+// 22. PROMO CODE GENERATOR
+// ===================================================
+
+function getSelectedPromoPackage() {
+    const select = adminGetElement('promo-package');
+
+    if (!select) return null;
+
+    const packages = {
+        '1000': {
+            packageId: 'package_1000',
+            price: 1000,
+            baseCoins: 40,
+            bonusCoins: 0,
+            totalCoins: 40
+        },
+        '2000': {
+            packageId: 'package_2000',
+            price: 2000,
+            baseCoins: 80,
+            bonusCoins: 5,
+            totalCoins: 85
+        },
+        '3000': {
+            packageId: 'package_3000',
+            price: 3000,
+            baseCoins: 120,
+            bonusCoins: 10,
+            totalCoins: 130
+        },
+        '5000': {
+            packageId: 'package_5000',
+            price: 5000,
+            baseCoins: 200,
+            bonusCoins: 20,
+            totalCoins: 220
+        }
+    };
+
+    return packages[select.value] || null;
+}
+
+async function generateAdminPromoCodes() {
+    const packageData = getSelectedPromoPackage();
+    const quantityInput = adminGetElement('promo-quantity');
+    const resultContainer = adminGetElement('promo-generation-result');
+    const button = adminGetElement('generate-promo-btn');
+
+    if (!packageData) {
+        alert('Coin Package ရွေးချယ်ပါ။');
+        return;
+    }
+
+    const quantity = Number(quantityInput?.value);
+
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > 500) {
+        alert('Promo Code အရေအတွက်ကို 1 မှ 500 အတွင်း ထည့်ပါ။');
+        return;
+    }
+
+    if (!confirm(
+        `${quantity} ခု Promo Code ထုတ်မှာ သေချာပါသလား?\n` +
+        `${adminFormatNumber(packageData.totalCoins)} Coins / Code`
+    )) {
+        return;
+    }
+
+    try {
+        if (button) button.disabled = true;
+
+        const result = await adminApiRequest('generatePromoCodes', {
+            package: packageData,
+            quantity
+        });
+
+        adminGeneratedPromoCodes = Array.isArray(result.codes)
+            ? result.codes
+            : [];
+
+        renderGeneratedPromoCodes();
+
+        if (resultContainer && !adminGeneratedPromoCodes.length) {
+            resultContainer.textContent =
+                'Backend က Promo Code များကို သိမ်းဆည်းပြီးပါပြီ။';
+        }
+
+        await loadAdminPromoCodeLists();
+        await loadAdminDashboard();
+
+        alert('Promo Code များ ဖန်တီးပြီးပါပြီ။');
+
+    } catch (error) {
+        console.error('Promo Generation Error:', error);
+        alert(error.message);
+
+    } finally {
+        if (button) button.disabled = false;
+    }
+}
+
+function renderGeneratedPromoCodes() {
+    const container = adminGetElement('promo-generation-result');
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (!adminGeneratedPromoCodes.length) {
+        container.textContent = 'ထုတ်ပေးထားသော Code မရှိသေးပါ။';
+        return;
+    }
+
+    adminGeneratedPromoCodes.forEach(item => {
+        const code = typeof item === 'string' ? item : item.code;
+
+        const line = document.createElement('p');
+        line.textContent = code || '';
+
+        container.appendChild(line);
+    });
+}
+
+async function loadAdminPromoCodeLists() {
+    try {
+        const result = await adminApiRequest('getAdminPromoCodes');
+
+        adminPromoCodesData = Array.isArray(result.codes)
+            ? result.codes
+            : [];
+
+        renderAdminPromoCodeLists();
+
+    } catch (error) {
+        console.error('Promo Code List Error:', error);
+
+        adminShowMessage(
+            adminGetElement('available-promo-list'),
+            error.message
+        );
+    }
+}
+
+function renderAdminPromoCodeLists() {
+    const availableContainer = adminGetElement('available-promo-list');
+    const usedContainer = adminGetElement('used-promo-list');
+
+    if (availableContainer) availableContainer.innerHTML = '';
+    if (usedContainer) usedContainer.innerHTML = '';
+
+    const available = adminPromoCodesData.filter(code =>
+        String(code.status).toLowerCase() === 'available'
+    );
+
+    const used = adminPromoCodesData.filter(code =>
+        String(code.status).toLowerCase() === 'used'
+    );
+
+    function appendPromoRows(container, codes) {
+        if (!container) return;
+
+        if (!codes.length) {
+            container.textContent = 'Code မရှိသေးပါ။';
+            return;
+        }
+
+        codes.forEach(item => {
+            const row = document.createElement('p');
+
+            row.textContent =
+                `${item.code} | ${adminFormatNumber(item.totalCoins)} Coins`;
+
+            container.appendChild(row);
+        });
+    }
+
+    appendPromoRows(availableContainer, available);
+    appendPromoRows(usedContainer, used);
+}
+
+async function copyAdminPromoCodes() {
+    const codes = adminGeneratedPromoCodes.map(item =>
+        typeof item === 'string' ? item : item.code
+    ).filter(Boolean);
+
+    if (!codes.length) {
+        alert('Copy လုပ်ရန် Code မရှိသေးပါ။');
+        return;
+    }
+
+    try {
+        await navigator.clipboard.writeText(codes.join('\n'));
+        alert('Promo Code များ Copy ကူးပြီးပါပြီ။');
+
+    } catch (error) {
+        alert('Clipboard Copy မအောင်မြင်ပါ။');
+    }
+}
+
+function exportAdminPromoCodesCSV() {
+    const codes = adminGeneratedPromoCodes.map(item =>
+        typeof item === 'string' ? item : item.code
+    ).filter(Boolean);
+
+    if (!codes.length) {
+        alert('Export လုပ်ရန် Code မရှိသေးပါ။');
+        return;
+    }
+
+    const csv = [
+        'Promo Code',
+        ...codes.map(code => `"${String(code).replace(/"/g, '""')}"`)
+    ].join('\r\n');
+
+    const blob = new Blob(
+        ['\uFEFF' + csv],
+        { type: 'text/csv;charset=utf-8;' }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = `NovelVerse-Promo-Codes-${Date.now()}.csv`;
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+}
+
+// ===================================================
+// 23. TOP-UP SETTINGS
+// ===================================================
+
+async function loadAdminTopupSettings() {
+    try {
+        const result = await adminApiRequest('getTopupSettings');
+        const settings = result.settings || {};
+
+        const fields = {
+            'settings-kbzpay-name': settings.kbzpayAccountName,
+            'settings-kbzpay-phone': settings.kbzpayPhone,
+            'settings-wavepay-name': settings.wavepayAccountName,
+            'settings-wavepay-phone': settings.wavepayPhone,
+            'settings-telegram-link': settings.telegramUrl
+        };
+
+        Object.entries(fields).forEach(([id, value]) => {
+            const element = adminGetElement(id);
+
+            if (element && value !== undefined) {
+                element.value = value;
+            }
+        });
+
+    } catch (error) {
+        console.error('Top-up Settings Error:', error);
+
+        alert(error.message);
+    }
+}
+
+async function saveAdminTopupSettings() {
+    const settings = {
+        kbzpayAccountName:
+            adminGetElement('settings-kbzpay-name')?.value.trim() || '',
+
+        kbzpayPhone:
+            adminGetElement('settings-kbzpay-phone')?.value.trim() || '',
+
+        wavepayAccountName:
+            adminGetElement('settings-wavepay-name')?.value.trim() || '',
+
+        wavepayPhone:
+            adminGetElement('settings-wavepay-phone')?.value.trim() || '',
+
+        telegramUrl:
+            adminGetElement('settings-telegram-link')?.value.trim() || ''
+    };
+
+    if (!settings.kbzpayPhone || !settings.wavepayPhone) {
+        alert('KBZPay နှင့် WavePay ဖုန်းနံပါတ်များ ထည့်ပေးပါ။');
+        return;
+    }
+
+    try {
+        await adminApiRequest('saveTopupSettings', {
+            settings
+        });
+
+        alert('Top-up Settings သိမ်းဆည်းပြီးပါပြီ။');
+
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+// ===================================================
+// 24. NEW ADMIN FEATURE EVENT LISTENERS
+// ===================================================
+
+function setupNewAdminFeatureListeners() {
+    const userSearch = adminGetElement('admin-user-search');
+
+    if (userSearch) {
+        userSearch.addEventListener('input', filterAdminUsers);
+    }
+
+    const pricingDropdown = adminGetElement('pricing-novel-select');
+
+    if (pricingDropdown) {
+        pricingDropdown.addEventListener('change', loadChapterPricing);
+    }
+
+    const generateButton = adminGetElement('generate-promo-btn');
+
+    if (generateButton) {
+        generateButton.addEventListener('click', generateAdminPromoCodes);
+    }
+
+    const copyButton = adminGetElement('copy-promo-codes-btn');
+
+    if (copyButton) {
+        copyButton.addEventListener('click', copyAdminPromoCodes);
+    }
+
+    const exportButton = adminGetElement('export-promo-csv-btn');
+
+    if (exportButton) {
+        exportButton.addEventListener('click', exportAdminPromoCodesCSV);
+    }
+
+    const saveSettingsButton = adminGetElement('save-topup-settings-btn');
+
+    if (saveSettingsButton) {
+        saveSettingsButton.addEventListener('click', saveAdminTopupSettings);
+    }
+
+    // မူရင်း inline switchTab() ကို မပြင်ဘဲ Tab ပြောင်းပြီးနောက်
+    // သက်ဆိုင်ရာ Feature ကို Load လုပ်မည်။
+    document.querySelectorAll('.tab-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const handler = button.getAttribute('onclick') || '';
+            const match = handler.match(/switchTab\(['"]([^'"]+)['"]\)/);
+
+            if (!match) return;
+
+            const tabId = match[1];
+
+            if (tabId === 'dashboard') loadAdminDashboard();
+
+            if (tabId === 'users') loadAdminUsers();
+
+            if (tabId === 'chapter-pricing') {
+                loadChapterPricingNovelDropdown();
+            }
+
+            if (tabId === 'promo-generator') {
+                loadAdminPromoCodeLists();
+            }
+
+            if (tabId === 'topup-settings') {
+                loadAdminTopupSettings();
+            }
+        });
+    });
+}
+
+// ===================================================
+// 25. REGISTER NEW ADMIN FUNCTIONS
+// ===================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.loadAdminDashboard = loadAdminDashboard;
+    window.loadAdminUsers = loadAdminUsers;
+    window.filterAdminUsers = filterAdminUsers;
+    window.updateAdminUserStatus = updateAdminUserStatus;
+    window.adjustAdminUserCoins = adjustAdminUserCoins;
+
+    window.loadChapterPricing = loadChapterPricing;
+    window.loadChapterPricingNovelDropdown = loadChapterPricingNovelDropdown;
+
+    window.generateAdminPromoCodes = generateAdminPromoCodes;
+    window.copyAdminPromoCodes = copyAdminPromoCodes;
+    window.exportAdminPromoCodesCSV = exportAdminPromoCodesCSV;
+
+    window.loadAdminTopupSettings = loadAdminTopupSettings;
+    window.saveAdminTopupSettings = saveAdminTopupSettings;
+
+    setupNewAdminFeatureListeners();
+
+    // Login ပြီးသားဖြစ်လျှင် Dashboard Statistics ကို စတင်ဖတ်မည်။
+    if (getToken()) {
+        loadAdminDashboard();
+    }
+});
