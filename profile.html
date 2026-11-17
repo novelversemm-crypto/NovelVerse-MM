@@ -41,7 +41,6 @@
 
                 <a href="topup.html" class="header-coin-link" id="header-coin-link">
                     <i class="fa-solid fa-coins"></i>
-
                     <span id="header-coin-balance">0</span>
                 </a>
 
@@ -112,7 +111,7 @@
 
 
             <!-- =================================
-                 LOGIN FORM
+                 LOGIN PANEL
             ================================== -->
             <div class="auth-panel" id="login-panel">
 
@@ -195,11 +194,26 @@
                     </div>
 
 
+                    <!-- REGISTER SUCCESS MESSAGE
+                         Register အောင်မြင်ပြီး Login Tab သို့
+                         ပြောင်းသည့်အခါ ဒီနေရာတွင် ပြသမည်။
+                    -->
+                    <div
+                        id="register-success"
+                        class="form-message success-message"
+                        role="status"
+                        aria-live="polite"
+                        style="display: none;"
+                    ></div>
+
+
+                    <!-- LOGIN ERROR MESSAGE -->
                     <div
                         id="login-error"
                         class="form-message error-message"
                         role="alert"
                         aria-live="polite"
+                        style="display: none;"
                     ></div>
 
 
@@ -232,12 +246,12 @@
 
 
             <!-- =================================
-                 REGISTER FORM
+                 REGISTER PANEL
             ================================== -->
             <div
                 class="auth-panel"
                 id="register-panel"
-                hidden
+                style="display: none;"
             >
 
                 <div class="auth-heading">
@@ -253,6 +267,7 @@
 
                 <form id="register-form">
 
+                    <!-- USERNAME -->
                     <div class="form-group">
 
                         <label for="register-username">
@@ -283,6 +298,7 @@
                     </div>
 
 
+                    <!-- CREATE PIN -->
                     <div class="form-group">
 
                         <label for="register-pin">
@@ -323,6 +339,7 @@
                     </div>
 
 
+                    <!-- CONFIRM PIN -->
                     <div class="form-group">
 
                         <label for="register-confirm-pin">
@@ -359,22 +376,17 @@
                     </div>
 
 
+                    <!-- REGISTER ERROR -->
                     <div
                         id="register-error"
                         class="form-message error-message"
                         role="alert"
                         aria-live="polite"
+                        style="display: none;"
                     ></div>
 
 
-                    <div
-                        id="register-success"
-                        class="form-message success-message"
-                        role="status"
-                        aria-live="polite"
-                    ></div>
-
-
+                    <!-- REGISTER BUTTON -->
                     <button
                         type="submit"
                         class="primary-btn"
@@ -411,7 +423,7 @@
         <section
             id="profile-section"
             class="profile-section"
-            hidden
+            style="display: none;"
         >
 
             <!-- PROFILE CARD -->
@@ -456,7 +468,6 @@
 
                     <h2>
                         <i class="fa-solid fa-coins"></i>
-
                         <span id="profile-coin-balance">0</span>
                     </h2>
 
@@ -482,6 +493,7 @@
                 </h3>
 
 
+                <!-- MY LIBRARY -->
                 <a href="library.html" class="profile-menu-item">
 
                     <div class="profile-menu-icon">
@@ -498,6 +510,7 @@
                 </a>
 
 
+                <!-- TOP UP COINS -->
                 <a href="topup.html" class="profile-menu-item">
 
                     <div class="profile-menu-icon">
@@ -514,6 +527,7 @@
                 </a>
 
 
+                <!-- CONTINUE READING -->
                 <a href="index.html" class="profile-menu-item">
 
                     <div class="profile-menu-icon">
@@ -532,7 +546,9 @@
             </div>
 
 
-            <!-- COIN TRANSACTION HISTORY -->
+            <!-- =================================
+                 COIN TRANSACTION HISTORY
+            ================================== -->
             <div class="transaction-section">
 
                 <div class="section-heading-row">
@@ -565,7 +581,9 @@
             </div>
 
 
-            <!-- LOGOUT -->
+            <!-- =================================
+                 LOGOUT
+            ================================== -->
             <div class="profile-logout-section">
 
                 <button
@@ -613,14 +631,11 @@
 
 
     <!-- =========================================
-     JAVASCRIPT
-========================================== -->
-
-<script src="auth.js"></script>
-    
-<script src="coin.js"></script>
-    
-<script src="profile.js"></script>
+         JAVASCRIPT
+    ========================================== -->
+    <script src="auth.js"></script>
+    <script src="coin.js"></script>
+    <script src="profile.js"></script>
 
 </body>
 </html>
