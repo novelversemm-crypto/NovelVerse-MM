@@ -78,13 +78,31 @@ async function coinApiRequest(action, data = {}) {
 
 function getCoinUserSession() {
 
-    const token = localStorage.getItem('novelverse_session');
+    if (typeof window.getAuthSession === 'function') {
 
-    if (!token) {
-        return null;
+        const session = window.getAuthSession();
+
+        return session?.token || null;
     }
 
-    return token;
+    try {
+
+        const storedSession = localStorage.getItem(
+            'novelverse_session'
+        );
+
+        if (!storedSession) return null;
+
+        const session = JSON.parse(storedSession);
+
+        return session?.token || null;
+
+    } catch (error) {
+
+        console.error('Coin Session Read Error:', error);
+
+        return null;
+    }
 }
 
 
