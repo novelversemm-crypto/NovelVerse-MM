@@ -1,0 +1,854 @@
+
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Coin Wallet & Top Up - NovelVerse</title>
+
+    <meta name="description" content="NovelVerse MM Coin Wallet မှာ Coin များဝယ်ယူပြီး သင်နှစ်သက်ရာ Novel များကို ဖတ်ရှုလိုက်ပါ။">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+</head>
+
+<body class="topup-page">
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="topup-header">
+
+        <div class="topup-header-inner">
+
+            <a href="index.html" class="topup-logo">
+                <img
+                    src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                    alt="NovelVerse Logo"
+                >
+
+                <span>NovelVerse</span>
+            </a>
+
+            <div class="topup-header-actions">
+
+                <a href="topup.html" class="topup-header-wallet active">
+                    <i class="fa-solid fa-coins"></i>
+
+                    <span id="header-coin-balance">--</span>
+                </a>
+
+                <a href="account.html" class="topup-account-btn" id="header-account-link">
+                    <i class="fa-solid fa-user"></i>
+                    <span>Account</span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+    <main class="topup-main">
+
+        <!-- PAGE INTRO -->
+        <section class="topup-intro">
+
+            <div class="topup-breadcrumb">
+                <a href="index.html">Home</a>
+                <i class="fa-solid fa-chevron-right"></i>
+                <span>Coin Wallet</span>
+            </div>
+
+            <div class="topup-heading">
+                <div class="topup-heading-icon">
+                    <i class="fa-solid fa-wallet"></i>
+                </div>
+
+                <div>
+                    <h1>Coin Wallet</h1>
+                    <p>သင်နှစ်သက်ရာ Novel များကို Coin ဖြင့် ဖတ်ရှုလိုက်ပါ။</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             WALLET BALANCE
+        ========================================== -->
+        <section class="wallet-balance-card">
+
+            <div class="wallet-balance-content">
+
+                <div class="wallet-balance-label">
+                    <i class="fa-solid fa-wallet"></i>
+                    လက်ရှိ Coin လက်ကျန်
+                </div>
+
+                <div class="wallet-balance-amount">
+                    <span id="wallet-coin-balance">0</span>
+                    <span class="coin-unit">Coins</span>
+                </div>
+
+                <p class="wallet-balance-description">
+                    သင့်အကောင့်ထဲရှိ အသုံးပြုနိုင်သော Coin လက်ကျန်ဖြစ်ပါတယ်။
+                </p>
+
+            </div>
+
+            <div class="wallet-balance-decoration">
+                <i class="fa-solid fa-coins"></i>
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             COIN PACKAGES
+        ========================================== -->
+        <section class="topup-section" id="coin-packages-section">
+
+            <div class="topup-section-heading">
+
+                <div>
+                    <h2>
+                        <i class="fa-solid fa-gem"></i>
+                        Coin Packages
+                    </h2>
+
+                    <p>သင်ဝယ်ယူလိုသော Coin Package ကို ရွေးချယ်ပါ။</p>
+                </div>
+
+            </div>
+
+
+            <div class="coin-package-grid" id="coin-package-grid">
+
+                <!-- PACKAGE 1 -->
+                <label class="coin-package-card">
+
+                    <input
+                        type="radio"
+                        name="coin-package"
+                        value="package_1"
+                        data-coins="100"
+                        data-price="1000"
+                    >
+
+                    <span class="package-select-indicator">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="package-icon">
+                        <i class="fa-solid fa-coins"></i>
+                    </span>
+
+                    <span class="package-coin-amount">
+                        100
+                        <small>Coins</small>
+                    </span>
+
+                    <span class="package-price">
+                        1,000 MMK
+                    </span>
+
+                    <span class="package-description">
+                        Starter Package
+                    </span>
+
+                </label>
+
+
+                <!-- PACKAGE 2 -->
+                <label class="coin-package-card">
+
+                    <input
+                        type="radio"
+                        name="coin-package"
+                        value="package_2"
+                        data-coins="300"
+                        data-price="3000"
+                    >
+
+                    <span class="package-select-indicator">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="package-icon">
+                        <i class="fa-solid fa-coins"></i>
+                    </span>
+
+                    <span class="package-coin-amount">
+                        300
+                        <small>Coins</small>
+                    </span>
+
+                    <span class="package-price">
+                        3,000 MMK
+                    </span>
+
+                    <span class="package-description">
+                        Standard Package
+                    </span>
+
+                </label>
+
+
+                <!-- PACKAGE 3 -->
+                <label class="coin-package-card popular-package">
+
+                    <span class="package-popular-badge">
+                        Popular
+                    </span>
+
+                    <input
+                        type="radio"
+                        name="coin-package"
+                        value="package_3"
+                        data-coins="500"
+                        data-price="5000"
+                    >
+
+                    <span class="package-select-indicator">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="package-icon">
+                        <i class="fa-solid fa-crown"></i>
+                    </span>
+
+                    <span class="package-coin-amount">
+                        500
+                        <small>Coins</small>
+                    </span>
+
+                    <span class="package-price">
+                        5,000 MMK
+                    </span>
+
+                    <span class="package-description">
+                        Popular Package
+                    </span>
+
+                </label>
+
+
+                <!-- PACKAGE 4 -->
+                <label class="coin-package-card">
+
+                    <input
+                        type="radio"
+                        name="coin-package"
+                        value="package_4"
+                        data-coins="1000"
+                        data-price="10000"
+                    >
+
+                    <span class="package-select-indicator">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+
+                    <span class="package-icon">
+                        <i class="fa-solid fa-gem"></i>
+                    </span>
+
+                    <span class="package-coin-amount">
+                        1,000
+                        <small>Coins</small>
+                    </span>
+
+                    <span class="package-price">
+                        10,000 MMK
+                    </span>
+
+                    <span class="package-description">
+                        Premium Package
+                    </span>
+
+                </label>
+
+            </div>
+
+            <p class="package-note">
+                <i class="fa-solid fa-circle-info"></i>
+                Package ဈေးနှုန်းများကို နောက်ပိုင်းတွင် Admin Settings မှ ပြောင်းလဲနိုင်အောင် ချိတ်ဆက်ပေးပါမယ်။
+            </p>
+
+        </section>
+
+
+        <!-- =========================================
+             PAYMENT SECTION
+        ========================================== -->
+        <section class="topup-section" id="payment-section">
+
+            <div class="topup-section-heading">
+
+                <div>
+                    <h2>
+                        <i class="fa-solid fa-credit-card"></i>
+                        Payment Method
+                    </h2>
+
+                    <p>ငွေပေးချေမည့် နည်းလမ်းကို ရွေးချယ်ပါ။</p>
+                </div>
+
+            </div>
+
+
+            <div class="payment-method-grid">
+
+                <!-- KBZPAY -->
+                <label class="payment-method-card">
+
+                    <input
+                        type="radio"
+                        name="payment-method"
+                        value="KBZPay"
+                    >
+
+                    <span class="payment-method-logo kbzpay-logo">
+                        <i class="fa-solid fa-wallet"></i>
+                    </span>
+
+                    <span class="payment-method-info">
+                        <strong>KBZPay</strong>
+                        <small>KBZPay ဖြင့် ငွေပေးချေရန်</small>
+                    </span>
+
+                    <span class="payment-method-check">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </span>
+
+                </label>
+
+
+                <!-- WAVEPAY -->
+                <label class="payment-method-card">
+
+                    <input
+                        type="radio"
+                        name="payment-method"
+                        value="WavePay"
+                    >
+
+                    <span class="payment-method-logo wavepay-logo">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                    </span>
+
+                    <span class="payment-method-info">
+                        <strong>WavePay</strong>
+                        <small>WavePay ဖြင့် ငွေပေးချေရန်</small>
+                    </span>
+
+                    <span class="payment-method-check">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </span>
+
+                </label>
+
+            </div>
+
+
+            <!-- PAYMENT ACCOUNT DETAILS -->
+            <div class="payment-account-box" id="payment-account-box">
+
+                <div class="payment-account-heading">
+                    <i class="fa-solid fa-building-columns"></i>
+                    ငွေလွှဲရန် Account အချက်အလက်
+                </div>
+
+
+                <!-- KBZPAY DETAILS -->
+                <div class="payment-account-details" id="kbzpay-details">
+
+                    <div class="payment-provider-name">
+                        <strong>KBZPay</strong>
+                        <span>Official Payment Account</span>
+                    </div>
+
+                    <div class="payment-detail-row">
+                        <span>Account Name</span>
+                        <strong id="kbzpay-account-name">
+                            [Account Name ထည့်ရန်]
+                        </strong>
+                    </div>
+
+                    <div class="payment-detail-row">
+                        <span>Phone Number</span>
+
+                        <strong id="kbzpay-phone">
+                            [KBZPay Number ထည့်ရန်]
+                        </strong>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="payment-copy-btn"
+                        id="copy-kbzpay-number-btn"
+                    >
+                        <i class="fa-regular fa-copy"></i>
+                        ဖုန်းနံပါတ်ကူးယူရန်
+                    </button>
+
+                </div>
+
+
+                <!-- WAVEPAY DETAILS -->
+                <div class="payment-account-details" id="wavepay-details">
+
+                    <div class="payment-provider-name">
+                        <strong>WavePay</strong>
+                        <span>Official Payment Account</span>
+                    </div>
+
+                    <div class="payment-detail-row">
+                        <span>Account Name</span>
+                        <strong id="wavepay-account-name">
+                            [Account Name ထည့်ရန်]
+                        </strong>
+                    </div>
+
+                    <div class="payment-detail-row">
+                        <span>Phone Number</span>
+
+                        <strong id="wavepay-phone">
+                            [WavePay Number ထည့်ရန်]
+                        </strong>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="payment-copy-btn"
+                        id="copy-wavepay-number-btn"
+                    >
+                        <i class="fa-regular fa-copy"></i>
+                        ဖုန်းနံပါတ်ကူးယူရန်
+                    </button>
+
+                </div>
+
+
+                <div class="payment-instructions">
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <p>
+                        အထက်ပါ Account သို့ သတ်မှတ်ထားသော ငွေပမာဏကို လွှဲပေးပြီး
+                        ငွေလွှဲအထောက်အထားကို အောက်တွင် တင်ပေးပါ။
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 PAYMENT SUBMISSION FORM
+            ================================== -->
+            <div class="payment-submit-card">
+
+                <h3>
+                    <i class="fa-solid fa-receipt"></i>
+                    Payment Confirmation
+                </h3>
+
+                <p class="payment-submit-description">
+                    ငွေလွှဲပြီးပါက အောက်ပါအချက်အလက်များကို ဖြည့်သွင်းပေးပါ။
+                </p>
+
+
+                <form id="topup-payment-form">
+
+                    <!-- SELECTED PACKAGE -->
+                    <input
+                        type="hidden"
+                        id="selected-package-id"
+                        name="packageId"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="selected-coin-amount"
+                        name="coinAmount"
+                    >
+
+                    <input
+                        type="hidden"
+                        id="selected-package-price"
+                        name="packagePrice"
+                    >
+
+
+                    <div class="form-group">
+
+                        <label for="payment-method-display">
+                            Payment Method
+                        </label>
+
+                        <input
+                            type="text"
+                            id="payment-method-display"
+                            placeholder="KBZPay / WavePay"
+                            readonly
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="payment-amount-display">
+                            ငွေပေးချေရမည့် ပမာဏ
+                        </label>
+
+                        <input
+                            type="text"
+                            id="payment-amount-display"
+                            placeholder="Package ရွေးချယ်ပါ"
+                            readonly
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="payment-order-id">
+                            Payment Transaction ID / Order ID *
+                        </label>
+
+                        <input
+                            type="text"
+                            id="payment-order-id"
+                            name="orderId"
+                            placeholder="ငွေလွှဲ Transaction ID ထည့်ပါ"
+                            maxlength="100"
+                            required
+                        >
+
+                        <small>
+                            KBZPay / WavePay မှ ရရှိသော Transaction ID ကို ထည့်ပါ။
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="payment-screenshot">
+                            <i class="fa-solid fa-image"></i>
+                            Payment Screenshot *
+                        </label>
+
+                        <input
+                            type="file"
+                            id="payment-screenshot"
+                            name="paymentScreenshot"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        >
+
+                        <small>
+                            ငွေလွှဲအောင်မြင်ကြောင်း ပြသသည့် Screenshot ကို တင်ပေးပါ။
+                            JPG, PNG, WEBP ပုံများကိုသာ လက်ခံပါမည်။
+                        </small>
+
+                        <div
+                            class="payment-image-preview"
+                            id="payment-image-preview"
+                            hidden
+                        >
+                            <img
+                                src=""
+                                id="payment-preview-img"
+                                alt="Payment Screenshot Preview"
+                            >
+
+                            <button
+                                type="button"
+                                id="remove-payment-image-btn"
+                                title="Remove image"
+                            >
+                                <i class="fa-solid fa-trash"></i>
+                                ပုံဖယ်ရှားရန်
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="payment-agreement">
+
+                        <label>
+                            <input
+                                type="checkbox"
+                                id="payment-confirm-checkbox"
+                                required
+                            >
+
+                            <span>
+                                ကျွန်ုပ်ပေးသွင်းထားသော Payment အချက်အလက်များ မှန်ကန်ကြောင်း အတည်ပြုပါသည်။
+                            </span>
+                        </label>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="topup-submit-btn"
+                        id="submit-payment-btn"
+                    >
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Payment တင်သွင်းမည်
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             REDEEM TOPUP CODE
+        ========================================== -->
+        <section class="topup-section redeem-section" id="redeem-section">
+
+            <div class="topup-section-heading">
+
+                <div>
+                    <h2>
+                        <i class="fa-solid fa-ticket"></i>
+                        Redeem Code
+                    </h2>
+
+                    <p>သင့်မှာရှိတဲ့ Top-up Code ကို အသုံးပြုပြီး Coin ရယူပါ။</p>
+                </div>
+
+            </div>
+
+
+            <div class="redeem-card">
+
+                <div class="redeem-card-icon">
+                    <i class="fa-solid fa-gift"></i>
+                </div>
+
+                <div class="redeem-card-content">
+
+                    <h3>Have a Top-up Code?</h3>
+
+                    <p>
+                        ရရှိထားသော Code ကို ထည့်သွင်းပြီး Coin များ ရယူနိုင်ပါတယ်။
+                    </p>
+
+                    <form id="redeem-code-form">
+
+                        <div class="redeem-input-group">
+
+                            <input
+                                type="text"
+                                id="redeem-code-input"
+                                name="redeemCode"
+                                placeholder="ဥပမာ - NV-XXXX-XXXX"
+                                maxlength="50"
+                                autocomplete="off"
+                                required
+                            >
+
+                            <button
+                                type="submit"
+                                id="redeem-code-btn"
+                            >
+                                <i class="fa-solid fa-unlock-keyhole"></i>
+                                Redeem
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <p class="redeem-note">
+                <i class="fa-solid fa-shield-halved"></i>
+                Code တစ်ခုကို တစ်ကြိမ်သာ အသုံးပြုနိုင်ပါသည်။
+            </p>
+
+        </section>
+
+
+        <!-- =========================================
+             TRANSACTION HISTORY
+        ========================================== -->
+        <section class="topup-section transaction-section" id="transaction-section">
+
+            <div class="topup-section-heading">
+
+                <div>
+                    <h2>
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Transaction History
+                    </h2>
+
+                    <p>သင့် Coin လုပ်ဆောင်မှုမှတ်တမ်းများ။</p>
+                </div>
+
+                <button
+                    type="button"
+                    class="transaction-refresh-btn"
+                    id="refresh-transactions-btn"
+                    title="Refresh"
+                >
+                    <i class="fa-solid fa-rotate"></i>
+                </button>
+
+            </div>
+
+
+            <!-- TRANSACTION FILTER -->
+            <div class="transaction-filter">
+
+                <button
+                    type="button"
+                    class="transaction-filter-btn active"
+                    data-filter="all"
+                >
+                    All
+                </button>
+
+                <button
+                    type="button"
+                    class="transaction-filter-btn"
+                    data-filter="topup"
+                >
+                    Top Up
+                </button>
+
+                <button
+                    type="button"
+                    class="transaction-filter-btn"
+                    data-filter="purchase"
+                >
+                    Purchases
+                </button>
+
+                <button
+                    type="button"
+                    class="transaction-filter-btn"
+                    data-filter="redeem"
+                >
+                    Redeem
+                </button>
+
+            </div>
+
+
+            <!-- TRANSACTION LIST -->
+            <div class="transaction-list" id="transaction-list">
+
+                <div class="transaction-empty-state" id="transaction-empty-state">
+
+                    <div class="transaction-empty-icon">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+
+                    <h3>မှတ်တမ်းမရှိသေးပါ</h3>
+
+                    <p>
+                        သင့်ရဲ့ Coin Transaction များကို ဒီနေရာမှာ ပြသပေးပါမယ်။
+                    </p>
+
+                </div>
+
+                <!-- Transaction records will be rendered by JavaScript -->
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================================
+             PAYMENT INFORMATION
+        ========================================== -->
+        <section class="topup-information">
+
+            <h3>
+                <i class="fa-solid fa-circle-question"></i>
+                သိထားသင့်သော အချက်များ
+            </h3>
+
+            <ul>
+
+                <li>
+                    Payment တင်သွင်းပြီးနောက် Admin မှ စစ်ဆေးအတည်ပြုပေးပါမည်။
+                </li>
+
+                <li>
+                    Payment အတည်ပြုပြီးမှသာ သင့် Account ထဲသို့ Coin များ ဝင်ရောက်ပါမည်။
+                </li>
+
+                <li>
+                    Transaction ID နှင့် Screenshot မှန်ကန်စွာ တင်သွင်းပေးပါ။
+                </li>
+
+                <li>
+                    Payment တစ်ခုတည်းကို ထပ်ခါတလဲလဲ တင်သွင်းခြင်း မပြုလုပ်ပါနှင့်။
+                </li>
+
+                <li>
+                    Coin ဖြင့် ဝယ်ယူပြီးသော Paid Chapter များ၏ အခြေအနေကို သင့် Account မှာ စစ်ဆေးနိုင်ပါသည်။
+                </li>
+
+            </ul>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         BOTTOM NAVIGATION
+    ========================================== -->
+    <nav class="bottom-nav">
+
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="search.html" class="nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+
+        <a href="library.html" class="nav-item">
+            <i class="fa-solid fa-bookmark"></i>
+            <span>Library</span>
+        </a>
+
+        <a href="topup.html" class="nav-item active">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Wallet</span>
+        </a>
+
+    </nav>
+
+
+    <!-- FUTURE JAVASCRIPT INTEGRATION -->
+    <!-- topup.js and coin.js will be connected in the JavaScript stage -->
+
+</body>
+</html>
