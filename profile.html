@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Account - NovelVerse</title>
+
+    <meta name="description" content="Manage your NovelVerse account, coins and reading library.">
+    <meta name="theme-color" content="#12111A">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+</head>
+
+<body class="profile-page">
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="top-header">
+
+        <div class="header-inner">
+
+            <a href="index.html" class="logo-area">
+                <img
+                    src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                    alt="NovelVerse Logo"
+                    class="logo-img"
+                >
+
+                <span class="logo-title">NovelVerse</span>
+            </a>
+
+            <div class="header-actions">
+
+                <a href="topup.html" class="header-coin-link" id="header-coin-link">
+                    <i class="fa-solid fa-coins"></i>
+
+                    <span id="header-coin-balance">0</span>
+                </a>
+
+                <a
+                    href="search.html"
+                    class="icon-btn"
+                    aria-label="Search Novels"
+                >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+    <main class="profile-main">
+
+        <!-- PAGE TITLE -->
+        <section class="page-heading">
+
+            <div class="page-heading-icon">
+                <i class="fa-solid fa-user-circle"></i>
+            </div>
+
+            <div>
+                <h1>My Account</h1>
+                <p>သင့်ရဲ့ NovelVerse Account ကို စီမံခန့်ခွဲပါ။</p>
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             AUTHENTICATION SECTION
+        ====================================== -->
+        <section id="auth-section" class="auth-section">
+
+            <!-- AUTH TAB BUTTONS -->
+            <div class="auth-tabs">
+
+                <button
+                    type="button"
+                    class="auth-tab active"
+                    id="login-tab-btn"
+                    data-auth-tab="login"
+                >
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Login
+                </button>
+
+                <button
+                    type="button"
+                    class="auth-tab"
+                    id="register-tab-btn"
+                    data-auth-tab="register"
+                >
+                    <i class="fa-solid fa-user-plus"></i>
+                    Register
+                </button>
+
+            </div>
+
+
+            <!-- =================================
+                 LOGIN FORM
+            ================================== -->
+            <div class="auth-panel" id="login-panel">
+
+                <div class="auth-heading">
+
+                    <h2>Welcome Back!</h2>
+
+                    <p>
+                        သင့် Account ထဲသို့ Login ဝင်ပါ။
+                    </p>
+
+                </div>
+
+
+                <form id="login-form">
+
+                    <div class="form-group">
+
+                        <label for="login-username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user input-icon"></i>
+
+                            <input
+                                type="text"
+                                id="login-username"
+                                name="username"
+                                placeholder="သင့် Username ကို ထည့်ပါ"
+                                autocomplete="username"
+                                minlength="3"
+                                maxlength="30"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="login-pin">
+                            PIN
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock input-icon"></i>
+
+                            <input
+                                type="password"
+                                id="login-pin"
+                                name="pin"
+                                placeholder="သင့် PIN ကို ထည့်ပါ"
+                                inputmode="numeric"
+                                autocomplete="current-password"
+                                minlength="6"
+                                maxlength="12"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-password-toggle="login-pin"
+                                aria-label="Show or hide PIN"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                        <small>
+                            သင့် Account ဖန်တီးစဉ်က အသုံးပြုခဲ့သော PIN ကို ထည့်ပါ။
+                        </small>
+
+                    </div>
+
+
+                    <div
+                        id="login-error"
+                        class="form-message error-message"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="login-submit-btn"
+                    >
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Login ဝင်မည်
+                    </button>
+
+                </form>
+
+
+                <div class="auth-switch-text">
+
+                    Account မရှိသေးဘူးလား?
+
+                    <button
+                        type="button"
+                        id="show-register-btn"
+                    >
+                        Register လုပ်ရန်
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 REGISTER FORM
+            ================================== -->
+            <div
+                class="auth-panel"
+                id="register-panel"
+                hidden
+            >
+
+                <div class="auth-heading">
+
+                    <h2>Create Account</h2>
+
+                    <p>
+                        NovelVerse မှာ Account အသစ်တစ်ခု ဖန်တီးပါ။
+                    </p>
+
+                </div>
+
+
+                <form id="register-form">
+
+                    <div class="form-group">
+
+                        <label for="register-username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-user input-icon"></i>
+
+                            <input
+                                type="text"
+                                id="register-username"
+                                name="username"
+                                placeholder="Username အသစ်ထည့်ပါ"
+                                autocomplete="username"
+                                minlength="3"
+                                maxlength="30"
+                                required
+                            >
+
+                        </div>
+
+                        <small>
+                            Username အနည်းဆုံး 3 လုံးနှင့် အများဆုံး 30 လုံး။
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="register-pin">
+                            Create PIN
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock input-icon"></i>
+
+                            <input
+                                type="password"
+                                id="register-pin"
+                                name="pin"
+                                placeholder="PIN အသစ်ထည့်ပါ"
+                                inputmode="numeric"
+                                autocomplete="new-password"
+                                minlength="6"
+                                maxlength="12"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-password-toggle="register-pin"
+                                aria-label="Show or hide PIN"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                        <small>
+                            လုံခြုံရေးအတွက် အနည်းဆုံး 6 လုံးရှိသော PIN ကို အသုံးပြုပါ။
+                        </small>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="register-confirm-pin">
+                            Confirm PIN
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-shield-halved input-icon"></i>
+
+                            <input
+                                type="password"
+                                id="register-confirm-pin"
+                                name="confirmPin"
+                                placeholder="PIN ကို ထပ်မံထည့်ပါ"
+                                inputmode="numeric"
+                                autocomplete="new-password"
+                                minlength="6"
+                                maxlength="12"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                data-password-toggle="register-confirm-pin"
+                                aria-label="Show or hide PIN"
+                            >
+                                <i class="fa-solid fa-eye"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="register-error"
+                        class="form-message error-message"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <div
+                        id="register-success"
+                        class="form-message success-message"
+                        role="status"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="register-submit-btn"
+                    >
+                        <i class="fa-solid fa-user-plus"></i>
+                        Account ဖန်တီးမည်
+                    </button>
+
+                </form>
+
+
+                <div class="auth-switch-text">
+
+                    Account ရှိပြီးသားလား?
+
+                    <button
+                        type="button"
+                        id="show-login-btn"
+                    >
+                        Login ဝင်ရန်
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             USER PROFILE SECTION
+        ====================================== -->
+        <section
+            id="profile-section"
+            class="profile-section"
+            hidden
+        >
+
+            <!-- PROFILE CARD -->
+            <div class="profile-card">
+
+                <div class="profile-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="profile-info">
+
+                    <span class="profile-label">
+                        MY ACCOUNT
+                    </span>
+
+                    <h2 id="profile-username">
+                        Username
+                    </h2>
+
+                    <p id="profile-created-date">
+                        Member Since: --
+                    </p>
+
+                </div>
+
+                <span class="account-status" id="profile-account-status">
+                    <i class="fa-solid fa-circle-check"></i>
+                    Active
+                </span>
+
+            </div>
+
+
+            <!-- COIN BALANCE CARD -->
+            <div class="coin-balance-card">
+
+                <div class="coin-balance-info">
+
+                    <span class="coin-balance-label">
+                        MY COIN BALANCE
+                    </span>
+
+                    <h2>
+                        <i class="fa-solid fa-coins"></i>
+
+                        <span id="profile-coin-balance">0</span>
+                    </h2>
+
+                    <p>
+                        သင့်လက်ရှိ Coin လက်ကျန်
+                    </p>
+
+                </div>
+
+                <a href="topup.html" class="primary-btn coin-topup-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    Top Up Coins
+                </a>
+
+            </div>
+
+
+            <!-- ACCOUNT MENU -->
+            <div class="profile-menu-section">
+
+                <h3 class="section-title">
+                    Account Menu
+                </h3>
+
+
+                <a href="library.html" class="profile-menu-item">
+
+                    <div class="profile-menu-icon">
+                        <i class="fa-solid fa-bookmark"></i>
+                    </div>
+
+                    <div class="profile-menu-text">
+                        <strong>My Library</strong>
+                        <small>သိမ်းဆည်းထားသော Novel များ</small>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+
+                </a>
+
+
+                <a href="topup.html" class="profile-menu-item">
+
+                    <div class="profile-menu-icon">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+
+                    <div class="profile-menu-text">
+                        <strong>Top Up Coins</strong>
+                        <small>Coin များ ဝယ်ယူရန်</small>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+
+                </a>
+
+
+                <a href="index.html" class="profile-menu-item">
+
+                    <div class="profile-menu-icon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+
+                    <div class="profile-menu-text">
+                        <strong>Continue Reading</strong>
+                        <small>NovelVerse သို့ ပြန်သွားရန်</small>
+                    </div>
+
+                    <i class="fa-solid fa-chevron-right menu-arrow"></i>
+
+                </a>
+
+            </div>
+
+
+            <!-- COIN TRANSACTION HISTORY -->
+            <div class="transaction-section">
+
+                <div class="section-heading-row">
+
+                    <h3 class="section-title">
+                        Coin Transaction History
+                    </h3>
+
+                </div>
+
+                <div
+                    id="coin-transaction-list"
+                    class="transaction-list"
+                >
+
+                    <!-- Transaction history will be loaded by profile.js -->
+
+                    <div class="empty-state" id="transaction-empty-state">
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                        <p>
+                            Transaction History မရှိသေးပါ။
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+            <div class="profile-logout-section">
+
+                <button
+                    type="button"
+                    class="logout-btn"
+                    id="profile-logout-btn"
+                >
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    Logout
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         BOTTOM NAVIGATION
+    ========================================== -->
+    <nav class="bottom-nav">
+
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="search.html" class="nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+
+        <a href="library.html" class="nav-item">
+            <i class="fa-solid fa-bookmark"></i>
+            <span>Library</span>
+        </a>
+
+        <a href="profile.html" class="nav-item active">
+            <i class="fa-solid fa-user"></i>
+            <span>Account</span>
+        </a>
+
+    </nav>
+
+
+    <!-- JAVASCRIPT WILL BE ADDED IN THE JS PHASE -->
+
+</body>
+</html>
