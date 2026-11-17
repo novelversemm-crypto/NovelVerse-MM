@@ -272,6 +272,7 @@ function switchAuthTab(tabName) {
 
     hideAuthMessage('register-error');
 
+    // Tab ကို ကိုယ်တိုင်ပြောင်းတဲ့အခါ Success Message ကို ဖျောက်မည်
     hideAuthMessage('register-success');
 
     if (tabName === 'register') {
@@ -467,12 +468,7 @@ async function handleUserRegister(event) {
         );
 
 
-        // Register အောင်မြင်ပါက Login Tab သို့ ပြောင်းမည်
-
-        showAuthMessage(
-            'register-success',
-            result.message || 'Account ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်နိုင်ပါပြီ။'
-        );
+        // Login Form တွင် Username အလိုအလျောက် ဖြည့်မည်
 
         const loginUsername = document.getElementById(
             'login-username'
@@ -482,16 +478,26 @@ async function handleUserRegister(event) {
             loginUsername.value = username;
         }
 
+
+        // Register Form ကို ရှင်းလင်းမည်
+
         document.getElementById(
             'register-form'
         )?.reset();
 
+
+        // Login Tab သို့ ပြောင်းမည်
+
         switchAuthTab('login');
 
+
+        // Register Success Message ကို Login Tab အောက်တွင် ပြမည်
+
         showAuthMessage(
-            'login-error',
-            ''
+            'register-success',
+            result.message || 'Account ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်နိုင်ပါပြီ။'
         );
+
 
     } catch (error) {
 
