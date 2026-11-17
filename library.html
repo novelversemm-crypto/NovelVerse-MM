@@ -1,540 +1,375 @@
 
-// ==========================================
-// 📚 NOVELVERSE LIBRARY CONFIGURATION
-// ==========================================
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const LIBRARY_STORAGE_KEY = 'novelverse_library';
-const LAST_READ_STORAGE_KEY = 'novelverse_last_read';
+    <title>My Library - NovelVerse</title>
 
-let libraryNovels = [];
-let selectedNovelToRemove = null;
-let currentLibraryTab = 'saved';
+    <meta name="description" content="Your personal NovelVerse library. Save and manage your favorite novels.">
+    <meta name="theme-color" content="#12111A">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-// ==========================================
-// 🚀 INITIALIZE LIBRARY
-// ==========================================
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-document.addEventListener('DOMContentLoaded', () => {
-    window.switchLibraryTab = switchLibraryTab;
-    window.openRemoveLibraryModal = openRemoveLibraryModal;
-    window.closeRemoveLibraryModal = closeRemoveLibraryModal;
-    window.confirmRemoveLibrary = confirmRemoveLibrary;
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="./favicon.png">
+</head>
 
-    loadLibraryData();
+<body class="library-page">
 
-    // Modal Backdrop
-    const backdrop = document.getElementById('remove-library-backdrop');
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+    <header class="top-header">
 
-    if (backdrop) {
-        backdrop.addEventListener('click', closeRemoveLibraryModal);
-    }
+        <div class="header-inner">
 
-    // Cancel Button
-    const cancelBtn = document.getElementById('cancel-remove-library');
+            <a href="index.html" class="logo-area">
+                <img
+                    src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                    alt="NovelVerse Logo"
+                    class="logo-img"
+                >
 
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', closeRemoveLibraryModal);
-    }
+                <span class="logo-title">NovelVerse</span>
+            </a>
 
-    // Confirm Button
-    const confirmBtn = document.getElementById('confirm-remove-library');
+            <div class="header-actions">
 
-    if (confirmBtn) {
-        confirmBtn.addEventListener('click', confirmRemoveLibrary);
-    }
-});
+                <a href="topup.html" class="header-coin-link" id="header-coin-link">
+                    <i class="fa-solid fa-coins"></i>
+                    <span id="header-coin-balance">0</span>
+                </a>
 
+                <a
+                    href="profile.html"
+                    class="icon-btn"
+                    aria-label="My Account"
+                >
+                    <i class="fa-solid fa-user"></i>
+                </a>
 
-// ==========================================
-// 🛠️ HELPER FUNCTIONS
-// ==========================================
+            </div>
 
-// HTML Escape
-function libraryEscapeHTML(value) {
-    return String(value ?? '').replace(/[&<>"']/g, char => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;'
-    })[char]);
-}
+        </div>
 
+    </header>
 
-// Safe Image URL
-function librarySafeImageURL(url) {
-    if (!url) return '';
 
-    try {
-        const parsed = new URL(String(url), window.location.origin);
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+    <main class="library-main">
 
-        if (
-            parsed.protocol === 'https:' ||
-            parsed.protocol === 'http:'
-        ) {
-            return parsed.href;
-        }
+        <!-- PAGE HEADING -->
+        <section class="page-heading">
 
-        return '';
-    } catch (error) {
-        return '';
-    }
-}
+            <div class="page-heading-icon">
+                <i class="fa-solid fa-bookmark"></i>
+            </div>
 
+            <div>
+                <h1>My Library</h1>
+                <p>သင်နှစ်သက်တဲ့ Novel တွေကို တစ်နေရာတည်းမှာ သိမ်းဆည်းထားပါ။</p>
+            </div>
 
-// LocalStorage မှ Saved Novels ရယူခြင်း
-function getLibraryNovels() {
-    try {
-        const savedData = localStorage.getItem(LIBRARY_STORAGE_KEY);
+        </section>
 
-        if (!savedData) return [];
 
-        const parsedData = JSON.parse(savedData);
+        <!-- =====================================
+             LIBRARY USER INFO
+        ====================================== -->
+        <section class="library-user-card" id="library-user-card">
 
-        return Array.isArray(parsedData) ? parsedData : [];
+            <div class="library-user-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
 
-    } catch (error) {
-        console.error('Get library data error:', error);
-        return [];
-    }
-}
+            <div class="library-user-info">
 
+                <span>YOUR PERSONAL LIBRARY</span>
 
-// LocalStorage ထဲသို့ Saved Novels သိမ်းခြင်း
-function saveLibraryNovels() {
-    try {
-        localStorage.setItem(
-            LIBRARY_STORAGE_KEY,
-            JSON.stringify(libraryNovels)
-        );
+                <h2 id="library-username">
+                    My Library
+                </h2>
 
-        return true;
+                <p>
+                    <span id="library-novel-count">0</span>
+                    Saved Novels
+                </p>
 
-    } catch (error) {
-        console.error('Save library data error:', error);
-        return false;
-    }
-}
+            </div>
 
+        </section>
 
-// ==========================================
-// 1. LOAD LIBRARY DATA
-// ==========================================
 
-function loadLibraryData() {
-    libraryNovels = getLibraryNovels();
+        <!-- =====================================
+             LOGIN REQUIRED
+        ====================================== -->
+        <section
+            class="library-login-required"
+            id="library-login-required"
+            hidden
+        >
 
-    renderSavedNovels();
-    renderContinueReading();
-}
+            <div class="empty-state-icon">
+                <i class="fa-solid fa-lock"></i>
+            </div>
 
+            <h2>Login Required</h2>
 
-// ==========================================
-// 2. SWITCH LIBRARY TABS
-// ==========================================
+            <p>
+                သင့် Library ကို ကြည့်ရှုရန် Account ထဲသို့ Login ဝင်ပေးပါ။
+            </p>
 
-function switchLibraryTab(tab) {
-    if (tab !== 'saved' && tab !== 'continue') {
-        return;
-    }
+            <a href="profile.html" class="primary-btn">
+                <i class="fa-solid fa-right-to-bracket"></i>
+                Login ဝင်ရန်
+            </a>
 
-    currentLibraryTab = tab;
+        </section>
 
-    const savedSection = document.getElementById(
-        'saved-novels-section'
-    );
 
-    const continueSection = document.getElementById(
-        'continue-reading-section'
-    );
+        <!-- =====================================
+             LIBRARY CONTENT
+        ====================================== -->
+        <section class="library-content" id="library-content">
 
-    const savedBtn = document.getElementById(
-        'saved-tab-btn'
-    );
+            <!-- LIBRARY TOOLBAR -->
+            <div class="library-toolbar">
 
-    const continueBtn = document.getElementById(
-        'continue-tab-btn'
-    );
+                <div class="library-toolbar-info">
 
-    if (savedSection) {
-        savedSection.style.display =
-            tab === 'saved' ? 'block' : 'none';
-    }
+                    <h2>
+                        <i class="fa-solid fa-bookmark"></i>
+                        Saved Novels
+                    </h2>
 
-    if (continueSection) {
-        continueSection.style.display =
-            tab === 'continue' ? 'block' : 'none';
-    }
+                    <span id="library-result-count">
+                        0 Novels
+                    </span>
 
-    if (savedBtn) {
-        savedBtn.classList.toggle('active', tab === 'saved');
-    }
+                </div>
 
-    if (continueBtn) {
-        continueBtn.classList.toggle('active', tab === 'continue');
-    }
-}
 
+                <div class="library-toolbar-actions">
 
-// ==========================================
-// 3. RENDER SAVED NOVELS
-// ==========================================
+                    <div class="library-search-wrapper">
 
-function renderSavedNovels() {
-    const grid = document.getElementById(
-        'saved-novels-grid'
-    );
+                        <i class="fa-solid fa-magnifying-glass"></i>
 
-    const countEl = document.getElementById(
-        'saved-novel-count'
-    );
-
-    const emptyState = document.getElementById(
-        'saved-empty-state'
-    );
-
-    if (countEl) {
-        countEl.textContent = libraryNovels.length;
-    }
-
-    if (!grid) return;
-
-    if (libraryNovels.length === 0) {
-        grid.innerHTML = '';
-
-        if (emptyState) {
-            emptyState.style.display = 'block';
-        }
-
-        return;
-    }
-
-    if (emptyState) {
-        emptyState.style.display = 'none';
-    }
-
-    // နောက်ဆုံးသိမ်းထားသော Novel ကို အပေါ်ဆုံးပြရန်
-    const sortedNovels = [...libraryNovels].sort((a, b) => {
-        return new Date(b.savedAt || 0) - new Date(a.savedAt || 0);
-    });
-
-    grid.innerHTML = sortedNovels.map(novel => {
-        const novelId = novel.slug || novel.id || '';
-
-        const novelURL = `novel.html?id=${encodeURIComponent(novelId)}`;
-
-        const coverURL = librarySafeImageURL(novel.coverUrl);
-
-        const title = libraryEscapeHTML(
-            novel.title || 'Untitled Novel'
-        );
-
-        const genre = libraryEscapeHTML(
-            novel.genre || 'General'
-        );
-
-        const status = libraryEscapeHTML(
-            novel.status || 'Ongoing'
-        );
-
-        const safeId = libraryEscapeHTML(novel.id || novel.slug || '');
-
-        return `
-            <div class="novel-card library-novel-card">
-
-                <a href="${libraryEscapeHTML(novelURL)}" class="library-novel-link">
-
-                    <div class="novel-cover-wrap">
-
-                        <img
-                            src="${libraryEscapeHTML(coverURL)}"
-                            class="novel-cover"
-                            alt="${title}"
-                            loading="lazy"
-                            onerror="this.style.visibility='hidden';"
+                        <input
+                            type="search"
+                            id="library-search-input"
+                            placeholder="Library ထဲမှာ ရှာဖွေပါ..."
+                            aria-label="Search saved novels"
                         >
 
-                        <span class="chapter-badge">
-                            ${status}
-                        </span>
-
                     </div>
 
-                    <div class="novel-info">
 
-                        <div class="novel-name">
-                            ${title}
-                        </div>
+                    <select
+                        id="library-sort-select"
+                        aria-label="Sort saved novels"
+                    >
+                        <option value="newest">Recently Added</option>
+                        <option value="oldest">Oldest Added</option>
+                        <option value="title-asc">Title: A - Z</option>
+                        <option value="title-desc">Title: Z - A</option>
+                    </select>
 
-                        <div class="novel-meta">
-                            ${genre}
-                        </div>
+                </div>
 
-                    </div>
+            </div>
 
-                </a>
+
+            <!-- LOADING STATE -->
+            <div
+                class="library-loading"
+                id="library-loading"
+                hidden
+            >
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
+                <p>Library ကို ရယူနေပါတယ်...</p>
+
+            </div>
+
+
+            <!-- ERROR STATE -->
+            <div
+                class="library-error"
+                id="library-error"
+                role="alert"
+                aria-live="polite"
+                hidden
+            >
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
+                <p id="library-error-message">
+                    Library ကို ရယူရာတွင် အမှားတစ်ခု ဖြစ်ပွားခဲ့ပါတယ်။
+                </p>
 
                 <button
                     type="button"
-                    class="remove-library-btn"
-                    data-novel-id="${safeId}"
-                    aria-label="Remove ${title} from Library"
-                    onclick="openRemoveLibraryModal(this.dataset.novelId)"
+                    id="library-retry-btn"
+                    class="secondary-btn"
                 >
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-rotate-right"></i>
+                    Try Again
                 </button>
 
             </div>
-        `;
-    }).join('');
-}
 
 
-// ==========================================
-// 4. REMOVE NOVEL MODAL
-// ==========================================
+            <!-- EMPTY LIBRARY -->
+            <div
+                class="library-empty-state"
+                id="library-empty-state"
+                hidden
+            >
 
-function openRemoveLibraryModal(novelId) {
-    selectedNovelToRemove = novelId;
-
-    const modal = document.getElementById(
-        'remove-library-modal'
-    );
-
-    if (modal) {
-        modal.style.display = 'flex';
-    }
-}
-
-
-// ==========================================
-// CLOSE REMOVE MODAL
-// ==========================================
-
-function closeRemoveLibraryModal() {
-    selectedNovelToRemove = null;
-
-    const modal = document.getElementById(
-        'remove-library-modal'
-    );
-
-    if (modal) {
-        modal.style.display = 'none';
-    }
-}
-
-
-// ==========================================
-// 5. CONFIRM REMOVE NOVEL
-// ==========================================
-
-function confirmRemoveLibrary() {
-    if (!selectedNovelToRemove) {
-        closeRemoveLibraryModal();
-        return;
-    }
-
-    const targetId = String(selectedNovelToRemove);
-
-    libraryNovels = libraryNovels.filter(novel => {
-        const novelId = String(novel.id || novel.slug || '');
-
-        return novelId !== targetId;
-    });
-
-    const saved = saveLibraryNovels();
-
-    if (!saved) {
-        showLibraryMessage(
-            'Library မှ ပြင်ဆင်မှုကို သိမ်းဆည်း၍ မရပါ။'
-        );
-
-        closeRemoveLibraryModal();
-        return;
-    }
-
-    closeRemoveLibraryModal();
-
-    renderSavedNovels();
-
-    showLibraryMessage(
-        'Novel ကို Library မှ ဖယ်ရှားပြီးပါပြီ။'
-    );
-}
-
-
-// ==========================================
-// 6. RENDER CONTINUE READING
-// ==========================================
-
-function renderContinueReading() {
-    const list = document.getElementById(
-        'continue-reading-list'
-    );
-
-    const emptyState = document.getElementById(
-        'continue-empty-state'
-    );
-
-    if (!list) return;
-
-    let lastRead = null;
-
-    try {
-        const savedData = localStorage.getItem(
-            LAST_READ_STORAGE_KEY
-        );
-
-        if (savedData) {
-            lastRead = JSON.parse(savedData);
-        }
-
-    } catch (error) {
-        console.error('Read last chapter error:', error);
-    }
-
-    if (
-        !lastRead ||
-        !lastRead.novelId ||
-        !lastRead.chapterId
-    ) {
-        list.innerHTML = '';
-
-        if (emptyState) {
-            emptyState.style.display = 'block';
-        }
-
-        return;
-    }
-
-    if (emptyState) {
-        emptyState.style.display = 'none';
-    }
-
-    const novelTitle = libraryEscapeHTML(
-        lastRead.novelTitle || 'Unknown Novel'
-    );
-
-    const chapterNumber = libraryEscapeHTML(
-        lastRead.chapterNumber || lastRead.chapterId
-    );
-
-    const novelId = encodeURIComponent(lastRead.novelId);
-
-    const chapterId = encodeURIComponent(lastRead.chapterId);
-
-    const readerURL =
-        `reader.html?novel_id=${novelId}&id=${chapterId}`;
-
-    const lastReadDate = lastRead.lastReadAt
-        ? formatLastReadDate(lastRead.lastReadAt)
-        : '';
-
-    list.innerHTML = `
-        <div class="continue-reading-card">
-
-            <div class="continue-reading-info">
-
-                <div class="continue-reading-title">
-                    ${novelTitle}
+                <div class="empty-state-icon">
+                    <i class="fa-solid fa-book-open"></i>
                 </div>
 
-                <div class="continue-reading-chapter">
-                    Chapter ${chapterNumber}
-                </div>
+                <h2>Your Library is Empty</h2>
 
-                <div class="continue-reading-date">
-                    ${libraryEscapeHTML(lastReadDate)}
-                </div>
+                <p>
+                    သင်နှစ်သက်တဲ့ Novel တွေကို Library ထဲသို့ သိမ်းဆည်းလိုက်ပါ။
+                </p>
+
+                <a href="search.html" class="primary-btn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    Explore Novels
+                </a>
 
             </div>
 
-            <a
-                href="${libraryEscapeHTML(readerURL)}"
-                class="continue-reading-btn"
+
+            <!-- NO SEARCH RESULTS -->
+            <div
+                class="library-no-results"
+                id="library-no-results"
+                hidden
             >
-                ဆက်ဖတ်မယ်
-                <i class="fa-solid fa-arrow-right"></i>
-            </a>
 
-        </div>
-    `;
-}
+                <div class="empty-state-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
 
+                <h2>No Novels Found</h2>
 
-// ==========================================
-// 7. FORMAT LAST READ DATE
-// ==========================================
+                <p>
+                    သင့်ရှာဖွေမှုနဲ့ ကိုက်ညီတဲ့ Novel မရှိပါ။
+                </p>
 
-function formatLastReadDate(dateValue) {
-    const date = new Date(dateValue);
+                <button
+                    type="button"
+                    id="library-clear-search-btn"
+                    class="secondary-btn"
+                >
+                    Clear Search
+                </button>
 
-    if (Number.isNaN(date.getTime())) {
-        return '';
-    }
-
-    return date.toLocaleString('my-MM', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
+            </div>
 
 
-// ==========================================
-// 8. LIBRARY MESSAGE
-// ==========================================
+            <!-- NOVEL GRID -->
+            <div
+                class="library-novels-grid"
+                id="library-novels-grid"
+            >
 
-function showLibraryMessage(message) {
-    // ရှိပြီးသား Message Container ကို အသုံးပြုမည်
-    let messageBox = document.getElementById(
-        'library-message'
-    );
+                <!--
+                    Library novels will be generated by library.js.
 
-    // မရှိသေးပါက သီးခြား Container ဖန်တီးမည်
-    if (!messageBox) {
-        messageBox = document.createElement('div');
+                    Each novel card should contain:
+                    - Novel Cover
+                    - Novel Title
+                    - Genre
+                    - Status
+                    - Open Novel Button
+                    - Remove from Library Button
+                -->
 
-        messageBox.id = 'library-message';
-
-        messageBox.style.cssText = `
-            position:fixed;
-            bottom:90px;
-            left:50%;
-            transform:translateX(-50%);
-            z-index:9999;
-            background:var(--surface-color, #222);
-            color:var(--text-main, #fff);
-            padding:12px 18px;
-            border-radius:10px;
-            font-size:13px;
-            text-align:center;
-            max-width:90%;
-            box-shadow:0 4px 15px rgba(0,0,0,0.3);
-        `;
-
-        document.body.appendChild(messageBox);
-    }
-
-    messageBox.textContent = message;
-    messageBox.style.display = 'block';
-
-    // နောက်ပိုင်းမှာ CSS Animation ထည့်နိုင်သည်
-    setTimeout(() => {
-        if (messageBox) {
-            messageBox.style.display = 'none';
-        }
-    }, 2500);
-}
+            </div>
 
 
-// ==========================================
-// 9. REFRESH LIBRARY
-// ==========================================
+            <!-- PAGINATION -->
+            <div
+                class="library-pagination"
+                id="library-pagination"
+            >
 
-function refreshLibrary() {
-    loadLibraryData();
-}
+                <!-- Pagination will be generated by library.js -->
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             EXPLORE MORE
+        ====================================== -->
+        <section class="library-explore-section">
+
+            <div class="library-explore-content">
+
+                <div>
+                    <h3>Discover More Stories</h3>
+
+                    <p>
+                        Novel အသစ်တွေကို ရှာဖွေပြီး သင့် Library ထဲသို့ သိမ်းဆည်းလိုက်ပါ။
+                    </p>
+                </div>
+
+                <a href="search.html" class="secondary-btn">
+                    Explore Novels
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         BOTTOM NAVIGATION
+    ========================================== -->
+    <nav class="bottom-nav">
+
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </a>
+
+        <a href="search.html" class="nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Search</span>
+        </a>
+
+        <a href="library.html" class="nav-item active">
+            <i class="fa-solid fa-bookmark"></i>
+            <span>Library</span>
+        </a>
+
+        <a href="profile.html" class="nav-item">
+            <i class="fa-solid fa-user"></i>
+            <span>Account</span>
+        </a>
+
+    </nav>
+
+
+    <!-- JAVASCRIPT WILL BE ADDED IN THE JS PHASE -->
+
+</body>
+</html>
