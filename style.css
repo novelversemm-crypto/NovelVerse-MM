@@ -3027,3 +3027,769 @@ hr {
 [hidden] {
     display: none !important;
 }
+
+
+/* =========================================================
+   23. VISUAL REFINEMENT & LAYOUT FIXES
+   Appended overrides — keeps existing HTML/JS class names.
+   ========================================================= */
+
+/* Better Myanmar typography and consistent vertical rhythm */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    line-height: 1.85;
+    overflow-x: clip;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, ul, ol {
+    overflow-wrap: anywhere;
+}
+
+p {
+    line-height: 1.85;
+}
+
+button, input, select, textarea {
+    line-height: 1.5;
+}
+
+:where(.section-title, .hero-title, .novel-card h3,
+       .novel-card-title, .novel-title, .chapter-title-text,
+       .chapter-item-title, .popular-item h3, .popular-novel h3) {
+    word-break: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Main page breathing room */
+.main-container {
+    padding-bottom: 20px;
+}
+
+.section-block {
+    margin-top: 42px;
+    margin-bottom: 42px;
+}
+
+.section-header {
+    align-items: flex-end;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.section-heading-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+}
+
+.section-eyebrow {
+    line-height: 1.6;
+    margin-bottom: 3px;
+}
+
+.section-title {
+    line-height: 1.65;
+    gap: 10px;
+}
+
+.view-all {
+    min-height: 36px;
+    padding: 6px 0 6px 8px;
+    white-space: nowrap;
+}
+
+/* Hero: keep copy readable and prevent text touching edges */
+.hero-card {
+    min-height: clamp(330px, 39vw, 490px);
+}
+
+.hero-content {
+    max-width: 680px;
+    padding: clamp(26px, 5vw, 58px);
+}
+
+.hero-title {
+    max-width: 100%;
+    line-height: 1.45;
+    letter-spacing: 0;
+    margin-bottom: 14px;
+}
+
+.hero-desc {
+    line-height: 2;
+    margin-bottom: 25px;
+}
+
+/* Novel cards: consistent cover ratio, spacing and hover feedback */
+.novel-grid,
+.library-novels-grid {
+    align-items: stretch;
+    column-gap: 18px;
+    row-gap: 24px;
+}
+
+.novel-card,
+.library-novel-card,
+.search-novel-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    transition: transform 220ms ease, border-color 220ms ease,
+                box-shadow 220ms ease, background 220ms ease;
+}
+
+.novel-card > a,
+.library-novel-card > a,
+.search-novel-card > a {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.novel-card img,
+.novel-cover,
+.library-novel-card img,
+.search-novel-card img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center;
+    flex: 0 0 auto;
+}
+
+.novel-card-content,
+.novel-card-info,
+.novel-info,
+.library-novel-info,
+.search-novel-info {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    padding: 14px;
+}
+
+.novel-card h3,
+.novel-card-title,
+.novel-title,
+.library-novel-title,
+.search-novel-title {
+    margin: 0;
+    line-height: 1.8;
+    min-height: 3.6em;
+    -webkit-line-clamp: 2;
+}
+
+.novel-card p,
+.novel-author,
+.library-novel-author,
+.search-novel-author {
+    line-height: 1.7;
+}
+
+.novel-meta,
+.novel-card-meta,
+.novel-card-footer {
+    flex-wrap: wrap;
+    row-gap: 6px;
+    margin-top: auto;
+    padding-top: 7px;
+    line-height: 1.6;
+}
+
+.novel-card:hover,
+.library-novel-card:hover,
+.search-novel-card:hover {
+    transform: translateY(-6px);
+}
+
+/* Popular rows: align cover, title and metadata cleanly */
+.popular-list {
+    column-gap: 16px;
+    row-gap: 14px;
+}
+
+.popular-item,
+.popular-novel,
+.popular-card {
+    min-height: 92px;
+    padding: 14px;
+}
+
+.popular-item > div,
+.popular-novel > div,
+.popular-card > div {
+    min-width: 0;
+    flex: 1;
+}
+
+.popular-item h3,
+.popular-novel h3,
+.popular-card h3 {
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+.popular-item p,
+.popular-novel p,
+.popular-card p {
+    line-height: 1.7;
+}
+
+/* All interactive tabs/chips/pagination have a visible hover state */
+.auth-tab,
+.status-btn,
+.genre-chip,
+.pagination-btn,
+.chapter-pagination button,
+#pagination-container button,
+.library-pagination button,
+.nav-item,
+.sort-btn {
+    transition: color 180ms ease, background 180ms ease,
+                border-color 180ms ease, box-shadow 180ms ease,
+                transform 180ms ease;
+}
+
+.auth-tab:hover:not(.active),
+.status-btn:hover:not(.active),
+.genre-chip:hover:not(.active) {
+    color: #fff;
+    background: rgba(155,120,255,.13);
+    border-color: rgba(155,120,255,.35);
+}
+
+.auth-tab:focus-visible,
+.status-btn:focus-visible,
+.genre-chip:focus-visible,
+.pagination-btn:focus-visible,
+.chapter-pagination button:focus-visible,
+#pagination-container button:focus-visible,
+.library-pagination button:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+}
+
+.chapter-pagination,
+#pagination-container,
+.library-pagination {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 22px auto 8px;
+}
+
+.chapter-pagination button,
+#pagination-container button,
+.library-pagination button,
+.pagination-btn {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 7px 11px;
+    color: var(--text-soft);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.chapter-pagination button:hover,
+#pagination-container button:hover,
+.library-pagination button:hover,
+.pagination-btn:hover {
+    color: #fff;
+    background: var(--primary-soft);
+    border-color: rgba(155,120,255,.45);
+    transform: translateY(-2px);
+}
+
+.chapter-pagination button.active,
+#pagination-container button.active,
+.library-pagination button.active,
+.pagination-btn.active {
+    color: #fff;
+    background: var(--primary-strong);
+    border-color: var(--primary-strong);
+    box-shadow: 0 5px 14px rgba(128,85,246,.22);
+}
+
+/* Novel detail: cover and information should stay as a balanced pair */
+.novel-detail-header {
+    align-items: center;
+    gap: clamp(18px, 3vw, 32px);
+    padding: clamp(18px, 3vw, 30px);
+}
+
+.novel-detail-header img,
+.novel-detail-cover,
+.novel-cover-large {
+    width: clamp(135px, 19vw, 205px);
+    max-height: 290px;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center;
+}
+
+.novel-detail-info,
+.novel-header-info,
+.novel-information {
+    min-width: 0;
+}
+
+.novel-detail-header h1,
+.novel-detail-title,
+.novel-header-title {
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+.novel-detail-header p,
+.novel-detail-description,
+.novel-header-description {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    line-height: 1.95;
+}
+
+.novel-detail-meta,
+.novel-meta-list,
+.novel-information-meta {
+    line-height: 1.8;
+}
+
+/* Chapter rows and synopsis spacing */
+.synopsis-box {
+    line-height: 2.05;
+    overflow-wrap: anywhere;
+}
+
+.chapter-list {
+    gap: 10px;
+}
+
+.chapter-item,
+.chapter-row,
+.chapter-link {
+    min-height: 48px;
+    line-height: 1.75;
+}
+
+.chapter-item > *,
+.chapter-row > *,
+.chapter-link > * {
+    min-width: 0;
+}
+
+.chapter-item-title,
+.chapter-title-text {
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+/* Search filters and result cards */
+.filter-section {
+    margin: 18px 0;
+    padding: 20px;
+}
+
+.status-tags,
+.genre-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.status-btn,
+.genre-chip {
+    min-height: 38px;
+    padding: 8px 13px;
+    line-height: 1.5;
+}
+
+.search-header {
+    gap: 16px;
+}
+
+.search-box-wrap {
+    min-width: 0;
+}
+
+.search-box-wrap input,
+.search-box-wrap .search-input {
+    min-width: 0;
+    width: 100%;
+}
+
+/* Reader typography: readable paragraphs without crowding */
+.reader-content {
+    line-height: 2.15;
+    overflow-wrap: anywhere;
+}
+
+.reader-content p {
+    margin: 0 0 1.35em;
+    line-height: inherit;
+}
+
+.reader-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Form controls: consistent dimensions */
+.input-wrapper input,
+.form-group input,
+.promo-input-wrapper input,
+.library-search-wrapper input,
+#library-search-input,
+#library-sort-select,
+select,
+textarea {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.form-group {
+    margin-bottom: 19px;
+}
+
+.form-group label,
+.promo-input-group label {
+    line-height: 1.7;
+}
+
+.auth-panel,
+.profile-card,
+.coin-balance-card,
+.transaction-section {
+    line-height: 1.8;
+}
+
+.auth-heading {
+    line-height: 1.55;
+}
+
+.auth-heading p {
+    line-height: 1.8;
+}
+
+/* Ad containers should not force horizontal overflow */
+.ad-section,
+.ad-container {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.ad-container iframe,
+.ad-container img {
+    display: block;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .novel-grid,
+    .library-novels-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .section-block {
+        margin-block: 34px;
+    }
+}
+
+/* Small tablet and mobile */
+@media (max-width: 760px) {
+    .section-block {
+        margin-block: 30px;
+    }
+
+    .section-header {
+        align-items: flex-end;
+        margin-bottom: 15px;
+    }
+
+    .novel-grid,
+    .library-novels-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .novel-card-content,
+    .novel-card-info,
+    .novel-info,
+    .library-novel-info,
+    .search-novel-info {
+        padding: 11px;
+    }
+
+    .novel-card h3,
+    .novel-card-title,
+    .novel-title,
+    .library-novel-title,
+    .search-novel-title {
+        font-size: 12px;
+        line-height: 1.8;
+    }
+
+    .novel-detail-header {
+        align-items: flex-start;
+    }
+
+    .novel-detail-header img,
+    .novel-detail-cover,
+    .novel-cover-large {
+        width: 132px;
+    }
+}
+
+/* Phone */
+@media (max-width: 480px) {
+    body {
+        line-height: 1.9;
+    }
+
+    .main-container,
+    .profile-main,
+    .library-main,
+    .topup-main {
+        width: calc(100% - 24px);
+    }
+
+    .section-block {
+        margin-block: 26px;
+    }
+
+    .section-header {
+        align-items: center;
+        gap: 8px;
+    }
+
+    .section-title {
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    .section-eyebrow {
+        font-size: 9px;
+        letter-spacing: 1.4px;
+    }
+
+    .view-all {
+        font-size: 10px;
+    }
+
+    .hero-card {
+        min-height: 300px;
+    }
+
+    .hero-content {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .hero-title {
+        font-size: clamp(23px, 7vw, 29px);
+        line-height: 1.55;
+    }
+
+    .hero-desc {
+        font-size: 11px;
+        line-height: 1.9;
+    }
+
+    .novel-grid,
+    .library-novels-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 13px;
+    }
+
+    .novel-card-content,
+    .novel-card-info,
+    .novel-info,
+    .library-novel-info,
+    .search-novel-info {
+        gap: 5px;
+        padding: 10px;
+    }
+
+    .novel-card h3,
+    .novel-card-title,
+    .novel-title,
+    .library-novel-title,
+    .search-novel-title {
+        min-height: 0;
+        font-size: 11px;
+        line-height: 1.85;
+    }
+
+    .novel-card p,
+    .novel-author,
+    .library-novel-author,
+    .search-novel-author {
+        font-size: 9px;
+        line-height: 1.7;
+    }
+
+    .novel-meta,
+    .novel-card-meta,
+    .novel-card-footer {
+        font-size: 9px;
+    }
+
+    .popular-list {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .popular-item,
+    .popular-novel,
+    .popular-card {
+        min-height: 82px;
+        padding: 11px;
+    }
+
+    .novel-detail-header {
+        display: grid;
+        grid-template-columns: 108px minmax(0, 1fr);
+        align-items: start;
+        gap: 13px;
+        padding: 14px;
+    }
+
+    .novel-detail-header img,
+    .novel-detail-cover,
+    .novel-cover-large {
+        width: 108px;
+        max-height: 150px;
+    }
+
+    .novel-detail-header h1,
+    .novel-detail-title,
+    .novel-header-title {
+        font-size: 16px;
+        line-height: 1.65;
+    }
+
+    .novel-detail-header p,
+    .novel-detail-description,
+    .novel-header-description {
+        font-size: 10px;
+        line-height: 1.85;
+    }
+
+    .novel-detail-meta,
+    .novel-meta-list,
+    .novel-information-meta {
+        gap: 6px 9px;
+        font-size: 9px;
+    }
+
+    .synopsis-box {
+        padding: 15px;
+        font-size: 11px;
+        line-height: 2;
+    }
+
+    .chapter-item,
+    .chapter-row,
+    .chapter-link {
+        gap: 8px;
+        padding: 11px;
+        font-size: 11px;
+    }
+
+    .chapter-pagination,
+    #pagination-container,
+    .library-pagination {
+        gap: 6px;
+    }
+
+    .chapter-pagination button,
+    #pagination-container button,
+    .library-pagination button,
+    .pagination-btn {
+        min-width: 33px;
+        min-height: 33px;
+        padding: 6px 9px;
+        font-size: 10px;
+    }
+
+    .search-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .filter-section {
+        padding: 14px;
+    }
+
+    .status-tags,
+    .genre-grid {
+        gap: 7px;
+    }
+
+    .status-btn,
+    .genre-chip {
+        min-height: 34px;
+        padding: 6px 9px;
+        font-size: 10px;
+    }
+
+    .auth-section {
+        width: 100%;
+        margin: 18px auto;
+    }
+
+    .auth-panel,
+    .profile-card,
+    .coin-balance-card,
+    .transaction-section {
+        padding: 16px;
+    }
+
+    .auth-heading {
+        font-size: 17px;
+    }
+
+    .reader-content {
+        font-size: 15px;
+        line-height: 2.1;
+    }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+    .novel-detail-header {
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 10px;
+        padding: 12px;
+    }
+
+    .novel-detail-header img,
+    .novel-detail-cover,
+    .novel-cover-large {
+        width: 92px;
+    }
+
+    .novel-detail-header h1,
+    .novel-detail-title,
+    .novel-header-title {
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+}
