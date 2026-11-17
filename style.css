@@ -3793,3 +3793,370 @@ textarea {
         font-size: 14px;
     }
 }
+
+/* =========================================================
+   24. INTERACTION STATES + STATUS BADGES — FINAL POLISH
+   Added after the existing responsive rules so these states
+   remain visible across Home, Search, Novel, Library, etc.
+   ========================================================= */
+
+/* --- Search filters: clear selected / pressed state --- */
+.status-tags,
+.genre-grid {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.status-btn,
+.genre-chip,
+.genre-reset-btn,
+.sort-btn,
+.novel-library-btn,
+.novel-share-btn,
+.nav-btn,
+.font-btn {
+    position: relative;
+    isolation: isolate;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.status-btn,
+.genre-chip {
+    min-height: 39px;
+    padding: 8px 15px;
+    color: #c9c3d8;
+    background: #171522;
+    border: 1px solid rgba(185, 164, 255, .13);
+    border-radius: 999px;
+    font-weight: 600;
+    transition:
+        color .18s ease,
+        background .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
+}
+
+.status-btn:hover,
+.genre-chip:hover {
+    color: #fff;
+    background: rgba(137, 96, 255, .18);
+    border-color: rgba(171, 139, 255, .52);
+    box-shadow: 0 5px 16px rgba(89, 52, 180, .16);
+    transform: translateY(-1px);
+}
+
+.status-btn.active,
+.status-btn[aria-pressed="true"],
+.genre-chip.active,
+.genre-chip[aria-pressed="true"] {
+    color: #fff;
+    background: linear-gradient(135deg, #5120c7 0%, #783cf0 58%, #986cff 100%);
+    border-color: rgba(190, 163, 255, .68);
+    box-shadow:
+        0 5px 17px rgba(104, 55, 226, .32),
+        inset 0 1px 0 rgba(255,255,255,.17);
+}
+
+.status-btn.active::after,
+.status-btn[aria-pressed="true"]::after,
+.genre-chip.active::after,
+.genre-chip[aria-pressed="true"]::after {
+    position: absolute;
+    z-index: -1;
+    inset: -3px;
+    content: "";
+    border: 1px solid rgba(173, 139, 255, .22);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.status-btn:active,
+.genre-chip:active {
+    transform: scale(.96);
+}
+
+/* --- Novel status: visible badge below the cover --- */
+.novel-card .status,
+.novel-card .novel-status,
+.novel-card .status-badge,
+.novel-card .status-tag,
+.novel-card .novel-status-badge,
+.search-novel-card .status,
+.search-novel-card .novel-status,
+.search-novel-card .status-badge,
+.library-novel-card .status,
+.library-novel-card .novel-status,
+.library-novel-card .status-badge {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: flex-start;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 23px;
+    margin: 0 0 7px;
+    padding: 3px 10px;
+    color: #72e2b0;
+    background: rgba(42, 190, 130, .13);
+    border: 1px solid rgba(85, 214, 160, .28);
+    border-radius: 999px;
+    font-family: "Poppins", "Noto Sans Myanmar", sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: .1px;
+    white-space: nowrap;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+.novel-card .status::before,
+.novel-card .novel-status::before,
+.novel-card .status-badge::before,
+.novel-card .status-tag::before,
+.novel-card .novel-status-badge::before,
+.search-novel-card .status::before,
+.search-novel-card .novel-status::before,
+.search-novel-card .status-badge::before,
+.library-novel-card .status::before,
+.library-novel-card .novel-status::before,
+.library-novel-card .status-badge::before {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    margin-right: 6px;
+    content: "";
+    background: currentColor;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.novel-card .status.completed,
+.novel-card .novel-status.completed,
+.novel-card .status-badge.completed,
+.novel-card .status[data-status="Completed"],
+.novel-card .novel-status[data-status="Completed"],
+.search-novel-card .status.completed,
+.search-novel-card .novel-status.completed,
+.library-novel-card .status.completed,
+.library-novel-card .novel-status.completed {
+    color: #c3a5ff;
+    background: rgba(155, 120, 255, .14);
+    border-color: rgba(155, 120, 255, .3);
+}
+
+/* Keep the card information neatly stacked and aligned. */
+.novel-card-content,
+.novel-card-info,
+.novel-info,
+.search-novel-info,
+.library-novel-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    min-width: 0;
+}
+
+.novel-card h3,
+.novel-card-title,
+.novel-title,
+.search-novel-title,
+.library-novel-title {
+    width: 100%;
+    margin-top: 0;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+}
+
+.novel-card .novel-genres,
+.novel-card .genre-text,
+.novel-card .novel-card-genres,
+.search-novel-card .novel-genres,
+.search-novel-card .genre-text {
+    width: 100%;
+    margin-top: 3px;
+    color: #9b93ad;
+    font-size: 10px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+/* --- Pagination: unmistakable current page + hover --- */
+#pagination-container,
+.chapter-pagination,
+.library-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    width: 100%;
+    margin: 27px auto 30px;
+    padding: 4px 0;
+}
+
+#pagination-container button,
+.chapter-pagination button,
+.library-pagination button,
+.pagination-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px 12px;
+    color: #d4cde4;
+    background: #171522;
+    border: 1px solid rgba(185, 164, 255, .16);
+    border-radius: 12px;
+    font-family: "Poppins", "Noto Sans Myanmar", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        color .18s ease,
+        background .18s ease,
+        border-color .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
+}
+
+#pagination-container button:hover,
+.chapter-pagination button:hover,
+.library-pagination button:hover,
+.pagination-btn:hover {
+    color: #fff;
+    background: rgba(125, 78, 239, .25);
+    border-color: rgba(177, 145, 255, .65);
+    box-shadow: 0 5px 15px rgba(104, 55, 226, .2);
+    transform: translateY(-2px);
+}
+
+#pagination-container button.active,
+#pagination-container button.current,
+#pagination-container button[aria-current="page"],
+#pagination-container button[aria-pressed="true"],
+.chapter-pagination button.active,
+.chapter-pagination button.current,
+.chapter-pagination button[aria-current="page"],
+.library-pagination button.active,
+.library-pagination button.current,
+.library-pagination button[aria-current="page"],
+.pagination-btn.active,
+.pagination-btn.current,
+.pagination-btn[aria-current="page"] {
+    color: #fff !important;
+    background: linear-gradient(135deg, #5422c9 0%, #7d45f2 60%, #9a70ff 100%) !important;
+    border-color: rgba(193, 168, 255, .75) !important;
+    box-shadow:
+        0 6px 18px rgba(105, 57, 226, .34),
+        inset 0 1px 0 rgba(255,255,255,.18) !important;
+    transform: translateY(-1px);
+}
+
+#pagination-container button:disabled,
+.chapter-pagination button:disabled,
+.library-pagination button:disabled {
+    opacity: .32;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+/* --- Other selected tabs / navigation states --- */
+.auth-tab.active,
+.account-tab.active,
+.admin-tab.active,
+.tab-button.active,
+.filter-tab.active,
+.sort-tab.active,
+[data-tab].active,
+[role="tab"][aria-selected="true"] {
+    color: #fff !important;
+    background: linear-gradient(135deg, #5120c7, #8750f5) !important;
+    border-color: rgba(190, 163, 255, .58) !important;
+    box-shadow: 0 5px 16px rgba(104, 55, 226, .25);
+}
+
+.nav-item.active,
+.nav-item[aria-current="page"] {
+    color: #d2bdff;
+    background: linear-gradient(135deg, rgba(111, 61, 220, .28), rgba(111, 61, 220, .12));
+    box-shadow: inset 0 0 0 1px rgba(169, 137, 255, .12);
+}
+
+.novel-library-btn[aria-pressed="true"] {
+    color: #d8c8ff;
+    background: rgba(128, 85, 246, .2);
+    border-color: rgba(173, 139, 255, .55);
+    box-shadow: 0 5px 16px rgba(104, 55, 226, .18);
+}
+
+/* Consistent keyboard focus and touch feedback. */
+.status-btn:focus-visible,
+.genre-chip:focus-visible,
+#pagination-container button:focus-visible,
+.chapter-pagination button:focus-visible,
+.library-pagination button:focus-visible,
+.nav-item:focus-visible {
+    outline: 2px solid #b69aff;
+    outline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .status-tags,
+    .genre-grid {
+        gap: 7px;
+    }
+
+    .status-btn,
+    .genre-chip {
+        min-height: 36px;
+        padding: 7px 12px;
+        font-size: 10px;
+    }
+
+    #pagination-container,
+    .chapter-pagination,
+    .library-pagination {
+        gap: 7px;
+        margin: 22px auto 26px;
+    }
+
+    #pagination-container button,
+    .chapter-pagination button,
+    .library-pagination button,
+    .pagination-btn {
+        min-width: 36px;
+        min-height: 36px;
+        padding: 7px 10px;
+        border-radius: 10px;
+    }
+
+    .novel-card .status,
+    .novel-card .novel-status,
+    .novel-card .status-badge,
+    .novel-card .status-tag,
+    .novel-card .novel-status-badge {
+        min-height: 21px;
+        margin-bottom: 5px;
+        padding: 3px 8px;
+        font-size: 9px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-btn,
+    .genre-chip,
+    #pagination-container button,
+    .chapter-pagination button,
+    .library-pagination button {
+        scroll-behavior: auto;
+        transition: none;
+    }
+}
