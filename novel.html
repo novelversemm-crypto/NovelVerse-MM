@@ -6,105 +6,222 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Website Theme -->
     <meta name="theme-color" content="#0d0d12">
-    <meta name="description" content="NovelVerse MM - Novel Details, Synopsis and Chapters">
+    <meta name="color-scheme" content="dark">
+
+    <!-- SEO -->
+    <meta
+        name="description"
+        content="NovelVerse MM - Novel Details, Synopsis and Chapters"
+        id="page-description"
+    >
+
+    <meta
+        name="keywords"
+        content="NovelVerse MM, Myanmar Novel, Burmese Novel, Online Novel"
+    >
+
+    <meta name="author" content="NovelVerse MM">
+
+    <!-- Social Media Preview -->
+    <meta property="og:type" content="book">
+    <meta
+        property="og:title"
+        content="Novel Details | NovelVerse MM"
+        id="og-title"
+    >
+    <meta
+        property="og:description"
+        content="သင်နှစ်သက်ရာ Novel များကို NovelVerse MM မှာ ဖတ်ရှုလိုက်ပါ။"
+        id="og-description"
+    >
+    <meta
+        property="og:image"
+        content="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+        id="og-image"
+    >
+
+    <meta
+        property="og:url"
+        content=""
+        id="og-url"
+    >
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta
+        name="twitter:title"
+        content="Novel Details | NovelVerse MM"
+        id="twitter-title"
+    >
+    <meta
+        name="twitter:description"
+        content="NovelVerse MM မှာ သင်နှစ်သက်ရာ Novel များကို ဖတ်ရှုလိုက်ပါ။"
+        id="twitter-description"
+    >
+    <meta
+        name="twitter:image"
+        content="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+        id="twitter-image"
+    >
 
     <title>Novel Details | NovelVerse MM</title>
 
+    <!-- Performance: External Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-    <!-- Main CSS -->
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./favicon.png">
+    <link rel="icon" type="image/png" href="./favicon.png">
+
 </head>
 
-<body>
+
+<body class="novel-page">
+
+    <!-- Skip Navigation -->
+    <a href="#main-content" class="skip-link">
+        အဓိကအကြောင်းအရာသို့ သွားရန်
+    </a>
+
 
     <!-- ==========================================
          HEADER
     =========================================== -->
+
     <header class="top-header">
 
-        <!-- Back Button -->
-        <a href="javascript:history.back()"
-           class="icon-btn"
-           aria-label="Go Back">
+        <div class="header-inner">
 
-            <i class="fa-solid fa-arrow-left"></i>
-
-        </a>
-
-        <!-- Logo -->
-        <a href="index.html" class="logo-area">
-
-            <img
-                src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
-                alt="NovelVerse Logo"
-                class="logo-img"
+            <!-- Back Button -->
+            <a
+                href="javascript:history.back()"
+                class="icon-btn back-btn"
+                aria-label="Go Back"
+                title="Go Back"
             >
 
-            <span class="logo-title">NovelVerse</span>
-
-        </a>
-
-        <!-- Header Actions -->
-        <div class="header-actions">
-
-            <!-- Search -->
-            <a href="search.html"
-               class="icon-btn"
-               aria-label="Search">
-
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-arrow-left"></i>
 
             </a>
 
-            <!-- Coin Wallet -->
-            <a href="topup.html"
-               class="header-coin"
-               id="header-coin-link"
-               aria-label="My Coin Wallet">
 
-                <i class="fa-solid fa-coins"></i>
+            <!-- Logo -->
+            <a
+                href="index.html"
+                class="logo-area"
+                aria-label="NovelVerse Home"
+            >
 
-                <span id="header-coin-balance">0</span>
+                <img
+                    src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
+                    alt="NovelVerse Logo"
+                    class="logo-img"
+                    width="42"
+                    height="42"
+                >
+
+                <span class="logo-title">
+                    NovelVerse
+                </span>
 
             </a>
 
-            <!-- Account -->
-            <a href="topup.html"
-               class="icon-btn account-btn"
-               id="header-account-link"
-               aria-label="My Account">
 
-                <i class="fa-regular fa-circle-user"
-                   id="header-account-icon"></i>
+            <!-- Header Actions -->
+            <div class="header-actions">
 
-            </a>
+                <!-- Search -->
+                <a
+                    href="search.html"
+                    class="icon-btn"
+                    aria-label="Search Novels"
+                    title="Search"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </a>
+
+
+                <!-- Coin Wallet -->
+                <a
+                    href="topup.html"
+                    class="header-coin"
+                    id="header-coin-link"
+                    aria-label="My Coin Wallet"
+                    title="My Coin Wallet"
+                >
+
+                    <i class="fa-solid fa-coins"></i>
+
+                    <span id="header-coin-balance">0</span>
+
+                </a>
+
+
+                <!-- User Account -->
+                <a
+                    href="profile.html"
+                    class="icon-btn account-btn"
+                    id="header-account-link"
+                    aria-label="My Account"
+                    title="My Account"
+                >
+
+                    <i
+                        class="fa-regular fa-circle-user"
+                        id="header-account-icon"
+                    ></i>
+
+                </a>
+
+            </div>
 
         </div>
 
     </header>
 
 
+
     <!-- ==========================================
          TOP ADVERTISEMENT
     =========================================== -->
-    <section class="ad-section">
+
+    <section
+        class="ad-section top-ad-slot"
+        aria-label="Advertisement"
+    >
 
         <div class="ad-label"></div>
 
-        <div class="ad-container" id="ad-slot-header">
+        <div
+            class="ad-container"
+            id="ad-slot-header"
+        >
 
             <div class="ad-placeholder">
+
                 <i class="fa-solid fa-rectangle-ad"></i>
+
                 Banner Ad Slot
+
             </div>
 
         </div>
@@ -112,33 +229,50 @@
     </section>
 
 
+
     <!-- ==========================================
          MAIN CONTENT
     =========================================== -->
-    <main class="main-container">
+
+    <main
+        class="main-container"
+        id="main-content"
+    >
 
 
         <!-- ======================================
              NOVEL INFORMATION
         ======================================= -->
+
         <section
             class="novel-detail-header"
             id="novel-header-container"
+            aria-label="Novel Information"
         >
 
-            <div class="loading-text">
+            <div class="loading-text" role="status">
+
+                <i class="fa-solid fa-spinner fa-spin"></i>
+
                 Loading Novel Info...
+
             </div>
 
         </section>
 
 
+
         <!-- ======================================
              NOVEL ACTIONS
         ======================================= -->
-        <section class="section-block novel-actions-section">
+
+        <section
+            class="section-block novel-actions-section"
+            aria-label="Novel Actions"
+        >
 
             <div class="novel-actions">
+
 
                 <!-- Add / Remove from Library -->
                 <button
@@ -147,10 +281,13 @@
                     id="novel-library-btn"
                     aria-label="Add to My Library"
                     aria-pressed="false"
+                    title="Add to My Library"
                 >
 
-                    <i class="fa-regular fa-bookmark"
-                       id="novel-library-icon"></i>
+                    <i
+                        class="fa-regular fa-bookmark"
+                        id="novel-library-icon"
+                    ></i>
 
                     <span id="novel-library-text">
                         My Library ထဲသိမ်းရန်
@@ -158,12 +295,15 @@
 
                 </button>
 
+
+
                 <!-- Share Novel -->
                 <button
                     type="button"
                     class="novel-share-btn"
                     id="novel-share-btn"
                     aria-label="Share Novel"
+                    title="Share Novel"
                 >
 
                     <i class="fa-solid fa-share-nodes"></i>
@@ -177,18 +317,29 @@
         </section>
 
 
+
         <!-- ======================================
              MIDDLE ADVERTISEMENT
         ======================================= -->
-        <section class="ad-section">
+
+        <section
+            class="ad-section"
+            aria-label="Advertisement"
+        >
 
             <div class="ad-label"></div>
 
-            <div class="ad-container" id="ad-slot-middle">
+            <div
+                class="ad-container"
+                id="ad-slot-middle"
+            >
 
                 <div class="ad-placeholder">
+
                     <i class="fa-solid fa-rectangle-ad"></i>
+
                     Banner Ad Slot
+
                 </div>
 
             </div>
@@ -196,18 +347,28 @@
         </section>
 
 
+
         <!-- ======================================
              NOVEL SYNOPSIS
         ======================================= -->
-        <section class="section-block">
 
-            <h3 class="section-title">
+        <section
+            class="section-block synopsis-section"
+            aria-label="Novel Synopsis"
+        >
 
-                <i class="fa-solid fa-book-open"></i>
+            <div class="section-header">
 
-                အညွှန်း (Synopsis)
+                <h3 class="section-title">
 
-            </h3>
+                    <i class="fa-solid fa-book-open"></i>
+
+                    အညွှန်း (Synopsis)
+
+                </h3>
+
+            </div>
+
 
             <div
                 class="synopsis-box"
@@ -221,10 +382,15 @@
         </section>
 
 
+
         <!-- ======================================
              CHAPTER LIST
         ======================================= -->
-        <section class="section-block">
+
+        <section
+            class="section-block chapter-section"
+            aria-label="Novel Chapters"
+        >
 
             <div class="section-header">
 
@@ -233,9 +399,11 @@
                     <i class="fa-solid fa-list-ol"></i>
 
                     စာစဉ်များ
+
                     (<span id="chapter-count">0</span>)
 
                 </h3>
+
 
                 <!-- Chapter Sorting -->
                 <button
@@ -243,6 +411,8 @@
                     class="sort-btn"
                     onclick="toggleChapterSort()"
                     id="sort-btn"
+                    aria-label="Toggle Chapter Sorting"
+                    title="Sort Chapters"
                 >
 
                     <i class="fa-solid fa-arrow-down-short-wide"></i>
@@ -254,6 +424,7 @@
             </div>
 
 
+
             <!-- Chapter List -->
             <div
                 class="chapter-list"
@@ -263,6 +434,7 @@
                 <!-- Dynamically loaded via novel.js -->
 
             </div>
+
 
 
             <!-- Chapter Pagination -->
@@ -279,18 +451,29 @@
         </section>
 
 
+
         <!-- ======================================
              BOTTOM ADVERTISEMENT
         ======================================= -->
-        <section class="ad-section">
+
+        <section
+            class="ad-section bottom-ad-slot"
+            aria-label="Advertisement"
+        >
 
             <div class="ad-label"></div>
 
-            <div class="ad-container" id="ad-slot-bottom">
+            <div
+                class="ad-container"
+                id="ad-slot-bottom"
+            >
 
                 <div class="ad-placeholder">
+
                     <i class="fa-solid fa-rectangle-ad"></i>
+
                     Native Ad
+
                 </div>
 
             </div>
@@ -301,13 +484,23 @@
     </main>
 
 
+
     <!-- ==========================================
          BOTTOM NAVIGATION
     =========================================== -->
-    <nav class="bottom-nav" aria-label="Main Navigation">
+
+    <nav
+        class="bottom-nav"
+        aria-label="Main Navigation"
+    >
+
 
         <!-- Home -->
-        <a href="index.html" class="nav-item">
+        <a
+            href="index.html"
+            class="nav-item"
+            aria-label="Home"
+        >
 
             <i class="fa-solid fa-house"></i>
 
@@ -316,8 +509,13 @@
         </a>
 
 
+
         <!-- Search -->
-        <a href="search.html" class="nav-item">
+        <a
+            href="search.html"
+            class="nav-item"
+            aria-label="Search"
+        >
 
             <i class="fa-solid fa-magnifying-glass"></i>
 
@@ -326,8 +524,13 @@
         </a>
 
 
+
         <!-- Library -->
-        <a href="library.html" class="nav-item">
+        <a
+            href="library.html"
+            class="nav-item"
+            aria-label="My Library"
+        >
 
             <i class="fa-solid fa-bookmark"></i>
 
@@ -336,8 +539,14 @@
         </a>
 
 
+
         <!-- Account -->
-        <a href="topup.html" class="nav-item" id="bottom-account-link">
+        <a
+            href="profile.html"
+            class="nav-item"
+            id="bottom-account-link"
+            aria-label="My Account"
+        >
 
             <i class="fa-solid fa-user"></i>
 
@@ -348,18 +557,32 @@
     </nav>
 
 
+
     <!-- ==========================================
          JAVASCRIPT FILES
     =========================================== -->
 
+
     <!-- Advertisement System -->
     <script src="ads.js"></script>
+
+
+    <!-- Main Website System -->
+    <script src="app.js"></script>
+
+
+    <!-- Authentication System -->
+    <script src="auth.js"></script>
+
 
     <!-- Novel Details & Chapter System -->
     <script src="novel.js"></script>
 
+
     <!-- Account & Coin System -->
     <script src="coin.js"></script>
 
+
 </body>
+
 </html>
