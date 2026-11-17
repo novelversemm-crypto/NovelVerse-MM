@@ -3019,3 +3019,11 @@ hr {
         min-width: 34px;
     }
 }
+
+/* ==========================================
+   AUTHENTICATION HIDDEN STATE
+========================================== */
+
+[hidden] {
+    display: none !important;
+}
