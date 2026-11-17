@@ -18,6 +18,12 @@ let novelsJsonCache = null;
 let novelsJsonPromise = null;
 let allAdminNovels = [];
 
+// Chapter Lock Management Data
+let currentChapterLockData = {
+    novelSlug: '',
+    chapters: []
+};
+
 // ==========================================
 // DOM LOADED EVENT
 // ==========================================
@@ -423,6 +429,34 @@ async function updateNovelsJsonFile(action) {
         Object.assign(chapter, action.chapter);
     }
 
+        // --------------------------------------
+// SET CHAPTER PREMIUM STATUS
+// Chapter ၏ is_premium field တစ်ခုတည်းကိုသာ ပြောင်းမည်
+// --------------------------------------
+else if (action.type === 'setChapterPremium') {
+
+    const novel = novels.find(n => n.slug === action.slug);
+
+    if (!novel || !Array.isArray(novel.chapters)) {
+        throw new Error(
+            'သက်ဆိုင်ရာ Novel သို့မဟုတ် Chapter စာရင်းကို ရှာမတွေ့ပါ။'
+        );
+    }
+
+    const chapter = novel.chapters.find(ch =>
+        Number(ch.chapter_number) === Number(action.chapterNumber)
+    );
+
+    if (!chapter) {
+        throw new Error(
+            'ပြင်ဆင်မည့် Chapter ကို novels.json ထဲတွင် ရှာမတွေ့ပါ။'
+        );
+    }
+
+    // Premium = true / Free = false
+    chapter.is_premium = action.isPremium === true;
+    }
+        
     // --------------------------------------
     // DELETE CHAPTER
     // --------------------------------------
@@ -1644,35 +1678,70 @@ function filterAdminUsers() {
     renderAdminUsers(filtered);
 }
 
+
 // ===================================================
-// 21. CHAPTER PRICING
+// 21. CHAPTER LOCK MANAGEMENT
 // ===================================================
 
+// Novel Dropdown ကို novels.json မှ ရယူမည်
 async function loadChapterPricingNovelDropdown() {
+
     const dropdown = adminGetElement('pricing-novel-select');
+    const container = adminGetElement('chapter-pricing-list');
 
     if (!dropdown) return;
 
-    try {
-        const novels = await getNovelsJsonData();
+    const previousValue = dropdown.value;
 
-        dropdown.innerHTML = '<option value="">-- Novel ရွေးပါ --</option>';
+    try {
+
+        const novels = await getNovelsJsonData(true);
+
+        dropdown.innerHTML =
+            '<option value="">-- Novel ရွေးပါ --</option>';
 
         novels.forEach(novel => {
+
+            if (!novel || !novel.slug) return;
+
             const option = document.createElement('option');
 
             option.value = novel.slug;
             option.textContent = novel.title || novel.slug;
 
             dropdown.appendChild(option);
+
         });
 
+        // ယခင်ရွေးထားသော Novel ကို ဆက်ရွေးထားမည်
+        if (novels.some(novel => novel.slug === previousValue)) {
+
+            dropdown.value = previousValue;
+
+            await loadChapterPricing();
+
+        } else if (container) {
+
+            dropdown.value = '';
+            container.textContent = 'Novel တစ်ခု ရွေးချယ်ပါ။';
+
+        }
+
     } catch (error) {
-        console.error('Pricing Novel Dropdown Error:', error);
+
+        console.error('Chapter Lock Novel Dropdown Error:', error);
+
+        if (container) {
+            adminShowMessage(container, error.message);
+        }
+
     }
 }
 
+
+// ရွေးထားသော Novel ၏ Chapter များကို ဖတ်မည်
 async function loadChapterPricing() {
+
     const dropdown = adminGetElement('pricing-novel-select');
     const container = adminGetElement('chapter-pricing-list');
 
@@ -1681,30 +1750,60 @@ async function loadChapterPricing() {
     const novelSlug = dropdown.value;
 
     if (!novelSlug) {
+
+        currentChapterLockData = {
+            novelSlug: '',
+            chapters: []
+        };
+
         container.textContent = 'Novel တစ်ခု ရွေးချယ်ပါ။';
+
         return;
     }
 
-    container.textContent = 'Chapter Pricing ရယူနေသည်...';
+    container.textContent = 'Chapter စာရင်း ရယူနေသည်...';
 
     try {
-        const result = await adminApiRequest('getChapterPricing', {
-            novelSlug
-        });
 
-        const chapters = Array.isArray(result.chapters)
-            ? result.chapters
+        const novels = await getNovelsJsonData(true);
+
+        const novel = novels.find(item =>
+            item.slug === novelSlug
+        );
+
+        if (!novel) {
+            throw new Error(
+                'ရွေးချယ်ထားသော Novel ကို novels.json ထဲတွင် ရှာမတွေ့ပါ။'
+            );
+        }
+
+        const chapters = Array.isArray(novel.chapters)
+            ? novel.chapters
             : [];
 
-        renderChapterPricing(novelSlug, chapters);
+        currentChapterLockData = {
+            novelSlug,
+            chapters: chapters.map(chapter => ({ ...chapter }))
+        };
+
+        renderChapterPricing(
+            novelSlug,
+            currentChapterLockData.chapters
+        );
 
     } catch (error) {
-        console.error('Chapter Pricing Error:', error);
+
+        console.error('Chapter Lock Loading Error:', error);
+
         adminShowMessage(container, error.message);
+
     }
 }
 
+
+// Chapter တစ်ခုချင်းစီကို Free / Premium အဖြစ် ပြမည်
 function renderChapterPricing(novelSlug, chapters) {
+
     const container = adminGetElement('chapter-pricing-list');
 
     if (!container) return;
@@ -1712,80 +1811,272 @@ function renderChapterPricing(novelSlug, chapters) {
     container.innerHTML = '';
 
     if (!chapters.length) {
-        container.textContent = 'Chapter Pricing Data မရှိသေးပါ။';
+
+        container.textContent =
+            'ဤ Novel တွင် Chapter မရှိသေးပါ။';
+
         return;
     }
 
+    const fragment = document.createDocumentFragment();
+
     chapters.forEach(chapter => {
+
+        const isPremium = chapter.is_premium === true;
+
         const row = document.createElement('div');
+
         row.className = 'admin-pricing-item';
 
-        const title = document.createElement('span');
+        row.style.cssText = [
+            'display:flex',
+            'align-items:center',
+            'justify-content:space-between',
+            'gap:12px',
+            'flex-wrap:wrap',
+            'padding:14px',
+            'margin-bottom:10px',
+            'border:1px solid rgba(255,255,255,0.08)',
+            'border-radius:10px',
+            'background:rgba(255,255,255,0.035)'
+        ].join(';');
+
+
+        // Chapter Information
+        const info = document.createElement('div');
+
+        info.style.cssText =
+            'display:flex;flex-direction:column;gap:5px;min-width:180px;';
+
+        const title = document.createElement('strong');
+
+        title.style.color = '#fff';
+
+        const chapterNumber = Number(chapter.chapter_number);
 
         title.textContent =
-            `Chapter ${chapter.chapterNumber}: ${chapter.title || ''}`;
+            `Chapter ${Number.isFinite(chapterNumber) ? chapterNumber : '?'}${chapter.title ? ' — ' + chapter.title : ''}`;
 
-        const priceInput = document.createElement('input');
-        priceInput.type = 'number';
-        priceInput.min = '0';
-        priceInput.step = '1';
-        priceInput.value = Number(chapter.price || 0);
-        priceInput.setAttribute('aria-label', 'Chapter Price');
 
-        const freeLabel = document.createElement('label');
+        const description = document.createElement('small');
 
-        const freeCheckbox = document.createElement('input');
-        freeCheckbox.type = 'checkbox';
-        freeCheckbox.checked = Number(chapter.price || 0) === 0;
+        description.style.color = '#a8b3cf';
 
-        freeCheckbox.addEventListener('change', () => {
-            if (freeCheckbox.checked) {
-                priceInput.value = '0';
-            }
-        });
+        description.textContent = isPremium
+            ? 'Premium Chapter · Unlock Cost: 1 Coin'
+            : 'Free Chapter · No Coin Required';
 
-        freeLabel.append(freeCheckbox, document.createTextNode(' Free'));
+        info.append(title, description);
 
-        freeCheckbox.addEventListener('change', () => {
-            priceInput.disabled = freeCheckbox.checked;
-        });
 
-        priceInput.disabled = freeCheckbox.checked;
+        // Lock Controls
+        const controls = document.createElement('div');
 
+        controls.style.cssText =
+            'display:flex;align-items:center;gap:10px;';
+
+
+        const label = document.createElement('label');
+
+        label.style.cssText =
+            'display:flex;align-items:center;gap:7px;color:#e5e7eb;cursor:pointer;';
+
+
+        const checkbox = document.createElement('input');
+
+        checkbox.type = 'checkbox';
+        checkbox.checked = isPremium;
+
+        checkbox.setAttribute(
+            'aria-label',
+            `Chapter ${chapterNumber} Premium Lock`
+        );
+
+
+        const status = document.createElement('span');
+
+        status.textContent = isPremium ? 'Premium' : 'Free';
+
+        status.style.cssText = isPremium
+            ? 'color:#fbbf24;font-weight:600;'
+            : 'color:#4ade80;font-weight:600;';
+
+        label.append(checkbox, status);
+
+
+        // Save Button
         const saveButton = document.createElement('button');
+
         saveButton.type = 'button';
-        saveButton.textContent = 'Save';
+        saveButton.className = 'submit-btn';
+        saveButton.textContent = 'သိမ်းမည်';
 
+        saveButton.style.cssText =
+            'padding:7px 13px;font-size:0.85rem;';
+
+
+        // Checkbox ပြောင်းသည့်အခါ UI Status ပြောင်းမည်
+        checkbox.addEventListener('change', () => {
+
+            status.textContent = checkbox.checked
+                ? 'Premium'
+                : 'Free';
+
+            status.style.color = checkbox.checked
+                ? '#fbbf24'
+                : '#4ade80';
+
+        });
+
+
+        // Save Action
         saveButton.addEventListener('click', async () => {
-            const price = Number(priceInput.value);
 
-            if (!Number.isSafeInteger(price) || price < 0) {
-                alert('မှန်ကန်သော Coin Price ထည့်ပါ။');
+            const newPremiumStatus = checkbox.checked;
+
+            if (newPremiumStatus === isPremium) {
+
+                alert('ပြောင်းလဲမှု မရှိပါ။');
+
+                return;
+            }
+
+            const actionText = newPremiumStatus
+                ? 'Premium Lock ဖွင့်ပြီး Chapter ဖတ်ရန် 1 Coin သတ်မှတ်'
+                : 'Premium Lock ဖြုတ်ပြီး Free Chapter ပြောင်း';
+
+            if (!confirm(
+                `Chapter ${chapterNumber} ကို ${actionText} မည်မှာ သေချာပါသလား?`
+            )) {
+
+                checkbox.checked = isPremium;
+
+                status.textContent = isPremium
+                    ? 'Premium'
+                    : 'Free';
+
+                status.style.color = isPremium
+                    ? '#fbbf24'
+                    : '#4ade80';
+
                 return;
             }
 
             try {
-                saveButton.disabled = true;
 
-                await adminApiRequest('setChapterPrice', {
-                    novelSlug,
-                    chapterNumber: Number(chapter.chapterNumber),
-                    price
+                saveButton.disabled = true;
+                checkbox.disabled = true;
+
+                saveButton.textContent = 'သိမ်းနေသည်...';
+
+
+                // novels.json ထဲတွင် Premium Status သိမ်းမည်
+                await updateNovelsJsonFile({
+
+                    type: 'setChapterPremium',
+
+                    slug: novelSlug,
+
+                    chapterNumber,
+
+                    isPremium: newPremiumStatus
+
                 });
 
-                alert('Chapter Price သိမ်းဆည်းပြီးပါပြီ။');
+
+                // လက်ရှိ UI Data ကိုပါ Update လုပ်မည်
+                const currentChapter =
+                    currentChapterLockData.chapters.find(item =>
+                        Number(item.chapter_number) === chapterNumber
+                    );
+
+                if (currentChapter) {
+                    currentChapter.is_premium = newPremiumStatus;
+                }
+
+
+                alert(
+                    newPremiumStatus
+                        ? `Chapter ${chapterNumber} ကို Premium Lock လုပ်ပြီးပါပြီ။ Unlock Cost = 1 Coin`
+                        : `Chapter ${chapterNumber} ကို Free ပြောင်းပြီးပါပြီ။`
+                );
+
+
+                // နောက်ဆုံး Data ပြန်ဖတ်မည်
+                await loadChapterPricing();
 
             } catch (error) {
-                alert(error.message);
+
+                console.error('Chapter Lock Update Error:', error);
+
+                alert(
+                    'Chapter Lock ပြောင်းလဲရာတွင် အမှားရှိပါသည်: ' +
+                    error.message
+                );
+
+                checkbox.checked = isPremium;
+
+                status.textContent = isPremium
+                    ? 'Premium'
+                    : 'Free';
+
+                status.style.color = isPremium
+                    ? '#fbbf24'
+                    : '#4ade80';
 
             } finally {
+
                 saveButton.disabled = false;
+                checkbox.disabled = false;
+
+                saveButton.textContent = 'သိမ်းမည်';
+
             }
+
         });
 
-        row.append(title, priceInput, freeLabel, saveButton);
-        container.appendChild(row);
+
+        controls.append(label, saveButton);
+
+        row.append(info, controls);
+
+        fragment.appendChild(row);
+
     });
+
+    container.appendChild(fragment);
+
+}
+
+
+// Chapter Number / Title ဖြင့် Search လုပ်မည်
+function filterChapterLockList() {
+
+    const searchInput =
+        adminGetElement('pricing-chapter-search');
+
+    const container =
+        adminGetElement('chapter-pricing-list');
+
+    if (!searchInput || !container) return;
+
+    const query = searchInput.value.trim().toLowerCase();
+
+    const filtered = currentChapterLockData.chapters.filter(chapter => {
+
+        const number = String(chapter.chapter_number || '');
+
+        const title = String(chapter.title || '').toLowerCase();
+
+        return number.includes(query) || title.includes(query);
+
+    });
+
+    renderChapterPricing(
+        currentChapterLockData.novelSlug,
+        filtered
+    );
+
 }
 
 // ===================================================
@@ -2104,6 +2395,13 @@ function setupNewAdminFeatureListeners() {
         pricingDropdown.addEventListener('change', loadChapterPricing);
     }
 
+    // Chapter Search
+const chapterSearch = adminGetElement('pricing-chapter-search');
+
+if (chapterSearch) {
+    chapterSearch.addEventListener('input', filterChapterLockList);
+}
+
     const generateButton = adminGetElement('generate-promo-btn');
 
     if (generateButton) {
@@ -2170,7 +2468,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.adjustAdminUserCoins = adjustAdminUserCoins;
 
     window.loadChapterPricing = loadChapterPricing;
-    window.loadChapterPricingNovelDropdown = loadChapterPricingNovelDropdown;
+window.loadChapterPricingNovelDropdown = loadChapterPricingNovelDropdown;
+window.filterChapterLockList = filterChapterLockList;
 
     window.generateAdminPromoCodes = generateAdminPromoCodes;
     window.copyAdminPromoCodes = copyAdminPromoCodes;
