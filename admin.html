@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="my">
 <head>
@@ -5,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Admin Dashboard - NovelVerse</title>
+
+    <meta name="description" content="NovelVerse Admin Dashboard">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -581,14 +584,18 @@
 
 <body>
 
-    <!-- HEADER -->
+    <!-- =========================================
+         HEADER
+    ========================================== -->
     <header class="top-header">
+
         <div class="logo-area">
             <img
                 src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
                 alt="NovelVerse Logo"
                 class="logo-img"
             >
+
             <span class="logo-title">NovelVerse</span>
         </div>
 
@@ -598,16 +605,22 @@
             onclick="handleLogout()"
             style="display: none; background: transparent; border: none; color: #ff4d4d; font-size: 1.2rem; cursor: pointer;"
             title="Logout"
+            aria-label="Logout"
         >
             <i class="fa-solid fa-right-from-bracket"></i>
         </button>
+
     </header>
 
 
-    <!-- MAIN -->
+    <!-- =========================================
+         MAIN
+    ========================================== -->
     <main class="main-container">
 
-        <!-- LOGIN -->
+        <!-- =====================================
+             ADMIN LOGIN
+        ====================================== -->
         <section class="admin-card" id="login-section">
 
             <h3 class="admin-title">
@@ -618,6 +631,7 @@
             <form id="login-form" onsubmit="handleLogin(event)">
 
                 <div class="form-group">
+
                     <label for="github-token-input">
                         GitHub Personal Access Token *
                     </label>
@@ -626,6 +640,7 @@
                         type="password"
                         id="github-token-input"
                         placeholder="ghp_xxxxxxxxxxxx"
+                        autocomplete="current-password"
                         required
                     >
 
@@ -633,25 +648,81 @@
                         <i class="fa-solid fa-circle-info"></i>
                         GitHub Token ကို ထည့်ပါ။
                     </small>
+
                 </div>
 
-                <button type="submit" class="submit-btn" id="login-btn">
+                <button
+                    type="submit"
+                    class="submit-btn"
+                    id="login-btn"
+                >
                     <i class="fa-solid fa-right-to-bracket"></i>
                     Login ဝင်မည်
                 </button>
 
             </form>
+
         </section>
 
 
-        <!-- DASHBOARD -->
+        <!-- =====================================
+             ADMIN DASHBOARD
+        ====================================== -->
         <div id="dashboard-section" style="display: none;">
 
-            <!-- NAVIGATION TABS -->
+            <!-- =================================
+                 NAVIGATION TABS
+            ================================== -->
             <div class="admin-tabs">
 
                 <button
+                    type="button"
                     class="tab-btn active"
+                    onclick="switchTab('dashboard')"
+                >
+                    <i class="fa-solid fa-chart-pie"></i>
+                    Dashboard
+                </button>
+
+                <button
+                    type="button"
+                    class="tab-btn"
+                    onclick="switchTab('users')"
+                >
+                    <i class="fa-solid fa-users"></i>
+                    Users
+                </button>
+
+                <button
+                    type="button"
+                    class="tab-btn"
+                    onclick="switchTab('chapter-pricing')"
+                >
+                    <i class="fa-solid fa-tags"></i>
+                    Chapter Pricing
+                </button>
+
+                <button
+                    type="button"
+                    class="tab-btn"
+                    onclick="switchTab('promo-generator')"
+                >
+                    <i class="fa-solid fa-ticket"></i>
+                    Promo Codes
+                </button>
+
+                <button
+                    type="button"
+                    class="tab-btn"
+                    onclick="switchTab('topup-settings')"
+                >
+                    <i class="fa-solid fa-wallet"></i>
+                    Top-up Settings
+                </button>
+
+                <button
+                    type="button"
+                    class="tab-btn"
                     onclick="switchTab('add-novel')"
                 >
                     <i class="fa-solid fa-book-medical"></i>
@@ -659,6 +730,7 @@
                 </button>
 
                 <button
+                    type="button"
                     class="tab-btn"
                     onclick="switchTab('add-chapter')"
                 >
@@ -667,6 +739,7 @@
                 </button>
 
                 <button
+                    type="button"
                     class="tab-btn"
                     onclick="switchTab('manage-novels')"
                 >
@@ -678,9 +751,442 @@
 
 
             <!-- =================================
-                 ADD NOVEL
+                 1. DASHBOARD
             ================================== -->
-            <section class="admin-card tab-content" id="tab-add-novel">
+            <section
+                class="admin-card tab-content"
+                id="tab-dashboard"
+            >
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Dashboard Overview
+                </h3>
+
+                <div class="form-group">
+                    <label>Users Overview</label>
+
+                    <div
+                        id="stat-total-users"
+                        class="admin-card"
+                        style="padding: 18px; margin-bottom: 12px;"
+                    >
+                        <small>Total Users</small>
+                        <h2>--</h2>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Coins Overview</label>
+
+                    <div
+                        id="stat-total-coins"
+                        class="admin-card"
+                        style="padding: 18px; margin-bottom: 12px;"
+                    >
+                        <small>Total User Coins</small>
+                        <h2>--</h2>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Promo Code Overview</label>
+
+                    <div
+                        id="stat-available-codes"
+                        class="admin-card"
+                        style="padding: 18px; margin-bottom: 12px;"
+                    >
+                        <small>Available Promo Codes</small>
+                        <h2>--</h2>
+                    </div>
+
+                    <div
+                        id="stat-used-codes"
+                        class="admin-card"
+                        style="padding: 18px;"
+                    >
+                        <small>Used Promo Codes</small>
+                        <h2>--</h2>
+                    </div>
+                </div>
+
+                <div
+                    id="admin-dashboard-content"
+                    style="margin-top: 25px;"
+                >
+                    <!-- Dashboard information will be loaded by admin.js -->
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 2. USER MANAGEMENT
+            ================================== -->
+            <section
+                class="admin-card tab-content"
+                id="tab-users"
+                style="display: none;"
+            >
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-users"></i>
+                    User Management
+                </h3>
+
+                <div class="form-group">
+
+                    <label for="admin-user-search">
+                        User ရှာဖွေရန်
+                    </label>
+
+                    <input
+                        type="search"
+                        id="admin-user-search"
+                        placeholder="Username ဖြင့် ရှာရန်..."
+                    >
+
+                </div>
+
+                <div
+                    id="admin-user-summary"
+                    style="margin-bottom: 20px;"
+                >
+                    <!-- User summary will be loaded by admin.js -->
+                </div>
+
+                <div
+                    id="admin-user-list"
+                    class="admin-novel-list"
+                >
+                    <!-- User list will be loaded by admin.js -->
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 3. CHAPTER PRICING
+            ================================== -->
+            <section
+                class="admin-card tab-content"
+                id="tab-chapter-pricing"
+                style="display: none;"
+            >
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-tags"></i>
+                    Chapter Pricing
+                </h3>
+
+                <div class="form-group">
+
+                    <label for="pricing-novel-select">
+                        Novel ရွေးချယ်ပါ
+                    </label>
+
+                    <select id="pricing-novel-select">
+                        <option value="">-- Novel ရွေးပါ --</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="pricing-chapter-search">
+                        Chapter ရှာဖွေရန်
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pricing-chapter-search"
+                        placeholder="Chapter နံပါတ် သို့မဟုတ် ခေါင်းစဉ်..."
+                    >
+
+                </div>
+
+                <div
+                    id="chapter-pricing-list"
+                    class="admin-novel-list"
+                >
+                    <!-- Chapter pricing list will be loaded by admin.js -->
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 4. PROMO CODE GENERATOR
+            ================================== -->
+            <section
+                class="admin-card tab-content"
+                id="tab-promo-generator"
+                style="display: none;"
+            >
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-ticket"></i>
+                    Promo Code Generator
+                </h3>
+
+                <p style="color: var(--admin-muted); font-size: 13px; line-height: 1.8; margin-bottom: 25px;">
+                    User တစ်ယောက်ချင်းစီအတွက် Single-use Promo Code များကို Batch အလိုက် ဖန်တီးနိုင်ပါသည်။
+                </p>
+
+                <div class="form-group">
+
+                    <label for="promo-package">
+                        Coin Package ရွေးချယ်ပါ *
+                    </label>
+
+                    <select id="promo-package" required>
+                        <option value="">-- Package ရွေးပါ --</option>
+                        <option value="1000">1,000 Ks - 40 Coins</option>
+                        <option value="2000">2,000 Ks - 85 Coins</option>
+                        <option value="3000">3,000 Ks - 130 Coins</option>
+                        <option value="5000">5,000 Ks - 220 Coins</option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="promo-quantity">
+                        Code အရေအတွက် *
+                    </label>
+
+                    <input
+                        type="number"
+                        id="promo-quantity"
+                        min="1"
+                        max="500"
+                        value="10"
+                        placeholder="ဥပမာ - 100"
+                        required
+                    >
+
+                    <small>
+                        တစ်ကြိမ်လျှင် အများဆုံး Code 500 ခုအထိ ဖန်တီးရန် သတ်မှတ်ထားသည်။
+                    </small>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="submit-btn"
+                    id="generate-promo-btn"
+                >
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    Generate Promo Codes
+                </button>
+
+
+                <!-- GENERATION RESULT -->
+                <div
+                    id="promo-generation-result"
+                    style="margin-top: 25px;"
+                >
+                    <!-- Generated promo codes will appear here -->
+                </div>
+
+                <div
+                    style="
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 10px;
+                        margin-top: 15px;
+                    "
+                >
+
+                    <button
+                        type="button"
+                        class="submit-btn"
+                        id="copy-promo-codes-btn"
+                        style="flex: 1; min-width: 150px;"
+                    >
+                        <i class="fa-solid fa-copy"></i>
+                        Copy Codes
+                    </button>
+
+                    <button
+                        type="button"
+                        class="submit-btn"
+                        id="export-promo-csv-btn"
+                        style="
+                            flex: 1;
+                            min-width: 150px;
+                            background: linear-gradient(135deg, #059669, #047857);
+                            box-shadow: 0 7px 20px rgba(5,150,105,0.2);
+                        "
+                    >
+                        <i class="fa-solid fa-file-csv"></i>
+                        Export CSV
+                    </button>
+
+                </div>
+
+
+                <!-- AVAILABLE PROMO CODES -->
+                <div style="margin-top: 35px;">
+
+                    <h3 class="admin-title">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Available Promo Codes
+                    </h3>
+
+                    <div
+                        id="available-promo-list"
+                        class="admin-novel-list"
+                    >
+                        <!-- Available codes will be loaded by admin.js -->
+                    </div>
+
+                </div>
+
+
+                <!-- USED PROMO CODES -->
+                <div style="margin-top: 35px;">
+
+                    <h3 class="admin-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        Used Promo Codes History
+                    </h3>
+
+                    <div
+                        id="used-promo-list"
+                        class="admin-novel-list"
+                    >
+                        <!-- Used codes history will be loaded by admin.js -->
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 5. TOP-UP SETTINGS
+            ================================== -->
+            <section
+                class="admin-card tab-content"
+                id="tab-topup-settings"
+                style="display: none;"
+            >
+
+                <h3 class="admin-title">
+                    <i class="fa-solid fa-wallet"></i>
+                    Top-up Settings
+                </h3>
+
+                <p style="color: var(--admin-muted); font-size: 13px; line-height: 1.8; margin-bottom: 25px;">
+                    User များ ငွေလွှဲရန် အသုံးပြုမည့် KBZPay၊ WavePay နှင့် Admin Telegram အချက်အလက်များကို ပြင်ဆင်ရန်။
+                </p>
+
+
+                <!-- KBZPAY -->
+                <div class="form-group">
+
+                    <label>
+                        <i class="fa-solid fa-building-columns"></i>
+                        KBZPay Account Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="settings-kbzpay-name"
+                        placeholder="Account Name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="settings-kbzpay-phone">
+                        KBZPay Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="settings-kbzpay-phone"
+                        placeholder="09xxxxxxxxx"
+                    >
+
+                </div>
+
+
+                <!-- WAVEPAY -->
+                <div class="form-group">
+
+                    <label for="settings-wavepay-name">
+                        <i class="fa-solid fa-wallet"></i>
+                        WavePay Account Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="settings-wavepay-name"
+                        placeholder="Account Name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="settings-wavepay-phone">
+                        WavePay Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="settings-wavepay-phone"
+                        placeholder="09xxxxxxxxx"
+                    >
+
+                </div>
+
+
+                <!-- TELEGRAM -->
+                <div class="form-group">
+
+                    <label for="settings-telegram-link">
+                        <i class="fa-brands fa-telegram"></i>
+                        Admin Telegram Link
+                    </label>
+
+                    <input
+                        type="url"
+                        id="settings-telegram-link"
+                        placeholder="https://t.me/yourusername"
+                    >
+
+                    <small>
+                        User များ Payment Screenshot ပေးပို့ရမည့် Telegram Link ဖြစ်သည်။
+                    </small>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="submit-btn"
+                    id="save-topup-settings-btn"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Settings သိမ်းဆည်းမည်
+                </button>
+
+            </section>
+
+
+            <!-- =================================
+                 6. ADD NOVEL
+            ================================== -->
+            <section
+                class="admin-card tab-content"
+                id="tab-add-novel"
+                style="display: none;"
+            >
 
                 <h3 class="admin-title">
                     <i class="fa-solid fa-plus-circle"></i>
@@ -690,6 +1196,7 @@
                 <form id="add-novel-form" onsubmit="handleAddNovel(event)">
 
                     <div class="form-group">
+
                         <label for="novel-title">
                             Novel ခေါင်းစဉ် *
                         </label>
@@ -700,10 +1207,12 @@
                             placeholder="ဥပမာ - Shadow Monarch"
                             required
                         >
+
                     </div>
 
 
                     <div class="form-group">
+
                         <label for="novel-cover-file">
                             <i class="fa-solid fa-image"></i>
                             Cover Image File *
@@ -719,6 +1228,7 @@
                         <small>
                             Novel Cover Image ကို ရွေးချယ်ပါ။
                         </small>
+
                     </div>
 
 
@@ -755,10 +1265,12 @@
                             <label><input type="checkbox" name="novel-genre-chip" value="Thriller"> Thriller</label>
 
                         </div>
+
                     </div>
 
 
                     <div class="form-group">
+
                         <label for="novel-status">
                             <i class="fa-solid fa-circle-check"></i>
                             Novel Status
@@ -768,10 +1280,12 @@
                             <option value="Ongoing">Ongoing</option>
                             <option value="Completed">Completed</option>
                         </select>
+
                     </div>
 
 
                     <div class="form-group">
+
                         <label for="novel-synopsis">
                             <i class="fa-solid fa-align-left"></i>
                             အညွှန်း (Synopsis)
@@ -782,6 +1296,7 @@
                             rows="5"
                             placeholder="နိုဗယ်အကြောင်း အကျဉ်းချုပ် ရေးပါ..."
                         ></textarea>
+
                     </div>
 
 
@@ -795,12 +1310,12 @@
                     </button>
 
                 </form>
+
             </section>
 
 
-
             <!-- =================================
-                 ADD CHAPTER
+                 7. ADD CHAPTER
             ================================== -->
             <section
                 class="admin-card tab-content"
@@ -816,6 +1331,7 @@
                 <form id="add-chapter-form" onsubmit="handleAddChapter(event)">
 
                     <div class="form-group">
+
                         <label for="select-novel-dropdown">
                             <i class="fa-solid fa-book"></i>
                             Novel ရွေးချယ်ပါ *
@@ -824,10 +1340,12 @@
                         <select id="select-novel-dropdown" required>
                             <option value="">-- Novel ရွေးပါ --</option>
                         </select>
+
                     </div>
 
 
                     <div class="form-group">
+
                         <label for="chapter-number">
                             Chapter နံပါတ် *
                         </label>
@@ -839,10 +1357,12 @@
                             min="1"
                             required
                         >
+
                     </div>
 
 
                     <div class="form-group">
+
                         <label for="chapter-title-input">
                             Chapter ခေါင်းစဉ်
                         </label>
@@ -852,10 +1372,12 @@
                             id="chapter-title-input"
                             placeholder="ဥပမာ - The Beginning"
                         >
+
                     </div>
 
 
                     <div class="form-group">
+
                         <label for="chapter-content-input">
                             <i class="fa-solid fa-file-lines"></i>
                             Chapter စာသားများ *
@@ -871,6 +1393,7 @@
                         <small>
                             Chapter Content ကို မတင်မီ သေချာစစ်ဆေးပါ။
                         </small>
+
                     </div>
 
 
@@ -884,12 +1407,12 @@
                     </button>
 
                 </form>
+
             </section>
 
 
-
             <!-- =================================
-                 MANAGE NOVELS
+                 8. MANAGE NOVELS
             ================================== -->
             <section
                 class="admin-card tab-content"
@@ -901,7 +1424,6 @@
                     <i class="fa-solid fa-list-check"></i>
                     Novels & Chapters စီမံရန်
                 </h3>
-
 
                 <div class="form-group" style="margin-bottom: 22px;">
 
@@ -930,8 +1452,8 @@
                         >
 
                     </div>
-                </div>
 
+                </div>
 
                 <div
                     id="admin-novel-list"
@@ -943,7 +1465,6 @@
         </div>
 
     </main>
-
 
 
     <!-- =========================================
@@ -979,13 +1500,12 @@
                 Novel ပြင်ဆင်ရန်
             </h3>
 
-
             <form id="edit-novel-form" onsubmit="handleUpdateNovel(event)">
 
                 <input type="hidden" id="edit-novel-id">
 
-
                 <div class="form-group">
+
                     <label for="edit-novel-title">
                         Novel ခေါင်းစဉ် *
                     </label>
@@ -995,10 +1515,11 @@
                         id="edit-novel-title"
                         required
                     >
+
                 </div>
 
-
                 <div class="form-group">
+
                     <label for="edit-novel-status">
                         Status
                     </label>
@@ -1007,10 +1528,11 @@
                         <option value="Ongoing">Ongoing</option>
                         <option value="Completed">Completed</option>
                     </select>
+
                 </div>
 
-
                 <div class="form-group">
+
                     <label for="edit-novel-synopsis">
                         အညွှန်း (Synopsis)
                     </label>
@@ -1019,8 +1541,8 @@
                         id="edit-novel-synopsis"
                         rows="5"
                     ></textarea>
-                </div>
 
+                </div>
 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
 
@@ -1051,8 +1573,8 @@
             </form>
 
         </div>
-    </div>
 
+    </div>
 
 
     <!-- =========================================
@@ -1088,14 +1610,13 @@
                 Chapter ပြင်ဆင်ရန်
             </h3>
 
-
             <form id="edit-chapter-form" onsubmit="handleUpdateChapter(event)">
 
                 <input type="hidden" id="edit-chapter-filename">
                 <input type="hidden" id="edit-chapter-slug">
 
-
                 <div class="form-group">
+
                     <label for="edit-chapter-number">
                         Chapter နံပါတ် *
                     </label>
@@ -1106,10 +1627,11 @@
                         min="1"
                         required
                     >
+
                 </div>
 
-
                 <div class="form-group">
+
                     <label for="edit-chapter-title">
                         Chapter ခေါင်းစဉ်
                     </label>
@@ -1119,10 +1641,11 @@
                         id="edit-chapter-title"
                         placeholder="ဥပမာ - The Beginning"
                     >
+
                 </div>
 
-
                 <div class="form-group">
+
                     <label for="edit-chapter-content">
                         Chapter စာသားများ *
                     </label>
@@ -1132,8 +1655,8 @@
                         rows="14"
                         required
                     ></textarea>
-                </div>
 
+                </div>
 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
 
@@ -1165,8 +1688,8 @@
             </form>
 
         </div>
-    </div>
 
+    </div>
 
 
     <!-- =========================================
@@ -1210,6 +1733,7 @@
                 </h3>
 
                 <button
+                    type="button"
                     onclick="closeChaptersModal()"
                     style="
                         width: 35px;
@@ -1221,12 +1745,12 @@
                         cursor: pointer;
                     "
                     title="Close"
+                    aria-label="Close"
                 >
                     <i class="fa-solid fa-xmark"></i>
                 </button>
 
             </div>
-
 
             <div
                 id="admin-chapter-list"
@@ -1240,8 +1764,8 @@
             </div>
 
         </div>
-    </div>
 
+    </div>
 
 
     <!-- =========================================
@@ -1271,7 +1795,9 @@
     </nav>
 
 
-    <!-- ORIGINAL JAVASCRIPT -->
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
     <script src="admin.js"></script>
 
 </body>
