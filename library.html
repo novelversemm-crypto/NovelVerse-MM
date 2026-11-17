@@ -1,0 +1,540 @@
+
+// ==========================================
+// 📚 NOVELVERSE LIBRARY CONFIGURATION
+// ==========================================
+
+const LIBRARY_STORAGE_KEY = 'novelverse_library';
+const LAST_READ_STORAGE_KEY = 'novelverse_last_read';
+
+let libraryNovels = [];
+let selectedNovelToRemove = null;
+let currentLibraryTab = 'saved';
+
+
+// ==========================================
+// 🚀 INITIALIZE LIBRARY
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.switchLibraryTab = switchLibraryTab;
+    window.openRemoveLibraryModal = openRemoveLibraryModal;
+    window.closeRemoveLibraryModal = closeRemoveLibraryModal;
+    window.confirmRemoveLibrary = confirmRemoveLibrary;
+
+    loadLibraryData();
+
+    // Modal Backdrop
+    const backdrop = document.getElementById('remove-library-backdrop');
+
+    if (backdrop) {
+        backdrop.addEventListener('click', closeRemoveLibraryModal);
+    }
+
+    // Cancel Button
+    const cancelBtn = document.getElementById('cancel-remove-library');
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeRemoveLibraryModal);
+    }
+
+    // Confirm Button
+    const confirmBtn = document.getElementById('confirm-remove-library');
+
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', confirmRemoveLibrary);
+    }
+});
+
+
+// ==========================================
+// 🛠️ HELPER FUNCTIONS
+// ==========================================
+
+// HTML Escape
+function libraryEscapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    })[char]);
+}
+
+
+// Safe Image URL
+function librarySafeImageURL(url) {
+    if (!url) return '';
+
+    try {
+        const parsed = new URL(String(url), window.location.origin);
+
+        if (
+            parsed.protocol === 'https:' ||
+            parsed.protocol === 'http:'
+        ) {
+            return parsed.href;
+        }
+
+        return '';
+    } catch (error) {
+        return '';
+    }
+}
+
+
+// LocalStorage မှ Saved Novels ရယူခြင်း
+function getLibraryNovels() {
+    try {
+        const savedData = localStorage.getItem(LIBRARY_STORAGE_KEY);
+
+        if (!savedData) return [];
+
+        const parsedData = JSON.parse(savedData);
+
+        return Array.isArray(parsedData) ? parsedData : [];
+
+    } catch (error) {
+        console.error('Get library data error:', error);
+        return [];
+    }
+}
+
+
+// LocalStorage ထဲသို့ Saved Novels သိမ်းခြင်း
+function saveLibraryNovels() {
+    try {
+        localStorage.setItem(
+            LIBRARY_STORAGE_KEY,
+            JSON.stringify(libraryNovels)
+        );
+
+        return true;
+
+    } catch (error) {
+        console.error('Save library data error:', error);
+        return false;
+    }
+}
+
+
+// ==========================================
+// 1. LOAD LIBRARY DATA
+// ==========================================
+
+function loadLibraryData() {
+    libraryNovels = getLibraryNovels();
+
+    renderSavedNovels();
+    renderContinueReading();
+}
+
+
+// ==========================================
+// 2. SWITCH LIBRARY TABS
+// ==========================================
+
+function switchLibraryTab(tab) {
+    if (tab !== 'saved' && tab !== 'continue') {
+        return;
+    }
+
+    currentLibraryTab = tab;
+
+    const savedSection = document.getElementById(
+        'saved-novels-section'
+    );
+
+    const continueSection = document.getElementById(
+        'continue-reading-section'
+    );
+
+    const savedBtn = document.getElementById(
+        'saved-tab-btn'
+    );
+
+    const continueBtn = document.getElementById(
+        'continue-tab-btn'
+    );
+
+    if (savedSection) {
+        savedSection.style.display =
+            tab === 'saved' ? 'block' : 'none';
+    }
+
+    if (continueSection) {
+        continueSection.style.display =
+            tab === 'continue' ? 'block' : 'none';
+    }
+
+    if (savedBtn) {
+        savedBtn.classList.toggle('active', tab === 'saved');
+    }
+
+    if (continueBtn) {
+        continueBtn.classList.toggle('active', tab === 'continue');
+    }
+}
+
+
+// ==========================================
+// 3. RENDER SAVED NOVELS
+// ==========================================
+
+function renderSavedNovels() {
+    const grid = document.getElementById(
+        'saved-novels-grid'
+    );
+
+    const countEl = document.getElementById(
+        'saved-novel-count'
+    );
+
+    const emptyState = document.getElementById(
+        'saved-empty-state'
+    );
+
+    if (countEl) {
+        countEl.textContent = libraryNovels.length;
+    }
+
+    if (!grid) return;
+
+    if (libraryNovels.length === 0) {
+        grid.innerHTML = '';
+
+        if (emptyState) {
+            emptyState.style.display = 'block';
+        }
+
+        return;
+    }
+
+    if (emptyState) {
+        emptyState.style.display = 'none';
+    }
+
+    // နောက်ဆုံးသိမ်းထားသော Novel ကို အပေါ်ဆုံးပြရန်
+    const sortedNovels = [...libraryNovels].sort((a, b) => {
+        return new Date(b.savedAt || 0) - new Date(a.savedAt || 0);
+    });
+
+    grid.innerHTML = sortedNovels.map(novel => {
+        const novelId = novel.slug || novel.id || '';
+
+        const novelURL = `novel.html?id=${encodeURIComponent(novelId)}`;
+
+        const coverURL = librarySafeImageURL(novel.coverUrl);
+
+        const title = libraryEscapeHTML(
+            novel.title || 'Untitled Novel'
+        );
+
+        const genre = libraryEscapeHTML(
+            novel.genre || 'General'
+        );
+
+        const status = libraryEscapeHTML(
+            novel.status || 'Ongoing'
+        );
+
+        const safeId = libraryEscapeHTML(novel.id || novel.slug || '');
+
+        return `
+            <div class="novel-card library-novel-card">
+
+                <a href="${libraryEscapeHTML(novelURL)}" class="library-novel-link">
+
+                    <div class="novel-cover-wrap">
+
+                        <img
+                            src="${libraryEscapeHTML(coverURL)}"
+                            class="novel-cover"
+                            alt="${title}"
+                            loading="lazy"
+                            onerror="this.style.visibility='hidden';"
+                        >
+
+                        <span class="chapter-badge">
+                            ${status}
+                        </span>
+
+                    </div>
+
+                    <div class="novel-info">
+
+                        <div class="novel-name">
+                            ${title}
+                        </div>
+
+                        <div class="novel-meta">
+                            ${genre}
+                        </div>
+
+                    </div>
+
+                </a>
+
+                <button
+                    type="button"
+                    class="remove-library-btn"
+                    data-novel-id="${safeId}"
+                    aria-label="Remove ${title} from Library"
+                    onclick="openRemoveLibraryModal(this.dataset.novelId)"
+                >
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+
+            </div>
+        `;
+    }).join('');
+}
+
+
+// ==========================================
+// 4. REMOVE NOVEL MODAL
+// ==========================================
+
+function openRemoveLibraryModal(novelId) {
+    selectedNovelToRemove = novelId;
+
+    const modal = document.getElementById(
+        'remove-library-modal'
+    );
+
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+}
+
+
+// ==========================================
+// CLOSE REMOVE MODAL
+// ==========================================
+
+function closeRemoveLibraryModal() {
+    selectedNovelToRemove = null;
+
+    const modal = document.getElementById(
+        'remove-library-modal'
+    );
+
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+
+// ==========================================
+// 5. CONFIRM REMOVE NOVEL
+// ==========================================
+
+function confirmRemoveLibrary() {
+    if (!selectedNovelToRemove) {
+        closeRemoveLibraryModal();
+        return;
+    }
+
+    const targetId = String(selectedNovelToRemove);
+
+    libraryNovels = libraryNovels.filter(novel => {
+        const novelId = String(novel.id || novel.slug || '');
+
+        return novelId !== targetId;
+    });
+
+    const saved = saveLibraryNovels();
+
+    if (!saved) {
+        showLibraryMessage(
+            'Library မှ ပြင်ဆင်မှုကို သိမ်းဆည်း၍ မရပါ။'
+        );
+
+        closeRemoveLibraryModal();
+        return;
+    }
+
+    closeRemoveLibraryModal();
+
+    renderSavedNovels();
+
+    showLibraryMessage(
+        'Novel ကို Library မှ ဖယ်ရှားပြီးပါပြီ။'
+    );
+}
+
+
+// ==========================================
+// 6. RENDER CONTINUE READING
+// ==========================================
+
+function renderContinueReading() {
+    const list = document.getElementById(
+        'continue-reading-list'
+    );
+
+    const emptyState = document.getElementById(
+        'continue-empty-state'
+    );
+
+    if (!list) return;
+
+    let lastRead = null;
+
+    try {
+        const savedData = localStorage.getItem(
+            LAST_READ_STORAGE_KEY
+        );
+
+        if (savedData) {
+            lastRead = JSON.parse(savedData);
+        }
+
+    } catch (error) {
+        console.error('Read last chapter error:', error);
+    }
+
+    if (
+        !lastRead ||
+        !lastRead.novelId ||
+        !lastRead.chapterId
+    ) {
+        list.innerHTML = '';
+
+        if (emptyState) {
+            emptyState.style.display = 'block';
+        }
+
+        return;
+    }
+
+    if (emptyState) {
+        emptyState.style.display = 'none';
+    }
+
+    const novelTitle = libraryEscapeHTML(
+        lastRead.novelTitle || 'Unknown Novel'
+    );
+
+    const chapterNumber = libraryEscapeHTML(
+        lastRead.chapterNumber || lastRead.chapterId
+    );
+
+    const novelId = encodeURIComponent(lastRead.novelId);
+
+    const chapterId = encodeURIComponent(lastRead.chapterId);
+
+    const readerURL =
+        `reader.html?novel_id=${novelId}&id=${chapterId}`;
+
+    const lastReadDate = lastRead.lastReadAt
+        ? formatLastReadDate(lastRead.lastReadAt)
+        : '';
+
+    list.innerHTML = `
+        <div class="continue-reading-card">
+
+            <div class="continue-reading-info">
+
+                <div class="continue-reading-title">
+                    ${novelTitle}
+                </div>
+
+                <div class="continue-reading-chapter">
+                    Chapter ${chapterNumber}
+                </div>
+
+                <div class="continue-reading-date">
+                    ${libraryEscapeHTML(lastReadDate)}
+                </div>
+
+            </div>
+
+            <a
+                href="${libraryEscapeHTML(readerURL)}"
+                class="continue-reading-btn"
+            >
+                ဆက်ဖတ်မယ်
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+
+        </div>
+    `;
+}
+
+
+// ==========================================
+// 7. FORMAT LAST READ DATE
+// ==========================================
+
+function formatLastReadDate(dateValue) {
+    const date = new Date(dateValue);
+
+    if (Number.isNaN(date.getTime())) {
+        return '';
+    }
+
+    return date.toLocaleString('my-MM', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+
+// ==========================================
+// 8. LIBRARY MESSAGE
+// ==========================================
+
+function showLibraryMessage(message) {
+    // ရှိပြီးသား Message Container ကို အသုံးပြုမည်
+    let messageBox = document.getElementById(
+        'library-message'
+    );
+
+    // မရှိသေးပါက သီးခြား Container ဖန်တီးမည်
+    if (!messageBox) {
+        messageBox = document.createElement('div');
+
+        messageBox.id = 'library-message';
+
+        messageBox.style.cssText = `
+            position:fixed;
+            bottom:90px;
+            left:50%;
+            transform:translateX(-50%);
+            z-index:9999;
+            background:var(--surface-color, #222);
+            color:var(--text-main, #fff);
+            padding:12px 18px;
+            border-radius:10px;
+            font-size:13px;
+            text-align:center;
+            max-width:90%;
+            box-shadow:0 4px 15px rgba(0,0,0,0.3);
+        `;
+
+        document.body.appendChild(messageBox);
+    }
+
+    messageBox.textContent = message;
+    messageBox.style.display = 'block';
+
+    // နောက်ပိုင်းမှာ CSS Animation ထည့်နိုင်သည်
+    setTimeout(() => {
+        if (messageBox) {
+            messageBox.style.display = 'none';
+        }
+    }, 2500);
+}
+
+
+// ==========================================
+// 9. REFRESH LIBRARY
+// ==========================================
+
+function refreshLibrary() {
+    loadLibraryData();
+}
