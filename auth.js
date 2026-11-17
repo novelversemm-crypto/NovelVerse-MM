@@ -2,14 +2,16 @@
 /* ==========================================
    NOVELVERSE MM — AUTHENTICATION SYSTEM
    Register / Login / Logout / User Session
-   ========================================== */
+========================================== */
 
 
 /* ==========================================
    1. CONFIGURATION
 ========================================== */
 
-// Google Apps Script Backend တည်ဆောက်ပြီးမှ URL ထည့်ပါမည်။
+// Google Apps Script Web App URL
+// Backend တည်ဆောက်ပြီးမှ URL ထည့်ပါမည်။
+
 const AUTH_API_URL = '';
 
 const AUTH_CONFIG = {
@@ -39,34 +41,58 @@ async function authApiRequest(action, data = {}) {
 
     if (!AUTH_API_URL) {
         throw new Error(
-            'Authentication Backend မချိတ်ဆက်ရသေးပါ။ Backend တည်ဆောက်ပြီးမှ အသုံးပြုနိုင်ပါမည်။'
+            'Authentication API မချိတ်ဆက်ရသေးပါ။ Backend တည်ဆောက်ရန် လိုအပ်ပါသည်။'
         );
     }
 
-    const response = await fetch(AUTH_API_URL, {
-        method: 'POST',
+    let response;
 
-        headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-        },
+    try {
 
-        body: JSON.stringify({
-            action: action,
-            ...data
-        })
-    });
+        response = await fetch(AUTH_API_URL, {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'text/plain;charset=utf-8'
+            },
+
+            body: JSON.stringify({
+                action,
+                ...data
+            })
+        });
+
+    } catch (error) {
+
+        const networkError = new Error(
+            'Server သို့ ချိတ်ဆက်၍ မရပါ။ Internet Connection ကို စစ်ဆေးပါ။'
+        );
+
+        networkError.code = 'NETWORK_ERROR';
+
+        throw networkError;
+    }
 
     if (!response.ok) {
-        throw new Error(
+
+        const serverError = new Error(
             `Server Error: ${response.status}`
         );
+
+        serverError.code = 'HTTP_ERROR';
+        serverError.status = response.status;
+
+        throw serverError;
     }
 
     let result;
 
     try {
+
         result = await response.json();
+
     } catch (error) {
+
         throw new Error(
             'Server မှ မှန်ကန်သော Response မရရှိပါ။'
         );
@@ -78,7 +104,7 @@ async function authApiRequest(action, data = {}) {
             result?.message || 'လုပ်ဆောင်မှု မအောင်မြင်ပါ။'
         );
 
-        apiError.code = result?.code || '';
+        apiError.code = result?.code || 'API_ERROR';
 
         throw apiError;
     }
@@ -97,25 +123,25 @@ function getAuthSession() {
 
     try {
 
-        const session = localStorage.getItem(
+        const savedSession = localStorage.getItem(
             AUTH_CONFIG.sessionKey
         );
 
-        if (!session) {
+        if (!savedSession) {
             return null;
         }
 
-        const parsedSession = JSON.parse(session);
+        const session = JSON.parse(savedSession);
 
         if (
-            !parsedSession ||
-            typeof parsedSession !== 'object' ||
-            !parsedSession.token
+            !session ||
+            typeof session !== 'object' ||
+            !session.token
         ) {
             return null;
         }
 
-        return parsedSession;
+        return session;
 
     } catch (error) {
 
@@ -159,7 +185,7 @@ function saveAuthSession(sessionData) {
     } catch (error) {
 
         throw new Error(
-            'Session သိမ်းဆည်း၍ မရပါ။ Browser Storage ကို စစ်ဆေးပါ။'
+            'Session ကို သိမ်းဆည်း၍ မရပါ။ Browser Storage ကို စစ်ဆေးပါ။'
         );
     }
 
@@ -188,39 +214,33 @@ function clearAuthSession() {
 }
 
 
-// Login ဝင်ထားခြင်း ရှိ/မရှိ စစ်ဆေးခြင်း
+// Login ဝင်ထားခြင်း ရှိ/မရှိ
 
 function isUserLoggedIn() {
 
     const session = getAuthSession();
 
-    if (!session || !session.token) {
-        return false;
-    }
-
-    // Backend မှ Expiry Date ပေးထားပါက စစ်ဆေးမည်။
-
-    if (session.expiresAt) {
-
-        const expiryTime = new Date(
-            session.expiresAt
-        ).getTime();
-
-        if (
-            !isNaN(expiryTime) &&
-            Date.now() >= expiryTime
-        ) {
-            return false;
-        }
-    }
-
-    return true;
+    return Boolean(
+        session && session.token
+    );
 }
 
 
 /* ==========================================
-   5. AUTH MESSAGE HELPERS
+   5. AUTH UI HELPERS
 ========================================== */
+
+function showAuthError(elementId, message) {
+
+    const element = document.getElementById(elementId);
+
+    if (!element) return;
+
+    element.textContent = message;
+
+    element.style.display = 'block';
+}
+
 
 function showAuthMessage(elementId, message) {
 
@@ -230,15 +250,7 @@ function showAuthMessage(elementId, message) {
 
     element.textContent = message;
 
-    element.hidden = false;
-
     element.style.display = 'block';
-}
-
-
-function showAuthError(elementId, message) {
-
-    showAuthMessage(elementId, message);
 }
 
 
@@ -250,21 +262,14 @@ function hideAuthMessage(elementId) {
 
     element.textContent = '';
 
-    element.hidden = true;
-
     element.style.display = 'none';
 }
 
 
-/* ==========================================
-   6. AUTH BUTTON LOADING
-========================================== */
+// Button Loading
+// မူလ Icon နှင့် HTML ကို ထိန်းထားမည်။
 
-function setAuthButtonLoading(
-    buttonId,
-    loading,
-    normalText
-) {
+function setAuthButtonLoading(buttonId, loading) {
 
     const button = document.getElementById(buttonId);
 
@@ -272,12 +277,9 @@ function setAuthButtonLoading(
 
     if (loading) {
 
-        // မူလ Button HTML နှင့် Icon ကို သိမ်းထားမည်။
-
         if (!button.dataset.originalHTML) {
 
-            button.dataset.originalHTML =
-                button.innerHTML;
+            button.dataset.originalHTML = button.innerHTML;
         }
 
         button.disabled = true;
@@ -290,21 +292,16 @@ function setAuthButtonLoading(
 
         if (button.dataset.originalHTML) {
 
-            button.innerHTML =
-                button.dataset.originalHTML;
+            button.innerHTML = button.dataset.originalHTML;
 
             delete button.dataset.originalHTML;
-
-        } else if (normalText) {
-
-            button.textContent = normalText;
         }
     }
 }
 
 
 /* ==========================================
-   7. AUTH / PROFILE SECTION
+   6. AUTH / PROFILE SECTION
 ========================================== */
 
 function showAuthSection() {
@@ -318,11 +315,17 @@ function showAuthSection() {
     );
 
     if (authSection) {
+
         authSection.hidden = false;
+
+        authSection.style.display = '';
     }
 
     if (profileSection) {
+
         profileSection.hidden = true;
+
+        profileSection.style.display = '';
     }
 }
 
@@ -338,20 +341,26 @@ function showProfileSection() {
     );
 
     if (authSection) {
+
         authSection.hidden = true;
+
+        authSection.style.display = '';
     }
 
     if (profileSection) {
+
         profileSection.hidden = false;
+
+        profileSection.style.display = '';
     }
 }
 
 
 /* ==========================================
-   8. AUTH TAB SWITCHING
+   7. AUTH TAB SWITCHING
 ========================================== */
 
-function switchAuthTab(tabName, preserveSuccess = false) {
+function switchAuthTab(tabName) {
 
     const loginPanel = document.getElementById(
         'login-panel'
@@ -369,19 +378,19 @@ function switchAuthTab(tabName, preserveSuccess = false) {
         'register-tab-btn'
     );
 
-    // မမှန်သော Tab Name ဖြစ်ပါက Login ကို Default ထားမည်။
-
-    const selectedTab =
-        tabName === 'register' ? 'register' : 'login';
-
     hideAuthMessage('login-error');
+
     hideAuthMessage('register-error');
 
-    if (!preserveSuccess) {
+    // Register Success Message ကို မဖျောက်ပါ။
+    // Tab ကို ပြန်ပြောင်းတဲ့အခါမှ ဖျောက်မည်။
+
+    if (tabName !== 'register') {
+
         hideAuthMessage('register-success');
     }
 
-    if (selectedTab === 'register') {
+    if (tabName === 'register') {
 
         if (loginPanel) {
             loginPanel.hidden = true;
@@ -421,7 +430,7 @@ function switchAuthTab(tabName, preserveSuccess = false) {
 
 
 /* ==========================================
-   9. PASSWORD / PIN VISIBILITY
+   8. PASSWORD / PIN VISIBILITY
 ========================================== */
 
 function setupPasswordToggles() {
@@ -440,12 +449,9 @@ function setupPasswordToggles() {
 
         button.addEventListener('click', () => {
 
-            const targetId =
-                button.dataset.passwordToggle;
+            const targetId = button.dataset.passwordToggle;
 
-            const input = document.getElementById(
-                targetId
-            );
+            const input = document.getElementById(targetId);
 
             if (!input) return;
 
@@ -485,7 +491,7 @@ function setupPasswordToggles() {
 
 
 /* ==========================================
-   10. USER REGISTRATION
+   9. USER REGISTRATION
 ========================================== */
 
 async function handleUserRegister(event) {
@@ -495,6 +501,7 @@ async function handleUserRegister(event) {
     if (isAuthLoading) return;
 
     hideAuthMessage('register-error');
+
     hideAuthMessage('register-success');
 
     const usernameInput = document.getElementById(
@@ -509,16 +516,7 @@ async function handleUserRegister(event) {
         'register-confirm-pin'
     );
 
-    if (
-        !usernameInput ||
-        !pinInput ||
-        !confirmPinInput
-    ) {
-        showAuthError(
-            'register-error',
-            'Register Form ကို ရှာမတွေ့ပါ။'
-        );
-
+    if (!usernameInput || !pinInput || !confirmPinInput) {
         return;
     }
 
@@ -531,7 +529,10 @@ async function handleUserRegister(event) {
 
     // Username Validation
 
-    if (username.length < 3 || username.length > 30) {
+    if (
+        username.length < 3 ||
+        username.length > 30
+    ) {
 
         showAuthError(
             'register-error',
@@ -540,6 +541,7 @@ async function handleUserRegister(event) {
 
         return;
     }
+
 
     if (!/^[a-zA-Z0-9_]+$/.test(username)) {
 
@@ -555,18 +557,17 @@ async function handleUserRegister(event) {
     // PIN Validation
 
     if (
-        !/^\d+$/.test(pin) ||
-        pin.length < AUTH_CONFIG.minimumPinLength ||
-        pin.length > AUTH_CONFIG.maximumPinLength
+        !/^\d{6,12}$/.test(pin)
     ) {
 
         showAuthError(
             'register-error',
-            'PIN ကို ဂဏန်း ၆ လုံးမှ ၁၂ လုံးအထိ အသုံးပြုပါ။'
+            'PIN ကို ဂဏန်းသီးသန့် ၆ လုံးမှ ၁၂ လုံးအထိ ထည့်ပေးပါ။'
         );
 
         return;
     }
+
 
     if (pin !== confirmPin) {
 
@@ -583,8 +584,7 @@ async function handleUserRegister(event) {
 
     setAuthButtonLoading(
         'register-submit-btn',
-        true,
-        'Account ဖန်တီးမည်'
+        true
     );
 
 
@@ -593,36 +593,55 @@ async function handleUserRegister(event) {
         const result = await authApiRequest(
             'register',
             {
-                username: username,
-                pin: pin
+                username,
+                pin
             }
         );
 
 
-        // Login Form တွင် Username ဖြည့်ပေးမည်။
+        // Login Form တွင် Username အလိုအလျောက် ဖြည့်မည်။
 
         const loginUsername = document.getElementById(
             'login-username'
         );
 
         if (loginUsername) {
+
             loginUsername.value = username;
         }
 
 
-        // Register Form ရှင်းလင်းခြင်း
+        // Register Form ကို ရှင်းလင်းမည်။
 
         document.getElementById(
             'register-form'
         )?.reset();
 
 
-        // Login Tab သို့ ပြောင်းခြင်း
+        // Password Toggle Icon များကို ပြန်ထားမည်။
 
-        switchAuthTab('login', true);
+        document.querySelectorAll(
+            '[data-password-toggle]'
+        ).forEach(button => {
+
+            const input = document.getElementById(
+                button.dataset.passwordToggle
+            );
+
+            const icon = button.querySelector('i');
+
+            if (input) {
+                input.type = 'password';
+            }
+
+            if (icon) {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
 
 
-        // Success Message ပြသခြင်း
+        // Register Panel ထဲမှာ Success Message ပြမည်။
 
         showAuthMessage(
             'register-success',
@@ -630,18 +649,15 @@ async function handleUserRegister(event) {
             'Account ဖွင့်ခြင်း အောင်မြင်ပါသည်။ Login ဝင်နိုင်ပါပြီ။'
         );
 
+
     } catch (error) {
 
         showAuthError(
             'register-error',
-            error.message ||
-            'Account ဖွင့်ခြင်း မအောင်မြင်ပါ။'
+            error.message || 'Account ဖွင့်ခြင်း မအောင်မြင်ပါ။'
         );
 
-        console.error(
-            'Registration Error:',
-            error
-        );
+        console.error('Registration Error:', error);
 
     } finally {
 
@@ -649,15 +665,14 @@ async function handleUserRegister(event) {
 
         setAuthButtonLoading(
             'register-submit-btn',
-            false,
-            'Account ဖန်တီးမည်'
+            false
         );
     }
 }
 
 
 /* ==========================================
-   11. USER LOGIN
+   10. USER LOGIN
 ========================================== */
 
 async function handleUserLogin(event) {
@@ -667,7 +682,6 @@ async function handleUserLogin(event) {
     if (isAuthLoading) return;
 
     hideAuthMessage('login-error');
-    hideAuthMessage('register-success');
 
     const usernameInput = document.getElementById(
         'login-username'
@@ -678,12 +692,6 @@ async function handleUserLogin(event) {
     );
 
     if (!usernameInput || !pinInput) {
-
-        showAuthError(
-            'login-error',
-            'Login Form ကို ရှာမတွေ့ပါ။'
-        );
-
         return;
     }
 
@@ -702,11 +710,12 @@ async function handleUserLogin(event) {
         return;
     }
 
-    if (!/^\d+$/.test(pin)) {
+
+    if (!/^\d{6,12}$/.test(pin)) {
 
         showAuthError(
             'login-error',
-            'PIN ကို ဂဏန်းများဖြင့်သာ ဖြည့်သွင်းပါ။'
+            'PIN ကို ဂဏန်း ၆ လုံးမှ ၁၂ လုံးအထိ ထည့်ပေးပါ။'
         );
 
         return;
@@ -717,8 +726,7 @@ async function handleUserLogin(event) {
 
     setAuthButtonLoading(
         'login-submit-btn',
-        true,
-        'Login ဝင်မည်'
+        true
     );
 
 
@@ -727,61 +735,51 @@ async function handleUserLogin(event) {
         const result = await authApiRequest(
             'login',
             {
-                username: username,
-                pin: pin
+                username,
+                pin
             }
         );
 
 
-        // Backend မှ Session Data ရယူခြင်း
+        // Backend မှ Session Token ရရှိရမည်။
 
         const sessionData = result.session || {
+
             token: result.token,
+
             userId: result.userId,
-            username: result.username || username,
+
+            username: result.username,
+
             createdAt: result.createdAt,
+
             expiresAt: result.expiresAt
         };
 
 
-        // Session သိမ်းဆည်းခြင်း
-
         saveAuthSession(sessionData);
 
 
-        // Login Form ရှင်းလင်းခြင်း
+        // Login Form ရှင်းလင်းမည်။
 
         document.getElementById(
             'login-form'
         )?.reset();
 
 
-        // Profile Data ရယူခြင်း
+        // Profile ကို Backend မှ ပြန်ရယူမည်။
 
-        const profileLoaded =
-            await loadCurrentUserProfile();
+        await loadCurrentUserProfile();
 
-
-        if (!profileLoaded) {
-
-            showAuthError(
-                'login-error',
-                'Login Session ရရှိပါပြီ။ Profile Data ကို ရယူ၍ မရသေးပါ။ ထပ်မံကြိုးစားပါ။'
-            );
-        }
 
     } catch (error) {
 
         showAuthError(
             'login-error',
-            error.message ||
-            'Login ဝင်ခြင်း မအောင်မြင်ပါ။'
+            error.message || 'Login ဝင်ခြင်း မအောင်မြင်ပါ။'
         );
 
-        console.error(
-            'Login Error:',
-            error
-        );
+        console.error('Login Error:', error);
 
     } finally {
 
@@ -789,15 +787,14 @@ async function handleUserLogin(event) {
 
         setAuthButtonLoading(
             'login-submit-btn',
-            false,
-            'Login ဝင်မည်'
+            false
         );
     }
 }
 
 
 /* ==========================================
-   12. LOAD CURRENT USER PROFILE
+   11. LOAD CURRENT USER PROFILE
 ========================================== */
 
 async function loadCurrentUserProfile() {
@@ -806,11 +803,11 @@ async function loadCurrentUserProfile() {
 
     if (!session || !session.token) {
 
-        currentAuthUser = null;
+        clearAuthSession();
 
         showAuthSection();
 
-        return false;
+        return;
     }
 
 
@@ -834,18 +831,13 @@ async function loadCurrentUserProfile() {
         }
 
 
-        // Session နှင့် User Data ပေါင်းစပ်ခြင်း
-
         currentAuthUser = {
             ...session,
-            ...user,
-            token: session.token
+            ...user
         };
 
 
-        // Profile UI Update
-
-        updateProfileUI(currentAuthUser);
+        updateProfileUI(user);
 
         showProfileSection();
 
@@ -859,7 +851,16 @@ async function loadCurrentUserProfile() {
             await window.loadCoinBalance();
         }
 
-        return true;
+
+        // Transaction History ကို profile.js မှ ရယူမည်။
+
+        if (
+            typeof window.loadTransactionHistory === 'function'
+        ) {
+
+            await window.loadTransactionHistory();
+        }
+
 
     } catch (error) {
 
@@ -869,11 +870,12 @@ async function loadCurrentUserProfile() {
         );
 
 
-        // Token သက်တမ်းကုန်ခြင်း သို့မဟုတ် မမှန်ခြင်း
-        // Backend မှ သတ်မှတ်ထားသော Code ဖြစ်ပါက Session ဖျက်မည်။
+        // Server က Session Invalid ဖြစ်ကြောင်း အတည်ပြုမှသာ
+        // Local Session ကို ဖျက်မည်။
 
         const invalidSessionCodes = [
             'INVALID_TOKEN',
+            'TOKEN_EXPIRED',
             'SESSION_EXPIRED',
             'UNAUTHORIZED'
         ];
@@ -886,36 +888,34 @@ async function loadCurrentUserProfile() {
 
             showAuthSection();
 
-            switchAuthTab('login');
-
             showAuthError(
                 'login-error',
                 'Session သက်တမ်းကုန်သွားပါပြီ။ Login ပြန်ဝင်ပေးပါ။'
             );
 
-        } else {
-
-            // Network Error ဖြစ်ရုံဖြင့် Session မဖျက်ပါ။
-
-            currentAuthUser = {
-                ...session
-            };
-
-            showAuthSection();
+            return;
         }
 
-        return false;
+
+        // Network Error သို့မဟုတ် Server Error ဖြစ်လျှင်
+        // Session ကို မဖျက်ပါ။
+
+        showAuthSection();
+
+        showAuthError(
+            'login-error',
+            error.message ||
+            'Profile ကို ရယူ၍ မရပါ။ ခဏအကြာတွင် ပြန်လည်ကြိုးစားပါ။'
+        );
     }
 }
 
 
 /* ==========================================
-   13. UPDATE PROFILE UI
+   12. UPDATE PROFILE UI
 ========================================== */
 
 function updateProfileUI(user) {
-
-    if (!user) return;
 
     const usernameElement = document.getElementById(
         'profile-username'
@@ -941,24 +941,29 @@ function updateProfileUI(user) {
     }
 
 
-    // Account Creation Date
+    // Member Since
 
     if (createdDateElement) {
 
-        const createdAt = user.createdAt || '';
+        const createdAt =
+            user.createdAt ||
+            currentAuthUser?.createdAt;
 
         if (createdAt) {
 
             const date = new Date(createdAt);
 
+            const formattedDate = isNaN(date.getTime())
+                ? createdAt
+                : date.toLocaleDateString('en-GB');
+
             createdDateElement.textContent =
-                isNaN(date.getTime())
-                    ? createdAt
-                    : date.toLocaleDateString('en-GB');
+                `Member Since: ${formattedDate}`;
 
         } else {
 
-            createdDateElement.textContent = '-';
+            createdDateElement.textContent =
+                'Member Since: --';
         }
     }
 
@@ -969,30 +974,34 @@ function updateProfileUI(user) {
 
         const status = user.status || 'Active';
 
-        const icon = accountStatusElement.querySelector('i');
+        const normalizedStatus = String(status).toLowerCase();
 
-        accountStatusElement.replaceChildren();
+        const icon = document.createElement('i');
 
-        if (icon) {
-            accountStatusElement.appendChild(
-                icon.cloneNode(true)
-            );
+        if (normalizedStatus === 'active') {
+
+            icon.className = 'fa-solid fa-circle-check';
+
+        } else {
+
+            icon.className = 'fa-solid fa-circle-exclamation';
         }
 
-        accountStatusElement.appendChild(
-            document.createTextNode(' ' + status)
+        accountStatusElement.replaceChildren(
+            icon,
+            document.createTextNode(` ${status}`)
         );
 
         accountStatusElement.classList.toggle(
             'inactive',
-            status.toLowerCase() !== 'active'
+            normalizedStatus !== 'active'
         );
     }
 }
 
 
 /* ==========================================
-   14. USER LOGOUT
+   13. USER LOGOUT
 ========================================== */
 
 async function handleUserLogout() {
@@ -1004,6 +1013,7 @@ async function handleUserLogout() {
     ) {
         return;
     }
+
 
     const session = getAuthSession();
 
@@ -1033,22 +1043,70 @@ async function handleUserLogout() {
 
     } finally {
 
-        // Local Session ကို အမြဲဖျက်မည်။
-
         clearAuthSession();
 
         showAuthSection();
 
         switchAuthTab('login');
 
-        window.location.href =
-            AUTH_CONFIG.loginPage;
+
+        // Coin Display ကို Reset လုပ်မည်။
+
+        const profileCoinBalance = document.getElementById(
+            'profile-coin-balance'
+        );
+
+        const headerCoinBalance = document.getElementById(
+            'header-coin-balance'
+        );
+
+        if (profileCoinBalance) {
+            profileCoinBalance.textContent = '0';
+        }
+
+        if (headerCoinBalance) {
+            headerCoinBalance.textContent = '0';
+        }
+
+
+        // Transaction List ကို Reset လုပ်မည်။
+
+        const transactionList = document.getElementById(
+            'coin-transaction-list'
+        );
+
+        if (transactionList) {
+
+            transactionList.replaceChildren();
+
+            const emptyState = document.createElement('div');
+
+            emptyState.className = 'empty-state';
+
+            emptyState.id = 'transaction-empty-state';
+
+            const icon = document.createElement('i');
+
+            icon.className = 'fa-solid fa-receipt';
+
+            const message = document.createElement('p');
+
+            message.textContent =
+                'Transaction History မရှိသေးပါ။';
+
+            emptyState.append(icon, message);
+
+            transactionList.appendChild(emptyState);
+        }
+
+
+        currentAuthUser = null;
     }
 }
 
 
 /* ==========================================
-   15. AUTH EVENT LISTENERS
+   14. AUTH EVENT LISTENERS
 ========================================== */
 
 function setupAuthEventListeners() {
@@ -1082,14 +1140,7 @@ function setupAuthEventListeners() {
     );
 
 
-    // Login Form
-
-    if (
-        loginForm &&
-        loginForm.dataset.authReady !== 'true'
-    ) {
-
-        loginForm.dataset.authReady = 'true';
+    if (loginForm) {
 
         loginForm.addEventListener(
             'submit',
@@ -1098,14 +1149,7 @@ function setupAuthEventListeners() {
     }
 
 
-    // Register Form
-
-    if (
-        registerForm &&
-        registerForm.dataset.authReady !== 'true'
-    ) {
-
-        registerForm.dataset.authReady = 'true';
+    if (registerForm) {
 
         registerForm.addEventListener(
             'submit',
@@ -1114,14 +1158,7 @@ function setupAuthEventListeners() {
     }
 
 
-    // Logout
-
-    if (
-        logoutButton &&
-        logoutButton.dataset.authReady !== 'true'
-    ) {
-
-        logoutButton.dataset.authReady = 'true';
+    if (logoutButton) {
 
         logoutButton.addEventListener(
             'click',
@@ -1130,61 +1167,37 @@ function setupAuthEventListeners() {
     }
 
 
-    // Login Tab
-
-    if (
-        loginTab &&
-        loginTab.dataset.authReady !== 'true'
-    ) {
-
-        loginTab.dataset.authReady = 'true';
+    if (loginTab) {
 
         loginTab.addEventListener('click', () => {
+
             switchAuthTab('login');
         });
     }
 
 
-    // Register Tab
-
-    if (
-        registerTab &&
-        registerTab.dataset.authReady !== 'true'
-    ) {
-
-        registerTab.dataset.authReady = 'true';
+    if (registerTab) {
 
         registerTab.addEventListener('click', () => {
+
             switchAuthTab('register');
         });
     }
 
 
-    // Show Register Button
-
-    if (
-        showRegisterButton &&
-        showRegisterButton.dataset.authReady !== 'true'
-    ) {
-
-        showRegisterButton.dataset.authReady = 'true';
+    if (showRegisterButton) {
 
         showRegisterButton.addEventListener('click', () => {
+
             switchAuthTab('register');
         });
     }
 
 
-    // Show Login Button
-
-    if (
-        showLoginButton &&
-        showLoginButton.dataset.authReady !== 'true'
-    ) {
-
-        showLoginButton.dataset.authReady = 'true';
+    if (showLoginButton) {
 
         showLoginButton.addEventListener('click', () => {
+
             switchAuthTab('login');
         });
     }
@@ -1195,7 +1208,7 @@ function setupAuthEventListeners() {
 
 
 /* ==========================================
-   16. INITIALIZE AUTH SYSTEM
+   15. INITIALIZE AUTH SYSTEM
 ========================================== */
 
 document.addEventListener(
@@ -1205,7 +1218,6 @@ document.addEventListener(
         setupAuthEventListeners();
 
         const session = getAuthSession();
-
 
         if (session && session.token) {
 
@@ -1226,22 +1238,16 @@ document.addEventListener(
 
 
 /* ==========================================
-   17. GLOBAL FUNCTIONS
+   16. GLOBAL FUNCTIONS
 ========================================== */
 
 window.getAuthSession = getAuthSession;
-
-window.saveAuthSession = saveAuthSession;
-
-window.clearAuthSession = clearAuthSession;
 
 window.isUserLoggedIn = isUserLoggedIn;
 
 window.getCurrentAuthUser = () => currentAuthUser;
 
 window.loadCurrentUserProfile = loadCurrentUserProfile;
-
-window.updateProfileUI = updateProfileUI;
 
 window.handleUserLogin = handleUserLogin;
 
@@ -1252,3 +1258,5 @@ window.handleUserLogout = handleUserLogout;
 window.switchAuthTab = switchAuthTab;
 
 window.authApiRequest = authApiRequest;
+
+window.clearAuthSession = clearAuthSession;
