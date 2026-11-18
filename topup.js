@@ -1,7 +1,8 @@
 
 /* ==========================================
    NOVELVERSE MM — TOP-UP SYSTEM
-   Coin Packages / Payment Settings / Promo
+   Payment Settings / Copy / Promo Redemption
+   Package Cards: DISPLAY ONLY
    ========================================== */
 
 
@@ -10,8 +11,6 @@
    ========================================== */
 
 const TOPUP_CONFIG = {
-
-    packageSelector: '[data-package-id]',
 
     copyButtonSelector: '[data-copy-target]',
 
@@ -30,49 +29,11 @@ const TOPUP_CONFIG = {
 };
 
 
-/* ==========================================
-   2. COIN PACKAGE CONFIGURATION
-   ========================================== */
-
-const TOPUP_PACKAGES = {
-
-    package_1000: {
-        price: 1000,
-        coins: 40,
-        bonus: 0,
-        total: 40
-    },
-
-    package_2000: {
-        price: 2000,
-        coins: 80,
-        bonus: 5,
-        total: 85
-    },
-
-    package_3000: {
-        price: 3000,
-        coins: 120,
-        bonus: 10,
-        total: 130
-    },
-
-    package_5000: {
-        price: 5000,
-        coins: 200,
-        bonus: 20,
-        total: 220
-    }
-};
-
-
-let selectedTopupPackage = null;
-
 let isPromoRedeeming = false;
 
 
 /* ==========================================
-   3. API HELPER
+   2. API HELPER
    ========================================== */
 
 async function topupApiRequest(action, data = {}) {
@@ -84,15 +45,12 @@ async function topupApiRequest(action, data = {}) {
         );
     }
 
-    return await window.authApiRequest(
-        action,
-        data
-    );
+    return await window.authApiRequest(action, data);
 }
 
 
 /* ==========================================
-   4. TOP-UP MESSAGE HELPERS
+   3. MESSAGE HELPERS
    ========================================== */
 
 function showTopupMessage(elementId, message) {
@@ -142,7 +100,7 @@ function showTopupSuccess(message) {
 
 
 /* ==========================================
-   5. FORMAT NUMBER
+   4. NUMBER FORMAT
    ========================================== */
 
 function formatTopupNumber(number) {
@@ -154,157 +112,25 @@ function formatTopupNumber(number) {
 
 
 /* ==========================================
-   6. PACKAGE SELECTION
+   5. UPDATE TEXT ELEMENT
    ========================================== */
 
-function selectTopupPackage(packageId, button) {
+function updateTopupText(elementId, value) {
 
-    const selectedPackage = TOPUP_PACKAGES[packageId];
+    const element = document.getElementById(elementId);
 
-    if (!selectedPackage || !button) {
+    if (!element) return;
 
-        console.error(
-            'Unknown Package:',
-            packageId
-        );
-
+    if (value === undefined || value === null) {
         return;
     }
 
-    selectedTopupPackage = {
-        id: packageId,
-        ...selectedPackage
-    };
-
-
-    // Clear Previous Selection
-
-    document.querySelectorAll(
-        TOPUP_CONFIG.packageSelector
-    ).forEach(packageButton => {
-
-        packageButton.classList.remove('selected');
-
-        packageButton.setAttribute(
-            'aria-pressed',
-            'false'
-        );
-
-        const card = packageButton.closest(
-            '[data-package-card]'
-        );
-
-        if (card) {
-            card.classList.remove('selected');
-        }
-    });
-
-
-    // Apply Current Selection
-
-    button.classList.add('selected');
-
-    button.setAttribute(
-        'aria-pressed',
-        'true'
-    );
-
-    const currentCard = button.closest(
-        '[data-package-card]'
-    );
-
-    if (currentCard) {
-        currentCard.classList.add('selected');
-    }
-
-
-    // Notify Other Scripts
-
-    document.dispatchEvent(
-        new CustomEvent('topupPackageSelected', {
-            detail: {
-                ...selectedTopupPackage
-            }
-        })
-    );
-
-
-    console.log(
-        'Selected Top-up Package:',
-        selectedTopupPackage
-    );
+    element.textContent = String(value);
 }
 
 
 /* ==========================================
-   7. SETUP PACKAGE BUTTONS
-   ========================================== */
-
-function setupTopupPackages() {
-
-    const packageButtons = document.querySelectorAll(
-        TOPUP_CONFIG.packageSelector
-    );
-
-    packageButtons.forEach(button => {
-
-        if (button.dataset.topupReady === 'true') {
-            return;
-        }
-
-        button.dataset.topupReady = 'true';
-
-        button.setAttribute(
-            'aria-pressed',
-            'false'
-        );
-
-        button.addEventListener('click', () => {
-
-            const packageId = button.dataset.packageId;
-
-            const packagePrice = Number(
-                button.dataset.price
-            );
-
-            const packageData = TOPUP_PACKAGES[packageId];
-
-
-            if (!packageData) {
-
-                console.error(
-                    'Package Configuration မတွေ့ပါ။',
-                    packageId
-                );
-
-                return;
-            }
-
-
-            // Verify HTML Package Price
-
-            if (packagePrice !== packageData.price) {
-
-                console.error(
-                    'Package Price မကိုက်ညီပါ။',
-                    packageId
-                );
-
-                return;
-            }
-
-
-            selectTopupPackage(
-                packageId,
-                button
-            );
-        });
-    });
-}
-
-
-/* ==========================================
-   8. LOAD PAYMENT SETTINGS
+   6. LOAD PAYMENT SETTINGS
    ========================================== */
 
 async function loadTopupSettings() {
@@ -314,6 +140,14 @@ async function loadTopupSettings() {
         const result = await topupApiRequest(
             'getTopupSettings'
         );
+
+        if (!result || result.success === false) {
+
+            throw new Error(
+                result?.message ||
+                'Payment Settings ရယူ၍ မရပါ။'
+            );
+        }
 
         const settings = result.settings || {};
 
@@ -352,9 +186,15 @@ async function loadTopupSettings() {
 
         if (telegramLink) {
 
-            if (settings.telegramUrl) {
+            const telegramUrl = String(
+                settings.telegramUrl || ''
+            ).trim();
 
-                telegramLink.href = settings.telegramUrl;
+            if (
+                /^https:\/\/(t\.me|telegram\.me)\//i.test(telegramUrl)
+            ) {
+
+                telegramLink.href = telegramUrl;
 
                 telegramLink.target = '_blank';
 
@@ -379,34 +219,29 @@ async function loadTopupSettings() {
             error
         );
 
+        showTopupError(
+            'ငွေလွှဲအကောင့်အချက်အလက်များ ရယူ၍မရပါ။ ခဏနေမှ ပြန်လည်ကြိုးစားပေးပါ။'
+        );
+
         return null;
     }
 }
 
 
 /* ==========================================
-   9. UPDATE TEXT ELEMENT
-   ========================================== */
-
-function updateTopupText(elementId, value) {
-
-    const element = document.getElementById(elementId);
-
-    if (!element || value === undefined || value === null) {
-        return;
-    }
-
-    element.textContent = value;
-}
-
-
-/* ==========================================
-   10. COPY PAYMENT INFORMATION
+   7. COPY PAYMENT INFORMATION
    ========================================== */
 
 async function copyTopupText(text, button) {
 
-    if (!text) return;
+    if (!text) {
+
+        showTopupError(
+            'Copy ကူးရန် အချက်အလက် မရှိသေးပါ။'
+        );
+
+        return;
+    }
 
     try {
 
@@ -414,7 +249,10 @@ async function copyTopupText(text, button) {
             !navigator.clipboard ||
             typeof navigator.clipboard.writeText !== 'function'
         ) {
-            throw new Error('CLIPBOARD_NOT_AVAILABLE');
+
+            throw new Error(
+                'CLIPBOARD_NOT_AVAILABLE'
+            );
         }
 
         await navigator.clipboard.writeText(text);
@@ -436,7 +274,7 @@ async function copyTopupText(text, button) {
 
 
 /* ==========================================
-   11. COPY BUTTON SUCCESS UI
+   8. COPY BUTTON SUCCESS
    ========================================== */
 
 function showCopySuccess(button) {
@@ -464,7 +302,7 @@ function showCopySuccess(button) {
 
 
 /* ==========================================
-   12. SETUP COPY BUTTONS
+   9. SETUP COPY BUTTONS
    ========================================== */
 
 function setupTopupCopyButtons() {
@@ -503,7 +341,7 @@ function setupTopupCopyButtons() {
 
 
 /* ==========================================
-   13. REDEEM PROMO CODE
+   10. REDEEM PROMO CODE
    ========================================== */
 
 async function redeemTopupPromoCode() {
@@ -511,9 +349,13 @@ async function redeemTopupPromoCode() {
     if (isPromoRedeeming) return;
 
 
-    hideTopupMessage(TOPUP_CONFIG.promoErrorId);
+    hideTopupMessage(
+        TOPUP_CONFIG.promoErrorId
+    );
 
-    hideTopupMessage(TOPUP_CONFIG.promoSuccessId);
+    hideTopupMessage(
+        TOPUP_CONFIG.promoSuccessId
+    );
 
 
     // Check Login Status
@@ -614,6 +456,15 @@ async function redeemTopupPromoCode() {
         );
 
 
+        if (!result || result.success === false) {
+
+            throw new Error(
+                result?.message ||
+                'Promo Code အသုံးပြုခြင်း မအောင်မြင်ပါ။'
+            );
+        }
+
+
         // Successful Redemption
 
         input.value = '';
@@ -705,7 +556,7 @@ async function redeemTopupPromoCode() {
 
 
 /* ==========================================
-   14. SETUP PROMO REDEMPTION
+   11. SETUP PROMO REDEMPTION
    ========================================== */
 
 function setupPromoRedemption() {
@@ -719,7 +570,12 @@ function setupPromoRedemption() {
     );
 
 
-    if (button && button.dataset.promoReady !== 'true') {
+    // Redeem Button
+
+    if (
+        button &&
+        button.dataset.promoReady !== 'true'
+    ) {
 
         button.dataset.promoReady = 'true';
 
@@ -730,7 +586,12 @@ function setupPromoRedemption() {
     }
 
 
-    if (input && input.dataset.promoReady !== 'true') {
+    // Enter Key Support
+
+    if (
+        input &&
+        input.dataset.promoReady !== 'true'
+    ) {
 
         input.dataset.promoReady = 'true';
 
@@ -744,6 +605,8 @@ function setupPromoRedemption() {
             }
         });
 
+
+        // Hide Previous Messages When Typing
 
         input.addEventListener('input', () => {
 
@@ -760,7 +623,7 @@ function setupPromoRedemption() {
 
 
 /* ==========================================
-   15. LOAD CURRENT COIN BALANCE
+   12. LOAD CURRENT COIN BALANCE
    ========================================== */
 
 async function loadTopupCoinBalance() {
@@ -783,7 +646,9 @@ async function loadTopupCoinBalance() {
     }
 
 
-    if (typeof window.refreshCoinBalance === 'function') {
+    if (
+        typeof window.refreshCoinBalance === 'function'
+    ) {
 
         await window.refreshCoinBalance();
     }
@@ -791,39 +656,44 @@ async function loadTopupCoinBalance() {
 
 
 /* ==========================================
-   16. INITIALIZE TOP-UP PAGE
+   13. INITIALIZE TOP-UP PAGE
    ========================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
-    // Run only on Top-up Page
+    // Run Only on Top-up Page
 
-    if (!document.getElementById(TOPUP_CONFIG.promoInputId)) {
+    if (
+        !document.getElementById(
+            TOPUP_CONFIG.promoInputId
+        )
+    ) {
         return;
     }
 
 
-    setupTopupPackages();
+    // Setup Page Functions
 
     setupTopupCopyButtons();
 
     setupPromoRedemption();
 
 
-    // Load Settings and Coin Balance
+    // Load Payment Settings and Coin Balance
 
-    loadTopupSettings();
+    await Promise.allSettled([
 
-    loadTopupCoinBalance();
+        loadTopupSettings(),
+
+        loadTopupCoinBalance()
+
+    ]);
 });
 
 
 /* ==========================================
-   17. GLOBAL FUNCTIONS
+   14. GLOBAL FUNCTIONS
    ========================================== */
-
-window.selectTopupPackage =
-    selectTopupPackage;
 
 window.loadTopupSettings =
     loadTopupSettings;
@@ -834,9 +704,14 @@ window.loadTopupCoinBalance =
 window.redeemTopupPromoCode =
     redeemTopupPromoCode;
 
+
 window.refreshTopupPage = async function () {
 
-    await loadTopupSettings();
+    await Promise.allSettled([
 
-    await loadTopupCoinBalance();
+        loadTopupSettings(),
+
+        loadTopupCoinBalance()
+
+    ]);
 };
