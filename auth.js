@@ -10,9 +10,8 @@
 ========================================== */
 
 // Google Apps Script Web App URL
-// Backend တည်ဆောက်ပြီးမှ URL ထည့်ပါမည်။
 
-const AUTH_API_URL = '';
+const AUTH_API_URL = 'https://script.google.com/macros/s/AKfycbznSFyzuaP9JZDOSe2RC3yIfVlUemLeAq15Oi3ibgn_cbN0FhLQhdorOw-i18CcNrfFZg/exec';
 
 const AUTH_CONFIG = {
     sessionKey: 'novelverse_session',
@@ -41,7 +40,7 @@ async function authApiRequest(action, data = {}) {
 
     if (!AUTH_API_URL) {
         throw new Error(
-            'Authentication API မချိတ်ဆက်ရသေးပါ။ Backend တည်ဆောက်ရန် လိုအပ်ပါသည်။'
+            'Authentication API မချိတ်ဆက်ရသေးပါ။'
         );
     }
 
@@ -117,8 +116,6 @@ async function authApiRequest(action, data = {}) {
    4. SESSION MANAGEMENT
 ========================================== */
 
-// Session ရယူခြင်း
-
 function getAuthSession() {
 
     try {
@@ -151,8 +148,6 @@ function getAuthSession() {
     }
 }
 
-
-// Session သိမ်းဆည်းခြင်း
 
 function saveAuthSession(sessionData) {
 
@@ -195,8 +190,6 @@ function saveAuthSession(sessionData) {
 }
 
 
-// Session ဖျက်ခြင်း
-
 function clearAuthSession() {
 
     try {
@@ -213,8 +206,6 @@ function clearAuthSession() {
     currentAuthUser = null;
 }
 
-
-// Login ဝင်ထားခြင်း ရှိ/မရှိ
 
 function isUserLoggedIn() {
 
@@ -265,9 +256,6 @@ function hideAuthMessage(elementId) {
     element.style.display = 'none';
 }
 
-
-// Button Loading
-// မူလ Icon နှင့် HTML ကို ထိန်းထားမည်။
 
 function setAuthButtonLoading(buttonId, loading) {
 
@@ -381,9 +369,6 @@ function switchAuthTab(tabName) {
     hideAuthMessage('login-error');
 
     hideAuthMessage('register-error');
-
-    // Register Success Message ကို မဖျောက်ပါ။
-    // Tab ကို ပြန်ပြောင်းတဲ့အခါမှ ဖျောက်မည်။
 
     if (tabName !== 'register') {
 
@@ -527,8 +512,6 @@ async function handleUserRegister(event) {
     const confirmPin = confirmPinInput.value;
 
 
-    // Username Validation
-
     if (
         username.length < 3 ||
         username.length > 30
@@ -554,11 +537,7 @@ async function handleUserRegister(event) {
     }
 
 
-    // PIN Validation
-
-    if (
-        !/^\d{6,12}$/.test(pin)
-    ) {
+    if (!/^\d{6,12}$/.test(pin)) {
 
         showAuthError(
             'register-error',
@@ -599,8 +578,6 @@ async function handleUserRegister(event) {
         );
 
 
-        // Login Form တွင် Username အလိုအလျောက် ဖြည့်မည်။
-
         const loginUsername = document.getElementById(
             'login-username'
         );
@@ -611,14 +588,10 @@ async function handleUserRegister(event) {
         }
 
 
-        // Register Form ကို ရှင်းလင်းမည်။
-
         document.getElementById(
             'register-form'
         )?.reset();
 
-
-        // Password Toggle Icon များကို ပြန်ထားမည်။
 
         document.querySelectorAll(
             '[data-password-toggle]'
@@ -640,8 +613,6 @@ async function handleUserRegister(event) {
             }
         });
 
-
-        // Register Panel ထဲမှာ Success Message ပြမည်။
 
         showAuthMessage(
             'register-success',
@@ -741,8 +712,6 @@ async function handleUserLogin(event) {
         );
 
 
-        // Backend မှ Session Token ရရှိရမည်။
-
         const sessionData = result.session || {
 
             token: result.token,
@@ -760,14 +729,10 @@ async function handleUserLogin(event) {
         saveAuthSession(sessionData);
 
 
-        // Login Form ရှင်းလင်းမည်။
-
         document.getElementById(
             'login-form'
         )?.reset();
 
-
-        // Profile ကို Backend မှ ပြန်ရယူမည်။
 
         await loadCurrentUserProfile();
 
@@ -842,8 +807,6 @@ async function loadCurrentUserProfile() {
         showProfileSection();
 
 
-        // Coin Balance ကို coin.js မှ ရယူမည်။
-
         if (
             typeof window.loadCoinBalance === 'function'
         ) {
@@ -851,8 +814,6 @@ async function loadCurrentUserProfile() {
             await window.loadCoinBalance();
         }
 
-
-        // Transaction History ကို profile.js မှ ရယူမည်။
 
         if (
             typeof window.loadTransactionHistory === 'function'
@@ -869,9 +830,6 @@ async function loadCurrentUserProfile() {
             error
         );
 
-
-        // Server က Session Invalid ဖြစ်ကြောင်း အတည်ပြုမှသာ
-        // Local Session ကို ဖျက်မည်။
 
         const invalidSessionCodes = [
             'INVALID_TOKEN',
@@ -896,9 +854,6 @@ async function loadCurrentUserProfile() {
             return;
         }
 
-
-        // Network Error သို့မဟုတ် Server Error ဖြစ်လျှင်
-        // Session ကို မဖျက်ပါ။
 
         showAuthSection();
 
@@ -930,8 +885,6 @@ function updateProfileUI(user) {
     );
 
 
-    // Username
-
     if (usernameElement) {
 
         usernameElement.textContent =
@@ -940,8 +893,6 @@ function updateProfileUI(user) {
             'User';
     }
 
-
-    // Member Since
 
     if (createdDateElement) {
 
@@ -967,8 +918,6 @@ function updateProfileUI(user) {
         }
     }
 
-
-    // Account Status
 
     if (accountStatusElement) {
 
@@ -1050,8 +999,6 @@ async function handleUserLogout() {
         switchAuthTab('login');
 
 
-        // Coin Display ကို Reset လုပ်မည်။
-
         const profileCoinBalance = document.getElementById(
             'profile-coin-balance'
         );
@@ -1068,8 +1015,6 @@ async function handleUserLogout() {
             headerCoinBalance.textContent = '0';
         }
 
-
-        // Transaction List ကို Reset လုပ်မည်။
 
         const transactionList = document.getElementById(
             'coin-transaction-list'
