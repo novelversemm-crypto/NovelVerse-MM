@@ -1,4 +1,4 @@
-
+const ADMIN_API_URL = 'https://script.google.com/macros/s/AKfycbznSFyzuaP9JZDOSe2RC3yIfVlUemLeAq15Oi3ibgn_cbN0FhLQhdorOw-i18CcNrfFZg/exec';
 // ==========================================
 // 🐙 GITHUB REPOSITORY CONFIGURATION
 // ==========================================
