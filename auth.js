@@ -1,20 +1,47 @@
+
+/* ===================================================
+   NOVELVERSE MM - AUTHENTICATION SYSTEM
+   File: js/auth.js
+   Version: 1.2
+=================================================== */
+
+
+// ==========================================
+// 1. API CONFIGURATION
+// ==========================================
+
 const AUTH_API_URL = 'https://script.google.com/macros/s/AKfycbznSFyzuaP9JZDOSe2RC3yIfVlUemLeAq15Oi3ibgn_cbN0FhLQhdorOw-i18CcNrfFZg/exec';
 
+
 const AUTH_CONFIG = {
+
     sessionKey: 'novelverse_session',
+
     minimumPinLength: 6,
+
     maximumPinLength: 12,
+
     loginPage: 'profile.html',
+
     homePage: 'index.html'
+
 };
 
+
+// ==========================================
+// 2. AUTH STATE
+// ==========================================
+
 let currentAuthUser = null;
+
 let isAuthLoading = false;
 
+let profileRequest = null;
 
-/* ==========================================
-   REFRESH LOADING SPINNER
-========================================== */
+
+// ==========================================
+// 3. REFRESH LOADING SPINNER
+// ==========================================
 
 (function prepareAuthLoader() {
 
@@ -25,12 +52,16 @@ let isAuthLoading = false;
     loaderStyle.id = 'novelverse-auth-loader-style';
 
     loaderStyle.textContent = `
+
         html.auth-checking #auth-section,
         html.auth-checking #profile-section {
+
             visibility: hidden !important;
+
         }
 
         #novelverse-auth-loader {
+
             position: fixed;
             inset: 0;
             z-index: 999999;
@@ -39,98 +70,148 @@ let isAuthLoading = false;
             justify-content: center;
             flex-direction: column;
             gap: 18px;
+
             background:
-                radial-gradient(circle at 50% 42%, rgba(212,175,106,0.10), transparent 34%),
+                radial-gradient(
+                    circle at 50% 42%,
+                    rgba(212,175,106,0.10),
+                    transparent 34%
+                ),
                 #12111A;
+
             color: #fff;
             font-family: inherit;
+
         }
 
         #novelverse-auth-loader .auth-loader-ring {
+
             position: relative;
             width: 58px;
             height: 58px;
             border-radius: 50%;
+
             border: 3px solid rgba(212,175,106,0.15);
+
             border-top-color: #D4AF6A;
             border-right-color: #D4AF6A;
+
             box-shadow: 0 0 22px rgba(212,175,106,0.12);
+
             animation: novelVerseAuthSpin 0.85s linear infinite;
+
         }
 
         #novelverse-auth-loader .auth-loader-ring::after {
+
             content: "";
             position: absolute;
             inset: 8px;
             border-radius: 50%;
+
             border: 2px solid rgba(255,255,255,0.08);
+
             border-bottom-color: rgba(255,255,255,0.75);
+
             animation: novelVerseAuthSpinReverse 1.25s linear infinite;
+
         }
 
         #novelverse-auth-loader .auth-loader-brand {
+
             font-size: 17px;
             font-weight: 700;
             letter-spacing: 2px;
             color: #D4AF6A;
+
         }
 
         #novelverse-auth-loader .auth-loader-message {
+
             margin: -10px 0 0;
             font-size: 13px;
             letter-spacing: 0.3px;
             color: rgba(255,255,255,0.68);
+
         }
 
         #novelverse-auth-loader .auth-loader-dots {
+
             display: flex;
             gap: 6px;
             margin-top: -8px;
+
         }
 
         #novelverse-auth-loader .auth-loader-dots span {
+
             width: 5px;
             height: 5px;
             border-radius: 50%;
             background: #D4AF6A;
+
             animation: novelVerseAuthPulse 1s ease-in-out infinite;
+
         }
 
         #novelverse-auth-loader .auth-loader-dots span:nth-child(2) {
+
             animation-delay: 0.15s;
+
         }
 
         #novelverse-auth-loader .auth-loader-dots span:nth-child(3) {
+
             animation-delay: 0.3s;
+
         }
 
         @keyframes novelVerseAuthSpin {
-            to { transform: rotate(360deg); }
+
+            to {
+                transform: rotate(360deg);
+            }
+
         }
 
         @keyframes novelVerseAuthSpinReverse {
-            to { transform: rotate(-360deg); }
+
+            to {
+                transform: rotate(-360deg);
+            }
+
         }
 
         @keyframes novelVerseAuthPulse {
+
             0%, 60%, 100% {
+
                 opacity: 0.3;
                 transform: translateY(0);
+
             }
 
             30% {
+
                 opacity: 1;
                 transform: translateY(-4px);
+
             }
+
         }
 
         @media (prefers-reduced-motion: reduce) {
+
             #novelverse-auth-loader .auth-loader-ring,
             #novelverse-auth-loader .auth-loader-ring::after,
             #novelverse-auth-loader .auth-loader-dots span {
+
                 animation-duration: 2.5s;
+
             }
+
         }
+
     `;
 
     (document.head || document.documentElement).appendChild(loaderStyle);
@@ -138,9 +219,14 @@ let isAuthLoading = false;
 })();
 
 
+// ==========================================
+// 4. SHOW AUTH LOADER
+// ==========================================
+
 function showAuthInitializationLoader() {
 
     const authSection = document.getElementById('auth-section');
+
     const profileSection = document.getElementById('profile-section');
 
     if (!authSection && !profileSection) {
@@ -156,48 +242,71 @@ function showAuthInitializationLoader() {
         loader.id = 'novelverse-auth-loader';
 
         loader.setAttribute('role', 'status');
+
         loader.setAttribute('aria-live', 'polite');
 
         loader.innerHTML = `
+
             <div class="auth-loader-ring"></div>
-            <div class="auth-loader-brand">NOVELVERSE</div>
-            <p class="auth-loader-message">Checking your account...</p>
-            <div class="auth-loader-dots" aria-hidden="true">
-                <span></span>
-                <span></span>
-                <span></span>
+
+            <div class="auth-loader-brand">
+                NOVELVERSE
             </div>
+
+            <p class="auth-loader-message">
+                Checking your account...
+            </p>
+
+            <div class="auth-loader-dots" aria-hidden="true">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
         `;
 
         document.body.appendChild(loader);
+
     }
 
     loader.style.display = 'flex';
+
 }
 
+
+// ==========================================
+// 5. HIDE AUTH LOADER
+// ==========================================
 
 function hideAuthInitializationLoader() {
 
     document.documentElement.classList.remove('auth-checking');
 
-    const loader = document.getElementById('novelverse-auth-loader');
+    const loader = document.getElementById(
+        'novelverse-auth-loader'
+    );
 
     if (loader) {
         loader.remove();
     }
+
 }
 
 
-/* ==========================================
-   API REQUEST
-========================================== */
+// ==========================================
+// 6. API REQUEST
+// ==========================================
 
 async function authApiRequest(action, data = {}) {
 
     if (!AUTH_API_URL) {
+
         throw new Error(
             'Authentication API မချိတ်ဆက်ရသေးပါ။'
         );
+
     }
 
     let response;
@@ -205,16 +314,23 @@ async function authApiRequest(action, data = {}) {
     try {
 
         response = await fetch(AUTH_API_URL, {
+
             method: 'POST',
 
             headers: {
+
                 'Content-Type': 'text/plain;charset=utf-8'
+
             },
 
             body: JSON.stringify({
+
                 action,
+
                 ...data
+
             })
+
         });
 
     } catch (error) {
@@ -226,7 +342,9 @@ async function authApiRequest(action, data = {}) {
         networkError.code = 'NETWORK_ERROR';
 
         throw networkError;
+
     }
+
 
     if (!response.ok) {
 
@@ -235,10 +353,13 @@ async function authApiRequest(action, data = {}) {
         );
 
         serverError.code = 'HTTP_ERROR';
+
         serverError.status = response.status;
 
         throw serverError;
+
     }
+
 
     let result;
 
@@ -251,7 +372,9 @@ async function authApiRequest(action, data = {}) {
         throw new Error(
             'Server မှ မှန်ကန်သော Response မရရှိပါ။'
         );
+
     }
+
 
     if (!result || result.success !== true) {
 
@@ -262,15 +385,17 @@ async function authApiRequest(action, data = {}) {
         apiError.code = result?.code || 'API_ERROR';
 
         throw apiError;
+
     }
 
     return result;
+
 }
 
 
-/* ==========================================
-   SESSION MANAGEMENT
-========================================== */
+// ==========================================
+// 7. SESSION MANAGEMENT
+// ==========================================
 
 function getAuthSession() {
 
@@ -291,7 +416,9 @@ function getAuthSession() {
             typeof session !== 'object' ||
             !session.token
         ) {
+
             return null;
+
         }
 
         return session;
@@ -301,9 +428,15 @@ function getAuthSession() {
         console.error('Session Read Error:', error);
 
         return null;
+
     }
+
 }
 
+
+// ==========================================
+// 8. SAVE AUTH SESSION
+// ==========================================
 
 function saveAuthSession(sessionData) {
 
@@ -312,21 +445,32 @@ function saveAuthSession(sessionData) {
         throw new Error(
             'Server မှ Session Token မရရှိပါ။'
         );
+
     }
 
     const session = {
+
         token: sessionData.token,
+
         userId: sessionData.userId || '',
+
         username: sessionData.username || '',
+
         createdAt: sessionData.createdAt || '',
+
         expiresAt: sessionData.expiresAt || ''
+
     };
+
 
     try {
 
         localStorage.setItem(
+
             AUTH_CONFIG.sessionKey,
+
             JSON.stringify(session)
+
         );
 
     } catch (error) {
@@ -334,13 +478,20 @@ function saveAuthSession(sessionData) {
         throw new Error(
             'Session ကို သိမ်းဆည်း၍ မရပါ။ Browser Storage ကို စစ်ဆေးပါ။'
         );
+
     }
+
 
     currentAuthUser = session;
 
     return session;
+
 }
 
+
+// ==========================================
+// 9. CLEAR AUTH SESSION
+// ==========================================
 
 function clearAuthSession() {
 
@@ -353,11 +504,19 @@ function clearAuthSession() {
     } catch (error) {
 
         console.error('Session Clear Error:', error);
+
     }
 
     currentAuthUser = null;
+
+    profileRequest = null;
+
 }
 
+
+// ==========================================
+// 10. CHECK LOGIN STATUS
+// ==========================================
 
 function isUserLoggedIn() {
 
@@ -366,12 +525,13 @@ function isUserLoggedIn() {
     return Boolean(
         session && session.token
     );
+
 }
 
 
-/* ==========================================
-   AUTH UI HELPERS
-========================================== */
+// ==========================================
+// 11. AUTH UI HELPERS
+// ==========================================
 
 function showAuthError(elementId, message) {
 
@@ -382,6 +542,7 @@ function showAuthError(elementId, message) {
     element.textContent = message;
 
     element.style.display = 'block';
+
 }
 
 
@@ -394,6 +555,7 @@ function showAuthMessage(elementId, message) {
     element.textContent = message;
 
     element.style.display = 'block';
+
 }
 
 
@@ -406,8 +568,13 @@ function hideAuthMessage(elementId) {
     element.textContent = '';
 
     element.style.display = 'none';
+
 }
 
+
+// ==========================================
+// 12. AUTH BUTTON LOADING
+// ==========================================
 
 function setAuthButtonLoading(buttonId, loading) {
 
@@ -418,7 +585,9 @@ function setAuthButtonLoading(buttonId, loading) {
     if (loading) {
 
         if (!button.dataset.originalHTML) {
+
             button.dataset.originalHTML = button.innerHTML;
+
         }
 
         button.disabled = true;
@@ -434,14 +603,17 @@ function setAuthButtonLoading(buttonId, loading) {
             button.innerHTML = button.dataset.originalHTML;
 
             delete button.dataset.originalHTML;
+
         }
+
     }
+
 }
 
 
-/* ==========================================
-   AUTH / PROFILE SECTION
-========================================== */
+// ==========================================
+// 13. AUTH / PROFILE SECTION
+// ==========================================
 
 function showAuthSection() {
 
@@ -453,19 +625,24 @@ function showAuthSection() {
         'profile-section'
     );
 
+
     if (authSection) {
 
         authSection.hidden = false;
 
         authSection.style.display = '';
+
     }
+
 
     if (profileSection) {
 
         profileSection.hidden = true;
 
         profileSection.style.display = '';
+
     }
+
 }
 
 
@@ -479,25 +656,30 @@ function showProfileSection() {
         'profile-section'
     );
 
+
     if (authSection) {
 
         authSection.hidden = true;
 
         authSection.style.display = '';
+
     }
+
 
     if (profileSection) {
 
         profileSection.hidden = false;
 
         profileSection.style.display = '';
+
     }
+
 }
 
 
-/* ==========================================
-   AUTH TAB SWITCHING
-========================================== */
+// ==========================================
+// 14. AUTH TAB SWITCHING
+// ==========================================
 
 function switchAuthTab(tabName) {
 
@@ -517,13 +699,18 @@ function switchAuthTab(tabName) {
         'register-tab-btn'
     );
 
+
     hideAuthMessage('login-error');
 
     hideAuthMessage('register-error');
 
+
     if (tabName !== 'register') {
+
         hideAuthMessage('register-success');
+
     }
+
 
     if (tabName === 'register') {
 
@@ -560,19 +747,22 @@ function switchAuthTab(tabName) {
         if (registerTab) {
             registerTab.classList.remove('active');
         }
+
     }
+
 }
 
 
-/* ==========================================
-   PASSWORD / PIN VISIBILITY
-========================================== */
+// ==========================================
+// 15. PASSWORD / PIN VISIBILITY
+// ==========================================
 
 function setupPasswordToggles() {
 
     const toggleButtons = document.querySelectorAll(
         '[data-password-toggle]'
     );
+
 
     toggleButtons.forEach(button => {
 
@@ -581,6 +771,7 @@ function setupPasswordToggles() {
         }
 
         button.dataset.authToggleReady = 'true';
+
 
         button.addEventListener('click', () => {
 
@@ -592,6 +783,7 @@ function setupPasswordToggles() {
 
             const icon = button.querySelector('i');
 
+
             if (input.type === 'password') {
 
                 input.type = 'text';
@@ -602,8 +794,11 @@ function setupPasswordToggles() {
                 );
 
                 if (icon) {
+
                     icon.classList.remove('fa-eye');
+
                     icon.classList.add('fa-eye-slash');
+
                 }
 
             } else {
@@ -616,18 +811,25 @@ function setupPasswordToggles() {
                 );
 
                 if (icon) {
+
                     icon.classList.remove('fa-eye-slash');
+
                     icon.classList.add('fa-eye');
+
                 }
+
             }
+
         });
+
     });
+
 }
 
 
-/* ==========================================
-   USER REGISTRATION
-========================================== */
+// ==========================================
+// 16. USER REGISTRATION
+// ==========================================
 
 async function handleUserRegister(event) {
 
@@ -638,6 +840,7 @@ async function handleUserRegister(event) {
     hideAuthMessage('register-error');
 
     hideAuthMessage('register-success');
+
 
     const usernameInput = document.getElementById(
         'register-username'
@@ -651,9 +854,11 @@ async function handleUserRegister(event) {
         'register-confirm-pin'
     );
 
+
     if (!usernameInput || !pinInput || !confirmPinInput) {
         return;
     }
+
 
     const username = usernameInput.value.trim();
 
@@ -673,6 +878,7 @@ async function handleUserRegister(event) {
         );
 
         return;
+
     }
 
 
@@ -684,6 +890,7 @@ async function handleUserRegister(event) {
         );
 
         return;
+
     }
 
 
@@ -695,6 +902,7 @@ async function handleUserRegister(event) {
         );
 
         return;
+
     }
 
 
@@ -706,6 +914,7 @@ async function handleUserRegister(event) {
         );
 
         return;
+
     }
 
 
@@ -752,14 +961,19 @@ async function handleUserRegister(event) {
 
             const icon = button.querySelector('i');
 
+
             if (input) {
                 input.type = 'password';
             }
 
             if (icon) {
+
                 icon.classList.remove('fa-eye-slash');
+
                 icon.classList.add('fa-eye');
+
             }
+
         });
 
 
@@ -779,6 +993,7 @@ async function handleUserRegister(event) {
 
         console.error('Registration Error:', error);
 
+
     } finally {
 
         isAuthLoading = false;
@@ -787,13 +1002,15 @@ async function handleUserRegister(event) {
             'register-submit-btn',
             false
         );
+
     }
+
 }
 
 
-/* ==========================================
-   USER LOGIN
-========================================== */
+// ==========================================
+// 17. USER LOGIN
+// ==========================================
 
 async function handleUserLogin(event) {
 
@@ -803,6 +1020,7 @@ async function handleUserLogin(event) {
 
     hideAuthMessage('login-error');
 
+
     const usernameInput = document.getElementById(
         'login-username'
     );
@@ -811,9 +1029,11 @@ async function handleUserLogin(event) {
         'login-pin'
     );
 
+
     if (!usernameInput || !pinInput) {
         return;
     }
+
 
     const username = usernameInput.value.trim();
 
@@ -828,6 +1048,7 @@ async function handleUserLogin(event) {
         );
 
         return;
+
     }
 
 
@@ -839,6 +1060,7 @@ async function handleUserLogin(event) {
         );
 
         return;
+
     }
 
 
@@ -872,6 +1094,7 @@ async function handleUserLogin(event) {
             createdAt: result.createdAt,
 
             expiresAt: result.expiresAt
+
         };
 
 
@@ -895,6 +1118,7 @@ async function handleUserLogin(event) {
 
         console.error('Login Error:', error);
 
+
     } finally {
 
         isAuthLoading = false;
@@ -903,17 +1127,30 @@ async function handleUserLogin(event) {
             'login-submit-btn',
             false
         );
+
     }
+
 }
 
 
-/* ==========================================
-   LOAD CURRENT USER PROFILE
-========================================== */
+// ==========================================
+// 18. LOAD CURRENT USER PROFILE
+// ==========================================
 
 async function loadCurrentUserProfile() {
 
+    // Profile Request တစ်ခု လုပ်နေပြီးသားဆို
+    // ထပ်မံ API မခေါ်ဘဲ အဲဒီ Request ကို အသုံးပြုမယ်။
+
+    if (profileRequest) {
+
+        return await profileRequest;
+
+    }
+
+
     const session = getAuthSession();
+
 
     if (!session || !session.token) {
 
@@ -921,103 +1158,177 @@ async function loadCurrentUserProfile() {
 
         showAuthSection();
 
-        return;
+        return null;
+
     }
 
 
-    try {
+    profileRequest = (async () => {
 
-        const result = await authApiRequest(
-            'getProfile',
-            {
-                token: session.token
-            }
-        );
+        try {
 
+            // 1. Get Profile Information
 
-        const user = result.user || result.profile;
-
-        if (!user) {
-
-            throw new Error(
-                'User Profile ကို ရယူ၍ မရပါ။'
+            const result = await authApiRequest(
+                'getProfile',
+                {
+                    token: session.token
+                }
             );
-        }
 
 
-        currentAuthUser = {
-            ...session,
-            ...user
-        };
+            const user = result.user || result.profile;
 
 
-        updateProfileUI(user);
+            if (!user) {
 
-        showProfileSection();
+                throw new Error(
+                    'User Profile ကို ရယူ၍ မရပါ။'
+                );
 
-
-        if (
-            typeof window.loadCoinBalance === 'function'
-        ) {
-
-            await window.loadCoinBalance();
-        }
+            }
 
 
-        if (
-            typeof window.loadTransactionHistory === 'function'
-        ) {
+            // 2. Update Current User
 
-            await window.loadTransactionHistory();
-        }
+            currentAuthUser = {
 
+                ...session,
 
-    } catch (error) {
+                ...user
 
-        console.error(
-            'Profile Loading Error:',
-            error
-        );
+            };
 
 
-        const invalidSessionCodes = [
-            'INVALID_TOKEN',
-            'TOKEN_EXPIRED',
-            'SESSION_EXPIRED',
-            'UNAUTHORIZED'
-        ];
+            // 3. Update Profile UI
 
-        if (
-            invalidSessionCodes.includes(error.code)
-        ) {
+            updateProfileUI(user);
 
-            clearAuthSession();
+
+            // 4. Show Profile Immediately
+
+            showProfileSection();
+
+
+            // 5. Load Coin Data in Background
+
+            const backgroundTasks = [];
+
+
+            if (
+                typeof window.loadCoinBalance === 'function'
+            ) {
+
+                backgroundTasks.push(
+                    window.loadCoinBalance()
+                );
+
+            }
+
+
+            if (
+                typeof window.loadTransactionHistory === 'function'
+            ) {
+
+                backgroundTasks.push(
+                    window.loadTransactionHistory()
+                );
+
+            }
+
+
+            // Background Tasks များကို စောင့်မထားပါ။
+            // Error ဖြစ်လည်း Profile UI ကို မထိခိုက်စေပါ။
+
+            Promise.allSettled(backgroundTasks).then(results => {
+
+                results.forEach(task => {
+
+                    if (task.status === 'rejected') {
+
+                        console.error(
+                            'Background Profile Data Error:',
+                            task.reason
+                        );
+
+                    }
+
+                });
+
+            });
+
+
+            return user;
+
+
+        } catch (error) {
+
+            console.error(
+                'Profile Loading Error:',
+                error
+            );
+
+
+            const invalidSessionCodes = [
+
+                'INVALID_TOKEN',
+
+                'TOKEN_EXPIRED',
+
+                'SESSION_EXPIRED',
+
+                'UNAUTHORIZED'
+
+            ];
+
+
+            if (
+                invalidSessionCodes.includes(error.code)
+            ) {
+
+                clearAuthSession();
+
+                showAuthSection();
+
+                showAuthError(
+                    'login-error',
+                    'Session သက်တမ်းကုန်သွားပါပြီ။ Login ပြန်ဝင်ပေးပါ။'
+                );
+
+                return null;
+
+            }
+
 
             showAuthSection();
 
             showAuthError(
                 'login-error',
-                'Session သက်တမ်းကုန်သွားပါပြီ။ Login ပြန်ဝင်ပေးပါ။'
+                error.message ||
+                'Profile ကို ရယူ၍ မရပါ။ ခဏအကြာတွင် ပြန်လည်ကြိုးစားပါ။'
             );
 
-            return;
+
+            return null;
+
+
+        } finally {
+
+            profileRequest = null;
+
         }
 
+    })();
 
-        showAuthSection();
 
-        showAuthError(
-            'login-error',
-            error.message ||
-            'Profile ကို ရယူ၍ မရပါ။ ခဏအကြာတွင် ပြန်လည်ကြိုးစားပါ။'
-        );
-    }
+    return await profileRequest;
+
 }
 
 
-/* ==========================================
-   UPDATE PROFILE UI
-========================================== */
+// ==========================================
+// 19. UPDATE PROFILE UI
+// ==========================================
 
 function updateProfileUI(user) {
 
@@ -1040,6 +1351,7 @@ function updateProfileUI(user) {
             user.username ||
             currentAuthUser?.username ||
             'User';
+
     }
 
 
@@ -1049,6 +1361,7 @@ function updateProfileUI(user) {
             user.createdAt ||
             currentAuthUser?.createdAt;
 
+
         if (createdAt) {
 
             const date = new Date(createdAt);
@@ -1057,6 +1370,7 @@ function updateProfileUI(user) {
                 ? createdAt
                 : date.toLocaleDateString('en-GB');
 
+
             createdDateElement.textContent =
                 `Member Since: ${formattedDate}`;
 
@@ -1064,7 +1378,9 @@ function updateProfileUI(user) {
 
             createdDateElement.textContent =
                 'Member Since: --';
+
         }
+
     }
 
 
@@ -1076,6 +1392,7 @@ function updateProfileUI(user) {
 
         const icon = document.createElement('i');
 
+
         if (normalizedStatus === 'active') {
 
             icon.className = 'fa-solid fa-circle-check';
@@ -1083,24 +1400,32 @@ function updateProfileUI(user) {
         } else {
 
             icon.className = 'fa-solid fa-circle-exclamation';
+
         }
 
+
         accountStatusElement.replaceChildren(
+
             icon,
+
             document.createTextNode(` ${status}`)
+
         );
+
 
         accountStatusElement.classList.toggle(
             'inactive',
             normalizedStatus !== 'active'
         );
+
     }
+
 }
 
 
-/* ==========================================
-   USER LOGOUT
-========================================== */
+// ==========================================
+// 20. USER LOGOUT
+// ==========================================
 
 async function handleUserLogout() {
 
@@ -1109,7 +1434,9 @@ async function handleUserLogout() {
             'Account မှ Logout ထွက်မှာ သေချာပါသလား။'
         )
     ) {
+
         return;
+
     }
 
 
@@ -1130,6 +1457,7 @@ async function handleUserLogout() {
                     token: session.token
                 }
             );
+
         }
 
     } catch (error) {
@@ -1143,31 +1471,48 @@ async function handleUserLogout() {
 
         clearAuthSession();
 
+
         showAuthSection();
 
         switchAuthTab('login');
 
 
-        const profileCoinBalance = document.getElementById(
-            'profile-coin-balance'
-        );
+        // Reset Coin Balance
 
-        const headerCoinBalance = document.getElementById(
-            'header-coin-balance'
-        );
+        if (
+            typeof window.updateCoinBalanceUI === 'function'
+        ) {
 
-        if (profileCoinBalance) {
-            profileCoinBalance.textContent = '0';
+            window.updateCoinBalanceUI(0);
+
+        } else {
+
+            const profileCoinBalance = document.getElementById(
+                'profile-coin-balance'
+            );
+
+            const headerCoinBalance = document.getElementById(
+                'header-coin-balance'
+            );
+
+
+            if (profileCoinBalance) {
+                profileCoinBalance.textContent = '0';
+            }
+
+            if (headerCoinBalance) {
+                headerCoinBalance.textContent = '0';
+            }
+
         }
 
-        if (headerCoinBalance) {
-            headerCoinBalance.textContent = '0';
-        }
 
+        // Clear Transaction History
 
         const transactionList = document.getElementById(
             'coin-transaction-list'
         );
+
 
         if (transactionList) {
 
@@ -1179,29 +1524,42 @@ async function handleUserLogout() {
 
             emptyState.id = 'transaction-empty-state';
 
+
             const icon = document.createElement('i');
 
             icon.className = 'fa-solid fa-receipt';
+
 
             const message = document.createElement('p');
 
             message.textContent =
                 'Transaction History မရှိသေးပါ။';
 
-            emptyState.append(icon, message);
+
+            emptyState.append(
+
+                icon,
+
+                message
+
+            );
+
 
             transactionList.appendChild(emptyState);
+
         }
 
 
         currentAuthUser = null;
+
     }
+
 }
 
 
-/* ==========================================
-   AUTH EVENT LISTENERS
-========================================== */
+// ==========================================
+// 21. AUTH EVENT LISTENERS
+// ==========================================
 
 function setupAuthEventListeners() {
 
@@ -1234,72 +1592,108 @@ function setupAuthEventListeners() {
     );
 
 
-    if (loginForm) {
+    if (loginForm && !loginForm.dataset.authReady) {
+
+        loginForm.dataset.authReady = 'true';
 
         loginForm.addEventListener(
             'submit',
             handleUserLogin
         );
+
     }
 
 
-    if (registerForm) {
+    if (registerForm && !registerForm.dataset.authReady) {
+
+        registerForm.dataset.authReady = 'true';
 
         registerForm.addEventListener(
             'submit',
             handleUserRegister
         );
+
     }
 
 
-    if (logoutButton) {
+    if (logoutButton && !logoutButton.dataset.authReady) {
+
+        logoutButton.dataset.authReady = 'true';
 
         logoutButton.addEventListener(
             'click',
             handleUserLogout
         );
+
     }
 
 
-    if (loginTab) {
+    if (loginTab && !loginTab.dataset.authReady) {
+
+        loginTab.dataset.authReady = 'true';
 
         loginTab.addEventListener('click', () => {
+
             switchAuthTab('login');
+
         });
+
     }
 
 
-    if (registerTab) {
+    if (registerTab && !registerTab.dataset.authReady) {
+
+        registerTab.dataset.authReady = 'true';
 
         registerTab.addEventListener('click', () => {
+
             switchAuthTab('register');
+
         });
+
     }
 
 
-    if (showRegisterButton) {
+    if (
+        showRegisterButton &&
+        !showRegisterButton.dataset.authReady
+    ) {
+
+        showRegisterButton.dataset.authReady = 'true';
 
         showRegisterButton.addEventListener('click', () => {
+
             switchAuthTab('register');
+
         });
+
     }
 
 
-    if (showLoginButton) {
+    if (
+        showLoginButton &&
+        !showLoginButton.dataset.authReady
+    ) {
+
+        showLoginButton.dataset.authReady = 'true';
 
         showLoginButton.addEventListener('click', () => {
+
             switchAuthTab('login');
+
         });
+
     }
 
 
     setupPasswordToggles();
+
 }
 
 
-/* ==========================================
-   INITIALIZE AUTH SYSTEM
-========================================== */
+// ==========================================
+// 22. INITIALIZE AUTH SYSTEM
+// ==========================================
 
 async function initializeAuthSystem() {
 
@@ -1307,9 +1701,11 @@ async function initializeAuthSystem() {
 
     showAuthInitializationLoader();
 
+
     try {
 
         const session = getAuthSession();
+
 
         if (session && session.token) {
 
@@ -1324,32 +1720,44 @@ async function initializeAuthSystem() {
             showAuthSection();
 
             switchAuthTab('login');
+
         }
 
     } finally {
 
         hideAuthInitializationLoader();
+
     }
+
 }
 
+
+// ==========================================
+// 23. START AUTH SYSTEM
+// ==========================================
 
 if (document.readyState === 'loading') {
 
     document.addEventListener(
+
         'DOMContentLoaded',
+
         initializeAuthSystem,
+
         { once: true }
+
     );
 
 } else {
 
     initializeAuthSystem();
+
 }
 
 
-/* ==========================================
-   GLOBAL FUNCTIONS
-========================================== */
+// ==========================================
+// 24. GLOBAL FUNCTIONS
+// ==========================================
 
 window.getAuthSession = getAuthSession;
 
@@ -1371,6 +1779,8 @@ window.authApiRequest = authApiRequest;
 
 window.clearAuthSession = clearAuthSession;
 
-window.showAuthInitializationLoader = showAuthInitializationLoader;
+window.showAuthInitializationLoader =
+    showAuthInitializationLoader;
 
-window.hideAuthInitializationLoader = hideAuthInitializationLoader;
+window.hideAuthInitializationLoader =
+    hideAuthInitializationLoader;
