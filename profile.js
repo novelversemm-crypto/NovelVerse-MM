@@ -2,12 +2,13 @@
 /* ==========================================
    NOVELVERSE MM — PROFILE PAGE
    User Profile / Coin History / Account UI
-   ========================================== */
+   Version: 1.2
+========================================== */
 
 
-/* ==========================================
-   1. PROFILE CONFIGURATION
-   ========================================== */
+// ==========================================
+// 1. PROFILE CONFIGURATION
+// ==========================================
 
 const PROFILE_CONFIG = {
 
@@ -24,19 +25,22 @@ const PROFILE_CONFIG = {
     transactionEmptyId: 'transaction-empty-state',
 
     loginRequiredRedirect: 'profile.html'
+
 };
 
 
-/* ==========================================
-   2. PROFILE PAGE STATE
-   ========================================== */
+// ==========================================
+// 2. PROFILE PAGE STATE
+// ==========================================
 
 let isProfilePageLoading = false;
 
+let profileTransactionRequest = null;
 
-/* ==========================================
-   3. CHECK PROFILE PAGE
-   ========================================== */
+
+// ==========================================
+// 3. CHECK PROFILE PAGE
+// ==========================================
 
 function isProfilePage() {
 
@@ -44,12 +48,13 @@ function isProfilePage() {
         document.getElementById('profile-section') ||
         document.getElementById('auth-section')
     );
+
 }
 
 
-/* ==========================================
-   4. GET CURRENT USER
-   ========================================== */
+// ==========================================
+// 4. GET CURRENT USER
+// ==========================================
 
 function getProfileUser() {
 
@@ -58,12 +63,13 @@ function getProfileUser() {
     }
 
     return window.getCurrentAuthUser();
+
 }
 
 
-/* ==========================================
-   5. UPDATE PROFILE INFORMATION
-   ========================================== */
+// ==========================================
+// 5. UPDATE PROFILE INFORMATION
+// ==========================================
 
 function refreshProfileInformation() {
 
@@ -91,6 +97,7 @@ function refreshProfileInformation() {
 
         usernameElement.textContent =
             user.username || 'User';
+
     }
 
 
@@ -112,7 +119,9 @@ function refreshProfileInformation() {
         } else {
 
             createdDateElement.textContent = '-';
+
         }
+
     }
 
 
@@ -128,13 +137,15 @@ function refreshProfileInformation() {
             'inactive',
             status.toLowerCase() !== 'active'
         );
+
     }
+
 }
 
 
-/* ==========================================
-   6. LOAD COIN TRANSACTION HISTORY
-   ========================================== */
+// ==========================================
+// 6. LOAD COIN TRANSACTION HISTORY
+// ==========================================
 
 async function refreshProfileTransactions() {
 
@@ -159,34 +170,65 @@ async function refreshProfileTransactions() {
         );
 
         if (emptyState) {
+
             emptyState.style.display = 'block';
-            emptyState.textContent = 'Transaction History ကြည့်ရန် Login ဝင်ပေးပါ။';
+
+            emptyState.textContent =
+                'Transaction History ကြည့်ရန် Login ဝင်ပေးပါ။';
+
         }
 
         return;
+
     }
 
 
-    // coin.js မှ Function ကို အသုံးပြုမည်
+    // Request တစ်ခု လုပ်နေပြီးသားဆို
+    // အဲဒီ Request ကိုပဲ ပြန်အသုံးပြုမယ်။
+
+    if (profileTransactionRequest) {
+
+        return await profileTransactionRequest;
+
+    }
+
 
     if (
-        typeof window.loadCoinTransactionHistory === 'function'
+        typeof window.loadCoinTransactionHistory !== 'function'
     ) {
-
-        await window.loadCoinTransactionHistory();
-
-    } else {
 
         console.warn(
             'coin.js: loadCoinTransactionHistory() မတွေ့ပါ။'
         );
+
+        return;
+
     }
+
+
+    profileTransactionRequest = (async () => {
+
+        try {
+
+            return await window.loadCoinTransactionHistory();
+
+        } finally {
+
+            profileTransactionRequest = null;
+
+        }
+
+    })();
+
+
+    return await profileTransactionRequest;
+
 }
 
 
-/* ==========================================
-   7. REFRESH PROFILE DATA
-   ========================================== */
+// ==========================================
+// 7. REFRESH PROFILE DATA
+// ==========================================
 
 async function refreshProfilePage() {
 
@@ -196,15 +238,30 @@ async function refreshProfilePage() {
 
     try {
 
-        // Auth User Information
+        // Login မရှိပါက
 
         if (
-            typeof window.loadCurrentUserProfile === 'function' &&
-            typeof window.isUserLoggedIn === 'function' &&
-            window.isUserLoggedIn()
+            typeof window.isUserLoggedIn !== 'function' ||
+            !window.isUserLoggedIn()
+        ) {
+
+            refreshProfileInformation();
+
+            return;
+
+        }
+
+
+        // Auth User Information
+        // auth.js က Balance နှင့် Transaction History
+        // ကိုပါ ရယူပေးထားသောကြောင့် ထပ်မခေါ်တော့ပါ။
+
+        if (
+            typeof window.loadCurrentUserProfile === 'function'
         ) {
 
             await window.loadCurrentUserProfile();
+
         }
 
 
@@ -212,18 +269,6 @@ async function refreshProfilePage() {
 
         refreshProfileInformation();
 
-
-        // Coin Balance
-
-        if (typeof window.refreshCoinBalance === 'function') {
-
-            await window.refreshCoinBalance();
-        }
-
-
-        // Transaction History
-
-        await refreshProfileTransactions();
 
     } catch (error) {
 
@@ -235,13 +280,15 @@ async function refreshProfilePage() {
     } finally {
 
         isProfilePageLoading = false;
+
     }
+
 }
 
 
-/* ==========================================
-   8. HANDLE COIN BALANCE UPDATE
-   ========================================== */
+// ==========================================
+// 8. HANDLE COIN BALANCE UPDATE
+// ==========================================
 
 function handleProfileCoinUpdate(event) {
 
@@ -251,18 +298,25 @@ function handleProfileCoinUpdate(event) {
 
     if (!balanceElement) return;
 
+
     const balance = Number(
         event.detail?.balance ?? 0
     );
 
+    if (!Number.isFinite(balance) || balance < 0) {
+        return;
+    }
+
+
     balanceElement.textContent =
         balance.toLocaleString('en-US');
+
 }
 
 
-/* ==========================================
-   9. PROFILE PAGE EVENT LISTENERS
-   ========================================== */
+// ==========================================
+// 9. PROFILE PAGE EVENT LISTENERS
+// ==========================================
 
 function setupProfileEventListeners() {
 
@@ -271,26 +325,6 @@ function setupProfileEventListeners() {
     document.addEventListener(
         'coinBalanceUpdated',
         handleProfileCoinUpdate
-    );
-
-
-    // Refresh Transaction History when page becomes visible
-
-    document.addEventListener(
-        'visibilitychange',
-        () => {
-
-            if (!document.hidden && isProfilePage()) {
-
-                if (
-                    typeof window.isUserLoggedIn === 'function' &&
-                    window.isUserLoggedIn()
-                ) {
-
-                    refreshProfileTransactions();
-                }
-            }
-        }
     );
 
 
@@ -304,23 +338,26 @@ function setupProfileEventListeners() {
         ) {
 
             window.location.reload();
+
         }
+
     });
+
 }
 
 
-/* ==========================================
-   10. INITIALIZE PROFILE PAGE
-   ========================================== */
+// ==========================================
+// 10. INITIALIZE PROFILE PAGE
+// ==========================================
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 
     if (!isProfilePage()) return;
 
     setupProfileEventListeners();
 
 
-    // Login ရှိပါက Profile Data ကို ပြန်လည်ရယူမည်
+    // Login ရှိပါက Profile Information ပြမယ်
 
     if (
         typeof window.isUserLoggedIn === 'function' &&
@@ -329,14 +366,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         refreshProfileInformation();
 
-        refreshProfileTransactions();
+        // Transaction History ကို တစ်ကြိမ်သာ ရယူမယ်။
+        // auth.js ကလည်း ရယူပေးထားပါက coin.js ရဲ့
+        // request protection က ထပ်ခါတလဲလဲ မခေါ်စေပါ။
+
+        await refreshProfileTransactions();
+
     }
+
 });
 
 
-/* ==========================================
-   11. GLOBAL FUNCTIONS
-   ========================================== */
+// ==========================================
+// 11. GLOBAL FUNCTIONS
+// ==========================================
 
 window.refreshProfileInformation =
     refreshProfileInformation;
