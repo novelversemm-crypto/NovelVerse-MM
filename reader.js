@@ -7,6 +7,9 @@ let currentFontSize = 15;
 
 const CHAPTER_UNLOCK_COST = 1;
 
+let isUnlockingChapter = false;
+
+
 // ==================================================
 // INITIALIZATION
 // ==================================================
@@ -21,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.navigateToChapter = navigateToChapter;
     window.changeFontSize = changeFontSize;
 
-    // အရင် Lock Panel ရှိနေလျှင် စစချင်းဖျောက်ထားမည်
     hidePremiumPanel();
 
     if (currentChapterId) {
@@ -41,6 +43,7 @@ function getElement(id) {
     return document.getElementById(id);
 }
 
+
 function showReaderMessage(message) {
 
     const contentBox = getElement('chapter-content');
@@ -52,14 +55,48 @@ function showReaderMessage(message) {
 
 }
 
+
 function isPremiumChapter(chapter) {
-    // is_premium မပါလျှင် Free
-    return chapter.is_premium === true;
+
+    // is_premium မပါလျှင် Free Chapter ဖြစ်သည်။
+    return chapter?.is_premium === true;
+
 }
+
+
+function getReaderSession() {
+
+    if (typeof window.getAuthSession !== 'function') {
+        return null;
+    }
+
+    return window.getAuthSession();
+
+}
+
+
+function getReaderToken() {
+
+    const session = getReaderSession();
+
+    return session?.token || null;
+
+}
+
+
+async function callReaderApi(action, data = {}) {
+
+    if (typeof window.authApiRequest !== 'function') {
+        throw new Error('Authentication API ကို မချိတ်ဆက်ရသေးပါ။');
+    }
+
+    return await window.authApiRequest(action, data);
+
+}
+
 
 function hidePremiumPanel() {
 
-    // ယခင် HTML ထဲက Lock Panel ရှိပါက ဖျောက်မည်
     document.querySelectorAll(
         '.chapter-lock-section, #chapter-lock-section, #premium-lock-panel'
     ).forEach(panel => {
@@ -74,7 +111,8 @@ function hidePremiumPanel() {
 
 }
 
-function showPremiumPanel(chapter) {
+
+function showPremiumPanel(chapter, message = '') {
 
     const contentBox = getElement('chapter-content');
 
@@ -83,12 +121,10 @@ function showPremiumPanel(chapter) {
         contentBox.innerHTML = '';
     }
 
-    // HTML ထဲတွင် မူရင်း Lock Panel ရှိပါက အသုံးပြုမည်
     let panel = document.querySelector(
         '.chapter-lock-section, #chapter-lock-section, #premium-lock-panel'
     );
 
-    // မရှိပါက Reader JS ကနေ ဖန်တီးမည်
     if (!panel) {
 
         panel = document.createElement('section');
@@ -96,7 +132,7 @@ function showPremiumPanel(chapter) {
         panel.id = 'premium-lock-panel';
         panel.className = 'chapter-lock-section';
 
-        if (contentBox) {
+        if (contentBox?.parentNode) {
             contentBox.parentNode.insertBefore(panel, contentBox);
         }
 
@@ -106,6 +142,7 @@ function showPremiumPanel(chapter) {
 
     panel.innerHTML = `
         <div class="premium-lock-card">
+
             <div class="premium-lock-icon">
                 <i class="fa-solid fa-lock"></i>
             </div>
@@ -121,6 +158,8 @@ function showPremiumPanel(chapter) {
                 <strong>${CHAPTER_UNLOCK_COST} Coin</strong>
             </div>
 
+            <p id="reader-unlock-message" class="reader-unlock-message"></p>
+
             <button
                 type="button"
                 id="reader-unlock-btn"
@@ -129,19 +168,35 @@ function showPremiumPanel(chapter) {
                 <i class="fa-solid fa-unlock"></i>
                 Unlock Chapter
             </button>
+
         </div>
     `;
+
+    const messageBox = getElement('reader-unlock-message');
+
+    if (messageBox) {
+        messageBox.textContent = message;
+    }
 
     const unlockButton = getElement('reader-unlock-btn');
 
     if (unlockButton) {
 
         unlockButton.addEventListener('click', () => {
-
             requestChapterUnlock();
-
         });
 
+    }
+
+}
+
+
+function setUnlockMessage(message) {
+
+    const messageBox = getElement('reader-unlock-message');
+
+    if (messageBox) {
+        messageBox.textContent = message;
     }
 
 }
@@ -156,7 +211,8 @@ async function fetchChapterContent(chapterId, novelId) {
     try {
 
         const response = await fetch(
-            'content/novels.json?' + Date.now()
+            'content/novels.json?' + Date.now(),
+            { cache: 'no-store' }
         );
 
         if (!response.ok) {
@@ -173,7 +229,7 @@ async function fetchChapterContent(chapterId, novelId) {
         let foundNovel = null;
 
 
-        // 1. သက်ဆိုင်ရာ Novel ထဲမှာ အရင်ရှာမည်
+        // 1. URL ထဲက Novel ID / Slug နဲ့ အရင်ရှာမည်
 
         if (novelId) {
 
@@ -254,12 +310,12 @@ async function fetchChapterContent(chapterId, novelId) {
         const chapterTitle = getElement('chapter-title');
 
         if (headerTitle) {
-            headerTitle.innerText =
+            headerTitle.textContent =
                 `Chapter ${foundChapter.chapter_number}`;
         }
 
         if (chapterTitle) {
-            chapterTitle.innerText =
+            chapterTitle.textContent =
                 `Chapter ${foundChapter.chapter_number} - ${foundChapter.title || ''}`;
         }
 
@@ -282,18 +338,23 @@ async function fetchChapterContent(chapterId, novelId) {
         }
 
 
-        // 6. Free / Premium စစ်ဆေးခြင်း
+        // 6. Previous / Next Navigation
+
+        setupNavigationButtons(
+            foundNovel,
+            foundChapter.chapter_number
+        );
+
+
+        // 7. Free / Premium စစ်ဆေးခြင်း
 
         if (isPremiumChapter(foundChapter)) {
 
-            // Premium Chapter ဖြစ်လျှင် Lock Panel ပြမည်
-            // Markdown ဖိုင်ကို ဒီနေရာမှာ မဆွဲယူပါ။
-
-            showPremiumPanel(foundChapter);
+            await checkPremiumChapterAccess(foundChapter);
 
         } else {
 
-            // Free Chapter ဖြစ်လျှင် Lock Panel ဖျောက်မည်
+            // is_premium မပါလျှင် သို့မဟုတ် false ဖြစ်လျှင် Free
 
             hidePremiumPanel();
 
@@ -302,20 +363,101 @@ async function fetchChapterContent(chapterId, novelId) {
         }
 
 
-        // 7. Navigation Buttons
-
-        setupNavigationButtons(
-            foundNovel,
-            foundChapter.chapter_number
-        );
-
-
     } catch (error) {
 
         console.error('Fetch chapter content error:', error);
 
         showReaderMessage(
             'အချက်အလက်များ ရယူရာတွင် အမှားအယွင်း ဖြစ်ပေါ်ခဲ့ပါသည်။'
+        );
+
+    }
+
+}
+
+
+// ==================================================
+// CHECK PREMIUM CHAPTER ACCESS
+// ==================================================
+
+async function checkPremiumChapterAccess(chapter) {
+
+    const token = getReaderToken();
+
+    // Login မဝင်ရသေးလျှင် Unlock Panel ပြမည်။
+
+    if (!token) {
+
+        showPremiumPanel(
+            chapter,
+            'Unlock လုပ်ရန် အကောင့်ဝင်ထားရန် လိုအပ်ပါသည်။'
+        );
+
+        return;
+
+    }
+
+
+    showPremiumPanel(
+        chapter,
+        'Chapter ဖတ်ခွင့် ရှိမရှိ စစ်ဆေးနေသည်...'
+    );
+
+    const unlockButton = getElement('reader-unlock-btn');
+
+    if (unlockButton) {
+        unlockButton.disabled = true;
+    }
+
+
+    try {
+
+        const result = await callReaderApi(
+            'checkChapterAccess',
+            {
+                token: token,
+                novelSlug: currentNovelData.slug,
+                chapterNumber: Number(chapter.chapter_number)
+            }
+        );
+
+
+        if (!result || result.success !== true) {
+
+            throw new Error(
+                result?.message || 'Chapter Access စစ်ဆေး၍ မရပါ။'
+            );
+
+        }
+
+
+        // Backend က Free ဖြစ်ကြောင်း ပြန်ပေးလျှင် ဖတ်ခွင့်ပေးမည်။
+
+        if (result.isPremium === false || result.hasAccess === true) {
+
+            hidePremiumPanel();
+
+            await loadChapterMarkdown(chapter);
+
+            return;
+
+        }
+
+
+        // Premium ဖြစ်ပြီး Unlock မလုပ်ရသေးပါက Lock Panel ပြမည်။
+
+        showPremiumPanel(
+            chapter,
+            'ဒီ Chapter ကို ဖတ်ရန် Unlock လုပ်ပေးပါ။'
+        );
+
+    } catch (error) {
+
+        console.error('Chapter access check error:', error);
+
+        showPremiumPanel(
+            chapter,
+            error.message || 'Chapter Access စစ်ဆေးရာတွင် အမှားဖြစ်နေပါသည်။'
         );
 
     }
@@ -342,75 +484,84 @@ async function loadChapterMarkdown(chapter) {
     }
 
     contentBox.style.display = 'block';
-
     contentBox.textContent = 'စာစဉ်ကို ရယူနေသည်...';
 
     let filePath = chapter.file;
 
-    if (
-        !filePath.startsWith('./') &&
-        !filePath.startsWith('content/')
-    ) {
 
-        filePath = './content/' + filePath;
+    // Markdown File Path ပြင်ဆင်ခြင်း
 
-    } else if (filePath.startsWith('content/')) {
+    if (!/^https?:\/\//i.test(filePath)) {
 
-        filePath = './' + filePath;
+        if (
+            !filePath.startsWith('./') &&
+            !filePath.startsWith('content/')
+        ) {
+
+            filePath = './content/' + filePath;
+
+        } else if (filePath.startsWith('content/')) {
+
+            filePath = './' + filePath;
+
+        }
 
     }
 
 
     try {
 
+        const separator = filePath.includes('?') ? '&' : '?';
+
         const mdRes = await fetch(
-            filePath + '?' + Date.now()
+            filePath + separator + 't=' + Date.now(),
+            { cache: 'no-store' }
         );
 
         if (!mdRes.ok) {
-
             throw new Error('Markdown file could not be loaded.');
-
         }
 
         const mdText = await mdRes.text();
 
-        // Frontmatter ဖယ်ထုတ်ခြင်း
 
-        let cleanText = mdText;
+        // Frontmatter ကို အစပိုင်းမှာရှိမှသာ ဖယ်ရှားမည်။
 
-        if (mdText.startsWith('---')) {
-
-            const parts = mdText.split('---');
-
-            if (parts.length >= 3) {
-                cleanText = parts.slice(2).join('---');
-            }
-
-        }
+        let cleanText = mdText.replace(
+            /^---\s*\r?\n[\s\S]*?\r?\n---\s*(?:\r?\n|$)/,
+            ''
+        );
 
 
-        // Paragraph များ ပြသခြင်း
+        // Paragraph များကို DOM နဲ့ ပြသမည်။
 
-        const formattedContent = cleanText
-            .split('\n')
-            .filter(paragraph => paragraph.trim() !== '')
-            .map(paragraph => {
+        contentBox.innerHTML = '';
+
+        const paragraphs = cleanText
+            .split(/\r?\n/)
+            .filter(paragraph => paragraph.trim() !== '');
+
+        if (paragraphs.length === 0) {
+
+            contentBox.textContent = 'စာသား မရှိပါ။';
+
+        } else {
+
+            paragraphs.forEach(paragraph => {
 
                 const p = document.createElement('p');
 
                 p.textContent = paragraph.trim();
 
-                return p.outerHTML;
+                contentBox.appendChild(p);
 
-            })
-            .join('');
+            });
+
+        }
 
         contentBox.style.fontSize = `${currentFontSize}px`;
 
-        contentBox.innerHTML =
-            formattedContent || '<p>စာသား မရှိပါ။</p>';
-
+        hidePremiumPanel();
 
     } catch (error) {
 
@@ -435,45 +586,45 @@ async function requestChapterUnlock() {
         return;
     }
 
+    if (isUnlockingChapter) {
+        return;
+    }
+
+    const token = getReaderToken();
+
+    // Login မဝင်ထားလျှင် Unlock မလုပ်နိုင်ပါ။
+
+    if (!token) {
+
+        alert('Chapter Unlock လုပ်ရန် အကောင့်ဝင်ထားပါ။');
+
+        return;
+
+    }
+
     const unlockButton = getElement('reader-unlock-btn');
+
+    isUnlockingChapter = true;
 
     if (unlockButton) {
         unlockButton.disabled = true;
-        unlockButton.textContent = 'စစ်ဆေးနေသည်...';
+        unlockButton.textContent = 'Unlock လုပ်နေသည်...';
     }
+
+    setUnlockMessage('Coin Balance နှင့် Chapter ကို စစ်ဆေးနေသည်...');
+
 
     try {
 
-        // Backend Unlock Function ရှိမှသာ ဆက်လုပ်မည်
-        if (typeof window.unlockChapter !== 'function') {
-
-            alert(
-                'Chapter Unlock Backend ကို မချိတ်ဆက်ရသေးပါ။'
-            );
-
-            if (unlockButton) {
-                unlockButton.disabled = false;
-                unlockButton.innerHTML =
-                    '<i class="fa-solid fa-unlock"></i> Unlock Chapter';
+        const result = await callReaderApi(
+            'unlockChapter',
+            {
+                token: token,
+                novelSlug: currentNovelData.slug,
+                chapterNumber: Number(currentChapterData.chapter_number)
             }
+        );
 
-            return;
-
-        }
-
-        const result = await window.unlockChapter({
-
-            novelId: currentNovelData.id || currentNovelData.slug,
-
-            chapterId:
-                currentChapterData.id ||
-                currentChapterData.chapter_number,
-
-            chapterNumber: currentChapterData.chapter_number,
-
-            cost: CHAPTER_UNLOCK_COST
-
-        });
 
         if (!result || result.success !== true) {
 
@@ -483,18 +634,45 @@ async function requestChapterUnlock() {
 
         }
 
-        // Backend က အောင်မြင်ကြောင်း ပြန်ပေးပြီးမှ
-        // Chapter စာသားကို ဖတ်ခွင့်ပေးမည်
+
+        // Unlock အောင်မြင်ပြီးမှ Coin Balance ပြန် Update လုပ်မည်။
+
+        try {
+
+            if (typeof window.loadCurrentUserProfile === 'function') {
+
+                await window.loadCurrentUserProfile();
+
+            } else if (typeof window.loadCoinBalance === 'function') {
+
+                await window.loadCoinBalance();
+
+            }
+
+        } catch (balanceError) {
+
+            console.error(
+                'Coin balance refresh error:',
+                balanceError
+            );
+
+        }
+
+
+        // Backend က အောင်မြင်ကြောင်း ပြန်ပေးပြီးမှ စာသားဖတ်ခွင့်ပေးမည်။
 
         hidePremiumPanel();
 
         await loadChapterMarkdown(currentChapterData);
 
+
     } catch (error) {
 
         console.error('Chapter unlock error:', error);
 
-        alert(error.message || 'Unlock လုပ်ရာတွင် အမှားဖြစ်နေပါသည်။');
+        setUnlockMessage(
+            error.message || 'Unlock လုပ်ရာတွင် အမှားဖြစ်နေပါသည်။'
+        );
 
         if (unlockButton) {
 
@@ -504,6 +682,10 @@ async function requestChapterUnlock() {
                 '<i class="fa-solid fa-unlock"></i> Unlock Chapter';
 
         }
+
+    } finally {
+
+        isUnlockingChapter = false;
 
     }
 
@@ -553,7 +735,7 @@ function setupNavigationButtons(novel, currentChapterNum) {
     );
 
 
-    // Previous
+    // Previous Chapter
 
     if (prevBtn) {
 
@@ -577,7 +759,7 @@ function setupNavigationButtons(novel, currentChapterNum) {
     }
 
 
-    // Next
+    // Next Chapter
 
     if (nextBtn) {
 
