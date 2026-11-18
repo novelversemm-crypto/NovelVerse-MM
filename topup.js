@@ -190,9 +190,26 @@ async function loadTopupSettings() {
                 settings.telegramUrl || ''
             ).trim();
 
-            if (
-                /^https:\/\/(t\.me|telegram\.me)\//i.test(telegramUrl)
-            ) {
+            let validTelegramUrl = false;
+
+            try {
+
+                const parsedUrl = new URL(telegramUrl);
+
+                validTelegramUrl =
+                    parsedUrl.protocol === 'https:' &&
+                    (
+                        parsedUrl.hostname === 't.me' ||
+                        parsedUrl.hostname === 'telegram.me'
+                    );
+
+            } catch (error) {
+
+                validTelegramUrl = false;
+            }
+
+
+            if (validTelegramUrl) {
 
                 telegramLink.href = telegramUrl;
 
@@ -234,7 +251,7 @@ async function loadTopupSettings() {
 
 async function copyTopupText(text, button) {
 
-    if (!text) {
+    if (!text || text === 'Loading...') {
 
         showTopupError(
             'Copy ကူးရန် အချက်အလက် မရှိသေးပါ။'
@@ -281,9 +298,9 @@ function showCopySuccess(button) {
 
     if (!button) return;
 
-    const originalText = button.textContent;
+    const originalHTML = button.innerHTML;
 
-    button.textContent = 'Copied!';
+    button.innerHTML = 'Copied!';
 
     button.classList.add('copied');
 
@@ -291,7 +308,7 @@ function showCopySuccess(button) {
 
     setTimeout(() => {
 
-        button.textContent = originalText;
+        button.innerHTML = originalHTML;
 
         button.classList.remove('copied');
 
@@ -341,7 +358,62 @@ function setupTopupCopyButtons() {
 
 
 /* ==========================================
-   10. REDEEM PROMO CODE
+   10. REFRESH COIN BALANCE
+   ========================================== */
+
+async function refreshTopupCoinBalance() {
+
+    if (
+        typeof window.loadCoinBalance === 'function'
+    ) {
+
+        await window.loadCoinBalance();
+
+        return true;
+    }
+
+    console.warn(
+        'loadCoinBalance() function မတွေ့ပါ။'
+    );
+
+    return false;
+}
+
+
+/* ==========================================
+   11. REFRESH TRANSACTION HISTORY
+   ========================================== */
+
+async function refreshTopupTransactionHistory() {
+
+    if (
+        typeof window.loadCoinTransactionHistory === 'function'
+    ) {
+
+        await window.loadCoinTransactionHistory();
+
+        return true;
+    }
+
+    if (
+        typeof window.loadTransactionHistory === 'function'
+    ) {
+
+        await window.loadTransactionHistory();
+
+        return true;
+    }
+
+    console.warn(
+        'Transaction History function မတွေ့ပါ။'
+    );
+
+    return false;
+}
+
+
+/* ==========================================
+   12. REDEEM PROMO CODE
    ========================================== */
 
 async function redeemTopupPromoCode() {
@@ -417,11 +489,11 @@ async function redeemTopupPromoCode() {
 
     isPromoRedeeming = true;
 
-    const originalButtonText = button.textContent;
+    const originalHTML = button.innerHTML;
 
     button.disabled = true;
 
-    button.textContent = 'Verifying...';
+    button.innerHTML = 'Verifying...';
 
 
     try {
@@ -456,7 +528,7 @@ async function redeemTopupPromoCode() {
         );
 
 
-        if (!result || result.success === false) {
+        if (!result || result.success !== true) {
 
             throw new Error(
                 result?.message ||
@@ -470,16 +542,18 @@ async function redeemTopupPromoCode() {
         input.value = '';
 
 
+        // Get Received Coins
+
         const receivedCoins = Number(
             result.totalCoins ??
             result.coins ??
+            result.coinAmount ??
+            result.coin_amount ??
             0
         );
 
-        const newBalance = Number(
-            result.balance
-        );
 
+        // Success Message
 
         let successMessage =
             result.message ||
@@ -500,37 +574,35 @@ async function redeemTopupPromoCode() {
 
 
         // Refresh Coin Balance
+        // Refresh Failure Must Not Undo Successful Redemption
 
-        if (
-            typeof window.refreshCoinBalance === 'function'
-        ) {
+        try {
 
-            await window.refreshCoinBalance();
+            await refreshTopupCoinBalance();
 
-        } else if (
-            Number.isSafeInteger(newBalance) &&
-            newBalance >= 0 &&
-            typeof window.updateCoinBalanceUI === 'function'
-        ) {
+        } catch (refreshError) {
 
-            window.updateCoinBalanceUI(newBalance);
+            console.error(
+                'Coin Balance Refresh Error:',
+                refreshError
+            );
         }
 
 
         // Refresh Transaction History
 
-        if (
-            typeof window.loadCoinTransactionHistory === 'function'
-        ) {
+        try {
 
-            await window.loadCoinTransactionHistory();
+            await refreshTopupTransactionHistory();
 
-        } else if (
-            typeof window.loadTransactionHistory === 'function'
-        ) {
+        } catch (historyError) {
 
-            await window.loadTransactionHistory();
+            console.error(
+                'Transaction History Refresh Error:',
+                historyError
+            );
         }
+
 
     } catch (error) {
 
@@ -550,13 +622,13 @@ async function redeemTopupPromoCode() {
 
         button.disabled = false;
 
-        button.textContent = originalButtonText;
+        button.innerHTML = originalHTML;
     }
 }
 
 
 /* ==========================================
-   11. SETUP PROMO REDEMPTION
+   13. SETUP PROMO REDEMPTION
    ========================================== */
 
 function setupPromoRedemption() {
@@ -623,7 +695,7 @@ function setupPromoRedemption() {
 
 
 /* ==========================================
-   12. LOAD CURRENT COIN BALANCE
+   14. LOAD CURRENT COIN BALANCE
    ========================================== */
 
 async function loadTopupCoinBalance() {
@@ -646,17 +718,12 @@ async function loadTopupCoinBalance() {
     }
 
 
-    if (
-        typeof window.refreshCoinBalance === 'function'
-    ) {
-
-        await window.refreshCoinBalance();
-    }
+    await refreshTopupCoinBalance();
 }
 
 
 /* ==========================================
-   13. INITIALIZE TOP-UP PAGE
+   15. INITIALIZE TOP-UP PAGE
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -692,7 +759,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 
 /* ==========================================
-   14. GLOBAL FUNCTIONS
+   16. GLOBAL FUNCTIONS
    ========================================== */
 
 window.loadTopupSettings =
@@ -704,14 +771,15 @@ window.loadTopupCoinBalance =
 window.redeemTopupPromoCode =
     redeemTopupPromoCode;
 
-
 window.refreshTopupPage = async function () {
 
     await Promise.allSettled([
 
         loadTopupSettings(),
 
-        loadTopupCoinBalance()
+        loadTopupCoinBalance(),
+
+        refreshTopupTransactionHistory()
 
     ]);
 };
