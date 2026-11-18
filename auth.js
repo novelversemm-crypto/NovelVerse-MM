@@ -1,4 +1,3 @@
-
 /* ==========================================
    NOVELVERSE MM — AUTHENTICATION SYSTEM
    Register / Login / Logout / User Session
@@ -9,8 +8,6 @@
    1. CONFIGURATION
 ========================================== */
 
-// Google Apps Script Web App URL
-
 const AUTH_API_URL = 'https://script.google.com/macros/s/AKfycbznSFyzuaP9JZDOSe2RC3yIfVlUemLeAq15Oi3ibgn_cbN0FhLQhdorOw-i18CcNrfFZg/exec';
 
 const AUTH_CONFIG = {
@@ -18,6 +15,8 @@ const AUTH_CONFIG = {
 
     minimumPinLength: 6,
     maximumPinLength: 12,
+
+    requestTimeout: 30000,
 
     loginPage: 'profile.html',
     homePage: 'index.html'
@@ -30,10 +29,125 @@ const AUTH_CONFIG = {
 
 let currentAuthUser = null;
 let isAuthLoading = false;
+let authInitializationFinished = false;
 
 
 /* ==========================================
-   3. API REQUEST
+   3. INITIAL LOADING SCREEN
+========================================== */
+
+function prepareAuthInitialization() {
+
+    if (!document.body) return;
+
+    document.body.classList.add('auth-pending');
+
+    if (document.getElementById('auth-initialization-style')) {
+        return;
+    }
+
+    const style = document.createElement('style');
+
+    style.id = 'auth-initialization-style';
+
+    style.textContent = `
+        body.auth-pending #auth-section,
+        body.auth-pending #profile-section {
+            visibility: hidden !important;
+        }
+
+        #auth-initialization-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 14px;
+            background: #12111A;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+
+        #auth-initialization-loader .auth-loader-spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid rgba(255,255,255,0.15);
+            border-top-color: #d4af6a;
+            border-radius: 50%;
+            animation: authLoaderSpin 0.8s linear infinite;
+        }
+
+        #auth-initialization-loader p {
+            margin: 0;
+            font-size: 14px;
+            color: #c9c5d3;
+        }
+
+        @keyframes authLoaderSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    `;
+
+    document.head.appendChild(style);
+}
+
+
+function showAuthInitializationLoader() {
+
+    if (
+        !document.getElementById('auth-section') &&
+        !document.getElementById('profile-section')
+    ) {
+        return;
+    }
+
+    if (document.getElementById('auth-initialization-loader')) {
+        return;
+    }
+
+    const loader = document.createElement('div');
+
+    loader.id = 'auth-initialization-loader';
+
+    loader.innerHTML = `
+        <div class="auth-loader-spinner"></div>
+        <p>NovelVerse ခဏစောင့်ပေးပါ...</p>
+    `;
+
+    document.body.appendChild(loader);
+}
+
+
+function finishAuthInitialization() {
+
+    authInitializationFinished = true;
+
+    document.body.classList.remove('auth-pending');
+
+    const loader = document.getElementById(
+        'auth-initialization-loader'
+    );
+
+    if (loader) {
+        loader.remove();
+    }
+}
+
+
+/*
+   Run immediately to reduce the chance of
+   Login/Register sections flashing on refresh.
+*/
+
+prepareAuthInitialization();
+
+
+/* ==========================================
+   4. API REQUEST
 ========================================== */
 
 async function authApiRequest(action, data = {}) {
@@ -43,6 +157,12 @@ async function authApiRequest(action, data = {}) {
             'Authentication API မချိတ်ဆက်ရသေးပါ။'
         );
     }
+
+    const controller = new AbortController();
+
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, AUTH_CONFIG.requestTimeout);
 
     let response;
 
@@ -58,10 +178,23 @@ async function authApiRequest(action, data = {}) {
             body: JSON.stringify({
                 action,
                 ...data
-            })
+            }),
+
+            signal: controller.signal
         });
 
     } catch (error) {
+
+        if (error.name === 'AbortError') {
+
+            const timeoutError = new Error(
+                'Server တုံ့ပြန်မှု ကြာမြင့်နေပါသည်။ ခဏအကြာတွင် ပြန်စမ်းကြည့်ပါ။'
+            );
+
+            timeoutError.code = 'REQUEST_TIMEOUT';
+
+            throw timeoutError;
+        }
 
         const networkError = new Error(
             'Server သို့ ချိတ်ဆက်၍ မရပါ။ Internet Connection ကို စစ်ဆေးပါ။'
@@ -70,7 +203,12 @@ async function authApiRequest(action, data = {}) {
         networkError.code = 'NETWORK_ERROR';
 
         throw networkError;
+
+    } finally {
+
+        clearTimeout(timeoutId);
     }
+
 
     if (!response.ok) {
 
@@ -84,6 +222,7 @@ async function authApiRequest(action, data = {}) {
         throw serverError;
     }
 
+
     let result;
 
     try {
@@ -96,6 +235,7 @@ async function authApiRequest(action, data = {}) {
             'Server မှ မှန်ကန်သော Response မရရှိပါ။'
         );
     }
+
 
     if (!result || result.success !== true) {
 
@@ -113,7 +253,7 @@ async function authApiRequest(action, data = {}) {
 
 
 /* ==========================================
-   4. SESSION MANAGEMENT
+   5. SESSION MANAGEMENT
 ========================================== */
 
 function getAuthSession() {
@@ -218,7 +358,7 @@ function isUserLoggedIn() {
 
 
 /* ==========================================
-   5. AUTH UI HELPERS
+   6. AUTH UI HELPERS
 ========================================== */
 
 function showAuthError(elementId, message) {
@@ -266,7 +406,6 @@ function setAuthButtonLoading(buttonId, loading) {
     if (loading) {
 
         if (!button.dataset.originalHTML) {
-
             button.dataset.originalHTML = button.innerHTML;
         }
 
@@ -289,7 +428,7 @@ function setAuthButtonLoading(buttonId, loading) {
 
 
 /* ==========================================
-   6. AUTH / PROFILE SECTION
+   7. AUTH / PROFILE SECTION
 ========================================== */
 
 function showAuthSection() {
@@ -345,7 +484,7 @@ function showProfileSection() {
 
 
 /* ==========================================
-   7. AUTH TAB SWITCHING
+   8. AUTH TAB SWITCHING
 ========================================== */
 
 function switchAuthTab(tabName) {
@@ -371,7 +510,6 @@ function switchAuthTab(tabName) {
     hideAuthMessage('register-error');
 
     if (tabName !== 'register') {
-
         hideAuthMessage('register-success');
     }
 
@@ -415,7 +553,7 @@ function switchAuthTab(tabName) {
 
 
 /* ==========================================
-   8. PASSWORD / PIN VISIBILITY
+   9. PASSWORD / PIN VISIBILITY
 ========================================== */
 
 function setupPasswordToggles() {
@@ -476,7 +614,7 @@ function setupPasswordToggles() {
 
 
 /* ==========================================
-   9. USER REGISTRATION
+   10. USER REGISTRATION
 ========================================== */
 
 async function handleUserRegister(event) {
@@ -583,7 +721,6 @@ async function handleUserRegister(event) {
         );
 
         if (loginUsername) {
-
             loginUsername.value = username;
         }
 
@@ -623,9 +760,18 @@ async function handleUserRegister(event) {
 
     } catch (error) {
 
+        let message = error.message ||
+            'Account ဖွင့်ခြင်း မအောင်မြင်ပါ။';
+
+        if (error.code === 'REQUEST_TIMEOUT') {
+
+            message =
+                'တုံ့ပြန်မှု ကြာမြင့်နေပါသည်။ Account ဖွင့်ပြီးသွားနိုင်သောကြောင့် Username ကို အရင်စစ်ဆေးပြီးမှ ပြန်လည်ကြိုးစားပါ။';
+        }
+
         showAuthError(
             'register-error',
-            error.message || 'Account ဖွင့်ခြင်း မအောင်မြင်ပါ။'
+            message
         );
 
         console.error('Registration Error:', error);
@@ -643,7 +789,7 @@ async function handleUserRegister(event) {
 
 
 /* ==========================================
-   10. USER LOGIN
+   11. USER LOGIN
 ========================================== */
 
 async function handleUserLogin(event) {
@@ -734,6 +880,12 @@ async function handleUserLogin(event) {
         )?.reset();
 
 
+        /*
+           Load profile first.
+           Coin and transaction data load separately
+           after the profile section is displayed.
+        */
+
         await loadCurrentUserProfile();
 
 
@@ -759,7 +911,52 @@ async function handleUserLogin(event) {
 
 
 /* ==========================================
-   11. LOAD CURRENT USER PROFILE
+   12. LOAD PROFILE EXTRAS
+========================================== */
+
+async function loadProfileExtras() {
+
+    const tasks = [];
+
+    if (typeof window.loadCoinBalance === 'function') {
+
+        tasks.push(
+            Promise.resolve().then(() => {
+                return window.loadCoinBalance();
+            })
+        );
+    }
+
+    if (typeof window.loadTransactionHistory === 'function') {
+
+        tasks.push(
+            Promise.resolve().then(() => {
+                return window.loadTransactionHistory();
+            })
+        );
+    }
+
+    if (tasks.length === 0) {
+        return;
+    }
+
+    const results = await Promise.allSettled(tasks);
+
+    results.forEach((result, index) => {
+
+        if (result.status === 'rejected') {
+
+            console.error(
+                `Profile Extra Loading Error (${index + 1}):`,
+                result.reason
+            );
+        }
+    });
+}
+
+
+/* ==========================================
+   13. LOAD CURRENT USER PROFILE
 ========================================== */
 
 async function loadCurrentUserProfile() {
@@ -772,7 +969,7 @@ async function loadCurrentUserProfile() {
 
         showAuthSection();
 
-        return;
+        return false;
     }
 
 
@@ -807,20 +1004,19 @@ async function loadCurrentUserProfile() {
         showProfileSection();
 
 
-        if (
-            typeof window.loadCoinBalance === 'function'
-        ) {
+        /*
+           Finish the main page initialization now.
+           Coin balance and transaction history will
+           continue loading in the background.
+        */
 
-            await window.loadCoinBalance();
-        }
+        finishAuthInitialization();
 
 
-        if (
-            typeof window.loadTransactionHistory === 'function'
-        ) {
+        loadProfileExtras();
 
-            await window.loadTransactionHistory();
-        }
+
+        return true;
 
 
     } catch (error) {
@@ -838,6 +1034,7 @@ async function loadCurrentUserProfile() {
             'UNAUTHORIZED'
         ];
 
+
         if (
             invalidSessionCodes.includes(error.code)
         ) {
@@ -851,9 +1048,14 @@ async function loadCurrentUserProfile() {
                 'Session သက်တမ်းကုန်သွားပါပြီ။ Login ပြန်ဝင်ပေးပါ။'
             );
 
-            return;
+            return false;
         }
 
+
+        /*
+           Do not delete the saved session for temporary
+           network/server errors. The user can retry.
+        */
 
         showAuthSection();
 
@@ -862,12 +1064,18 @@ async function loadCurrentUserProfile() {
             error.message ||
             'Profile ကို ရယူ၍ မရပါ။ ခဏအကြာတွင် ပြန်လည်ကြိုးစားပါ။'
         );
+
+        return false;
+
+    } finally {
+
+        finishAuthInitialization();
     }
 }
 
 
 /* ==========================================
-   12. UPDATE PROFILE UI
+   14. UPDATE PROFILE UI
 ========================================== */
 
 function updateProfileUI(user) {
@@ -950,7 +1158,7 @@ function updateProfileUI(user) {
 
 
 /* ==========================================
-   13. USER LOGOUT
+   15. USER LOGOUT
 ========================================== */
 
 async function handleUserLogout() {
@@ -1051,7 +1259,7 @@ async function handleUserLogout() {
 
 
 /* ==========================================
-   14. AUTH EVENT LISTENERS
+   16. AUTH EVENT LISTENERS
 ========================================== */
 
 function setupAuthEventListeners() {
@@ -1085,7 +1293,9 @@ function setupAuthEventListeners() {
     );
 
 
-    if (loginForm) {
+    if (loginForm && loginForm.dataset.authReady !== 'true') {
+
+        loginForm.dataset.authReady = 'true';
 
         loginForm.addEventListener(
             'submit',
@@ -1094,7 +1304,9 @@ function setupAuthEventListeners() {
     }
 
 
-    if (registerForm) {
+    if (registerForm && registerForm.dataset.authReady !== 'true') {
+
+        registerForm.dataset.authReady = 'true';
 
         registerForm.addEventListener(
             'submit',
@@ -1103,7 +1315,9 @@ function setupAuthEventListeners() {
     }
 
 
-    if (logoutButton) {
+    if (logoutButton && logoutButton.dataset.authReady !== 'true') {
+
+        logoutButton.dataset.authReady = 'true';
 
         logoutButton.addEventListener(
             'click',
@@ -1112,37 +1326,47 @@ function setupAuthEventListeners() {
     }
 
 
-    if (loginTab) {
+    if (loginTab && loginTab.dataset.authReady !== 'true') {
+
+        loginTab.dataset.authReady = 'true';
 
         loginTab.addEventListener('click', () => {
-
             switchAuthTab('login');
         });
     }
 
 
-    if (registerTab) {
+    if (registerTab && registerTab.dataset.authReady !== 'true') {
+
+        registerTab.dataset.authReady = 'true';
 
         registerTab.addEventListener('click', () => {
-
             switchAuthTab('register');
         });
     }
 
 
-    if (showRegisterButton) {
+    if (
+        showRegisterButton &&
+        showRegisterButton.dataset.authReady !== 'true'
+    ) {
+
+        showRegisterButton.dataset.authReady = 'true';
 
         showRegisterButton.addEventListener('click', () => {
-
             switchAuthTab('register');
         });
     }
 
 
-    if (showLoginButton) {
+    if (
+        showLoginButton &&
+        showLoginButton.dataset.authReady !== 'true'
+    ) {
+
+        showLoginButton.dataset.authReady = 'true';
 
         showLoginButton.addEventListener('click', () => {
-
             switchAuthTab('login');
         });
     }
@@ -1153,37 +1377,52 @@ function setupAuthEventListeners() {
 
 
 /* ==========================================
-   15. INITIALIZE AUTH SYSTEM
+   17. INITIALIZE AUTH SYSTEM
 ========================================== */
 
-document.addEventListener(
-    'DOMContentLoaded',
-    async () => {
+async function initializeAuthSystem() {
 
-        setupAuthEventListeners();
+    setupAuthEventListeners();
 
-        const session = getAuthSession();
+    showAuthInitializationLoader();
 
-        if (session && session.token) {
+    const session = getAuthSession();
 
-            currentAuthUser = session;
+    if (session && session.token) {
 
-            await loadCurrentUserProfile();
+        currentAuthUser = session;
 
-        } else {
+        await loadCurrentUserProfile();
 
-            clearAuthSession();
+    } else {
 
-            showAuthSection();
+        clearAuthSession();
 
-            switchAuthTab('login');
-        }
+        showAuthSection();
+
+        switchAuthTab('login');
+
+        finishAuthInitialization();
     }
-);
+}
+
+
+if (document.readyState === 'loading') {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initializeAuthSystem,
+        { once: true }
+    );
+
+} else {
+
+    initializeAuthSystem();
+}
 
 
 /* ==========================================
-   16. GLOBAL FUNCTIONS
+   18. GLOBAL FUNCTIONS
 ========================================== */
 
 window.getAuthSession = getAuthSession;
@@ -1205,3 +1444,5 @@ window.switchAuthTab = switchAuthTab;
 window.authApiRequest = authApiRequest;
 
 window.clearAuthSession = clearAuthSession;
+
+window.updateProfileUI = updateProfileUI;
