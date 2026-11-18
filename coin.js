@@ -2,17 +2,16 @@
 /* ===================================================
    NOVELVERSE MM - COIN MANAGEMENT SYSTEM
    File: js/coin.js
-   Version: 1.0
+   Version: 1.1
 =================================================== */
+
 
 // ==========================================
 // 1. CONFIGURATION
 // ==========================================
 
-// နောက်ပိုင်း Code.gs Web App URL ထည့်ရန်
-const COIN_API_URL = '';
-
 const COIN_CONFIG = {
+
     balanceIds: [
         'header-coin-balance',
         'profile-coin-balance',
@@ -22,6 +21,7 @@ const COIN_CONFIG = {
     defaultBalance: 0,
 
     currencyName: 'Coins'
+
 };
 
 
@@ -39,36 +39,12 @@ let isCoinLoading = false;
 
 async function coinApiRequest(action, data = {}) {
 
-    if (!COIN_API_URL) {
-        throw new Error('Coin API URL မသတ်မှတ်ရသေးပါ။');
+    if (typeof window.authApiRequest !== 'function') {
+        throw new Error('Authentication API ကို မချိတ်ဆက်ရသေးပါ။');
     }
 
-    const response = await fetch(COIN_API_URL, {
-        method: 'POST',
+    return await window.authApiRequest(action, data);
 
-        headers: {
-            'Content-Type': 'text/plain;charset=utf-8'
-        },
-
-        body: JSON.stringify({
-            action,
-            ...data
-        })
-    });
-
-    if (!response.ok) {
-        throw new Error('Server နှင့် ချိတ်ဆက်၍မရပါ။');
-    }
-
-    const result = await response.json();
-
-    if (!result.success) {
-        throw new Error(
-            result.message || 'လုပ်ဆောင်မှု မအောင်မြင်ပါ။'
-        );
-    }
-
-    return result;
 }
 
 
@@ -83,6 +59,7 @@ function getCoinUserSession() {
         const session = window.getAuthSession();
 
         return session?.token || null;
+
     }
 
     try {
@@ -102,7 +79,9 @@ function getCoinUserSession() {
         console.error('Coin Session Read Error:', error);
 
         return null;
+
     }
+
 }
 
 
@@ -119,6 +98,7 @@ function formatCoinNumber(amount) {
     }
 
     return number.toLocaleString('en-US');
+
 }
 
 
@@ -146,7 +126,9 @@ function updateCoinBalanceUI(balance) {
 
     });
 
+
     // အခြား JS ဖိုင်များက အသုံးပြုနိုင်ရန်
+
     window.currentCoinBalance = currentCoinBalance;
 
     window.dispatchEvent(
@@ -156,6 +138,7 @@ function updateCoinBalanceUI(balance) {
             }
         })
     );
+
 }
 
 
@@ -165,7 +148,9 @@ function updateCoinBalanceUI(balance) {
 
 async function loadCoinBalance() {
 
-    if (isCoinLoading) return;
+    if (isCoinLoading) {
+        return currentCoinBalance;
+    }
 
     const session = getCoinUserSession();
 
@@ -174,6 +159,7 @@ async function loadCoinBalance() {
         updateCoinBalanceUI(0);
 
         return 0;
+
     }
 
     isCoinLoading = true;
@@ -187,17 +173,26 @@ async function loadCoinBalance() {
             }
         );
 
+
         if (
             typeof result.balance !== 'number' &&
             typeof result.balance !== 'string'
         ) {
-            throw new Error('Coin Balance Data မှားယွင်းနေပါသည်။');
+
+            throw new Error(
+                'Coin Balance Data မှားယွင်းနေပါသည်။'
+            );
+
         }
 
         const balance = Number(result.balance);
 
         if (!Number.isFinite(balance) || balance < 0) {
-            throw new Error('Coin Balance တန်ဖိုး မမှန်ပါ။');
+
+            throw new Error(
+                'Coin Balance တန်ဖိုး မမှန်ပါ။'
+            );
+
         }
 
         updateCoinBalanceUI(balance);
@@ -215,6 +210,7 @@ async function loadCoinBalance() {
         isCoinLoading = false;
 
     }
+
 }
 
 
@@ -238,7 +234,11 @@ async function getCoinTransactionHistory() {
     const session = getCoinUserSession();
 
     if (!session) {
-        throw new Error('Transaction ကြည့်ရန် Login ဝင်ပါ။');
+
+        throw new Error(
+            'Transaction ကြည့်ရန် Login ဝင်ပါ။'
+        );
+
     }
 
     const result = await coinApiRequest(
@@ -280,6 +280,7 @@ function renderCoinTransactionHistory(transactions) {
         }
 
         return;
+
     }
 
     if (emptyState) {
@@ -305,11 +306,14 @@ function renderCoinTransactionHistory(transactions) {
             : '-';
 
         const title = String(
-            transaction.description || transaction.type || 'Transaction'
+            transaction.description ||
+            transaction.type ||
+            'Transaction'
         );
 
         item.innerHTML = `
             <div class="transaction-info">
+
                 <div class="transaction-title">
                     ${escapeCoinHtml(title)}
                 </div>
@@ -317,6 +321,7 @@ function renderCoinTransactionHistory(transactions) {
                 <div class="transaction-date">
                     ${escapeCoinHtml(date)}
                 </div>
+
             </div>
 
             <div class="transaction-amount ${isIncome ? 'income' : 'expense'}">
@@ -395,12 +400,10 @@ function escapeCoinHtml(value) {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    updateCoinBalanceUI(0);
+    updateCoinBalanceUI(COIN_CONFIG.defaultBalance);
 
     if (getCoinUserSession()) {
-
         loadCoinBalance();
-
     }
 
 });
@@ -419,5 +422,8 @@ window.updateCoinBalanceUI = updateCoinBalanceUI;
 window.getCoinTransactionHistory = getCoinTransactionHistory;
 
 window.loadCoinTransactionHistory = loadCoinTransactionHistory;
+
+// auth.js က ဒီနာမည်ကို ခေါ်ထားတဲ့အတွက် Alias ထည့်ပေးထားသည်။
+window.loadTransactionHistory = loadCoinTransactionHistory;
 
 window.renderCoinTransactionHistory = renderCoinTransactionHistory;
