@@ -2,7 +2,7 @@
 /* ===================================================
    NOVELVERSE MM - COIN MANAGEMENT SYSTEM
    File: js/coin.js
-   Version: 1.1
+   Version: 1.2
 =================================================== */
 
 
@@ -30,7 +30,12 @@ const COIN_CONFIG = {
 // ==========================================
 
 let currentCoinBalance = 0;
+
 let isCoinLoading = false;
+
+let coinBalanceRequest = null;
+
+let transactionHistoryRequest = null;
 
 
 // ==========================================
@@ -40,7 +45,11 @@ let isCoinLoading = false;
 async function coinApiRequest(action, data = {}) {
 
     if (typeof window.authApiRequest !== 'function') {
-        throw new Error('Authentication API ကို မချိတ်ဆက်ရသေးပါ။');
+
+        throw new Error(
+            'Authentication API ကို မချိတ်ဆက်ရသေးပါ။'
+        );
+
     }
 
     return await window.authApiRequest(action, data);
@@ -93,11 +102,11 @@ function formatCoinNumber(amount) {
 
     const number = Number(amount);
 
-    if (!Number.isFinite(number) || number < 0) {
+    if (!Number.isFinite(number)) {
         return '0';
     }
 
-    return number.toLocaleString('en-US');
+    return Math.abs(number).toLocaleString('en-US');
 
 }
 
@@ -148,8 +157,13 @@ function updateCoinBalanceUI(balance) {
 
 async function loadCoinBalance() {
 
-    if (isCoinLoading) {
-        return currentCoinBalance;
+    // API request တစ်ခု လုပ်နေပြီးသားဆို
+    // အဲဒီ request ကိုပဲ ပြန်အသုံးပြုမယ်။
+
+    if (coinBalanceRequest) {
+
+        return await coinBalanceRequest;
+
     }
 
     const session = getCoinUserSession();
@@ -164,52 +178,63 @@ async function loadCoinBalance() {
 
     isCoinLoading = true;
 
-    try {
+    coinBalanceRequest = (async () => {
 
-        const result = await coinApiRequest(
-            'getCoinBalance',
-            {
-                session
+        try {
+
+            const result = await coinApiRequest(
+                'getCoinBalance',
+                {
+                    session
+                }
+            );
+
+
+            if (
+                !result ||
+                (
+                    typeof result.balance !== 'number' &&
+                    typeof result.balance !== 'string'
+                )
+            ) {
+
+                throw new Error(
+                    'Coin Balance Data မှားယွင်းနေပါသည်။'
+                );
+
             }
-        );
 
+            const balance = Number(result.balance);
 
-        if (
-            typeof result.balance !== 'number' &&
-            typeof result.balance !== 'string'
-        ) {
+            if (!Number.isFinite(balance) || balance < 0) {
 
-            throw new Error(
-                'Coin Balance Data မှားယွင်းနေပါသည်။'
-            );
+                throw new Error(
+                    'Coin Balance တန်ဖိုး မမှန်ပါ။'
+                );
+
+            }
+
+            updateCoinBalanceUI(balance);
+
+            return balance;
+
+        } catch (error) {
+
+            console.error('Coin Balance Error:', error);
+
+            return null;
+
+        } finally {
+
+            isCoinLoading = false;
+
+            coinBalanceRequest = null;
 
         }
 
-        const balance = Number(result.balance);
+    })();
 
-        if (!Number.isFinite(balance) || balance < 0) {
-
-            throw new Error(
-                'Coin Balance တန်ဖိုး မမှန်ပါ။'
-            );
-
-        }
-
-        updateCoinBalanceUI(balance);
-
-        return balance;
-
-    } catch (error) {
-
-        console.error('Coin Balance Error:', error);
-
-        return null;
-
-    } finally {
-
-        isCoinLoading = false;
-
-    }
+    return await coinBalanceRequest;
 
 }
 
@@ -248,7 +273,7 @@ async function getCoinTransactionHistory() {
         }
     );
 
-    return Array.isArray(result.transactions)
+    return Array.isArray(result?.transactions)
         ? result.transactions
         : [];
 
@@ -271,6 +296,9 @@ function renderCoinTransactionHistory(transactions) {
 
     if (!container) return;
 
+
+    // Transaction မရှိသေးပါက
+
     if (!Array.isArray(transactions) || transactions.length === 0) {
 
         container.innerHTML = '';
@@ -283,27 +311,36 @@ function renderCoinTransactionHistory(transactions) {
 
     }
 
+
     if (emptyState) {
         emptyState.style.display = 'none';
     }
 
     container.innerHTML = '';
 
+
     transactions.forEach(transaction => {
 
         const amount = Number(transaction.amount) || 0;
 
-        const isIncome =
-            transaction.type === 'credit' ||
-            transaction.type === 'income';
+
+        // Amount အပေါင်း = Coin ဝင်
+        // Amount အနုတ် = Coin သုံး
+
+        const isIncome = amount > 0;
+
+        const displayAmount = Math.abs(amount);
+
 
         const item = document.createElement('div');
 
         item.className = 'coin-transaction-item';
 
+
         const date = transaction.createdAt
             ? new Date(transaction.createdAt).toLocaleString()
             : '-';
+
 
         const title = String(
             transaction.description ||
@@ -311,7 +348,9 @@ function renderCoinTransactionHistory(transactions) {
             'Transaction'
         );
 
+
         item.innerHTML = `
+
             <div class="transaction-info">
 
                 <div class="transaction-title">
@@ -325,8 +364,9 @@ function renderCoinTransactionHistory(transactions) {
             </div>
 
             <div class="transaction-amount ${isIncome ? 'income' : 'expense'}">
-                ${isIncome ? '+' : '-'}${formatCoinNumber(amount)}
+                ${isIncome ? '+' : '-'}${formatCoinNumber(displayAmount)}
             </div>
+
         `;
 
         container.appendChild(item);
@@ -348,29 +388,62 @@ async function loadCoinTransactionHistory() {
 
     if (!container) return;
 
-    try {
 
-        container.innerHTML = `
-            <p class="coin-loading">
-                Transaction များ ရယူနေသည်...
-            </p>
-        `;
+    // Transaction request တစ်ခု လုပ်နေပြီးသားဆို
+    // ထပ်မံ API မခေါ်ပါ။
 
-        const transactions = await getCoinTransactionHistory();
+    if (transactionHistoryRequest) {
 
-        renderCoinTransactionHistory(transactions);
-
-    } catch (error) {
-
-        console.error('Transaction Error:', error);
-
-        container.innerHTML = `
-            <p class="coin-error">
-                Transaction များ ရယူ၍မရပါ။
-            </p>
-        `;
+        return await transactionHistoryRequest;
 
     }
+
+
+    transactionHistoryRequest = (async () => {
+
+        try {
+
+            container.innerHTML = `
+
+                <p class="coin-loading">
+                    Transaction များ ရယူနေသည်...
+                </p>
+
+            `;
+
+
+            const transactions =
+                await getCoinTransactionHistory();
+
+
+            renderCoinTransactionHistory(transactions);
+
+            return transactions;
+
+        } catch (error) {
+
+            console.error('Transaction Error:', error);
+
+
+            container.innerHTML = `
+
+                <p class="coin-error">
+                    Transaction များ ရယူ၍မရပါ။
+                </p>
+
+            `;
+
+            return [];
+
+        } finally {
+
+            transactionHistoryRequest = null;
+
+        }
+
+    })();
+
+    return await transactionHistoryRequest;
 
 }
 
@@ -402,8 +475,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCoinBalanceUI(COIN_CONFIG.defaultBalance);
 
+
     if (getCoinUserSession()) {
+
         loadCoinBalance();
+
     }
 
 });
@@ -423,7 +499,9 @@ window.getCoinTransactionHistory = getCoinTransactionHistory;
 
 window.loadCoinTransactionHistory = loadCoinTransactionHistory;
 
-// auth.js က ဒီနာမည်ကို ခေါ်ထားတဲ့အတွက် Alias ထည့်ပေးထားသည်။
+
+// auth.js က ခေါ်ထားတဲ့ function name
+
 window.loadTransactionHistory = loadCoinTransactionHistory;
 
 window.renderCoinTransactionHistory = renderCoinTransactionHistory;
