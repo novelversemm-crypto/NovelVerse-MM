@@ -1,38 +1,195 @@
-/* ==========================================
-   NOVELVERSE MM — AUTHENTICATION SYSTEM
-   Register / Login / Logout / User Session
-========================================== */
-
-
-/* ==========================================
-   1. CONFIGURATION
-========================================== */
-
-// Google Apps Script Web App URL
-
 const AUTH_API_URL = 'https://script.google.com/macros/s/AKfycbznSFyzuaP9JZDOSe2RC3yIfVlUemLeAq15Oi3ibgn_cbN0FhLQhdorOw-i18CcNrfFZg/exec';
 
 const AUTH_CONFIG = {
     sessionKey: 'novelverse_session',
-
     minimumPinLength: 6,
     maximumPinLength: 12,
-
     loginPage: 'profile.html',
     homePage: 'index.html'
 };
-
-
-/* ==========================================
-   2. AUTHENTICATION STATE
-========================================== */
 
 let currentAuthUser = null;
 let isAuthLoading = false;
 
 
 /* ==========================================
-   3. API REQUEST
+   REFRESH LOADING SPINNER
+========================================== */
+
+(function prepareAuthLoader() {
+
+    document.documentElement.classList.add('auth-checking');
+
+    const loaderStyle = document.createElement('style');
+
+    loaderStyle.id = 'novelverse-auth-loader-style';
+
+    loaderStyle.textContent = `
+        html.auth-checking #auth-section,
+        html.auth-checking #profile-section {
+            visibility: hidden !important;
+        }
+
+        #novelverse-auth-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 18px;
+            background:
+                radial-gradient(circle at 50% 42%, rgba(212,175,106,0.10), transparent 34%),
+                #12111A;
+            color: #fff;
+            font-family: inherit;
+        }
+
+        #novelverse-auth-loader .auth-loader-ring {
+            position: relative;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            border: 3px solid rgba(212,175,106,0.15);
+            border-top-color: #D4AF6A;
+            border-right-color: #D4AF6A;
+            box-shadow: 0 0 22px rgba(212,175,106,0.12);
+            animation: novelVerseAuthSpin 0.85s linear infinite;
+        }
+
+        #novelverse-auth-loader .auth-loader-ring::after {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.08);
+            border-bottom-color: rgba(255,255,255,0.75);
+            animation: novelVerseAuthSpinReverse 1.25s linear infinite;
+        }
+
+        #novelverse-auth-loader .auth-loader-brand {
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #D4AF6A;
+        }
+
+        #novelverse-auth-loader .auth-loader-message {
+            margin: -10px 0 0;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            color: rgba(255,255,255,0.68);
+        }
+
+        #novelverse-auth-loader .auth-loader-dots {
+            display: flex;
+            gap: 6px;
+            margin-top: -8px;
+        }
+
+        #novelverse-auth-loader .auth-loader-dots span {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #D4AF6A;
+            animation: novelVerseAuthPulse 1s ease-in-out infinite;
+        }
+
+        #novelverse-auth-loader .auth-loader-dots span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        #novelverse-auth-loader .auth-loader-dots span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes novelVerseAuthSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes novelVerseAuthSpinReverse {
+            to { transform: rotate(-360deg); }
+        }
+
+        @keyframes novelVerseAuthPulse {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-4px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #novelverse-auth-loader .auth-loader-ring,
+            #novelverse-auth-loader .auth-loader-ring::after,
+            #novelverse-auth-loader .auth-loader-dots span {
+                animation-duration: 2.5s;
+            }
+        }
+    `;
+
+    (document.head || document.documentElement).appendChild(loaderStyle);
+
+})();
+
+
+function showAuthInitializationLoader() {
+
+    const authSection = document.getElementById('auth-section');
+    const profileSection = document.getElementById('profile-section');
+
+    if (!authSection && !profileSection) {
+        return;
+    }
+
+    let loader = document.getElementById('novelverse-auth-loader');
+
+    if (!loader) {
+
+        loader = document.createElement('div');
+
+        loader.id = 'novelverse-auth-loader';
+
+        loader.setAttribute('role', 'status');
+        loader.setAttribute('aria-live', 'polite');
+
+        loader.innerHTML = `
+            <div class="auth-loader-ring"></div>
+            <div class="auth-loader-brand">NOVELVERSE</div>
+            <p class="auth-loader-message">Checking your account...</p>
+            <div class="auth-loader-dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
+
+        document.body.appendChild(loader);
+    }
+
+    loader.style.display = 'flex';
+}
+
+
+function hideAuthInitializationLoader() {
+
+    document.documentElement.classList.remove('auth-checking');
+
+    const loader = document.getElementById('novelverse-auth-loader');
+
+    if (loader) {
+        loader.remove();
+    }
+}
+
+
+/* ==========================================
+   API REQUEST
 ========================================== */
 
 async function authApiRequest(action, data = {}) {
@@ -112,7 +269,7 @@ async function authApiRequest(action, data = {}) {
 
 
 /* ==========================================
-   4. SESSION MANAGEMENT
+   SESSION MANAGEMENT
 ========================================== */
 
 function getAuthSession() {
@@ -159,13 +316,9 @@ function saveAuthSession(sessionData) {
 
     const session = {
         token: sessionData.token,
-
         userId: sessionData.userId || '',
-
         username: sessionData.username || '',
-
         createdAt: sessionData.createdAt || '',
-
         expiresAt: sessionData.expiresAt || ''
     };
 
@@ -217,7 +370,7 @@ function isUserLoggedIn() {
 
 
 /* ==========================================
-   5. AUTH UI HELPERS
+   AUTH UI HELPERS
 ========================================== */
 
 function showAuthError(elementId, message) {
@@ -265,7 +418,6 @@ function setAuthButtonLoading(buttonId, loading) {
     if (loading) {
 
         if (!button.dataset.originalHTML) {
-
             button.dataset.originalHTML = button.innerHTML;
         }
 
@@ -288,7 +440,7 @@ function setAuthButtonLoading(buttonId, loading) {
 
 
 /* ==========================================
-   6. AUTH / PROFILE SECTION
+   AUTH / PROFILE SECTION
 ========================================== */
 
 function showAuthSection() {
@@ -344,7 +496,7 @@ function showProfileSection() {
 
 
 /* ==========================================
-   7. AUTH TAB SWITCHING
+   AUTH TAB SWITCHING
 ========================================== */
 
 function switchAuthTab(tabName) {
@@ -370,7 +522,6 @@ function switchAuthTab(tabName) {
     hideAuthMessage('register-error');
 
     if (tabName !== 'register') {
-
         hideAuthMessage('register-success');
     }
 
@@ -414,7 +565,7 @@ function switchAuthTab(tabName) {
 
 
 /* ==========================================
-   8. PASSWORD / PIN VISIBILITY
+   PASSWORD / PIN VISIBILITY
 ========================================== */
 
 function setupPasswordToggles() {
@@ -475,7 +626,7 @@ function setupPasswordToggles() {
 
 
 /* ==========================================
-   9. USER REGISTRATION
+   USER REGISTRATION
 ========================================== */
 
 async function handleUserRegister(event) {
@@ -582,7 +733,6 @@ async function handleUserRegister(event) {
         );
 
         if (loginUsername) {
-
             loginUsername.value = username;
         }
 
@@ -642,7 +792,7 @@ async function handleUserRegister(event) {
 
 
 /* ==========================================
-   10. USER LOGIN
+   USER LOGIN
 ========================================== */
 
 async function handleUserLogin(event) {
@@ -758,7 +908,7 @@ async function handleUserLogin(event) {
 
 
 /* ==========================================
-   11. LOAD CURRENT USER PROFILE
+   LOAD CURRENT USER PROFILE
 ========================================== */
 
 async function loadCurrentUserProfile() {
@@ -866,7 +1016,7 @@ async function loadCurrentUserProfile() {
 
 
 /* ==========================================
-   12. UPDATE PROFILE UI
+   UPDATE PROFILE UI
 ========================================== */
 
 function updateProfileUI(user) {
@@ -949,7 +1099,7 @@ function updateProfileUI(user) {
 
 
 /* ==========================================
-   13. USER LOGOUT
+   USER LOGOUT
 ========================================== */
 
 async function handleUserLogout() {
@@ -1050,7 +1200,7 @@ async function handleUserLogout() {
 
 
 /* ==========================================
-   14. AUTH EVENT LISTENERS
+   AUTH EVENT LISTENERS
 ========================================== */
 
 function setupAuthEventListeners() {
@@ -1114,7 +1264,6 @@ function setupAuthEventListeners() {
     if (loginTab) {
 
         loginTab.addEventListener('click', () => {
-
             switchAuthTab('login');
         });
     }
@@ -1123,7 +1272,6 @@ function setupAuthEventListeners() {
     if (registerTab) {
 
         registerTab.addEventListener('click', () => {
-
             switchAuthTab('register');
         });
     }
@@ -1132,7 +1280,6 @@ function setupAuthEventListeners() {
     if (showRegisterButton) {
 
         showRegisterButton.addEventListener('click', () => {
-
             switchAuthTab('register');
         });
     }
@@ -1141,7 +1288,6 @@ function setupAuthEventListeners() {
     if (showLoginButton) {
 
         showLoginButton.addEventListener('click', () => {
-
             switchAuthTab('login');
         });
     }
@@ -1152,14 +1298,16 @@ function setupAuthEventListeners() {
 
 
 /* ==========================================
-   15. INITIALIZE AUTH SYSTEM
+   INITIALIZE AUTH SYSTEM
 ========================================== */
 
-document.addEventListener(
-    'DOMContentLoaded',
-    async () => {
+async function initializeAuthSystem() {
 
-        setupAuthEventListeners();
+    setupAuthEventListeners();
+
+    showAuthInitializationLoader();
+
+    try {
 
         const session = getAuthSession();
 
@@ -1177,12 +1325,30 @@ document.addEventListener(
 
             switchAuthTab('login');
         }
+
+    } finally {
+
+        hideAuthInitializationLoader();
     }
-);
+}
+
+
+if (document.readyState === 'loading') {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initializeAuthSystem,
+        { once: true }
+    );
+
+} else {
+
+    initializeAuthSystem();
+}
 
 
 /* ==========================================
-   16. GLOBAL FUNCTIONS
+   GLOBAL FUNCTIONS
 ========================================== */
 
 window.getAuthSession = getAuthSession;
@@ -1204,3 +1370,7 @@ window.switchAuthTab = switchAuthTab;
 window.authApiRequest = authApiRequest;
 
 window.clearAuthSession = clearAuthSession;
+
+window.showAuthInitializationLoader = showAuthInitializationLoader;
+
+window.hideAuthInitializationLoader = hideAuthInitializationLoader;
