@@ -1496,12 +1496,12 @@ async function loadAdminDashboard() {
 
         adminSetText(
             'stat-available-codes',
-            adminFormatNumber(stats.availableCodes)
+            adminFormatNumber(stats.availablePromoCodes)
         );
 
         adminSetText(
             'stat-used-codes',
-            adminFormatNumber(stats.usedCodes)
+            adminFormatNumber(stats.usedPromoCodes)
         );
 
         const container = adminGetElement('admin-dashboard-content');
@@ -1578,7 +1578,7 @@ function renderAdminUsers(users) {
 
         const details = document.createElement('p');
         details.textContent =
-            `Coins: ${adminFormatNumber(user.coins)} | Status: ${user.status || 'Active'}`;
+    `Coins: ${adminFormatNumber(user.coinBalance)} | Status: ${user.status || 'Active'}`;
 
         info.append(username, details);
 
