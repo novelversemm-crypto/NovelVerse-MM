@@ -77,16 +77,16 @@ let isPromoRedeeming = false;
 
 async function topupApiRequest(action, data = {}) {
 
-    if (typeof window.authApiRequest === 'function') {
+    if (typeof window.authApiRequest !== 'function') {
 
-        return await window.authApiRequest(
-            action,
-            data
+        throw new Error(
+            'Authentication API မတွေ့ပါ။ auth.js ကို စစ်ဆေးပါ။'
         );
     }
 
-    throw new Error(
-        'Authentication API မတွေ့ပါ။ auth.js ကို စစ်ဆေးပါ။'
+    return await window.authApiRequest(
+        action,
+        data
     );
 }
 
@@ -147,7 +147,9 @@ function showTopupSuccess(message) {
 
 function formatTopupNumber(number) {
 
-    return Number(number || 0).toLocaleString('en-US');
+    const value = Number(number || 0);
+
+    return value.toLocaleString('en-US');
 }
 
 
@@ -159,7 +161,7 @@ function selectTopupPackage(packageId, button) {
 
     const selectedPackage = TOPUP_PACKAGES[packageId];
 
-    if (!selectedPackage) {
+    if (!selectedPackage || !button) {
 
         console.error(
             'Unknown Package:',
@@ -169,14 +171,13 @@ function selectTopupPackage(packageId, button) {
         return;
     }
 
-
     selectedTopupPackage = {
         id: packageId,
         ...selectedPackage
     };
 
 
-    // Previous Selection ကို ဖယ်ရှားခြင်း
+    // Clear Previous Selection
 
     document.querySelectorAll(
         TOPUP_CONFIG.packageSelector
@@ -199,7 +200,7 @@ function selectTopupPackage(packageId, button) {
     });
 
 
-    // Current Selection
+    // Apply Current Selection
 
     button.classList.add('selected');
 
@@ -217,7 +218,7 @@ function selectTopupPackage(packageId, button) {
     }
 
 
-    // Selected Package ကို Browser State ထဲတွင်သာ သိမ်းမည်
+    // Notify Other Scripts
 
     document.dispatchEvent(
         new CustomEvent('topupPackageSelected', {
@@ -280,7 +281,7 @@ function setupTopupPackages() {
             }
 
 
-            // HTML မှာ သတ်မှတ်ထားသော ဈေးနှုန်းကိုလည်း စစ်ဆေးမည်
+            // Verify HTML Package Price
 
             if (packagePrice !== packageData.price) {
 
@@ -321,7 +322,7 @@ async function loadTopupSettings() {
 
         updateTopupText(
             'kbzpay-account-name',
-            settings.kbzpayName
+            settings.kbzpayAccountName
         );
 
         updateTopupText(
@@ -334,7 +335,7 @@ async function loadTopupSettings() {
 
         updateTopupText(
             'wavepay-account-name',
-            settings.wavepayName
+            settings.wavepayAccountName
         );
 
         updateTopupText(
@@ -349,15 +350,24 @@ async function loadTopupSettings() {
             'admin-telegram-link'
         );
 
-        if (telegramLink && settings.telegramLink) {
+        if (telegramLink) {
 
-            telegramLink.href = settings.telegramLink;
+            if (settings.telegramUrl) {
 
-            telegramLink.target = '_blank';
+                telegramLink.href = settings.telegramUrl;
 
-            telegramLink.rel = 'noopener noreferrer';
+                telegramLink.target = '_blank';
 
-            telegramLink.style.display = '';
+                telegramLink.rel = 'noopener noreferrer';
+
+                telegramLink.style.display = '';
+
+            } else {
+
+                telegramLink.removeAttribute('href');
+
+                telegramLink.style.display = 'none';
+            }
         }
 
         return settings;
@@ -399,6 +409,13 @@ async function copyTopupText(text, button) {
     if (!text) return;
 
     try {
+
+        if (
+            !navigator.clipboard ||
+            typeof navigator.clipboard.writeText !== 'function'
+        ) {
+            throw new Error('CLIPBOARD_NOT_AVAILABLE');
+        }
 
         await navigator.clipboard.writeText(text);
 
@@ -499,7 +516,7 @@ async function redeemTopupPromoCode() {
     hideTopupMessage(TOPUP_CONFIG.promoSuccessId);
 
 
-    // Login စစ်ဆေးခြင်း
+    // Check Login Status
 
     if (
         typeof window.isUserLoggedIn !== 'function' ||
@@ -550,6 +567,8 @@ async function redeemTopupPromoCode() {
             'Promo Code ပုံစံ မမှန်ပါ။ ပြန်စစ်ဆေးပေးပါ။'
         );
 
+        input.focus();
+
         return;
     }
 
@@ -565,6 +584,15 @@ async function redeemTopupPromoCode() {
 
     try {
 
+        // Get Current Session
+
+        if (typeof window.getAuthSession !== 'function') {
+
+            throw new Error(
+                'Login Session စစ်ဆေးမှု မရရှိပါ။'
+            );
+        }
+
         const session = window.getAuthSession();
 
         if (!session || !session.token) {
@@ -575,7 +603,7 @@ async function redeemTopupPromoCode() {
         }
 
 
-        // Backend ကသာ Code Validity နှင့် Coin Credit ကို ဆုံးဖြတ်မည်
+        // Send Promo Code to Backend
 
         const result = await topupApiRequest(
             'redeemPromoCode',
@@ -597,17 +625,20 @@ async function redeemTopupPromoCode() {
             0
         );
 
-
         const newBalance = Number(
             result.balance
         );
 
 
         let successMessage =
-            result.message || 'Promo Code အသုံးပြုခြင်း အောင်မြင်ပါသည်။';
+            result.message ||
+            'Promo Code အသုံးပြုခြင်း အောင်မြင်ပါသည်။';
 
 
-        if (receivedCoins > 0) {
+        if (
+            Number.isSafeInteger(receivedCoins) &&
+            receivedCoins > 0
+        ) {
 
             successMessage +=
                 ` ရရှိသော Coins: ${formatTopupNumber(receivedCoins)}`;
@@ -617,37 +648,44 @@ async function redeemTopupPromoCode() {
         showTopupSuccess(successMessage);
 
 
-        // Coin Balance ကို Backend Response ဖြင့် Update လုပ်မည်
+        // Refresh Coin Balance
 
         if (
-            Number.isFinite(newBalance) &&
-            typeof window.updateCoinBalanceUI === 'function'
-        ) {
-
-            window.updateCoinBalanceUI(newBalance);
-
-        } else if (
             typeof window.refreshCoinBalance === 'function'
         ) {
 
             await window.refreshCoinBalance();
+
+        } else if (
+            Number.isSafeInteger(newBalance) &&
+            newBalance >= 0 &&
+            typeof window.updateCoinBalanceUI === 'function'
+        ) {
+
+            window.updateCoinBalanceUI(newBalance);
         }
 
 
-        // Transaction History ကို Refresh လုပ်မည်
+        // Refresh Transaction History
 
         if (
             typeof window.loadCoinTransactionHistory === 'function'
         ) {
 
             await window.loadCoinTransactionHistory();
-        }
 
+        } else if (
+            typeof window.loadTransactionHistory === 'function'
+        ) {
+
+            await window.loadTransactionHistory();
+        }
 
     } catch (error) {
 
         showTopupError(
-            error.message || 'Promo Code အသုံးပြုခြင်း မအောင်မြင်ပါ။'
+            error.message ||
+            'Promo Code အသုံးပြုခြင်း မအောင်မြင်ပါ။'
         );
 
         console.error(
@@ -758,7 +796,9 @@ async function loadTopupCoinBalance() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    if (!document.getElementById('promo-code-input')) {
+    // Run only on Top-up Page
+
+    if (!document.getElementById(TOPUP_CONFIG.promoInputId)) {
         return;
     }
 
@@ -770,7 +810,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupPromoRedemption();
 
 
-    // Settings နှင့် Balance ကို Load လုပ်ခြင်း
+    // Load Settings and Coin Balance
 
     loadTopupSettings();
 
