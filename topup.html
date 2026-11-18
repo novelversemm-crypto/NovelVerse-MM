@@ -7,12 +7,22 @@
 
     <title>Top Up Coins - NovelVerse</title>
 
-    <meta name="description" content="Top up your NovelVerse coins and unlock premium chapters.">
+    <meta
+        name="description"
+        content="Purchase NovelVerse Coins through KBZPay or WavePay. Send your payment screenshot to our admin and receive a Promo Code."
+    >
+
     <meta name="theme-color" content="#12111A">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
 
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="./favicon.png">
@@ -23,27 +33,38 @@
     <!-- =========================================
          HEADER
     ========================================== -->
+
     <header class="top-header">
 
         <div class="header-inner">
 
             <a href="index.html" class="logo-area">
+
                 <img
                     src="./icon/b0ea578f-afcf-4306-800f-343d8a8712cc.png"
                     alt="NovelVerse Logo"
                     class="logo-img"
                 >
+
                 <span class="logo-title">NovelVerse</span>
+
             </a>
 
             <div class="header-actions">
 
                 <div class="header-coin-link" id="header-coin-link">
+
                     <i class="fa-solid fa-coins"></i>
+
                     <span id="header-coin-balance">0</span>
+
                 </div>
 
-                <a href="profile.html" class="icon-btn" aria-label="My Account">
+                <a
+                    href="profile.html"
+                    class="icon-btn"
+                    aria-label="My Account"
+                >
                     <i class="fa-solid fa-user"></i>
                 </a>
 
@@ -57,9 +78,11 @@
     <!-- =========================================
          MAIN CONTENT
     ========================================== -->
+
     <main class="topup-main">
 
         <!-- PAGE HEADING -->
+
         <section class="page-heading">
 
             <div class="page-heading-icon">
@@ -67,8 +90,13 @@
             </div>
 
             <div>
+
                 <h1>Top Up Coins</h1>
-                <p>Coin ဝယ်ယူပြီး Premium Chapters များကို ဖတ်ရှုလိုက်ပါ။</p>
+
+                <p>
+                    Coin ဝယ်ယူပြီး Premium Chapters များကို ဖတ်ရှုလိုက်ပါ။
+                </p>
+
             </div>
 
         </section>
@@ -77,6 +105,7 @@
         <!-- =====================================
              CURRENT BALANCE
         ====================================== -->
+
         <section class="topup-balance-card">
 
             <div class="topup-balance-info">
@@ -84,17 +113,26 @@
                 <span>YOUR CURRENT BALANCE</span>
 
                 <h2>
+
                     <i class="fa-solid fa-coins"></i>
+
                     <span id="topup-current-balance">0</span>
+
                 </h2>
 
                 <p>လက်ရှိ Coin လက်ကျန်</p>
 
             </div>
 
-            <a href="profile.html" class="balance-account-link">
+            <a
+                href="profile.html"
+                class="balance-account-link"
+            >
+
                 <i class="fa-solid fa-user-circle"></i>
+
                 My Account
+
             </a>
 
         </section>
@@ -103,16 +141,22 @@
         <!-- =====================================
              COIN PACKAGES
         ====================================== -->
+
         <section class="coin-packages-section">
 
             <div class="section-heading">
 
                 <h2>
+
                     <i class="fa-solid fa-box-open"></i>
-                    Choose Your Package
+
+                    Coin Packages
+
                 </h2>
 
-                <p>သင်ဝယ်ယူလိုသော Coin Package ကို ရွေးချယ်ပါ။</p>
+                <p>
+                    မိမိဝယ်ယူလိုသော ပမာဏအလိုက် ငွေလွှဲပေးနိုင်ပါတယ်။
+                </p>
 
             </div>
 
@@ -120,23 +164,23 @@
             <div class="coin-packages-grid">
 
                 <!-- PACKAGE 1 -->
-                <button
-                    type="button"
-                    class="coin-package-card"
-                    data-package-id="package_1000"
-                    data-price="1000"
-                    aria-pressed="false"
-                >
+
+                <article class="coin-package-card">
 
                     <div class="package-icon">
+
                         <i class="fa-solid fa-coins"></i>
+
                     </div>
 
                     <h3>Starter</h3>
 
                     <div class="package-coins">
+
                         <strong>40</strong>
+
                         <span>Coins</span>
+
                     </div>
 
                     <div class="package-price">
@@ -147,31 +191,27 @@
                         No Bonus
                     </span>
 
-                    <span class="package-select-indicator">
-                        <i class="fa-regular fa-circle"></i>
-                    </span>
-
-                </button>
+                </article>
 
 
                 <!-- PACKAGE 2 -->
-                <button
-                    type="button"
-                    class="coin-package-card"
-                    data-package-id="package_2000"
-                    data-price="2000"
-                    aria-pressed="false"
-                >
+
+                <article class="coin-package-card">
 
                     <div class="package-icon">
+
                         <i class="fa-solid fa-coins"></i>
+
                     </div>
 
                     <h3>Standard</h3>
 
                     <div class="package-coins">
+
                         <strong>85</strong>
+
                         <span>Coins</span>
+
                     </div>
 
                     <div class="package-price">
@@ -182,35 +222,31 @@
                         80 + 5 Bonus
                     </span>
 
-                    <span class="package-select-indicator">
-                        <i class="fa-regular fa-circle"></i>
-                    </span>
-
-                </button>
+                </article>
 
 
                 <!-- PACKAGE 3 -->
-                <button
-                    type="button"
-                    class="coin-package-card popular-package"
-                    data-package-id="package_3000"
-                    data-price="3000"
-                    aria-pressed="false"
-                >
+
+                <article class="coin-package-card popular-package">
 
                     <span class="package-popular-label">
                         POPULAR
                     </span>
 
                     <div class="package-icon">
+
                         <i class="fa-solid fa-gem"></i>
+
                     </div>
 
                     <h3>Premium</h3>
 
                     <div class="package-coins">
+
                         <strong>130</strong>
+
                         <span>Coins</span>
+
                     </div>
 
                     <div class="package-price">
@@ -221,31 +257,27 @@
                         120 + 10 Bonus
                     </span>
 
-                    <span class="package-select-indicator">
-                        <i class="fa-regular fa-circle"></i>
-                    </span>
-
-                </button>
+                </article>
 
 
                 <!-- PACKAGE 4 -->
-                <button
-                    type="button"
-                    class="coin-package-card"
-                    data-package-id="package_5000"
-                    data-price="5000"
-                    aria-pressed="false"
-                >
+
+                <article class="coin-package-card">
 
                     <div class="package-icon">
+
                         <i class="fa-solid fa-crown"></i>
+
                     </div>
 
                     <h3>Ultimate</h3>
 
                     <div class="package-coins">
+
                         <strong>220</strong>
+
                         <span>Coins</span>
+
                     </div>
 
                     <div class="package-price">
@@ -256,11 +288,7 @@
                         200 + 20 Bonus
                     </span>
 
-                    <span class="package-select-indicator">
-                        <i class="fa-regular fa-circle"></i>
-                    </span>
-
-                </button>
+                </article>
 
             </div>
 
@@ -270,35 +298,48 @@
         <!-- =====================================
              PAYMENT INFORMATION
         ====================================== -->
+
         <section class="payment-section">
 
             <div class="section-heading">
 
                 <h2>
+
                     <i class="fa-solid fa-wallet"></i>
-                    Payment Information
+
+                    Payment Methods
+
                 </h2>
 
-                <p>အောက်ပါ Payment Account များမှတစ်ဆင့် ငွေလွှဲနိုင်ပါတယ်။</p>
+                <p>
+                    အောက်ပါ Account များသို့ ငွေလွှဲပေးပါ။
+                </p>
 
             </div>
 
 
             <!-- KBZPAY -->
+
             <div class="payment-method-card">
 
                 <div class="payment-method-header">
 
                     <div class="payment-method-icon kbzpay-icon">
+
                         <i class="fa-solid fa-wallet"></i>
+
                     </div>
 
                     <div>
+
                         <h3>KBZPay</h3>
+
                         <span>Mobile Payment</span>
+
                     </div>
 
                 </div>
+
 
                 <div class="payment-account-details">
 
@@ -311,6 +352,7 @@
                         </strong>
 
                     </div>
+
 
                     <div class="payment-detail-row">
 
@@ -328,7 +370,9 @@
                                 data-copy-target="kbzpay-phone"
                                 aria-label="Copy KBZPay phone number"
                             >
+
                                 <i class="fa-regular fa-copy"></i>
+
                             </button>
 
                         </div>
@@ -341,20 +385,27 @@
 
 
             <!-- WAVEPAY -->
+
             <div class="payment-method-card">
 
                 <div class="payment-method-header">
 
                     <div class="payment-method-icon wavepay-icon">
+
                         <i class="fa-solid fa-mobile-screen-button"></i>
+
                     </div>
 
                     <div>
+
                         <h3>WavePay</h3>
+
                         <span>Mobile Payment</span>
+
                     </div>
 
                 </div>
+
 
                 <div class="payment-account-details">
 
@@ -367,6 +418,7 @@
                         </strong>
 
                     </div>
+
 
                     <div class="payment-detail-row">
 
@@ -384,7 +436,9 @@
                                 data-copy-target="wavepay-phone"
                                 aria-label="Copy WavePay phone number"
                             >
+
                                 <i class="fa-regular fa-copy"></i>
+
                             </button>
 
                         </div>
@@ -399,60 +453,75 @@
 
 
         <!-- =====================================
-             PAYMENT INSTRUCTIONS
+             HOW TO TOP UP
         ====================================== -->
+
         <section class="payment-instructions-section">
 
             <h2>
+
                 <i class="fa-solid fa-circle-info"></i>
+
                 How to Top Up
+
             </h2>
+
 
             <ol class="payment-instructions-list">
 
                 <li>
+
                     <span class="instruction-number">1</span>
 
                     <div>
-                        <strong>Package ရွေးချယ်ပါ</strong>
-                        <p>အထက်ပါ Coin Package များထဲမှ တစ်ခုကို ရွေးပါ။</p>
+
+                        <strong>ငွေလွှဲပါ</strong>
+
+                        <p>
+                            မိမိဝယ်ယူလိုသော Coin Package ဈေးနှုန်းအတိုင်း
+                            KBZPay သို့မဟုတ် WavePay မှ ငွေလွှဲပါ။
+                        </p>
+
                     </div>
+
                 </li>
 
+
                 <li>
+
                     <span class="instruction-number">2</span>
 
                     <div>
-                        <strong>ငွေလွှဲပါ</strong>
-                        <p>KBZPay သို့မဟုတ် WavePay ဖြင့် ရွေးချယ်ထားသော Package ဈေးနှုန်းအတိုင်း ငွေလွှဲပါ။</p>
+
+                        <strong>Payment Screenshot ပို့ပါ</strong>
+
+                        <p>
+                            ငွေလွှဲပြီးပါက ငွေလွှဲအောင်မြင်ကြောင်း
+                            Screenshot ကို Admin Telegram သို့ ပို့ပေးပါ။
+                        </p>
+
                     </div>
+
                 </li>
 
+
                 <li>
+
                     <span class="instruction-number">3</span>
 
                     <div>
-                        <strong>Screenshot ပို့ပါ</strong>
-                        <p>ငွေလွှဲပြီးပါက Payment Screenshot နှင့် ရွေးချယ်ထားသော Package ကို Admin Telegram သို့ ပို့ပါ။</p>
+
+                        <strong>Promo Code ရယူပြီး Redeem လုပ်ပါ</strong>
+
+                        <p>
+                            Admin မှ ငွေလွှဲမှုကို စစ်ဆေးပြီးနောက်
+                            သင့်ငွေပမာဏအတွက် Promo Code ပေးပါမယ်။
+                            ရရှိလာသော Code ကို အောက်တွင် ထည့်သွင်းပြီး
+                            Coin ရယူနိုင်ပါတယ်။
+                        </p>
+
                     </div>
-                </li>
 
-                <li>
-                    <span class="instruction-number">4</span>
-
-                    <div>
-                        <strong>Promo Code ရယူပါ</strong>
-                        <p>Admin မှ ငွေလွှဲမှုကို စစ်ဆေးပြီးနောက် သင့် Package အတွက် Promo Code ပေးပါမယ်။</p>
-                    </div>
-                </li>
-
-                <li>
-                    <span class="instruction-number">5</span>
-
-                    <div>
-                        <strong>Promo Code Redeem လုပ်ပါ</strong>
-                        <p>အောက်ပါ Redeem နေရာတွင် Code ထည့်ပြီး Coin လက်ခံရယူပါ။</p>
-                    </div>
                 </li>
 
             </ol>
@@ -464,9 +533,13 @@
                 class="telegram-contact-btn"
                 target="_blank"
                 rel="noopener noreferrer"
+                style="display: none;"
             >
+
                 <i class="fa-brands fa-telegram"></i>
-                Contact Admin on Telegram
+
+                Send Payment Screenshot to Admin
+
             </a>
 
         </section>
@@ -475,16 +548,22 @@
         <!-- =====================================
              PROMO CODE REDEMPTION
         ====================================== -->
+
         <section class="promo-redeem-section">
 
             <div class="section-heading">
 
                 <h2>
+
                     <i class="fa-solid fa-ticket"></i>
+
                     Redeem Promo Code
+
                 </h2>
 
-                <p>Admin မှ ရရှိထားသော Promo Code ကို ထည့်သွင်းပါ။</p>
+                <p>
+                    Admin ထံမှ ရရှိထားသော Promo Code ကို ထည့်သွင်းပါ။
+                </p>
 
             </div>
 
@@ -494,7 +573,7 @@
                 <div class="promo-input-group">
 
                     <label for="promo-code-input">
-                        Your Promo Code
+                        Promo Code
                     </label>
 
                     <div class="promo-input-wrapper">
@@ -505,8 +584,9 @@
                             type="text"
                             id="promo-code-input"
                             name="promoCode"
-                            placeholder="ဥပမာ - NV-XXXXXXXX"
+                            placeholder="Enter your Promo Code"
                             autocomplete="off"
+                            autocapitalize="characters"
                             maxlength="50"
                             required
                         >
@@ -521,6 +601,7 @@
                     class="form-message error-message"
                     role="alert"
                     aria-live="polite"
+                    style="display: none;"
                 ></div>
 
 
@@ -529,6 +610,7 @@
                     class="form-message success-message"
                     role="status"
                     aria-live="polite"
+                    style="display: none;"
                 ></div>
 
 
@@ -537,14 +619,20 @@
                     id="redeem-promo-btn"
                     class="primary-btn redeem-btn"
                 >
+
                     <i class="fa-solid fa-gift"></i>
+
                     Redeem Coins
+
                 </button>
 
 
                 <p class="promo-redeem-note">
+
                     <i class="fa-solid fa-shield-halved"></i>
+
                     Promo Code တစ်ခုကို တစ်ကြိမ်သာ အသုံးပြုနိုင်ပါတယ်။
+
                 </p>
 
             </div>
@@ -555,19 +643,39 @@
         <!-- =====================================
              IMPORTANT NOTICE
         ====================================== -->
+
         <section class="topup-notice">
 
             <h3>
-                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <i class="fa-solid fa-circle-exclamation"></i>
+
                 Important Notice
+
             </h3>
 
             <ul>
-                <li>ငွေမလွှဲမီ Package ဈေးနှုန်းကို သေချာစစ်ဆေးပါ။</li>
-                <li>ငွေလွှဲ Screenshot ကို Admin ထံ ပေးပို့ပါ။</li>
-                <li>Promo Code ကို အခြားသူများနှင့် မမျှဝေပါနှင့်။</li>
-                <li>အသုံးပြုပြီးသော Promo Code ကို ထပ်မံအသုံးပြု၍ မရပါ။</li>
-                <li>Coin လက်ကျန်ကို Backend မှ အတည်ပြုထားသော Balance အတိုင်းသာ ပြသပါမည်။</li>
+
+                <li>
+                    ငွေမလွှဲမီ Payment Account နှင့် ငွေပမာဏကို သေချာစစ်ဆေးပါ။
+                </li>
+
+                <li>
+                    ငွေလွှဲပြီးနောက် Payment Screenshot ကို Admin Telegram သို့ ပို့ပေးပါ။
+                </li>
+
+                <li>
+                    Admin မှ ငွေလွှဲမှုကို အတည်ပြုပြီးမှ Promo Code ရရှိပါမယ်။
+                </li>
+
+                <li>
+                    Promo Code ကို တစ်ကြိမ်သာ အသုံးပြုနိုင်ပါတယ်။
+                </li>
+
+                <li>
+                    Coin ရရှိရန် Admin ပေးထားသော Promo Code ကို Redeem လုပ်ပေးရပါမယ်။
+                </li>
+
             </ul>
 
         </section>
@@ -578,38 +686,56 @@
     <!-- =========================================
          BOTTOM NAVIGATION
     ========================================== -->
+
     <nav class="bottom-nav">
 
         <a href="index.html" class="nav-item">
+
             <i class="fa-solid fa-house"></i>
+
             <span>Home</span>
+
         </a>
+
 
         <a href="search.html" class="nav-item">
+
             <i class="fa-solid fa-magnifying-glass"></i>
+
             <span>Search</span>
+
         </a>
+
 
         <a href="library.html" class="nav-item">
+
             <i class="fa-solid fa-bookmark"></i>
+
             <span>Library</span>
+
         </a>
 
+
         <a href="profile.html" class="nav-item">
+
             <i class="fa-solid fa-user"></i>
+
             <span>Account</span>
+
         </a>
 
     </nav>
 
 
-    <!-- JAVASCRIPT WILL BE ADDED IN THE JS PHASE -->
-
-    <script src="coin.js"></script>
+    <!-- =========================================
+         JAVASCRIPT
+    ========================================== -->
 
     <script src="auth.js"></script>
 
+    <script src="coin.js"></script>
+
     <script src="topup.js"></script>
-    
+
 </body>
 </html>
