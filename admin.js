@@ -1399,32 +1399,48 @@ let adminGeneratedPromoCodes = [];
 // ADMIN API REQUEST
 // ---------------------------------------------------
 
+
 async function adminApiRequest(action, payload = {}) {
+
     if (!ADMIN_API_URL) {
         throw new Error(
             'Admin Backend API မချိတ်ဆက်ရသေးပါ။ Backend တည်ဆောက်ပြီးမှ အသုံးပြုနိုင်ပါမည်။'
         );
     }
 
+    const token = getToken();
+
+    if (!token) {
+        throw new Error(
+            'GitHub Token မတွေ့ပါ။ Admin Panel သို့ ပြန်လည် Login ဝင်ပါ။'
+        );
+    }
+
     const response = await fetch(ADMIN_API_URL, {
         method: 'POST',
+
         headers: {
             'Content-Type': 'text/plain;charset=utf-8'
         },
+
         body: JSON.stringify({
             action,
-            ...payload
+            ...payload,
+            githubToken: token
         })
     });
 
     const result = await response.json();
 
     if (!response.ok || result.success === false) {
-        throw new Error(result.message || 'Backend Request မအောင်မြင်ပါ။');
+        throw new Error(
+            result.message || 'Backend Request မအောင်မြင်ပါ။'
+        );
     }
 
     return result;
 }
+
 
 // ---------------------------------------------------
 // COMMON ADMIN HELPERS
