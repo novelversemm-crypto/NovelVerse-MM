@@ -1,975 +1,1151 @@
 /* ==========================================================
    NOVELVERSE MM — THEME SYSTEM
-   Theme Modes: DARK / LIGHT / LIGHT-DARK
-   File: theme.css
+   Theme: DARK / LIGHT / LIGHT-DARK
+   File: theme.js
 ========================================================== */
 
-/* ==========================================================
-   01. DARK THEME (DEFAULT)
-========================================================== */
-
-:root,
-html[data-theme="dark"],
-html[data-theme-mode="dark"] {
-
-    --nv-bg: #12111A;
-    --nv-bg-secondary: #181621;
-
-    --nv-surface: #1B1925;
-    --nv-surface-2: #242130;
-    --nv-surface-3: #302B40;
-
-    --nv-card: #1B1925;
-    --nv-card-hover: #242130;
-
-    --nv-header: #15131D;
-    --nv-navbar: #181621;
-
-    --nv-text: #F0EDF8;
-    --nv-text-primary: #F0EDF8;
-    --nv-muted: #A7A0B6;
-    --nv-text-secondary: #A7A0B6;
-
-    --nv-accent: #8B5CF6;
-    --nv-accent-hover: #A78BFA;
-    --nv-accent-soft: rgba(139, 92, 246, 0.15);
-
-    --nv-border: #302A40;
-    --nv-border-light: #3A334B;
-
-    --nv-input: #242130;
-    --nv-input-bg: #242130;
-
-    --nv-button-bg: #8B5CF6;
-    --nv-button-text: #FFFFFF;
-
-    --nv-success: #4ADE80;
-    --nv-danger: #FB7185;
-    --nv-warning: #FBBF24;
-
-    --nv-overlay: rgba(0, 0, 0, 0.70);
-
-    --nv-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-    --nv-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
-    --nv-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.35);
-
-    --nv-scrollbar: #3A334B;
-    --nv-scrollbar-hover: #8B5CF6;
-
-    --nv-radius-sm: 8px;
-    --nv-radius-md: 12px;
-    --nv-radius-lg: 18px;
-    --nv-radius-xl: 24px;
-
-    --nv-transition: 0.25s ease;
-
-    color-scheme: dark;
-}
-
-
-/* ==========================================================
-   02. LIGHT THEME
-========================================================== */
-
-html[data-theme="light"] {
-
-    --nv-bg: #F5F5F7;
-    --nv-bg-secondary: #EEEEF2;
-
-    --nv-surface: #FFFFFF;
-    --nv-surface-2: #F0F0F4;
-    --nv-surface-3: #E5E5EB;
-
-    --nv-card: #FFFFFF;
-    --nv-card-hover: #F8F8FA;
-
-    --nv-header: #FFFFFF;
-    --nv-navbar: #FFFFFF;
-
-    --nv-text: #24232C;
-    --nv-text-primary: #24232C;
-    --nv-muted: #777583;
-    --nv-text-secondary: #777583;
-
-    --nv-accent: #7650C9;
-    --nv-accent-hover: #8B68DC;
-    --nv-accent-soft: rgba(118, 80, 201, 0.10);
-
-    --nv-border: #E2E0E8;
-    --nv-border-light: #D4D1DE;
-
-    --nv-input: #F0F0F4;
-    --nv-input-bg: #F0F0F4;
-
-    --nv-button-bg: #7650C9;
-    --nv-button-text: #FFFFFF;
-
-    --nv-success: #21864B;
-    --nv-danger: #D94159;
-    --nv-warning: #C58A16;
-
-    --nv-overlay: rgba(25, 20, 35, 0.55);
-
-    --nv-shadow-sm: 0 2px 8px rgba(20, 20, 30, 0.05);
-    --nv-shadow-md: 0 8px 24px rgba(20, 20, 30, 0.08);
-    --nv-shadow-lg: 0 20px 60px rgba(20, 20, 30, 0.15);
-
-    --nv-scrollbar: #D4D1DE;
-    --nv-scrollbar-hover: #7650C9;
-
-    color-scheme: light;
-}
-
-
-/* ==========================================================
-   03. LIGHT-DARK THEME
-   Light outer background + dark surfaces
-========================================================== */
-
-html[data-theme="light-dark"] {
-
-    --nv-bg: #F0EFF4;
-    --nv-bg-secondary: #E7E5EC;
-
-    --nv-surface: #1C1A25;
-    --nv-surface-2: #262331;
-    --nv-surface-3: #322D40;
-
-    --nv-card: #1C1A25;
-    --nv-card-hover: #262331;
-
-    --nv-header: #1C1A25;
-    --nv-navbar: #1C1A25;
-
-    --nv-text: #F0EDF8;
-    --nv-text-primary: #F0EDF8;
-    --nv-muted: #AAA3B8;
-    --nv-text-secondary: #AAA3B8;
-
-    --nv-accent: #A78BFA;
-    --nv-accent-hover: #C4A7FF;
-    --nv-accent-soft: rgba(167, 139, 250, 0.15);
-
-    --nv-border: #373143;
-    --nv-border-light: #494158;
-
-    --nv-input: #262331;
-    --nv-input-bg: #262331;
-
-    --nv-button-bg: #8B5CF6;
-    --nv-button-text: #FFFFFF;
-
-    --nv-success: #4ADE80;
-    --nv-danger: #FB7185;
-    --nv-warning: #FBBF24;
-
-    --nv-overlay: rgba(0, 0, 0, 0.70);
-
-    --nv-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.10);
-    --nv-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
-    --nv-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.25);
-
-    --nv-scrollbar: #494158;
-    --nv-scrollbar-hover: #A78BFA;
-
-    color-scheme: dark;
-}
-
-
-/* ==========================================================
-   04. BASE HTML
-========================================================== */
-
-html {
-    min-height: 100%;
-    background: var(--nv-bg);
-    color: var(--nv-text);
-    scroll-behavior: smooth;
-
-    transition:
-        background-color var(--nv-transition),
-        color var(--nv-transition);
-}
-
-body {
-    min-height: 100vh;
-    margin: 0;
-
-    background: var(--nv-bg);
-    color: var(--nv-text);
-
-    transition:
-        background-color var(--nv-transition),
-        color var(--nv-transition);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body,
-button,
-input,
-textarea,
-select {
-    font-family: inherit;
-}
-
-button {
-    color: var(--nv-text);
-}
-
-img {
-    max-width: 100%;
-}
-
-a {
-    color: var(--nv-accent);
-    text-decoration: none;
-    transition: color var(--nv-transition);
-}
-
-a:hover {
-    color: var(--nv-accent-hover);
-}
-
-::selection {
-    background: var(--nv-accent);
-    color: #FFFFFF;
-}
-
-
-/* ==========================================================
-   05. TEXT
-========================================================== */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--nv-text);
-}
-
-p {
-    color: var(--nv-text);
-}
-
-small,
-.small-text,
-.muted,
-.text-muted {
-    color: var(--nv-muted);
-}
-
-.text-primary {
-    color: var(--nv-text-primary);
-}
-
-.text-accent {
-    color: var(--nv-accent);
-}
-
-.text-success {
-    color: var(--nv-success);
-}
-
-.text-danger {
-    color: var(--nv-danger);
-}
-
-.text-warning {
-    color: var(--nv-warning);
-}
-
-
-/* ==========================================================
-   06. MAIN CONTAINERS
-========================================================== */
-
-main,
-.main-content,
-.page-content,
-.content-wrapper {
-    color: var(--nv-text);
-}
-
-.section,
-.content-section {
-    color: var(--nv-text);
-}
-
-.page-container {
-    background: transparent;
-}
-
-
-/* ==========================================================
-   07. HEADER
-========================================================== */
-
-header,
-.top-header,
-.site-header,
-.header,
-.navbar {
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.top-header,
-.site-header {
-    background: var(--nv-header);
-}
-
-.header-inner,
-.header-content {
-    color: var(--nv-text);
-}
-
-.header-title,
-.logo-text {
-    color: var(--nv-text);
-}
-
-.header-actions {
-    color: var(--nv-text);
-}
-
-
-/* ==========================================================
-   08. NAVIGATION
-========================================================== */
-
-nav,
-.main-nav,
-.bottom-nav,
-.mobile-nav {
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-nav a,
-.main-nav a,
-.bottom-nav a,
-.mobile-nav a {
-    color: var(--nv-muted);
-    transition: color var(--nv-transition);
-}
-
-nav a:hover,
-.main-nav a:hover,
-.bottom-nav a:hover,
-.mobile-nav a:hover {
-    color: var(--nv-accent);
-}
-
-.nav-link.active,
-.nav-item.active,
-.active-nav {
-    color: var(--nv-accent);
-}
-
-
-/* ==========================================================
-   09. CARDS / SURFACES
-========================================================== */
-
-.card,
-.novel-card,
-.book-card,
-.profile-card,
-.section-card,
-.content-card,
-.panel,
-.surface {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-
-    transition:
-        background-color var(--nv-transition),
-        border-color var(--nv-transition),
-        color var(--nv-transition);
-}
-
-.card:hover,
-.novel-card:hover,
-.book-card:hover {
-    background: var(--nv-card-hover);
-}
-
-.card-title,
-.novel-title,
-.book-title {
-    color: var(--nv-text);
-}
-
-.card-description,
-.novel-description,
-.book-description {
-    color: var(--nv-muted);
-}
-
-
-/* ==========================================================
-   10. BUTTONS
-========================================================== */
-
-button,
-.btn {
-    transition:
-        background-color var(--nv-transition),
-        color var(--nv-transition),
-        border-color var(--nv-transition);
-}
-
-.btn-primary,
-.primary-btn,
-button.primary {
-    background: var(--nv-button-bg);
-    color: var(--nv-button-text);
-    border-color: var(--nv-button-bg);
-}
-
-.btn-primary:hover,
-.primary-btn:hover,
-button.primary:hover {
-    background: var(--nv-accent-hover);
-    border-color: var(--nv-accent-hover);
-}
-
-.btn-secondary,
-.secondary-btn,
-button.secondary {
-    background: var(--nv-surface-2);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.btn-secondary:hover,
-.secondary-btn:hover,
-button.secondary:hover {
-    background: var(--nv-surface-3);
-}
-
-.btn-outline,
-.outline-btn {
-    background: transparent;
-    color: var(--nv-accent);
-    border: 1px solid var(--nv-accent);
-}
-
-.btn-outline:hover,
-.outline-btn:hover {
-    background: var(--nv-accent-soft);
-}
-
-button:disabled,
-.btn:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-}
-
-
-/* ==========================================================
-   11. INPUT / SEARCH / FORM
-========================================================== */
-
-input,
-textarea,
-select {
-    background: var(--nv-input-bg);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-    outline-color: var(--nv-accent);
-    transition:
-        background-color var(--nv-transition),
-        color var(--nv-transition),
-        border-color var(--nv-transition);
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: var(--nv-accent);
-    outline: none;
-    box-shadow: 0 0 0 3px var(--nv-accent-soft);
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: var(--nv-muted);
-    opacity: 0.8;
-}
-
-.search-box,
-.search-container,
-.search-input {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-
-/* ==========================================================
-   12. BADGES / TAGS
-========================================================== */
-
-.badge,
-.tag,
-.status-badge {
-    background: var(--nv-surface-2);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.badge-accent,
-.tag-accent {
-    background: var(--nv-accent-soft);
-    color: var(--nv-accent);
-}
-
-.badge-success {
-    background: rgba(74, 222, 128, 0.12);
-    color: var(--nv-success);
-}
-
-.badge-danger {
-    background: rgba(251, 113, 133, 0.12);
-    color: var(--nv-danger);
-}
-
-
-/* ==========================================================
-   13. DIVIDERS
-========================================================== */
-
-hr,
-.divider,
-.border-line {
-    border-color: var(--nv-border);
-}
-
-/* ==========================================================
-   14. MODALS / POPUPS
-========================================================== */
-
-.modal,
-.modal-content,
-.popup,
-.popup-content,
-.dialog {
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.modal-content,
-.popup-content,
-.dialog-content {
-    background: var(--nv-surface);
-}
-
-.modal-overlay,
-.popup-overlay,
-.overlay {
-    background: var(--nv-overlay);
-}
-
-
-/* ==========================================================
-   15. DROPDOWN
-========================================================== */
-
-.dropdown,
-.dropdown-menu,
-.menu-dropdown {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-    box-shadow: var(--nv-shadow-md);
-}
-
-.dropdown-item,
-.menu-item {
-    color: var(--nv-text);
-}
-
-.dropdown-item:hover,
-.menu-item:hover {
-    background: var(--nv-surface-2);
-}
-
-
-/* ==========================================================
-   16. PROFILE
-========================================================== */
-
-.profile-container,
-.profile-content,
-.profile-section {
-    color: var(--nv-text);
-}
-
-.profile-card {
-    background: var(--nv-surface);
-    border: 1px solid var(--nv-border);
-}
-
-.profile-name,
-.username,
-.user-name {
-    color: var(--nv-text);
-}
-
-.profile-info,
-.user-info {
-    color: var(--nv-muted);
-}
-
-.profile-tabs {
-    border-color: var(--nv-border);
-}
-
-.profile-tab {
-    color: var(--nv-muted);
-}
-
-.profile-tab.active {
-    color: var(--nv-accent);
-    border-color: var(--nv-accent);
-}
-
-
-/* ==========================================================
-   17. READER PAGE
-========================================================== */
-
-.reader-page,
-.reader-container,
-.reader-wrapper {
-    color: var(--nv-text);
-}
-
-.reader-header,
-.reader-toolbar,
-.reader-controls {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.reader-content,
-.chapter-content,
-#chapter-content {
-    color: var(--nv-text);
-}
-
-.chapter-content p,
-#chapter-content p {
-    color: var(--nv-text);
-}
-
-.chapter-content h1,
-.chapter-content h2,
-.chapter-content h3,
-#chapter-content h1,
-#chapter-content h2,
-#chapter-content h3 {
-    color: var(--nv-text);
-}
-
-.chapter-content blockquote,
-#chapter-content blockquote {
-    background: var(--nv-surface-2);
-    border-left-color: var(--nv-accent);
-    color: var(--nv-muted);
-}
-
-.chapter-content a,
-#chapter-content a {
-    color: var(--nv-accent);
-}
-
-
-/* ==========================================================
-   18. READER SETTINGS
-========================================================== */
-
-.reader-settings,
-.reader-settings-panel,
-.reading-settings {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.reader-setting-item {
-    border-color: var(--nv-border);
-}
-
-.reader-setting-label {
-    color: var(--nv-text);
-}
-
-.reader-setting-description {
-    color: var(--nv-muted);
-}
-
-
-/* ==========================================================
-   19. LOCKED CHAPTER / PREMIUM
-========================================================== */
-
-.locked-chapter,
-.chapter-locked,
-.premium-lock {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-.lock-icon {
-    color: var(--nv-accent);
-}
-
-.locked-description {
-    color: var(--nv-muted);
-}
-
-
-/* ==========================================================
-   20. TOAST / NOTIFICATION
-========================================================== */
-
-.toast,
-.notification,
-.alert {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-    box-shadow: var(--nv-shadow-md);
-}
-
-.toast-success,
-.alert-success {
-    border-left: 4px solid var(--nv-success);
-}
-
-.toast-error,
-.alert-error {
-    border-left: 4px solid var(--nv-danger);
-}
-
-.toast-warning,
-.alert-warning {
-    border-left: 4px solid var(--nv-warning);
-}
-
-
-/* ==========================================================
-   21. TABLE
-========================================================== */
-
-table {
-    color: var(--nv-text);
-}
-
-thead,
-th {
-    background: var(--nv-surface-2);
-    color: var(--nv-text);
-}
-
-td {
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-tr {
-    border-color: var(--nv-border);
-}
-
-tbody tr:hover {
-    background: var(--nv-surface-2);
-}
-
-
-/* ==========================================================
-   22. ICONS
-========================================================== */
-
-.icon,
-i,
-svg {
-    transition: color var(--nv-transition);
-}
-
-.accent-icon {
-    color: var(--nv-accent);
-}
-
-
-/* ==========================================================
-   23. SCROLLBAR
-========================================================== */
-
-* {
-    scrollbar-width: thin;
-    scrollbar-color: var(--nv-scrollbar) var(--nv-bg);
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--nv-bg);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--nv-scrollbar);
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--nv-scrollbar-hover);
-}
-
-
-/* ==========================================================
-   24. SELECTION
-========================================================== */
-
-.nv-selected,
-.selected,
-.active-item {
-    background: var(--nv-accent-soft);
-    color: var(--nv-accent);
-}
-
-
-/* ==========================================================
-   25. THEME TRANSITIONS
-========================================================== */
-
-body,
-header,
-.top-header,
-.card,
-.novel-card,
-.profile-card,
-.section-card,
-.modal-content,
-.reader-header,
-.reader-settings,
-button,
-input,
-textarea,
-select {
-    transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease;
-}
-
-
-/* ==========================================================
-   26. LIGHT THEME EXTRA FIXES
-========================================================== */
-
-html[data-theme="light"] .card,
-html[data-theme="light"] .novel-card,
-html[data-theme="light"] .book-card,
-html[data-theme="light"] .profile-card {
-    box-shadow: var(--nv-shadow-sm);
-}
-
-html[data-theme="light"] .modal-content {
-    box-shadow: var(--nv-shadow-lg);
-}
-
-
-/* ==========================================================
-   27. LIGHT-DARK THEME EXTRA FIXES
-========================================================== */
-
-/* Outer page stays light */
-html[data-theme="light-dark"] body {
-    background: var(--nv-bg);
-}
-
-/* Main content surfaces stay dark */
-html[data-theme="light-dark"] .card,
-html[data-theme="light-dark"] .novel-card,
-html[data-theme="light-dark"] .book-card,
-html[data-theme="light-dark"] .profile-card,
-html[data-theme="light-dark"] .section-card,
-html[data-theme="light-dark"] .modal-content {
-    background: var(--nv-surface);
-    color: var(--nv-text);
-    border-color: var(--nv-border);
-}
-
-
-/* ==========================================================
-   28. MOBILE RESPONSIVE
-========================================================== */
-
-@media (max-width: 768px) {
-
-    body {
-        font-size: 14px;
+(() => {
+    "use strict";
+
+    // ======================================================
+    // 01. CONFIGURATION
+    // ======================================================
+
+    const NV_THEME = {
+        defaultTheme: "dark",
+        storageKey: "novelverse_theme",
+        themes: [
+            {
+                id: "dark",
+                name: "Dark",
+                description: "Dark cinematic appearance",
+                icon: "fa-moon",
+                colors: {
+                    bg: "#12111A",
+                    surface: "#1B1925",
+                    surface2: "#242130",
+                    accent: "#8B5CF6",
+                    text: "#F0EDF8"
+                }
+            },
+            {
+                id: "light",
+                name: "Light",
+                description: "Clean light appearance",
+                icon: "fa-sun",
+                colors: {
+                    bg: "#F5F5F7",
+                    surface: "#FFFFFF",
+                    surface2: "#F0F0F4",
+                    accent: "#7650C9",
+                    text: "#24232C"
+                }
+            },
+            {
+                id: "light-dark",
+                name: "Light-Dark",
+                description: "Light background with dark surfaces",
+                icon: "fa-circle-half-stroke",
+                colors: {
+                    bg: "#F0EFF4",
+                    surface: "#1C1A25",
+                    surface2: "#262331",
+                    accent: "#A78BFA",
+                    text: "#F0EDF8"
+                }
+            }
+        ]
+    };
+
+    const NV_THEME_MAP = Object.fromEntries(
+        NV_THEME.themes.map(theme => [theme.id, theme])
+    );
+
+    // ======================================================
+    // 02. THEME UI CSS
+    // ======================================================
+
+    function injectThemeUIStyles() {
+        if (document.getElementById("nv-theme-ui-styles")) return;
+
+        const style = document.createElement("style");
+        style.id = "nv-theme-ui-styles";
+
+        style.textContent = `
+        /* THEME PANEL */
+
+        .nv-theme-panel {
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background: var(--nv-surface);
+            color: var(--nv-text);
+            border: 1px solid var(--nv-border);
+            border-radius: 18px;
+        }
+
+        .nv-theme-panel-header {
+            margin-bottom: 18px;
+        }
+
+        .nv-theme-panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--nv-text);
+            margin: 0;
+        }
+
+        .nv-theme-panel-description {
+            font-size: 13px;
+            color: var(--nv-muted);
+            line-height: 1.7;
+            margin-top: 7px;
+        }
+
+        /* THEME GRID */
+
+        .nv-theme-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        /* THEME CARD */
+
+        .nv-theme-card {
+            position: relative;
+            padding: 12px;
+            border: 2px solid var(--nv-border);
+            border-radius: 15px;
+            background: var(--nv-bg);
+            color: var(--nv-text);
+            cursor: pointer;
+            text-align: left;
+            min-width: 0;
+            transition: 0.2s ease;
+        }
+
+        .nv-theme-card:hover {
+            border-color: var(--nv-accent);
+            transform: translateY(-2px);
+        }
+
+        .nv-theme-card.active {
+            border-color: var(--nv-accent);
+            box-shadow: 0 0 0 2px var(--nv-accent-soft);
+        }
+
+        /* PREVIEW */
+
+        .nv-theme-preview {
+            width: 100%;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(128,128,128,0.15);
+        }
+
+        .nv-theme-preview-header {
+            height: 25px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 0 9px;
+        }
+
+        .nv-theme-preview-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .nv-theme-preview-content {
+            display: flex;
+            height: 75px;
+            padding: 9px;
+            gap: 7px;
+        }
+
+        .nv-theme-preview-sidebar {
+            width: 28%;
+            border-radius: 5px;
+        }
+
+        .nv-theme-preview-main {
+            flex: 1;
+            border-radius: 5px;
+            padding: 7px;
+        }
+
+        .nv-theme-preview-line {
+            width: 85%;
+            height: 4px;
+            border-radius: 5px;
+            margin-bottom: 6px;
+        }
+
+        .nv-theme-preview-line.short {
+            width: 55%;
+        }
+
+        /* CARD INFO */
+
+        .nv-theme-card-info {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .nv-theme-card-icon {
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: var(--nv-surface-2);
+            color: var(--nv-accent);
+        }
+
+        .nv-theme-card-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nv-theme-card-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--nv-text);
+        }
+
+        .nv-theme-card-desc {
+            font-size: 11px;
+            line-height: 1.5;
+            margin-top: 4px;
+            color: var(--nv-muted);
+        }
+
+        .nv-theme-check {
+            width: 22px;
+            height: 22px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--nv-accent);
+            color: #fff;
+            flex-shrink: 0;
+            font-size: 10px;
+        }
+
+        .nv-theme-card.active .nv-theme-check {
+            display: flex;
+        }
+
+        /* STATUS */
+
+        .nv-theme-status {
+            font-size: 12px;
+            color: var(--nv-muted);
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* THEME BUTTON */
+
+        .nv-theme-button {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--nv-border);
+            border-radius: 11px;
+            background: var(--nv-surface);
+            color: var(--nv-text);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: 0.2s ease;
+        }
+
+        .nv-theme-button:hover {
+            background: var(--nv-surface-2);
+            color: var(--nv-accent);
+            border-color: var(--nv-accent);
+        }
+
+        /* MODAL */
+
+        .nv-theme-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: rgba(0,0,0,0.68);
+            backdrop-filter: blur(5px);
+        }
+
+        .nv-theme-overlay.show {
+            display: flex;
+        }
+
+        .nv-theme-modal {
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 22px;
+            border-radius: 20px;
+            background: var(--nv-surface);
+            color: var(--nv-text);
+            border: 1px solid var(--nv-border);
+            box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+            animation: nvThemeModalIn 0.2s ease;
+        }
+
+        @keyframes nvThemeModalIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nv-theme-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .nv-theme-modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--nv-text);
+            margin: 0;
+        }
+
+        .nv-theme-close {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--nv-border);
+            border-radius: 10px;
+            background: var(--nv-surface-2);
+            color: var(--nv-text);
+            cursor: pointer;
+        }
+
+        .nv-theme-modal-description {
+            font-size: 13px;
+            line-height: 1.7;
+            color: var(--nv-muted);
+            margin-bottom: 16px;
+        }
+
+        /* LOGIN MODAL */
+
+        .nv-theme-login-content {
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .nv-theme-login-icon {
+            width: 62px;
+            height: 62px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            border-radius: 18px;
+            background: var(--nv-surface-2);
+            color: var(--nv-accent);
+            font-size: 24px;
+        }
+
+        .nv-theme-login-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--nv-text);
+        }
+
+        .nv-theme-login-description {
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--nv-muted);
+            margin: 10px 0 20px;
+        }
+
+        .nv-theme-login-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nv-theme-login-link {
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nv-theme-login-link.primary {
+            background: var(--nv-accent);
+            color: #fff;
+        }
+
+        .nv-theme-login-link.secondary {
+            background: var(--nv-surface-2);
+            border: 1px solid var(--nv-border);
+            color: var(--nv-text);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+            .nv-theme-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .nv-theme-card {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px;
+            }
+
+            .nv-theme-preview {
+                width: 110px;
+                height: 75px;
+                flex-shrink: 0;
+                margin: 0;
+            }
+
+            .nv-theme-preview-content {
+                height: 50px;
+            }
+
+            .nv-theme-card-info {
+                flex: 1;
+            }
+
+            .nv-theme-modal {
+                padding: 17px;
+                border-radius: 17px;
+            }
+
+            .nv-theme-button {
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .nv-theme-card,
+            .nv-theme-button,
+            .nv-theme-modal {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+        `;
+
+        document.head.appendChild(style);
     }
 
-    .card,
-    .novel-card,
-    .book-card {
-        border-radius: var(--nv-radius-md);
+     // ======================================================
+    // 03. USER / LOGIN
+    // ======================================================
+
+    function getCurrentUser() {
+        try {
+            if (typeof window.getCurrentAuthUser === "function") {
+                return window.getCurrentAuthUser();
+            }
+        } catch (error) {
+            console.warn("Theme: Unable to get current user.", error);
+        }
+
+        return null;
     }
 
-    .modal-content,
-    .popup-content {
-        border-radius: var(--nv-radius-lg);
+    function getUserId() {
+        const user = getCurrentUser();
+
+        if (!user) return null;
+
+        return user.userId ||
+               user.id ||
+               user.email ||
+               user.username ||
+               null;
     }
 
-}
+    function isLoggedIn() {
+        try {
+            if (typeof window.isUserLoggedIn === "function") {
+                return !!window.isUserLoggedIn();
+            }
+        } catch (error) {}
 
-@media (max-width: 480px) {
-
-    :root {
-        --nv-radius-lg: 15px;
-        --nv-radius-xl: 20px;
+        return !!getUserId();
     }
 
-    .card,
-    .novel-card,
-    .book-card {
-        border-radius: 12px;
+    // ======================================================
+    // 04. STORAGE
+    // ======================================================
+
+    function getStorageKey() {
+        const userId = getUserId();
+
+        return userId
+            ? NV_THEME.storageKey + "_" + userId
+            : null;
     }
 
-}
+    function getSavedTheme() {
+        const key = getStorageKey();
 
+        if (!key) {
+            return NV_THEME.defaultTheme;
+        }
 
-/* ==========================================================
-   29. REDUCED MOTION
-========================================================== */
+        try {
+            const saved = localStorage.getItem(key);
 
-@media (prefers-reduced-motion: reduce) {
+            return NV_THEME_MAP[saved]
+                ? saved
+                : NV_THEME.defaultTheme;
 
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-        animation: none !important;
+        } catch (error) {
+            console.warn("Theme: Unable to read saved theme.", error);
+            return NV_THEME.defaultTheme;
+        }
     }
 
-}
+    function saveTheme(themeId) {
+        if (!isLoggedIn()) return false;
+        if (!NV_THEME_MAP[themeId]) return false;
 
+        const key = getStorageKey();
 
-/* ==========================================================
-   30. END OF NOVELVERSE THEME CSS
-========================================================== */
+        if (!key) return false;
+
+        try {
+            localStorage.setItem(key, themeId);
+            return true;
+        } catch (error) {
+            console.warn("Theme: Unable to save theme.", error);
+            return false;
+        }
+    }
+
+    // ======================================================
+    // 05. CURRENT THEME
+    // ======================================================
+
+    let currentTheme = NV_THEME.defaultTheme;
+    let initialized = false;
+
+    // ======================================================
+    // 06. APPLY THEME
+    // ======================================================
+
+    function applyTheme(themeId, save = false) {
+        if (!NV_THEME_MAP[themeId]) {
+            themeId = NV_THEME.defaultTheme;
+        }
+
+        currentTheme = themeId;
+
+        const root = document.documentElement;
+
+        // Set theme for theme.css
+        root.setAttribute("data-theme", themeId);
+
+        // Set CSS variables directly from theme.css palette
+        root.style.setProperty(
+            "--nv-theme-current",
+            themeId
+        );
+
+        // Update browser theme color
+        const themeColor = document.querySelector(
+            'meta[name="theme-color"]'
+        );
+
+        if (themeColor) {
+            const theme = NV_THEME_MAP[themeId];
+
+            themeColor.content = theme.colors.bg;
+        }
+
+        // Update theme cards
+        updateThemeCards();
+
+        // Optional save
+        if (save && isLoggedIn()) {
+            saveTheme(themeId);
+        }
+
+        // Dispatch theme change event for other scripts
+        window.dispatchEvent(
+            new CustomEvent("novelverseThemeChanged", {
+                detail: {
+                    theme: themeId
+                }
+            })
+        );
+    }
+
+    // ======================================================
+    // 07. SELECT THEME
+    // ======================================================
+
+    function selectTheme(themeId) {
+        if (!NV_THEME_MAP[themeId]) return;
+
+        // Guest users must login
+        if (!isLoggedIn()) {
+            openLoginModal();
+            return;
+        }
+
+        applyTheme(themeId, true);
+
+        document.querySelectorAll(".nv-theme-status").forEach(el => {
+            el.textContent = "Theme saved successfully.";
+        });
+
+        closeThemeModal();
+    }
+
+    // ======================================================
+    // 08. THEME PREVIEW
+    // ======================================================
+
+    function createThemePreview(theme) {
+        const c = theme.colors;
+
+        return `
+            <div class="nv-theme-preview"
+                 style="background:${c.bg}">
+
+                <div class="nv-theme-preview-header"
+                     style="background:${c.surface}">
+
+                    <span class="nv-theme-preview-dot"
+                          style="background:${c.accent}"></span>
+
+                    <span class="nv-theme-preview-dot"
+                          style="background:${c.text}"></span>
+
+                    <span class="nv-theme-preview-dot"
+                          style="background:${c.surface2}"></span>
+                </div>
+
+                <div class="nv-theme-preview-content">
+
+                    <div class="nv-theme-preview-sidebar"
+                         style="background:${c.accent}">
+                    </div>
+
+                    <div class="nv-theme-preview-main"
+                         style="background:${c.surface}">
+
+                        <div class="nv-theme-preview-line"
+                             style="background:${c.text}">
+                        </div>
+
+                        <div class="nv-theme-preview-line short"
+                             style="background:${c.accent}">
+                        </div>
+
+                        <div class="nv-theme-preview-line"
+                             style="background:${c.surface2}">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ======================================================
+    // 09. THEME CARD
+    // ======================================================
+
+    function createThemeCard(theme) {
+        const active = currentTheme === theme.id;
+
+        return `
+            <button type="button"
+                    class="nv-theme-card ${active ? "active" : ""}"
+                    data-nv-theme-choice="${theme.id}"
+                    aria-pressed="${active}">
+
+                ${createThemePreview(theme)}
+
+                <div class="nv-theme-card-info">
+
+                    <div class="nv-theme-card-icon">
+                        <i class="fas ${theme.icon}"></i>
+                    </div>
+
+                    <div class="nv-theme-card-text">
+
+                        <div class="nv-theme-card-name">
+                            ${theme.name}
+                        </div>
+
+                        <div class="nv-theme-card-desc">
+                            ${theme.description}
+                        </div>
+
+                    </div>
+
+                    <div class="nv-theme-check">
+                        <i class="fas fa-check"></i>
+                    </div>
+
+                </div>
+
+            </button>
+        `;
+    }
+
+    // ======================================================
+    // 10. THEME GRID
+    // ======================================================
+
+    function createThemeGrid() {
+        return `
+            <div class="nv-theme-grid">
+                ${NV_THEME.themes.map(createThemeCard).join("")}
+            </div>
+        `;
+    }
+
+    // ======================================================
+    // 11. UPDATE THEME CARD STATES
+    // ======================================================
+
+    function updateThemeCards() {
+        document.querySelectorAll("[data-nv-theme-choice]").forEach(card => {
+            const active =
+                card.dataset.nvThemeChoice === currentTheme;
+
+            card.classList.toggle("active", active);
+
+            card.setAttribute(
+                "aria-pressed",
+                String(active)
+            );
+        });
+    }
+
+     // ======================================================
+    // 12. THEME MODAL
+    // ======================================================
+
+    function createThemeModal() {
+        if (document.getElementById("nv-theme-overlay")) return;
+
+        const overlay = document.createElement("div");
+
+        overlay.id = "nv-theme-overlay";
+        overlay.className = "nv-theme-overlay";
+
+        overlay.innerHTML = `
+            <div class="nv-theme-modal">
+
+                <div class="nv-theme-modal-header">
+
+                    <h2 class="nv-theme-modal-title">
+                        <i class="fas fa-palette"></i>
+                        Choose Your Theme
+                    </h2>
+
+                    <button type="button"
+                            class="nv-theme-close"
+                            aria-label="Close Theme">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                </div>
+
+                <p class="nv-theme-modal-description">
+                    Select your preferred NovelVerse appearance.
+                </p>
+
+                <div id="nv-theme-modal-grid">
+                    ${createThemeGrid()}
+                </div>
+
+                <div class="nv-theme-status">
+                    Choose a theme to personalize your experience.
+                </div>
+
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", event => {
+            if (event.target === overlay) {
+                closeThemeModal();
+            }
+        });
+
+        overlay.querySelector(".nv-theme-close")
+            .addEventListener("click", closeThemeModal);
+    }
+
+    function openThemeModal() {
+        if (!isLoggedIn()) {
+            openLoginModal();
+            return;
+        }
+
+        createThemeModal();
+
+        const overlay = document.getElementById("nv-theme-overlay");
+
+        if (overlay) {
+            overlay.classList.add("show");
+        }
+
+        updateThemeCards();
+    }
+
+    function closeThemeModal() {
+        document.getElementById("nv-theme-overlay")
+            ?.classList.remove("show");
+    }
+
+    // ======================================================
+    // 13. LOGIN MODAL
+    // ======================================================
+
+    function createLoginModal() {
+        if (document.getElementById("nv-theme-login-overlay")) return;
+
+        const overlay = document.createElement("div");
+
+        overlay.id = "nv-theme-login-overlay";
+        overlay.className = "nv-theme-overlay";
+
+        overlay.innerHTML = `
+            <div class="nv-theme-modal">
+
+                <div class="nv-theme-modal-header">
+
+                    <h2 class="nv-theme-modal-title">
+                        Login Required
+                    </h2>
+
+                    <button type="button"
+                            class="nv-theme-close"
+                            aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                </div>
+
+                <div class="nv-theme-login-content">
+
+                    <div class="nv-theme-login-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+
+                    <h3 class="nv-theme-login-title">
+                        Personalize Your Reading
+                    </h3>
+
+                    <p class="nv-theme-login-description">
+                        Login to your NovelVerse account to choose
+                        and save your preferred theme.
+                    </p>
+
+                    <div class="nv-theme-login-actions">
+
+                        <a href="profile.html?tab=login"
+                           class="nv-theme-login-link primary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            &nbsp; Login
+                        </a>
+
+                        <a href="profile.html?tab=register"
+                           class="nv-theme-login-link secondary">
+                            <i class="fas fa-user-plus"></i>
+                            &nbsp; Create Account
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener("click", event => {
+            if (event.target === overlay) {
+                closeLoginModal();
+            }
+        });
+
+        overlay.querySelector(".nv-theme-close")
+            .addEventListener("click", closeLoginModal);
+    }
+
+    function openLoginModal() {
+        createLoginModal();
+
+        document.getElementById("nv-theme-login-overlay")
+            ?.classList.add("show");
+    }
+
+    function closeLoginModal() {
+        document.getElementById("nv-theme-login-overlay")
+            ?.classList.remove("show");
+    }
+
+    // ======================================================
+    // 14. PROFILE THEME PANEL
+    // ======================================================
+
+    function createProfileThemePanel() {
+        if (document.getElementById("nv-profile-theme-panel")) return;
+
+        const panel = document.createElement("section");
+
+        panel.id = "nv-profile-theme-panel";
+        panel.className = "nv-theme-panel";
+
+        panel.innerHTML = `
+            <div class="nv-theme-panel-header">
+
+                <h3 class="nv-theme-panel-title">
+                    <i class="fas fa-palette"></i>
+                    Theme Settings
+                </h3>
+
+                <p class="nv-theme-panel-description">
+                    Customize your NovelVerse appearance.
+                    Choose Dark, Light or Light-Dark.
+                </p>
+
+            </div>
+
+            <div id="nv-profile-theme-grid">
+                ${createThemeGrid()}
+            </div>
+
+            <div class="nv-theme-status">
+                Your theme preference is saved on this device.
+            </div>
+        `;
+
+        const target =
+            document.getElementById("profile-section") ||
+            document.getElementById("profile-section-content") ||
+            document.querySelector(".profile-container") ||
+            document.querySelector(".profile-content");
+
+        if (target) {
+            target.appendChild(panel);
+        }
+    }
+
+    // ======================================================
+    // 15. READER THEME BUTTON
+    // ======================================================
+
+    function createReaderThemeButton() {
+        if (document.getElementById("nv-reader-theme-button")) return;
+
+        const button = document.createElement("button");
+
+        button.id = "nv-reader-theme-button";
+        button.type = "button";
+        button.className = "nv-theme-button";
+        button.title = "Change Theme";
+        button.setAttribute("aria-label", "Change Theme");
+
+        button.innerHTML = `
+            <i class="fas fa-palette"></i>
+        `;
+
+        button.addEventListener("click", openThemeModal);
+
+        const target =
+            document.querySelector(".header-actions") ||
+            document.querySelector(".top-header .header-actions");
+
+        if (target) {
+            target.appendChild(button);
+        } else {
+            const header = document.querySelector(".top-header");
+
+            if (header) {
+                header.appendChild(button);
+            }
+        }
+    }
+
+    // ======================================================
+    // 16. PAGE DETECTION
+    // ======================================================
+
+    function isReaderPage() {
+        return document.body.classList.contains("reader-page") ||
+               document.getElementById("chapter-content") !== null;
+    }
+
+    function isProfilePage() {
+        return location.pathname.toLowerCase().includes("profile.html") ||
+               document.getElementById("profile-section") !== null ||
+               document.getElementById("auth-section") !== null;
+    }
+
+    // ======================================================
+    // 17. INITIALIZATION
+    // ======================================================
+
+    function init() {
+        if (initialized) return;
+
+        injectThemeUIStyles();
+
+        // Guests always start with default Dark theme
+        applyTheme(NV_THEME.defaultTheme);
+
+        // Logged-in users restore their saved theme
+        if (isLoggedIn()) {
+            applyTheme(getSavedTheme());
+        }
+
+        // Reader
+        if (isReaderPage()) {
+            createReaderThemeButton();
+            createThemeModal();
+        }
+
+        // Profile
+        if (isProfilePage()) {
+            createProfileThemePanel();
+        }
+
+        // Login popup
+        createLoginModal();
+
+        initialized = true;
+
+        console.log("NovelVerse Theme System initialized.");
+    }
+
+    // ======================================================
+    // 18. GLOBAL CLICK HANDLER
+    // ======================================================
+
+    document.addEventListener("click", event => {
+
+        // Theme card
+        const themeCard = event.target.closest(
+            "[data-nv-theme-choice]"
+        );
+
+        if (themeCard) {
+            event.preventDefault();
+
+            selectTheme(
+                themeCard.dataset.nvThemeChoice
+            );
+
+            return;
+        }
+
+    });
+
+    // ======================================================
+    // 19. LOGIN / LOGOUT SYNC
+    // ======================================================
+
+    function syncThemeAfterAuth() {
+        if (isLoggedIn()) {
+            applyTheme(getSavedTheme());
+        } else {
+            applyTheme(NV_THEME.defaultTheme);
+        }
+    }
+
+    window.addEventListener(
+        "novelverseAuthChanged",
+        syncThemeAfterAuth
+    );
+
+    window.addEventListener("storage", event => {
+        if (
+            event.key === "novelverse_session" ||
+            event.key?.startsWith(NV_THEME.storageKey)
+        ) {
+            syncThemeAfterAuth();
+        }
+    });
+
+    // ======================================================
+    // 20. ESCAPE TO CLOSE MODALS
+    // ======================================================
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            closeThemeModal();
+            closeLoginModal();
+        }
+    });
+
+    // ======================================================
+    // 21. PUBLIC API
+    // ======================================================
+
+    window.NovelVerseTheme = {
+        init,
+        applyTheme,
+        selectTheme,
+        openThemeModal,
+        closeThemeModal,
+        openLoginModal,
+        closeLoginModal,
+        getSavedTheme,
+        getCurrentTheme: () => currentTheme,
+        getCurrentUser,
+        isLoggedIn,
+        themes: NV_THEME.themes
+    };
+
+    // ======================================================
+    // 22. AUTO INITIALIZATION
+    // ======================================================
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+    } else {
+        init();
+    }
+
+})();
