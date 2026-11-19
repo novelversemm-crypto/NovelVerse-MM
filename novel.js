@@ -1,7 +1,7 @@
-
 // ==========================================
 // NOVELVERSE - NOVEL DETAILS SYSTEM
 // Library + Share + Chapter Management
+// Premium / Free Chapter UI
 // ==========================================
 
 
@@ -143,6 +143,80 @@ function getNovelSlug(novel) {
         currentNovelId ||
         ''
     ).trim();
+
+}
+
+
+// ==========================================
+// PREMIUM CHAPTER CHECK
+// ==========================================
+
+// is_premium === true  -> Premium
+// is_premium === false -> Free
+// is_premium မပါ       -> Free
+
+function isPremiumChapter(chapter) {
+
+    return chapter?.is_premium === true;
+
+}
+
+
+// Chapter Status UI
+
+function getChapterStatusHTML(chapter) {
+
+    if (isPremiumChapter(chapter)) {
+
+        return `
+            <span
+                class="chapter-status chapter-status-premium"
+                style="
+                    display:inline-flex;
+                    align-items:center;
+                    gap:5px;
+                    padding:5px 9px;
+                    border-radius:7px;
+                    background:rgba(168,85,247,0.13);
+                    border:1px solid rgba(168,85,247,0.28);
+                    color:#c084fc;
+                    font-size:11px;
+                    font-weight:700;
+                    white-space:nowrap;
+                "
+            >
+                <i class="fa-solid fa-lock"></i>
+                Premium
+            </span>
+        `;
+
+    }
+
+
+    // Free Chapter
+    // is_premium false သို့မဟုတ် property မပါလျှင် Free
+
+    return `
+        <span
+            class="chapter-status chapter-status-free"
+            style="
+                display:inline-flex;
+                align-items:center;
+                gap:5px;
+                padding:5px 9px;
+                border-radius:7px;
+                background:rgba(34,197,94,0.10);
+                border:1px solid rgba(34,197,94,0.22);
+                color:#4ade80;
+                font-size:11px;
+                font-weight:700;
+                white-space:nowrap;
+            "
+        >
+            <i class="fa-solid fa-book-open"></i>
+            Free
+        </span>
+    `;
 
 }
 
@@ -1118,6 +1192,7 @@ async function shareCurrentNovel() {
 
 // ==========================================
 // 11. RENDER CHAPTERS
+// PREMIUM / FREE UI
 // PAGINATION
 // ==========================================
 
@@ -1179,25 +1254,78 @@ function renderChapters() {
             `&id=${chapterId}`;
 
 
+        // Premium / Free Status
+
+        const isPremium = isPremiumChapter(ch);
+
+        const statusHTML = getChapterStatusHTML(ch);
+
+
+        // Chapter label
+
+        const chapterLabel = escapeNovelHtml(
+            chapterNumber
+        );
+
+
+        // Screen reader status
+
+        const statusLabel = isPremium
+            ? 'Premium Chapter'
+            : 'Free Chapter';
+
+
         return `
 
             <a
                 href="${readerUrl}"
-                class="chapter-item"
+                class="chapter-item ${isPremium ? 'premium-chapter-item' : 'free-chapter-item'}"
+                aria-label="Chapter ${chapterLabel} - ${statusLabel}"
                 onclick="triggerChapterAd(event, this.href)"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    gap:10px;
+                "
             >
 
-                <div class="ch-title">
+                <div
+                    class="ch-title"
+                    style="
+                        flex:1;
+                        min-width:0;
+                    "
+                >
 
-                    Chapter ${escapeNovelHtml(chapterNumber)}
-
-                    - ${chapterTitle}
+                    <span>
+                        Chapter ${chapterLabel}
+                        - ${chapterTitle}
+                    </span>
 
                 </div>
 
-                <div class="ch-date">
 
-                    <i class="fa-solid fa-chevron-right"></i>
+                <div
+                    class="ch-date chapter-status-wrapper"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:flex-end;
+                        gap:8px;
+                        flex-shrink:0;
+                    "
+                >
+
+                    ${statusHTML}
+
+                    <i
+                        class="fa-solid ${isPremium ? 'fa-lock' : 'fa-chevron-right'}"
+                        style="
+                            color:${isPremium ? '#c084fc' : 'var(--text-secondary, #aaa)'};
+                            font-size:13px;
+                        "
+                    ></i>
 
                 </div>
 
