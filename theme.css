@@ -1,700 +1,828 @@
-/* =========================================================
-   NOVELVERSE — PREMIUM 8-THEME SYSTEM
+/* ==========================================================
+   NOVELVERSE MM — THEME SYSTEM
+   Theme: Dark / Light / Light-Dark
    File: theme.css
-   Apply a theme by setting data-theme on <html>:
-   original-dark | lavender-dream | emerald-forest |
-   midnight-ocean | vintage-parchment | silver-minimal |
-   royal-burgundy | neon-cyberpunk
+========================================================== */
 
-   Example:
-   <html lang="my" data-theme="original-dark">
-   ========================================================= */
+/* ==========================================================
+   01. DARK THEME (DEFAULT)
+========================================================== */
 
-/* ---------- 1. DEFAULT / SIGNATURE: OBSIDIAN MIDNIGHT ---------- */
 :root,
-:root[data-theme="original-dark"],
-:root[data-theme="obsidian-midnight"] {
+html[data-theme="dark"] {
     color-scheme: dark;
 
-    --nv-bg: #12111A;
-    --nv-bg-soft: #171521;
-    --nv-surface: #1C1926;
-    --nv-surface-2: #242130;
-    --nv-surface-3: #2D293B;
-    --nv-header: rgba(18, 17, 26, 0.88);
-    --nv-nav: rgba(28, 25, 38, 0.92);
+    --theme-bg: #12111A;
+    --theme-bg-secondary: #181621;
 
-    --nv-text: #F4F0FA;
-    --nv-text-soft: #C5BED2;
-    --nv-muted: #91899F;
-    --nv-text-on-accent: #FFFFFF;
+    --theme-surface: #1D1A27;
+    --theme-surface-2: #252130;
+    --theme-surface-3: #302B3D;
 
-    --nv-primary: #8B5CF6;
-    --nv-primary-hover: #A17AFB;
-    --nv-primary-soft: rgba(139, 92, 246, 0.16);
-    --nv-secondary: #D6B36A;
-    --nv-secondary-soft: rgba(214, 179, 106, 0.14);
+    --theme-card: #1D1A27;
+    --theme-card-hover: #252130;
 
-    --nv-border: rgba(196, 181, 220, 0.13);
-    --nv-border-strong: rgba(196, 181, 220, 0.24);
-    --nv-divider: rgba(196, 181, 220, 0.10);
+    --theme-header: #17141E;
+    --theme-nav: #17141E;
 
-    --nv-success: #45C995;
-    --nv-warning: #E9B65D;
-    --nv-danger: #F06C7A;
-    --nv-info: #65B9F5;
+    --theme-text: #F1EDF8;
+    --theme-text-secondary: #C1B9CF;
+    --theme-muted: #938AA5;
 
-    --nv-input-bg: #171521;
-    --nv-input-border: rgba(196, 181, 220, 0.19);
-    --nv-input-focus: #8B5CF6;
+    --theme-accent: #A78BFA;
+    --theme-accent-hover: #B99CFF;
+    --theme-accent-soft: rgba(167, 139, 250, 0.14);
 
-    --nv-overlay: rgba(8, 7, 13, 0.72);
-    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
-    --nv-shadow-accent: 0 8px 28px rgba(139, 92, 246, 0.17);
-    --nv-glow: rgba(139, 92, 246, 0.16);
+    --theme-border: #332C41;
+    --theme-border-strong: #463A58;
 
-    --nv-scrollbar: #514765;
-    --nv-scrollbar-track: #171521;
+    --theme-input-bg: #252130;
+    --theme-input-text: #F1EDF8;
+    --theme-placeholder: #827990;
 
-    --nv-radius-sm: 8px;
-    --nv-radius-md: 14px;
-    --nv-radius-lg: 20px;
-    --nv-radius-xl: 26px;
+    --theme-overlay: rgba(0, 0, 0, 0.72);
 
-    --nv-transition: 180ms ease;
+    --theme-success: #4ADE80;
+    --theme-danger: #FB7185;
+    --theme-warning: #FBBF24;
+
+    --theme-shadow: rgba(0, 0, 0, 0.25);
+
+    --theme-scrollbar: #413750;
+    --theme-scrollbar-hover: #655575;
 }
 
-/* ---------- 2. LAVENDER DREAM ---------- */
-:root[data-theme="lavender-dream"] {
-    color-scheme: dark;
+/* ==========================================================
+   02. LIGHT THEME
+========================================================== */
 
-    --nv-bg: #24212B;
-    --nv-bg-soft: #2B2734;
-    --nv-surface: #332E3E;
-    --nv-surface-2: #3D374A;
-    --nv-surface-3: #494157;
-    --nv-header: rgba(36, 33, 43, 0.90);
-    --nv-nav: rgba(51, 46, 62, 0.94);
-
-    --nv-text: #FBF7FF;
-    --nv-text-soft: #DED3EB;
-    --nv-muted: #B0A2C0;
-    --nv-text-on-accent: #241B31;
-
-    --nv-primary: #C4A7FF;
-    --nv-primary-hover: #D4C0FF;
-    --nv-primary-soft: rgba(196, 167, 255, 0.17);
-    --nv-secondary: #F0B9D4;
-    --nv-secondary-soft: rgba(240, 185, 212, 0.14);
-
-    --nv-border: rgba(222, 211, 235, 0.15);
-    --nv-border-strong: rgba(222, 211, 235, 0.27);
-    --nv-divider: rgba(222, 211, 235, 0.11);
-
-    --nv-success: #78D6B0;
-    --nv-warning: #F0C77D;
-    --nv-danger: #F28CA6;
-    --nv-info: #9DCBFA;
-
-    --nv-input-bg: #2B2734;
-    --nv-input-border: rgba(222, 211, 235, 0.21);
-    --nv-input-focus: #C4A7FF;
-
-    --nv-overlay: rgba(16, 12, 23, 0.72);
-    --nv-shadow: 0 12px 34px rgba(10, 7, 18, 0.30);
-    --nv-shadow-accent: 0 8px 28px rgba(196, 167, 255, 0.18);
-    --nv-glow: rgba(196, 167, 255, 0.17);
-
-    --nv-scrollbar: #75658C;
-    --nv-scrollbar-track: #2B2734;
-}
-
-/* ---------- 3. EMERALD FOREST ---------- */
-:root[data-theme="emerald-forest"] {
-    color-scheme: dark;
-
-    --nv-bg: #17231F;
-    --nv-bg-soft: #1B2B25;
-    --nv-surface: #21352D;
-    --nv-surface-2: #2A4036;
-    --nv-surface-3: #354F43;
-    --nv-header: rgba(23, 35, 31, 0.90);
-    --nv-nav: rgba(33, 53, 45, 0.94);
-
-    --nv-text: #F0F8F2;
-    --nv-text-soft: #C5D8CC;
-    --nv-muted: #91AA9B;
-    --nv-text-on-accent: #092219;
-
-    --nv-primary: #36B88A;
-    --nv-primary-hover: #55D0A2;
-    --nv-primary-soft: rgba(54, 184, 138, 0.16);
-    --nv-secondary: #D4B879;
-    --nv-secondary-soft: rgba(212, 184, 121, 0.14);
-
-    --nv-border: rgba(190, 224, 204, 0.14);
-    --nv-border-strong: rgba(190, 224, 204, 0.25);
-    --nv-divider: rgba(190, 224, 204, 0.10);
-
-    --nv-success: #63D6A0;
-    --nv-warning: #E8C16E;
-    --nv-danger: #F07B79;
-    --nv-info: #77C7D8;
-
-    --nv-input-bg: #1B2B25;
-    --nv-input-border: rgba(190, 224, 204, 0.20);
-    --nv-input-focus: #36B88A;
-
-    --nv-overlay: rgba(5, 16, 11, 0.74);
-    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.30);
-    --nv-shadow-accent: 0 8px 28px rgba(54, 184, 138, 0.16);
-    --nv-glow: rgba(54, 184, 138, 0.15);
-
-    --nv-scrollbar: #4C7964;
-    --nv-scrollbar-track: #1B2B25;
-}
-
-/* ---------- 4. MIDNIGHT OCEAN ---------- */
-:root[data-theme="midnight-ocean"] {
-    color-scheme: dark;
-
-    --nv-bg: #172333;
-    --nv-bg-soft: #1B2B3E;
-    --nv-surface: #22364B;
-    --nv-surface-2: #2B435B;
-    --nv-surface-3: #36536E;
-    --nv-header: rgba(23, 35, 51, 0.91);
-    --nv-nav: rgba(34, 54, 75, 0.94);
-
-    --nv-text: #F1F7FC;
-    --nv-text-soft: #C5D8E8;
-    --nv-muted: #91A9BE;
-    --nv-text-on-accent: #082033;
-
-    --nv-primary: #38BDF8;
-    --nv-primary-hover: #69D0FF;
-    --nv-primary-soft: rgba(56, 189, 248, 0.16);
-    --nv-secondary: #72A7D8;
-    --nv-secondary-soft: rgba(114, 167, 216, 0.15);
-
-    --nv-border: rgba(190, 218, 240, 0.14);
-    --nv-border-strong: rgba(190, 218, 240, 0.25);
-    --nv-divider: rgba(190, 218, 240, 0.10);
-
-    --nv-success: #55D6B0;
-    --nv-warning: #F0C36D;
-    --nv-danger: #F17C8C;
-    --nv-info: #65C8F5;
-
-    --nv-input-bg: #1B2B3E;
-    --nv-input-border: rgba(190, 218, 240, 0.20);
-    --nv-input-focus: #38BDF8;
-
-    --nv-overlay: rgba(5, 13, 24, 0.75);
-    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.30);
-    --nv-shadow-accent: 0 8px 28px rgba(56, 189, 248, 0.16);
-    --nv-glow: rgba(56, 189, 248, 0.15);
-
-    --nv-scrollbar: #4D718F;
-    --nv-scrollbar-track: #1B2B3E;
-}
-
-/* ---------- 5. VINTAGE PARCHMENT ---------- */
-:root[data-theme="vintage-parchment"] {
+html[data-theme="light"] {
     color-scheme: light;
 
-    --nv-bg: #F2EEE5;
-    --nv-bg-soft: #EAE3D6;
-    --nv-surface: #FBF8F0;
-    --nv-surface-2: #E8DFD0;
-    --nv-surface-3: #DCD0BC;
-    --nv-header: rgba(242, 238, 229, 0.92);
-    --nv-nav: rgba(251, 248, 240, 0.96);
+    --theme-bg: #F5F4F8;
+    --theme-bg-secondary: #EFEDF4;
 
-    --nv-text: #35291F;
-    --nv-text-soft: #5D4A39;
-    --nv-muted: #897662;
-    --nv-text-on-accent: #FFFDF8;
+    --theme-surface: #FFFFFF;
+    --theme-surface-2: #F2EFF7;
+    --theme-surface-3: #E8E3F0;
 
-    --nv-primary: #9B7048;
-    --nv-primary-hover: #805A38;
-    --nv-primary-soft: rgba(155, 112, 72, 0.13);
-    --nv-secondary: #B18A55;
-    --nv-secondary-soft: rgba(177, 138, 85, 0.14);
+    --theme-card: #FFFFFF;
+    --theme-card-hover: #F8F6FC;
 
-    --nv-border: rgba(91, 67, 43, 0.15);
-    --nv-border-strong: rgba(91, 67, 43, 0.27);
-    --nv-divider: rgba(91, 67, 43, 0.12);
+    --theme-header: #FFFFFF;
+    --theme-nav: #FFFFFF;
 
-    --nv-success: #397B57;
-    --nv-warning: #A97728;
-    --nv-danger: #B64E4A;
-    --nv-info: #477C9C;
+    --theme-text: #292432;
+    --theme-text-secondary: #51485E;
+    --theme-muted: #81788D;
 
-    --nv-input-bg: #FFFDF8;
-    --nv-input-border: rgba(91, 67, 43, 0.22);
-    --nv-input-focus: #9B7048;
+    --theme-accent: #8055C8;
+    --theme-accent-hover: #6F45B8;
+    --theme-accent-soft: rgba(128, 85, 200, 0.10);
 
-    --nv-overlay: rgba(38, 27, 17, 0.48);
-    --nv-shadow: 0 10px 28px rgba(74, 52, 31, 0.10);
-    --nv-shadow-accent: 0 8px 24px rgba(155, 112, 72, 0.15);
-    --nv-glow: rgba(177, 138, 85, 0.13);
+    --theme-border: #E4DFEC;
+    --theme-border-strong: #D0C6DF;
 
-    --nv-scrollbar: #B5A187;
-    --nv-scrollbar-track: #EAE3D6;
+    --theme-input-bg: #FFFFFF;
+    --theme-input-text: #292432;
+    --theme-placeholder: #9B92A9;
+
+    --theme-overlay: rgba(30, 22, 40, 0.48);
+
+    --theme-success: #21844D;
+    --theme-danger: #D6455D;
+    --theme-warning: #B98412;
+
+    --theme-shadow: rgba(35, 25, 50, 0.07);
+
+    --theme-scrollbar: #D5CCDF;
+    --theme-scrollbar-hover: #B7A8CE;
 }
 
-/* ---------- 6. SILVER MINIMAL ---------- */
-:root[data-theme="silver-minimal"] {
+/* ==========================================================
+   03. LIGHT-DARK THEME (MIXED)
+   Light background + dark surfaces
+========================================================== */
+
+html[data-theme="light-dark"] {
     color-scheme: light;
 
-    --nv-bg: #EAE8E2;
-    --nv-bg-soft: #E1E0DC;
-    --nv-surface: #F7F7F4;
-    --nv-surface-2: #DDDFE0;
-    --nv-surface-3: #CFD3D5;
-    --nv-header: rgba(234, 232, 226, 0.93);
-    --nv-nav: rgba(247, 247, 244, 0.96);
+    --theme-bg: #F1EFF5;
+    --theme-bg-secondary: #E8E5EF;
 
-    --nv-text: #252A30;
-    --nv-text-soft: #4E5862;
-    --nv-muted: #78818A;
-    --nv-text-on-accent: #FFFFFF;
+    --theme-surface: #201C2B;
+    --theme-surface-2: #2A2536;
+    --theme-surface-3: #373047;
 
-    --nv-primary: #64748B;
-    --nv-primary-hover: #4D5D73;
-    --nv-primary-soft: rgba(100, 116, 139, 0.14);
-    --nv-secondary: #8B929B;
-    --nv-secondary-soft: rgba(139, 146, 155, 0.15);
+    --theme-card: #201C2B;
+    --theme-card-hover: #2A2536;
 
-    --nv-border: rgba(54, 65, 76, 0.13);
-    --nv-border-strong: rgba(54, 65, 76, 0.24);
-    --nv-divider: rgba(54, 65, 76, 0.10);
+    --theme-header: #201C2B;
+    --theme-nav: #201C2B;
 
-    --nv-success: #348565;
-    --nv-warning: #A8792D;
-    --nv-danger: #C0525C;
-    --nv-info: #477FA8;
+    --theme-text: #F3EDF9;
+    --theme-text-secondary: #D0C6DF;
+    --theme-muted: #A69AB8;
 
-    --nv-input-bg: #FFFFFF;
-    --nv-input-border: rgba(54, 65, 76, 0.19);
-    --nv-input-focus: #64748B;
+    --theme-accent: #B99AFF;
+    --theme-accent-hover: #C9B1FF;
+    --theme-accent-soft: rgba(185, 154, 255, 0.15);
 
-    --nv-overlay: rgba(26, 31, 37, 0.48);
-    --nv-shadow: 0 10px 28px rgba(38, 45, 52, 0.09);
-    --nv-shadow-accent: 0 8px 24px rgba(100, 116, 139, 0.14);
-    --nv-glow: rgba(100, 116, 139, 0.12);
+    --theme-border: #40364E;
+    --theme-border-strong: #574969;
 
-    --nv-scrollbar: #A7ADB4;
-    --nv-scrollbar-track: #E1E0DC;
+    --theme-input-bg: #2A2536;
+    --theme-input-text: #F3EDF9;
+    --theme-placeholder: #9A8EAD;
+
+    --theme-overlay: rgba(20, 15, 30, 0.65);
+
+    --theme-success: #4ADE80;
+    --theme-danger: #FB7185;
+    --theme-warning: #FBBF24;
+
+    --theme-shadow: rgba(30, 20, 45, 0.14);
+
+    --theme-scrollbar: #4A405B;
+    --theme-scrollbar-hover: #685A7E;
 }
 
-/* ---------- 7. ROYAL BURGUNDY ---------- */
-:root[data-theme="royal-burgundy"] {
-    color-scheme: dark;
+/* ==========================================================
+   04. GLOBAL BASE
+========================================================== */
 
-    --nv-bg: #24151D;
-    --nv-bg-soft: #2D1A25;
-    --nv-surface: #38212E;
-    --nv-surface-2: #462838;
-    --nv-surface-3: #573347;
-    --nv-header: rgba(36, 21, 29, 0.91);
-    --nv-nav: rgba(56, 33, 46, 0.95);
-
-    --nv-text: #FFF2F5;
-    --nv-text-soft: #E7C9D2;
-    --nv-muted: #B894A1;
-    --nv-text-on-accent: #FFFFFF;
-
-    --nv-primary: #C45B78;
-    --nv-primary-hover: #DE7894;
-    --nv-primary-soft: rgba(196, 91, 120, 0.17);
-    --nv-secondary: #D6A0A8;
-    --nv-secondary-soft: rgba(214, 160, 168, 0.14);
-
-    --nv-border: rgba(235, 194, 207, 0.15);
-    --nv-border-strong: rgba(235, 194, 207, 0.27);
-    --nv-divider: rgba(235, 194, 207, 0.11);
-
-    --nv-success: #68C99B;
-    --nv-warning: #E8B96D;
-    --nv-danger: #F17C8B;
-    --nv-info: #83BDE0;
-
-    --nv-input-bg: #2D1A25;
-    --nv-input-border: rgba(235, 194, 207, 0.21);
-    --nv-input-focus: #C45B78;
-
-    --nv-overlay: rgba(15, 5, 10, 0.76);
-    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.32);
-    --nv-shadow-accent: 0 8px 28px rgba(196, 91, 120, 0.18);
-    --nv-glow: rgba(196, 91, 120, 0.16);
-
-    --nv-scrollbar: #805064;
-    --nv-scrollbar-track: #2D1A25;
-}
-
-/* ---------- 8. NEON CYBERPUNK ---------- */
-:root[data-theme="neon-cyberpunk"] {
-    color-scheme: dark;
-
-    --nv-bg: #101018;
-    --nv-bg-soft: #151522;
-    --nv-surface: #1C1C2B;
-    --nv-surface-2: #25253A;
-    --nv-surface-3: #30304A;
-    --nv-header: rgba(16, 16, 24, 0.92);
-    --nv-nav: rgba(28, 28, 43, 0.95);
-
-    --nv-text: #F7F5FF;
-    --nv-text-soft: #D0CEE6;
-    --nv-muted: #9694B5;
-    --nv-text-on-accent: #160D1C;
-
-    --nv-primary: #FF3D9A;
-    --nv-primary-hover: #FF69B2;
-    --nv-primary-soft: rgba(255, 61, 154, 0.16);
-    --nv-secondary: #35E6E0;
-    --nv-secondary-soft: rgba(53, 230, 224, 0.14);
-
-    --nv-border: rgba(190, 180, 255, 0.16);
-    --nv-border-strong: rgba(190, 180, 255, 0.30);
-    --nv-divider: rgba(190, 180, 255, 0.12);
-
-    --nv-success: #47E6A5;
-    --nv-warning: #FFD166;
-    --nv-danger: #FF5470;
-    --nv-info: #35E6E0;
-
-    --nv-input-bg: #151522;
-    --nv-input-border: rgba(190, 180, 255, 0.23);
-    --nv-input-focus: #35E6E0;
-
-    --nv-overlay: rgba(5, 5, 14, 0.78);
-    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.38);
-    --nv-shadow-accent: 0 8px 30px rgba(255, 61, 154, 0.20);
-    --nv-glow: rgba(255, 61, 154, 0.17);
-
-    --nv-scrollbar: #66518A;
-    --nv-scrollbar-track: #151522;
-}
-
-/* ---------- SHARED THEME APPLICATION ---------- */
 html {
-    background: var(--nv-bg);
-    color-scheme: inherit;
-    transition: background-color var(--nv-transition), color var(--nv-transition);
+    background: var(--theme-bg);
+    color: var(--theme-text);
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
 body {
-    background-color: var(--nv-bg);
-    color: var(--nv-text);
+    background: var(--theme-bg);
+    color: var(--theme-text);
+
     transition:
-        background-color var(--nv-transition),
-        color var(--nv-transition);
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
 
-body,
-button,
-input,
-select,
-textarea {
-    accent-color: var(--nv-primary);
+* {
+    scrollbar-color:
+        var(--theme-scrollbar)
+        var(--theme-bg);
 }
 
 ::selection {
-    color: var(--nv-text-on-accent);
-    background: var(--nv-primary);
+    background: var(--theme-accent-soft);
+    color: var(--theme-text);
 }
 
-hr,
-.divider,
-.section-divider {
-    border-color: var(--nv-divider);
+a {
+    color: var(--theme-accent);
+    transition: color 0.2s ease;
 }
 
-/* Surfaces and common layout elements */
+a:hover {
+    color: var(--theme-accent-hover);
+}
+
+hr {
+    border-color: var(--theme-border);
+}
+
+/* ==========================================================
+   05. HEADER & NAVIGATION
+========================================================== */
+
+header,
 .top-header,
-.site-header,
-.header,
-.bottom-nav,
-.mobile-bottom-nav {
-    color: var(--nv-text);
-    background: var(--nv-header);
-    border-color: var(--nv-border);
+.navbar,
+.top-nav,
+.header-container {
+    background: var(--theme-header);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
 }
 
 .bottom-nav,
-.mobile-bottom-nav {
-    background: var(--nv-nav);
-    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.08);
+.mobile-nav,
+.bottom-navigation {
+    background: var(--theme-nav);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
 }
 
-.main-container,
-.page-container,
-.content-container {
-    color: var(--nv-text);
+header a,
+.top-header a,
+.navbar a,
+.bottom-nav a,
+.mobile-nav a {
+    color: var(--theme-text);
 }
+
+header a:hover,
+.top-header a:hover,
+.navbar a:hover {
+    color: var(--theme-accent);
+}
+
+/* ==========================================================
+   06. CARDS & SURFACES
+========================================================== */
 
 .card,
 .novel-card,
-.continue-card,
-.popular-item,
-.section-card,
-.panel,
-.modal-content,
-.dropdown-menu,
-.menu-panel,
+.book-card,
 .profile-card,
-.topup-card,
-.admin-card,
-.reader-settings,
-.chapter-list,
-.search-panel {
-    color: var(--nv-text);
-    background: var(--nv-surface);
-    border: 1px solid var(--nv-border);
-    box-shadow: var(--nv-shadow);
+.section-card,
+.content-card {
+    background: var(--theme-card);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .card:hover,
 .novel-card:hover,
-.continue-card:hover,
-.popular-item:hover {
-    border-color: var(--nv-border-strong);
+.book-card:hover {
+    background: var(--theme-card-hover);
 }
 
-/* Text */
-h1, h2, h3, h4, h5, h6,
-.logo-title,
-.section-title,
+.card-title,
 .novel-title,
-.card-title {
-    color: var(--nv-text);
+.book-title,
+.section-title {
+    color: var(--theme-text);
 }
 
-p,
-.description,
+.card-description,
 .novel-description,
-.section-description {
-    color: var(--nv-text-soft);
+.book-description {
+    color: var(--theme-text-secondary);
 }
 
-small,
-.muted,
-.text-muted,
-.meta,
-.novel-meta,
-.chapter-meta,
-.ad-label {
-    color: var(--nv-muted);
-}
+/* ==========================================================
+   07. BUTTONS
+========================================================== */
 
-/* Links */
-a {
-    color: var(--nv-primary);
-    transition: color var(--nv-transition);
-}
-
-a:hover {
-    color: var(--nv-primary-hover);
-}
-
-/* Buttons */
 button,
-.btn,
-.btn-primary,
-button.primary,
-.button-primary {
+.button,
+.btn {
     transition:
-        color var(--nv-transition),
-        background-color var(--nv-transition),
-        border-color var(--nv-transition),
-        box-shadow var(--nv-transition),
-        transform var(--nv-transition);
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
 }
 
 .btn-primary,
-button.primary,
-.button-primary {
-    color: var(--nv-text-on-accent);
-    background: var(--nv-primary);
-    border: 1px solid transparent;
-    box-shadow: var(--nv-shadow-accent);
+.primary-btn,
+button.primary {
+    background: var(--theme-accent);
+    color: #FFFFFF;
+    border-color: var(--theme-accent);
 }
 
 .btn-primary:hover,
-button.primary:hover,
-.button-primary:hover {
-    color: var(--nv-text-on-accent);
-    background: var(--nv-primary-hover);
-    box-shadow: var(--nv-shadow-accent);
+.primary-btn:hover,
+button.primary:hover {
+    background: var(--theme-accent-hover);
+    border-color: var(--theme-accent-hover);
 }
 
 .btn-secondary,
-button.secondary,
-.button-secondary,
-.icon-btn,
-.account-btn {
-    color: var(--nv-text);
-    background: var(--nv-surface-2);
-    border: 1px solid var(--nv-border);
+.secondary-btn,
+button.secondary {
+    background: var(--theme-surface-2);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
 }
 
 .btn-secondary:hover,
-button.secondary:hover,
-.button-secondary:hover,
-.icon-btn:hover,
-.account-btn:hover {
-    background: var(--nv-surface-3);
-    border-color: var(--nv-border-strong);
+.secondary-btn:hover,
+button.secondary:hover {
+    background: var(--theme-surface-3);
 }
 
-/* Inputs */
+button:disabled,
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ==========================================================
+   08. INPUTS & FORMS
+========================================================== */
+
 input,
-select,
 textarea,
+select,
 .form-control {
-    color: var(--nv-text);
-    background: var(--nv-input-bg);
-    border: 1px solid var(--nv-input-border);
+    background: var(--theme-input-bg);
+    color: var(--theme-input-text);
+    border-color: var(--theme-border);
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+.form-control:focus {
+    border-color: var(--theme-accent);
+    outline-color: var(--theme-accent);
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: var(--nv-muted);
-    opacity: 0.85;
+    color: var(--theme-placeholder);
 }
 
-input:focus,
-select:focus,
-textarea:focus,
-.form-control:focus {
-    outline: none;
-    border-color: var(--nv-input-focus);
-    box-shadow: 0 0 0 3px var(--nv-primary-soft);
+option {
+    background: var(--theme-surface);
+    color: var(--theme-text);
 }
 
-/* Tabs, filters, active navigation */
-.nav-item,
-.tab-button,
-.filter-button,
-.category-chip,
-.filter-chip {
-    color: var(--nv-text-soft);
+/* ==========================================================
+   09. MODALS & OVERLAYS
+========================================================== */
+
+.modal,
+.modal-content,
+.popup,
+.dialog,
+.dropdown-menu {
+    background: var(--theme-surface);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
+}
+
+.modal-overlay,
+.popup-overlay,
+.overlay {
+    background: var(--theme-overlay);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--theme-border);
+}
+
+.modal-title {
+    color: var(--theme-text);
+}
+
+.modal-description,
+.modal-text {
+    color: var(--theme-text-secondary);
+}
+
+/* ==========================================================
+   10. TABS & ACTIVE STATES
+========================================================== */
+
+.tab,
+.nav-tab,
+.tab-button {
+    color: var(--theme-text-secondary);
     background: transparent;
     border-color: transparent;
-    transition: all var(--nv-transition);
 }
 
-.nav-item:hover,
-.tab-button:hover,
-.filter-button:hover,
-.category-chip:hover,
-.filter-chip:hover {
-    color: var(--nv-text);
-    background: var(--nv-primary-soft);
-}
-
-.nav-item.active,
+.tab.active,
+.nav-tab.active,
 .tab-button.active,
-.filter-button.active,
-.category-chip.active,
-.filter-chip.active {
-    color: var(--nv-primary);
-    background: var(--nv-primary-soft);
-    border-color: var(--nv-border);
+.tab[aria-selected="true"] {
+    color: var(--theme-accent);
+    background: var(--theme-accent-soft);
+    border-color: var(--theme-accent);
 }
 
-/* Badges and status */
+/* ==========================================================
+   11. BADGES & LABELS
+========================================================== */
+
 .badge,
 .tag,
-.status-badge,
-.chapter-badge {
-    color: var(--nv-primary);
-    background: var(--nv-primary-soft);
-    border: 1px solid var(--nv-border);
+.label {
+    background: var(--theme-surface-2);
+    color: var(--theme-text-secondary);
+    border-color: var(--theme-border);
 }
 
-.success,
-.status-success {
-    color: var(--nv-success);
+.badge-primary {
+    background: var(--theme-accent-soft);
+    color: var(--theme-accent);
 }
 
-.warning,
-.status-warning {
-    color: var(--nv-warning);
+.badge-success {
+    color: var(--theme-success);
 }
 
-.danger,
-.error,
-.status-danger {
-    color: var(--nv-danger);
+.badge-danger {
+    color: var(--theme-danger);
 }
 
-.info,
-.status-info {
-    color: var(--nv-info);
+/* ==========================================================
+   12. SEPARATORS
+========================================================== */
+
+.divider,
+.separator,
+.border-bottom {
+    border-color: var(--theme-border);
 }
 
-/* Reader */
-.reader-page,
+/* ==========================================================
+   13. EMPTY STATES
+========================================================== */
+
+.empty-state,
+.no-results,
+.empty-message {
+    color: var(--theme-muted);
+}
+
+.empty-state i,
+.no-results i {
+    color: var(--theme-accent);
+}
+
+/* ==========================================================
+   14. ICONS
+========================================================== */
+
+.icon,
+i {
+    transition: color 0.2s ease;
+}
+
+/* ==========================================================
+   15. TEXT COLORS
+========================================================== */
+
+.text-primary {
+    color: var(--theme-text);
+}
+
+.text-secondary {
+    color: var(--theme-text-secondary);
+}
+
+.text-muted {
+    color: var(--theme-muted);
+}
+
+.text-accent {
+    color: var(--theme-accent);
+}
+
+/* ==========================================================
+   16. SHADOWS
+========================================================== */
+
+.card,
+.modal,
+.popup,
+.dropdown-menu {
+    box-shadow: 0 4px 16px var(--theme-shadow);
+}
+
+/* ==========================================================
+   17. READER CONTENT
+========================================================== */
+
 .reader-container,
 .reader-content,
 .chapter-content {
-    color: var(--nv-text);
-    background: var(--nv-bg);
+    color: var(--theme-text);
 }
 
-.reader-toolbar,
-.reader-settings-panel {
-    color: var(--nv-text);
-    background: var(--nv-surface);
-    border-color: var(--nv-border);
+.reader-content p,
+.chapter-content p {
+    color: inherit;
 }
 
-/* Ads and placeholders */
-.ad-container,
-.ad-placeholder,
-.novel-card-skeleton,
-.skeleton {
-    background-color: var(--nv-surface-2);
-    border-color: var(--nv-border);
+/* ==========================================================
+   18. TABLES
+========================================================== */
+
+table,
+.table {
+    color: var(--theme-text);
+    background: var(--theme-surface);
 }
 
-/* Scrollbar */
-* {
-    scrollbar-color: var(--nv-scrollbar) var(--nv-scrollbar-track);
+th,
+td {
+    border-color: var(--theme-border);
 }
 
-*::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+thead,
+.table-header {
+    background: var(--theme-surface-2);
 }
 
-*::-webkit-scrollbar-track {
-    background: var(--nv-scrollbar-track);
+/* ==========================================================
+   19. TOOLTIP
+========================================================== */
+
+.tooltip,
+[role="tooltip"] {
+    background: var(--theme-surface-3);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
 }
 
-*::-webkit-scrollbar-thumb {
-    background: var(--nv-scrollbar);
-    border-radius: 99px;
+/* ==========================================================
+   20. SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
 }
 
-/* Focus visibility */
-:focus-visible {
-    outline: 2px solid var(--nv-primary);
+::-webkit-scrollbar-track {
+    background: var(--theme-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--theme-scrollbar);
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--theme-scrollbar-hover);
+}
+
+/* ==========================================================
+   21. THEME SELECTOR PANEL
+========================================================== */
+
+.theme-settings,
+.theme-selector,
+.theme-panel {
+    background: var(--theme-surface);
+    color: var(--theme-text);
+    border: 1px solid var(--theme-border);
+    border-radius: 16px;
+    padding: 18px;
+}
+
+.theme-settings-title,
+.theme-selector-title {
+    color: var(--theme-text);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.theme-settings-description,
+.theme-selector-description {
+    color: var(--theme-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* ==========================================================
+   22. THEME CHOICES
+========================================================== */
+
+.theme-options,
+.theme-choice-grid,
+.theme-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.theme-option,
+.theme-choice,
+.theme-card {
+    background: var(--theme-bg);
+    color: var(--theme-text);
+    border: 1px solid var(--theme-border);
+    border-radius: 13px;
+    padding: 12px;
+    cursor: pointer;
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.theme-option:hover,
+.theme-choice:hover,
+.theme-card:hover {
+    border-color: var(--theme-accent);
+    transform: translateY(-2px);
+}
+
+.theme-option.active,
+.theme-choice.active,
+.theme-card.active,
+.theme-option.selected,
+.theme-choice.selected,
+.theme-card.selected {
+    border: 2px solid var(--theme-accent);
+    background: var(--theme-accent-soft);
+}
+
+.theme-option-name,
+.theme-choice-name,
+.theme-card-name {
+    color: var(--theme-text);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.theme-option-description,
+.theme-choice-description,
+.theme-card-description {
+    color: var(--theme-muted);
+    font-size: 11px;
+}
+
+/* ==========================================================
+   23. THEME PREVIEW
+========================================================== */
+
+.theme-preview {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 75px;
+    border-radius: 9px;
+    border: 1px solid var(--theme-border);
+    margin-bottom: 10px;
+}
+
+.theme-preview-header {
+    height: 22px;
+    padding: 5px 8px;
+}
+
+.theme-preview-body {
+    display: flex;
+    flex: 1;
+    padding: 7px;
+    gap: 6px;
+}
+
+.theme-preview-block {
+    flex: 1;
+    border-radius: 4px;
+}
+
+.theme-preview-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.theme-preview-line {
+    width: 90%;
+    height: 4px;
+    border-radius: 5px;
+}
+
+.theme-preview-line.short {
+    width: 55%;
+}
+
+/* ==========================================================
+   24. THEME MODE TOGGLE
+========================================================== */
+
+.theme-mode-toggle,
+.mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    background: var(--theme-surface-2);
+    color: var(--theme-text);
+
+    border: 1px solid var(--theme-border);
+    border-radius: 10px;
+
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.theme-mode-toggle:hover,
+.mode-toggle:hover {
+    background: var(--theme-surface-3);
+    border-color: var(--theme-accent);
+}
+
+/* ==========================================================
+   25. THEME CHECK MARK
+========================================================== */
+
+.theme-check,
+.theme-selected-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    width: 22px;
+    height: 22px;
+
+    background: var(--theme-accent);
+    color: #FFFFFF;
+    border-radius: 50%;
+}
+
+.theme-option.active .theme-check,
+.theme-choice.active .theme-check,
+.theme-card.active .theme-check,
+.theme-option.selected .theme-check,
+.theme-choice.selected .theme-check,
+.theme-card.selected .theme-check {
+    display: inline-flex;
+}
+
+/* ==========================================================
+   26. FOCUS ACCESSIBILITY
+========================================================== */
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--theme-accent);
     outline-offset: 3px;
 }
 
-/* Respect reduced-motion preferences */
+/* ==========================================================
+   27. RESPONSIVE
+========================================================== */
+
+@media (max-width: 600px) {
+    .theme-settings,
+    .theme-selector,
+    .theme-panel {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .theme-options,
+    .theme-choice-grid,
+    .theme-grid {
+        gap: 8px;
+    }
+
+    .theme-option,
+    .theme-choice,
+    .theme-card {
+        padding: 9px;
+        border-radius: 11px;
+    }
+
+    .theme-preview {
+        height: 62px;
+    }
+
+    .theme-option-name,
+    .theme-choice-name,
+    .theme-card-name {
+        font-size: 11px;
+    }
+
+    .theme-option-description,
+    .theme-choice-description,
+    .theme-card-description {
+        font-size: 10px;
+    }
+}
+
+/* ==========================================================
+   28. REDUCED MOTION
+========================================================== */
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
     *::after {
+        transition: none !important;
+        animation: none !important;
         scroll-behavior: auto !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
     }
 }
+
+/* ==========================================================
+   END — NOVELVERSE MM THEME CSS
+========================================================== */
