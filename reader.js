@@ -95,6 +95,102 @@ async function callReaderApi(action, data = {}) {
 }
 
 
+// ==================================================
+// NOVEL VIEWS — SESSION MANAGEMENT
+// ==================================================
+
+function getNovelViewSessionId() {
+
+    const SESSION_KEY = 'novelverse_view_session';
+
+    let sessionId = sessionStorage.getItem(SESSION_KEY);
+
+    if (!sessionId) {
+
+        sessionId = (
+            window.crypto &&
+            typeof window.crypto.randomUUID === 'function'
+        )
+            ? window.crypto.randomUUID()
+            : 'session_' + Date.now() + '_' +
+              Math.random().toString(36).slice(2);
+
+        sessionStorage.setItem(SESSION_KEY, sessionId);
+
+    }
+
+    return sessionId;
+
+}
+
+
+// ==================================================
+// NOVEL VIEWS — COUNT
+// ==================================================
+
+async function countNovelView(novelSlug) {
+
+    if (!novelSlug) return;
+
+    const slug = String(novelSlug).trim();
+
+    if (!slug) return;
+
+    const COUNTED_KEY = 'novelverse_viewed_' + slug;
+
+    // Tab တစ်ခုအတွင်း Novel တစ်ခုကို တစ်ကြိမ်သာ Count လုပ်မည်။
+
+    if (sessionStorage.getItem(COUNTED_KEY)) {
+        return;
+    }
+
+    try {
+
+        const sessionId = getNovelViewSessionId();
+
+        const result = await callReaderApi(
+            'incrementNovelView',
+            {
+                slug: slug,
+                sessionId: sessionId
+            }
+        );
+
+        if (result && result.success === true) {
+
+            sessionStorage.setItem(COUNTED_KEY, '1');
+
+            console.log(
+                'Novel View Count:',
+                slug,
+                result.counted ? '+1' : 'Already counted',
+                result.views ?? ''
+            );
+
+        } else {
+
+            console.warn(
+                'Novel View Count Failed:',
+                result?.message || 'Unknown API Error'
+            );
+
+        }
+
+    } catch (error) {
+
+        // View Count Error ဖြစ်လည်း Reader ကို မထိခိုက်စေရန်
+
+        console.warn('Novel View Count Error:', error);
+
+    }
+
+}
+
+
+// ==================================================
+// PREMIUM PANEL
+// ==================================================
+
 function hidePremiumPanel() {
 
     document.querySelectorAll(
@@ -302,6 +398,12 @@ async function fetchChapterContent(chapterId, novelId) {
 
         currentChapterData = foundChapter;
         currentNovelData = foundNovel;
+
+
+        // 3.5 Novel View Count (+1)
+        // Novel တစ်ခုကို Tab တစ်ခုအတွင်း တစ်ကြိမ်သာ Count လုပ်မည်။
+
+        countNovelView(foundNovel.slug || foundNovel.id);
 
 
         // 4. Chapter Title
