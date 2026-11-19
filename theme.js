@@ -1,8 +1,18 @@
 
 /* ==========================================================
    NOVELVERSE MM — COMPLETE THEME SYSTEM
-   Version: 1.0
-   Includes: Themes + UI + CSS + Popup + LocalStorage
+   Version: 2.0
+   Themes + CSS + UI + Popup + LocalStorage
+
+   8 DISTINCT THEMES
+   1. Obsidian Midnight
+   2. Lavender Dream
+   3. Emerald Forest
+   4. Midnight Ocean
+   5. Vintage Parchment
+   6. Silver Minimal
+   7. Royal Burgundy
+   8. Neon Cyberpunk
 ========================================================== */
 
 (() => {
@@ -14,217 +24,257 @@
 
     const NV_THEME_CONFIG = {
         defaultTheme: "original-dark",
-
         storagePrefix: "novelverse_theme_",
 
         themes: [
             {
                 id: "original-dark",
                 name: "Obsidian Midnight",
-                description: "Cinematic midnight with violet & gold",
+                description: "Midnight black, violet & antique gold",
                 icon: "fa-moon",
-                colors: ["#12111A", "#8B5CF6", "#D4AF77"]
+                colors: ["#100E18", "#9B6DFF", "#D6B56D"]
             },
             {
                 id: "lavender-dream",
                 name: "Lavender Dream",
-                description: "Dreamy lavender, lilac & soft pink",
+                description: "Dreamy lavender, lilac & rose pink",
                 icon: "fa-cloud",
-                colors: ["#24212B", "#C4A7FF", "#F0B6D5"]
+                colors: ["#30243D", "#D1A9FF", "#FFB7D5"]
             },
             {
                 id: "emerald-forest",
                 name: "Emerald Forest",
-                description: "Deep forest green & champagne",
+                description: "Forest green, emerald & champagne",
                 icon: "fa-leaf",
-                colors: ["#17231F", "#36B88A", "#D9C49A"]
+                colors: ["#10271C", "#29C78B", "#D8C28A"]
             },
             {
                 id: "midnight-ocean",
                 name: "Midnight Ocean",
-                description: "Navy, ocean blue & cyan",
+                description: "Deep navy, sapphire & electric cyan",
                 icon: "fa-water",
-                colors: ["#172333", "#38BDF8", "#75A9FF"]
+                colors: ["#0B192D", "#397BFF", "#27D9F2"]
             },
             {
                 id: "vintage-parchment",
                 name: "Vintage Parchment",
-                description: "Classic paper & coffee brown",
+                description: "Warm ivory, antique paper & ink",
                 icon: "fa-book-open",
-                colors: ["#F2EEE5", "#9B7048", "#C5A982"]
+                colors: ["#F5E9D2", "#94633D", "#C4A16C"]
             },
             {
                 id: "silver-minimal",
                 name: "Silver Minimal",
-                description: "Minimal silver, gray & white",
+                description: "Clean white, cool silver & slate",
                 icon: "fa-gem",
-                colors: ["#EAE8E2", "#64748B", "#A3A3A3"]
+                colors: ["#F4F6F9", "#718096", "#B8C5D6"]
             },
             {
                 id: "royal-burgundy",
                 name: "Royal Burgundy",
-                description: "Elegant burgundy & rose gold",
+                description: "Deep wine, crimson & rose gold",
                 icon: "fa-heart",
-                colors: ["#24151D", "#C45B78", "#D8AD91"]
+                colors: ["#2B101C", "#D14D76", "#D9AF91"]
             },
             {
                 id: "neon-cyberpunk",
                 name: "Neon Cyberpunk",
-                description: "Dark neon pink & electric cyan",
+                description: "Pitch black, hot pink & electric cyan",
                 icon: "fa-bolt",
-                colors: ["#101018", "#FF3D9A", "#00E5FF"]
+                colors: ["#090910", "#FF1493", "#00F5FF"]
             }
         ]
     };
 
 
     // ======================================================
-    // 2. THEME COLOR DEFINITIONS
+    // 2. DISTINCT COLOR PALETTES
     // ======================================================
 
     const NV_THEME_PALETTES = {
+
+        // --------------------------------------------------
+        // 1. OBSIDIAN MIDNIGHT
+        // Black / Violet / Gold
+        // --------------------------------------------------
+
         "original-dark": {
-            bg: "#12111A",
-            surface: "#1B1925",
-            surface2: "#242130",
-            surface3: "#302B40",
-            text: "#F0EDF8",
-            muted: "#A7A0B6",
-            accent: "#8B5CF6",
-            accent2: "#A78BFA",
-            border: "#302A40",
-            card: "#1B1925",
-            input: "#211E2C",
-            header: "#15131D",
-            success: "#4ADE80",
-            danger: "#FB7185",
-            shadow: "rgba(0,0,0,.30)"
+            bg: "#100E18",
+            surface: "#191522",
+            surface2: "#241D32",
+            surface3: "#332747",
+            text: "#F5F0FF",
+            muted: "#A99CBF",
+            accent: "#9B6DFF",
+            accent2: "#C0A1FF",
+            border: "#342746,
+            card: "#191522",
+            input: "#211A2D",
+            header: "#13101B",
+            success: "#58D6A0",
+            danger: "#FF708A",
+            shadow: "rgba(0,0,0,.42)"
         },
+
+        // --------------------------------------------------
+        // 2. LAVENDER DREAM
+        // Purple / Lilac / Pink
+        // --------------------------------------------------
 
         "lavender-dream": {
-            bg: "#24212B",
-            surface: "#302B3B",
-            surface2: "#393246",
-            surface3: "#494057",
-            text: "#F5EDFF",
-            muted: "#BEB0D1",
-            accent: "#C4A7FF",
-            accent2: "#E0C6FF",
-            border: "#4A4059",
-            card: "#302B3B",
-            input: "#393246",
-            header: "#292431",
-            success: "#86E3B0",
-            danger: "#FF91B6",
-            shadow: "rgba(0,0,0,.25)"
+            bg: "#30243D",
+            surface: "#3B2D4D",
+            surface2: "#49365D",
+            surface3: "#594575",
+            text: "#FFF1FF",
+            muted: "#D0B9DE",
+            accent: "#D1A9FF",
+            accent2: "#FFB7D5",
+            border: "#59446E",
+            card: "#3B2D4D",
+            input: "#49365D",
+            header: "#342741",
+            success: "#7FE2B2",
+            danger: "#FF8CB9",
+            shadow: "rgba(12,4,22,.30)"
         },
+
+        // --------------------------------------------------
+        // 3. EMERALD FOREST
+        // Deep green / Emerald / Champagne
+        // --------------------------------------------------
 
         "emerald-forest": {
-            bg: "#17231F",
-            surface: "#202F29",
-            surface2: "#2B3C34",
-            surface3: "#3B5145",
-            text: "#E8F4EC",
-            muted: "#A7BDB0",
-            accent: "#36B88A",
-            accent2: "#63D5AC",
-            border: "#354B3E",
-            card: "#202F29",
-            input: "#2B3C34",
-            header: "#1A2721",
-            success: "#7CE6A9",
-            danger: "#F18C91",
-            shadow: "rgba(0,0,0,.28)"
+            bg: "#10271C",
+            surface: "#193629",
+            surface2: "#224632",
+            surface3: "#2C5940",
+            text: "#E9F8EE",
+            muted: "#A0C4AD",
+            accent: "#29C78B",
+            accent2: "#D8C28A",
+            border: "#315C43",
+            card: "#193629",
+            input: "#224632",
+            header: "#142F21",
+            success: "#7CE8AC",
+            danger: "#EF8490",
+            shadow: "rgba(0,8,3,.38)"
         },
+
+        // --------------------------------------------------
+        // 4. MIDNIGHT OCEAN
+        // Navy / Sapphire / Electric Cyan
+        // --------------------------------------------------
 
         "midnight-ocean": {
-            bg: "#172333",
-            surface: "#202F42",
-            surface2: "#2B3E55",
-            surface3: "#354C66",
-            text: "#E9F4FF",
-            muted: "#A8BCD0",
-            accent: "#38BDF8",
-            accent2: "#76D5FF",
-            border: "#344B64",
-            card: "#202F42",
-            input: "#2B3E55",
-            header: "#192637",
-            success: "#64D8A4",
-            danger: "#FF879C",
-            shadow: "rgba(0,0,0,.28)"
+            bg: "#0B192D",
+            surface: "#122640",
+            surface2: "#19365A",
+            surface3: "#214774",
+            text: "#EAF5FF",
+            muted: "#9FB9D8",
+            accent: "#397BFF",
+            accent2: "#27D9F2",
+            border: "#28517B",
+            card: "#122640",
+            input: "#19365A",
+            header: "#0E2038",
+            success: "#53DBAC",
+            danger: "#FF799D",
+            shadow: "rgba(0,5,20,.40)"
         },
+
+        // --------------------------------------------------
+        // 5. VINTAGE PARCHMENT
+        // Ivory / Paper / Coffee Brown
+        // --------------------------------------------------
 
         "vintage-parchment": {
-            bg: "#F2EEE5",
-            surface: "#E8E0D2",
-            surface2: "#DED3C1",
-            surface3: "#D3C3AD",
-            text: "#3E3228",
-            muted: "#80705D",
-            accent: "#9B7048",
-            accent2: "#B38A60",
-            border: "#D2C3AE",
-            card: "#E8E0D2",
-            input: "#DED3C1",
-            header: "#EDE6DA",
-            success: "#527A57",
-            danger: "#B94C51",
-            shadow: "rgba(79,54,31,.10)"
+            bg: "#F5E9D2",
+            surface: "#EDE0C5",
+            surface2: "#E2D0AE",
+            surface3: "#D4BD95",
+            text: "#3D2B1D",
+            muted: "#80664A",
+            accent: "#94633D",
+            accent2: "#C4A16C",
+            border: "#CDB58E",
+            card: "#EDE0C5",
+            input: "#E2D0AE",
+            header: "#F0E3CA",
+            success: "#557A48",
+            danger: "#B84D45",
+            shadow: "rgba(67,40,15,.12)"
         },
+
+        // --------------------------------------------------
+        // 6. SILVER MINIMAL
+        // White / Silver / Slate Gray
+        // --------------------------------------------------
 
         "silver-minimal": {
-            bg: "#EAE8E2",
-            surface: "#F5F4F0",
-            surface2: "#DDDBD5",
-            surface3: "#D0CEC8",
-            text: "#292D33",
-            muted: "#747982",
-            accent: "#64748B",
-            accent2: "#8494AA",
-            border: "#D2D1CC",
-            card: "#F5F4F0",
-            input: "#DDDBD5",
-            header: "#EEECE7",
-            success: "#41865F",
-            danger: "#C35B67",
-            shadow: "rgba(30,35,45,.09)"
+            bg: "#F4F6F9",
+            surface: "#FFFFFF",
+            surface2: "#E8ECF2",
+            surface3: "#D6DEE8",
+            text: "#263241",
+            muted: "#748296",
+            accent: "#718096",
+            accent2: "#B8C5D6",
+            border: "#D5DDE7",
+            card: "#FFFFFF",
+            input: "#E8ECF2",
+            header: "#F9FAFC",
+            success: "#36865C",
+            danger: "#D25268",
+            shadow: "rgba(39,55,75,.09)"
         },
+
+        // --------------------------------------------------
+        // 7. ROYAL BURGUNDY
+        // Wine / Crimson / Rose Gold
+        // --------------------------------------------------
 
         "royal-burgundy": {
-            bg: "#24151D",
-            surface: "#33212B",
-            surface2: "#422A36",
-            surface3: "#533443",
-            text: "#F6EAF0",
-            muted: "#C0A7B4",
-            accent: "#C45B78",
-            accent2: "#DA819B",
-            border: "#4C3441",
-            card: "#33212B",
-            input: "#422A36",
-            header: "#291923",
-            success: "#73D1A0",
-            danger: "#FF8C9B",
-            shadow: "rgba(0,0,0,.30)"
+            bg: "#2B101C",
+            surface: "#391725",
+            surface2: "#4A1D31",
+            surface3: "#632640",
+            text: "#FCEEF3",
+            muted: "#C5A0B0",
+            accent: "#D14D76",
+            accent2: "#D9AF91",
+            border: "#63344B",
+            card: "#391725",
+            input: "#4A1D31",
+            header: "#321421",
+            success: "#6ED3A0",
+            danger: "#FF7D8F",
+            shadow: "rgba(12,0,6,.42)"
         },
 
+        // --------------------------------------------------
+        // 8. NEON CYBERPUNK
+        // Pitch Black / Hot Pink / Electric Cyan
+        // --------------------------------------------------
+
         "neon-cyberpunk": {
-            bg: "#101018",
-            surface: "#1B1822",
-            surface2: "#262130",
-            surface3: "#342A40",
-            text: "#F8F1FF",
-            muted: "#B0A3BC",
-            accent: "#FF3D9A",
-            accent2: "#FF72BC",
-            border: "#38283D",
-            card: "#1B1822",
-            input: "#262130",
-            header: "#14121A",
-            success: "#00E6A0",
-            danger: "#FF526E",
-            shadow: "rgba(0,0,0,.35)"
+            bg: "#090910",
+            surface: "#13121D",
+            surface2: "#21182B",
+            surface3: "#30203F,
+            text: "#F9F4FF",
+            muted: "#A99BBE",
+            accent: "#FF1493",
+            accent2: "#00F5FF",
+            border: "#4A2054",
+            card: "#13121D",
+            input: "#21182B",
+            header: "#0D0C15",
+            success: "#00F5A0",
+            danger: "#FF426D",
+            shadow: "rgba(0,0,0,.48)"
         }
     };
 
@@ -241,51 +291,43 @@
         style.id = "nv-theme-system-styles";
 
         style.textContent = `
-        /* ==============================================
+
+        /* ==========================================
            THEME VARIABLES
-        ============================================== */
+        ========================================== */
 
         html {
-            --nv-bg: #12111A;
-            --nv-surface: #1B1925;
-            --nv-surface-2: #242130;
-            --nv-surface-3: #302B40;
-            --nv-text: #F0EDF8;
-            --nv-muted: #A7A0B6;
-            --nv-accent: #8B5CF6;
-            --nv-accent-2: #A78BFA;
-            --nv-border: #302A40;
-            --nv-card: #1B1925;
-            --nv-input: #211E2C;
-            --nv-header: #15131D;
-            --nv-success: #4ADE80;
-            --nv-danger: #FB7185;
-            --nv-shadow: rgba(0,0,0,.30);
+            --nv-bg: #100E18;
+            --nv-surface: #191522;
+            --nv-surface-2: #241D32;
+            --nv-surface-3: #332747;
+            --nv-text: #F5F0FF;
+            --nv-muted: #A99CBF;
+            --nv-accent: #9B6DFF;
+            --nv-accent-2: #C0A1FF;
+            --nv-border: #342746;
+            --nv-card: #191522;
+            --nv-input: #211A2D;
+            --nv-header: #13101B;
+            --nv-success: #58D6A0;
+            --nv-danger: #FF708A;
+            --nv-shadow: rgba(0,0,0,.42);
 
             color-scheme: dark;
         }
 
-        /* ==============================================
-           APPLY GLOBAL THEME
-        ============================================== */
-
-        html[data-theme="original-dark"],
-        html[data-theme="obsidian-midnight"] {
-            color-scheme: dark;
-        }
-
-        html[data-theme="lavender-dream"],
-        html[data-theme="emerald-forest"],
-        html[data-theme="midnight-ocean"],
-        html[data-theme="royal-burgundy"],
-        html[data-theme="neon-cyberpunk"] {
-            color-scheme: dark;
-        }
+        /* ==========================================
+           LIGHT THEMES
+        ========================================== */
 
         html[data-theme="vintage-parchment"],
         html[data-theme="silver-minimal"] {
             color-scheme: light;
         }
+
+        /* ==========================================
+           GLOBAL COLORS
+        ========================================== */
 
         html,
         body {
@@ -301,41 +343,19 @@
             color: var(--nv-text);
         }
 
-        /* ==============================================
-           GENERAL THEME SURFACES
-        ============================================== */
-
-        .top-header,
-        header,
-        .bottom-nav,
-        .mobile-nav,
-        .navbar {
-            transition: background .25s ease, border-color .25s ease;
-        }
+        /* ==========================================
+           COMMON HEADER
+        ========================================== */
 
         .top-header {
-            background-color: var(--nv-header);
+            background: var(--nv-header);
             border-color: var(--nv-border);
+            transition: background .25s ease;
         }
 
-        .card,
-        .novel-card,
-        .profile-card,
-        .section-card,
-        .modal-content,
-        .dropdown-menu {
-            transition: background .25s ease, border-color .25s ease;
-        }
-
-        input,
-        textarea,
-        select {
-            transition: background .25s ease, color .25s ease;
-        }
-
-        /* ==============================================
-           THEME SYSTEM UI
-        ============================================== */
+        /* ==========================================
+           THEME BUTTON
+        ========================================== */
 
         .nv-theme-btn {
             width: 42px;
@@ -367,9 +387,9 @@
             font-size: 16px;
         }
 
-        /* ==============================================
+        /* ==========================================
            THEME PANEL
-        ============================================== */
+        ========================================== */
 
         .nv-theme-panel {
             width: 100%;
@@ -404,11 +424,19 @@
             line-height: 1.6;
         }
 
+        /* ==========================================
+           THEME GRID
+        ========================================== */
+
         .nv-theme-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 12px;
         }
+
+        /* ==========================================
+           THEME CARD
+        ========================================== */
 
         .nv-theme-card {
             position: relative;
@@ -433,8 +461,19 @@
 
         .nv-theme-card.active {
             border: 2px solid var(--nv-accent);
-            box-shadow: 0 0 0 2px color-mix(in srgb, var(--nv-accent) 15%, transparent);
+            box-shadow: 0 0 0 2px color-mix(in srgb, var(--nv-accent) 18%, transparent);
         }
+
+        .nv-theme-card:focus-visible,
+        .nv-theme-btn:focus-visible,
+        .nv-theme-close:focus-visible {
+            outline: 2px solid var(--nv-accent);
+            outline-offset: 3px;
+        }
+
+        /* ==========================================
+           THEME PREVIEW
+        ========================================== */
 
         .nv-theme-preview {
             width: 100%;
@@ -491,6 +530,10 @@
             width: 55%;
         }
 
+        /* ==========================================
+           THEME CARD INFORMATION
+        ========================================== */
+
         .nv-theme-card-info {
             display: flex;
             align-items: center;
@@ -534,7 +577,7 @@
             height: 22px;
             border-radius: 50%;
             background: var(--nv-accent);
-            color: white;
+            color: #FFFFFF;
             display: none;
             align-items: center;
             justify-content: center;
@@ -553,9 +596,9 @@
             text-align: center;
         }
 
-        /* ==============================================
-           THEME MODAL
-        ============================================== */
+        /* ==========================================
+           MODAL OVERLAY
+        ========================================== */
 
         .nv-theme-modal-overlay {
             position: fixed;
@@ -574,6 +617,10 @@
             display: flex;
         }
 
+        /* ==========================================
+           MODAL
+        ========================================== */
+
         .nv-theme-modal {
             width: 100%;
             max-width: 480px;
@@ -584,7 +631,7 @@
             border: 1px solid var(--nv-border);
             border-radius: 22px;
             padding: 22px;
-            box-shadow: 0 25px 80px rgba(0,0,0,.4);
+            box-shadow: 0 25px 80px var(--nv-shadow);
             animation: nvThemeModalIn .2s ease;
         }
 
@@ -593,6 +640,7 @@
                 opacity: 0;
                 transform: translateY(12px) scale(.98);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
@@ -638,9 +686,9 @@
             gap: 10px;
         }
 
-        /* ==============================================
+        /* ==========================================
            LOGIN REQUIRED POPUP
-        ============================================== */
+        ========================================== */
 
         .nv-theme-login-box {
             text-align: center;
@@ -696,7 +744,7 @@
 
         .nv-theme-login-link.primary {
             background: var(--nv-accent);
-            color: #fff;
+            color: #FFFFFF;
         }
 
         .nv-theme-login-link.primary:hover {
@@ -713,9 +761,9 @@
             border-color: var(--nv-accent);
         }
 
-        /* ==============================================
+        /* ==========================================
            MOBILE RESPONSIVE
-        ============================================== */
+        ========================================== */
 
         @media (max-width: 480px) {
 
@@ -750,7 +798,6 @@
                 width: 27px;
                 height: 27px;
                 border-radius: 8px;
-                font-size: 11px;
             }
 
             .nv-theme-modal {
@@ -764,6 +811,10 @@
                 border-radius: 11px;
             }
         }
+
+        /* ==========================================
+           REDUCED MOTION
+        ========================================== */
 
         @media (prefers-reduced-motion: reduce) {
             .nv-theme-card,
@@ -780,17 +831,16 @@
 
 
     // ======================================================
-    // 4. CURRENT USER
+    // 4. AUTHENTICATION
     // ======================================================
 
     function getThemeUser() {
-
         try {
             if (typeof window.getCurrentAuthUser === "function") {
                 return window.getCurrentAuthUser();
             }
         } catch (error) {
-            console.warn("Theme: Unable to read auth user", error);
+            console.warn("Theme: Unable to read current user.", error);
         }
 
         return null;
@@ -798,7 +848,6 @@
 
 
     function getThemeUserId() {
-
         const user = getThemeUser();
 
         if (!user) return null;
@@ -812,9 +861,12 @@
 
 
     function isThemeLoggedIn() {
-
-        if (typeof window.isUserLoggedIn === "function") {
-            return window.isUserLoggedIn();
+        try {
+            if (typeof window.isUserLoggedIn === "function") {
+                return window.isUserLoggedIn();
+            }
+        } catch (error) {
+            console.warn("Theme: Auth check failed.", error);
         }
 
         return !!getThemeUserId();
@@ -822,11 +874,10 @@
 
 
     // ======================================================
-    // 5. STORAGE
+    // 5. LOCAL STORAGE
     // ======================================================
 
     function getThemeStorageKey() {
-
         const userId = getThemeUserId();
 
         if (!userId) return null;
@@ -836,19 +887,18 @@
 
 
     function getSavedTheme() {
-
         const key = getThemeStorageKey();
 
         if (!key) return NV_THEME_CONFIG.defaultTheme;
 
         try {
-            const saved = localStorage.getItem(key);
+            const savedTheme = localStorage.getItem(key);
 
-            if (saved && NV_THEME_PALETTES[saved]) {
-                return saved;
+            if (savedTheme && NV_THEME_PALETTES[savedTheme]) {
+                return savedTheme;
             }
         } catch (error) {
-            console.warn("Theme: Storage read error", error);
+            console.warn("Theme: Storage read error.", error);
         }
 
         return NV_THEME_CONFIG.defaultTheme;
@@ -856,9 +906,7 @@
 
 
     function saveTheme(themeId) {
-
         if (!isThemeLoggedIn()) return false;
-
         if (!NV_THEME_PALETTES[themeId]) return false;
 
         const key = getThemeStorageKey();
@@ -869,7 +917,7 @@
             localStorage.setItem(key, themeId);
             return true;
         } catch (error) {
-            console.warn("Theme: Storage save error", error);
+            console.warn("Theme: Storage save error.", error);
             return false;
         }
     }
@@ -880,18 +928,15 @@
     // ======================================================
 
     function applyTheme(themeId, save = false) {
-
         if (!NV_THEME_PALETTES[themeId]) {
             themeId = NV_THEME_CONFIG.defaultTheme;
         }
 
         const palette = NV_THEME_PALETTES[themeId];
-
         const root = document.documentElement;
 
         root.dataset.theme = themeId;
 
-        // Apply theme variables
         root.style.setProperty("--nv-bg", palette.bg);
         root.style.setProperty("--nv-surface", palette.surface);
         root.style.setProperty("--nv-surface-2", palette.surface2);
@@ -908,11 +953,10 @@
         root.style.setProperty("--nv-danger", palette.danger);
         root.style.setProperty("--nv-shadow", palette.shadow);
 
-        // Update meta theme color
-        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        const meta = document.querySelector('meta[name="theme-color"]');
 
-        if (themeMeta) {
-            themeMeta.setAttribute("content", palette.bg);
+        if (meta) {
+            meta.setAttribute("content", palette.bg);
         }
 
         if (save && isThemeLoggedIn()) {
@@ -924,52 +968,28 @@
 
 
     // ======================================================
-    // 7. THEME PREVIEW HTML
+    // 7. PREVIEW
     // ======================================================
 
     function createThemePreview(themeId) {
-
-        const palette = NV_THEME_PALETTES[themeId];
+        const p = NV_THEME_PALETTES[themeId];
 
         return `
-            <div class="nv-theme-preview"
-                 style="background:${palette.bg};">
-
-                <div class="nv-theme-preview-top"
-                     style="background:${palette.surface};">
-
-                    <span class="nv-theme-preview-dot"
-                          style="background:${palette.accent};"></span>
-
-                    <span class="nv-theme-preview-dot"
-                          style="background:${palette.accent2};"></span>
-
-                    <span class="nv-theme-preview-dot"
-                          style="background:${palette.muted};"></span>
+            <div class="nv-theme-preview" style="background:${p.bg}">
+                <div class="nv-theme-preview-top" style="background:${p.surface}">
+                    <span class="nv-theme-preview-dot" style="background:${p.accent}"></span>
+                    <span class="nv-theme-preview-dot" style="background:${p.accent2}"></span>
+                    <span class="nv-theme-preview-dot" style="background:${p.muted}"></span>
                 </div>
 
                 <div class="nv-theme-preview-body">
-
-                    <div class="nv-theme-preview-block"
-                         style="background:${palette.accent};">
-                    </div>
+                    <div class="nv-theme-preview-block" style="background:${p.accent}"></div>
 
                     <div class="nv-theme-preview-lines">
-
-                        <div class="nv-theme-preview-line"
-                             style="background:${palette.text};">
-                        </div>
-
-                        <div class="nv-theme-preview-line short"
-                             style="background:${palette.muted};">
-                        </div>
-
-                        <div class="nv-theme-preview-line"
-                             style="background:${palette.surface3};">
-                        </div>
-
+                        <div class="nv-theme-preview-line" style="background:${p.text}"></div>
+                        <div class="nv-theme-preview-line short" style="background:${p.muted}"></div>
+                        <div class="nv-theme-preview-line" style="background:${p.surface3}"></div>
                     </div>
-
                 </div>
             </div>
         `;
@@ -977,20 +997,18 @@
 
 
     // ======================================================
-    // 8. THEME CARD
+    // 8. THEME CARDS
     // ======================================================
 
     function createThemeCard(theme, selectedTheme) {
-
-        const isActive = theme.id === selectedTheme;
+        const active = theme.id === selectedTheme;
 
         return `
             <button
                 type="button"
-                class="nv-theme-card ${isActive ? "active" : ""}"
+                class="nv-theme-card ${active ? "active" : ""}"
                 data-nv-theme-choice="${theme.id}"
-                aria-pressed="${isActive}"
-            >
+                aria-pressed="${active}">
 
                 ${createThemePreview(theme.id)}
 
@@ -1001,15 +1019,8 @@
                     </div>
 
                     <div class="nv-theme-card-text">
-
-                        <div class="nv-theme-card-name">
-                            ${theme.name}
-                        </div>
-
-                        <div class="nv-theme-card-desc">
-                            ${theme.description}
-                        </div>
-
+                        <div class="nv-theme-card-name">${theme.name}</div>
+                        <div class="nv-theme-card-desc">${theme.description}</div>
                     </div>
 
                     <div class="nv-theme-check">
@@ -1017,58 +1028,42 @@
                     </div>
 
                 </div>
-
             </button>
         `;
     }
 
 
-    // ======================================================
-    // 9. THEME GRID
-    // ======================================================
-
     function createThemeGrid() {
-
-        const selectedTheme = document.documentElement.dataset.theme ||
-                            NV_THEME_CONFIG.defaultTheme;
+        const selected = document.documentElement.dataset.theme ||
+                        NV_THEME_CONFIG.defaultTheme;
 
         return `
             <div class="nv-theme-grid">
-
                 ${NV_THEME_CONFIG.themes.map(theme =>
-                    createThemeCard(theme, selectedTheme)
+                    createThemeCard(theme, selected)
                 ).join("")}
-
             </div>
         `;
     }
 
 
-    // ======================================================
-    // 10. UPDATE SELECTED CARDS
-    // ======================================================
-
     function updateThemeCards() {
-
-        const currentTheme = document.documentElement.dataset.theme;
+        const current = document.documentElement.dataset.theme;
 
         document.querySelectorAll("[data-nv-theme-choice]").forEach(card => {
+            const active = card.dataset.nvThemeChoice === current;
 
-            const isActive = card.dataset.nvThemeChoice === currentTheme;
-
-            card.classList.toggle("active", isActive);
-
-            card.setAttribute("aria-pressed", String(isActive));
+            card.classList.toggle("active", active);
+            card.setAttribute("aria-pressed", String(active));
         });
     }
 
 
     // ======================================================
-    // 11. THEME SELECTION
+    // 9. SELECT THEME
     // ======================================================
 
     function selectTheme(themeId) {
-
         if (!NV_THEME_PALETTES[themeId]) return;
 
         if (!isThemeLoggedIn()) {
@@ -1078,31 +1073,19 @@
 
         applyTheme(themeId, true);
 
-        // Update Theme UI
-        document.querySelectorAll("[data-nv-theme-choice]").forEach(card => {
-
-            const active = card.dataset.nvThemeChoice === themeId;
-
-            card.classList.toggle("active", active);
-            card.setAttribute("aria-pressed", String(active));
-        });
-
-        // Update status text
         document.querySelectorAll(".nv-theme-status").forEach(status => {
             status.textContent = "Theme saved on this device.";
         });
 
-        // Close reader popup after selection
         closeThemeModal();
     }
 
 
     // ======================================================
-    // 12. THEME MODAL
+    // 10. THEME MODAL
     // ======================================================
 
     function createThemeModal() {
-
         if (document.getElementById("nv-theme-modal-overlay")) return;
 
         const overlay = document.createElement("div");
@@ -1114,25 +1097,19 @@
             <div class="nv-theme-modal">
 
                 <div class="nv-theme-modal-header">
-
                     <h2 class="nv-theme-modal-title">
                         <i class="fas fa-palette"></i>
                         Choose Your Theme
                     </h2>
 
-                    <button class="nv-theme-close"
-                            type="button"
-                            aria-label="Close theme panel">
-
+                    <button class="nv-theme-close" type="button" aria-label="Close">
                         <i class="fas fa-times"></i>
-
                     </button>
-
                 </div>
 
                 <p class="nv-theme-modal-desc">
                     Choose your favorite reading atmosphere.
-                    Your theme will be saved to your account on this device.
+                    Your selected theme will be saved on this device.
                 </p>
 
                 <div id="nv-theme-modal-grid">
@@ -1149,18 +1126,15 @@
         document.body.appendChild(overlay);
 
         overlay.addEventListener("click", event => {
-
-            if (event.target === overlay) {
-                closeThemeModal();
-            }
+            if (event.target === overlay) closeThemeModal();
         });
 
-        overlay.querySelector(".nv-theme-close").addEventListener("click", closeThemeModal);
+        overlay.querySelector(".nv-theme-close")
+            .addEventListener("click", closeThemeModal);
     }
 
 
     function openThemeModal() {
-
         if (!isThemeLoggedIn()) {
             openLoginModal();
             return;
@@ -1170,28 +1144,22 @@
 
         const overlay = document.getElementById("nv-theme-modal-overlay");
 
-        if (overlay) {
-            overlay.classList.add("show");
-        }
+        if (overlay) overlay.classList.add("show");
     }
 
 
     function closeThemeModal() {
-
         const overlay = document.getElementById("nv-theme-modal-overlay");
 
-        if (overlay) {
-            overlay.classList.remove("show");
-        }
+        if (overlay) overlay.classList.remove("show");
     }
 
 
     // ======================================================
-    // 13. LOGIN / REGISTER MODAL
+    // 11. LOGIN / REGISTER POPUP
     // ======================================================
 
     function createLoginModal() {
-
         if (document.getElementById("nv-theme-login-overlay")) return;
 
         const overlay = document.createElement("div");
@@ -1203,19 +1171,11 @@
             <div class="nv-theme-modal">
 
                 <div class="nv-theme-modal-header">
+                    <h2 class="nv-theme-modal-title">Account Required</h2>
 
-                    <h2 class="nv-theme-modal-title">
-                        Account Required
-                    </h2>
-
-                    <button class="nv-theme-close"
-                            type="button"
-                            aria-label="Close">
-
+                    <button class="nv-theme-close" type="button" aria-label="Close">
                         <i class="fas fa-times"></i>
-
                     </button>
-
                 </div>
 
                 <div class="nv-theme-login-box">
@@ -1234,67 +1194,53 @@
                     </p>
 
                     <div class="nv-theme-login-actions">
-
                         <a href="profile.html?tab=login"
                            class="nv-theme-login-link primary">
-                            <i class="fas fa-sign-in-alt"></i>
-                            &nbsp; Login
+                            <i class="fas fa-sign-in-alt"></i>&nbsp; Login
                         </a>
 
                         <a href="profile.html?tab=register"
                            class="nv-theme-login-link secondary">
-                            <i class="fas fa-user-plus"></i>
-                            &nbsp; Create Account
+                            <i class="fas fa-user-plus"></i>&nbsp; Create Account
                         </a>
-
                     </div>
 
                 </div>
-
             </div>
         `;
 
         document.body.appendChild(overlay);
 
         overlay.addEventListener("click", event => {
-
-            if (event.target === overlay) {
-                closeLoginModal();
-            }
+            if (event.target === overlay) closeLoginModal();
         });
 
-        overlay.querySelector(".nv-theme-close").addEventListener("click", closeLoginModal);
+        overlay.querySelector(".nv-theme-close")
+            .addEventListener("click", closeLoginModal);
     }
 
 
     function openLoginModal() {
-
         createLoginModal();
 
         const overlay = document.getElementById("nv-theme-login-overlay");
 
-        if (overlay) {
-            overlay.classList.add("show");
-        }
+        if (overlay) overlay.classList.add("show");
     }
 
 
     function closeLoginModal() {
-
         const overlay = document.getElementById("nv-theme-login-overlay");
 
-        if (overlay) {
-            overlay.classList.remove("show");
-        }
+        if (overlay) overlay.classList.remove("show");
     }
 
 
     // ======================================================
-    // 14. PROFILE THEME PANEL
+    // 12. PROFILE THEME PANEL
     // ======================================================
 
     function createProfileThemePanel() {
-
         if (document.getElementById("nv-profile-theme-panel")) return;
 
         const panel = document.createElement("section");
@@ -1304,9 +1250,7 @@
 
         panel.innerHTML = `
             <div class="nv-theme-panel-header">
-
                 <div>
-
                     <h3 class="nv-theme-panel-title">
                         <i class="fas fa-palette"></i>
                         Theme Settings
@@ -1315,9 +1259,7 @@
                     <p class="nv-theme-panel-subtitle">
                         Personalize your NovelVerse reading experience.
                     </p>
-
                 </div>
-
             </div>
 
             <div id="nv-profile-theme-grid">
@@ -1329,15 +1271,14 @@
             </div>
         `;
 
-        // Prefer profile section if available
-        const profileSection =
+        const target =
             document.getElementById("profile-section") ||
             document.getElementById("profile-section-content") ||
             document.querySelector(".profile-container") ||
             document.querySelector(".profile-content");
 
-        if (profileSection) {
-            profileSection.appendChild(panel);
+        if (target) {
+            target.appendChild(panel);
         } else {
             document.body.appendChild(panel);
         }
@@ -1345,11 +1286,10 @@
 
 
     // ======================================================
-    // 15. READER THEME BUTTON
+    // 13. READER THEME BUTTON
     // ======================================================
 
     function createReaderThemeButton() {
-
         if (document.getElementById("nv-reader-theme-btn")) return;
 
         const button = document.createElement("button");
@@ -1360,43 +1300,33 @@
         button.title = "Change Theme";
         button.setAttribute("aria-label", "Change Theme");
 
-        button.innerHTML = `
-            <i class="fas fa-palette"></i>
-        `;
+        button.innerHTML = `<i class="fas fa-palette"></i>`;
 
-        button.addEventListener("click", () => {
-            openThemeModal();
-        });
+        button.addEventListener("click", openThemeModal);
 
-        const headerActions =
-            document.querySelector(".header-actions") ||
-            document.querySelector(".top-header .header-actions");
+        const actions = document.querySelector(".header-actions");
 
-        if (headerActions) {
-            headerActions.appendChild(button);
+        if (actions) {
+            actions.appendChild(button);
         } else {
             const header = document.querySelector(".top-header");
 
-            if (header) {
-                header.appendChild(button);
-            }
+            if (header) header.appendChild(button);
         }
     }
 
 
     // ======================================================
-    // 16. PAGE DETECTION
+    // 14. PAGE DETECTION
     // ======================================================
 
     function isReaderPage() {
-
         return document.body.classList.contains("reader-page") ||
                document.getElementById("chapter-content") !== null;
     }
 
 
     function isProfilePage() {
-
         return window.location.pathname.toLowerCase().includes("profile.html") ||
                document.getElementById("profile-section") !== null ||
                document.getElementById("auth-section") !== null;
@@ -1404,84 +1334,68 @@
 
 
     // ======================================================
-    // 17. INITIALIZE THEME
+    // 15. INITIALIZATION
     // ======================================================
 
     let isThemeReady = false;
 
     function initializeThemeSystem() {
-
         if (isThemeReady) return;
 
         injectThemeStyles();
 
-        // Apply default first to prevent theme flash
         applyTheme(NV_THEME_CONFIG.defaultTheme);
 
         if (isThemeLoggedIn()) {
             applyTheme(getSavedTheme());
         }
 
-        // Reader page
         if (isReaderPage()) {
             createReaderThemeButton();
             createThemeModal();
         }
 
-        // Profile page
         if (isProfilePage()) {
             createProfileThemePanel();
         }
 
-        // Login modal
         createLoginModal();
 
         isThemeReady = true;
 
-        console.log("NovelVerse Theme System initialized.");
+        console.log("NovelVerse Theme System v2.0 initialized.");
     }
 
 
     // ======================================================
-    // 18. THEME CLICK EVENTS
+    // 16. THEME CLICK HANDLER
     // ======================================================
 
     document.addEventListener("click", event => {
+        const card = event.target.closest("[data-nv-theme-choice]");
 
-        const themeCard = event.target.closest("[data-nv-theme-choice]");
+        if (!card) return;
 
-        if (themeCard) {
+        event.preventDefault();
 
-            event.preventDefault();
-
-            const themeId = themeCard.dataset.nvThemeChoice;
-
-            selectTheme(themeId);
-        }
-
+        selectTheme(card.dataset.nvThemeChoice);
     });
 
 
     // ======================================================
-    // 19. AUTH CHANGE DETECTION
+    // 17. AUTH CHANGE HANDLING
     // ======================================================
 
     window.addEventListener("storage", event => {
-
         if (event.key === "novelverse_session") {
             syncThemeAfterAuthChange();
         }
-
     });
 
-
-    window.addEventListener("novelverseAuthChanged", () => {
-        syncThemeAfterAuthChange();
-    });
+    window.addEventListener("novelverseAuthChanged", syncThemeAfterAuthChange);
 
 
     function syncThemeAfterAuthChange() {
-
         if (isThemeLoggedIn()) {
             applyTheme(getSavedTheme());
         } else {
@@ -1491,7 +1405,7 @@
 
 
     // ======================================================
-    // 20. EXPORT FUNCTIONS
+    // 18. PUBLIC API
     // ======================================================
 
     window.NovelVerseTheme = {
@@ -1509,17 +1423,13 @@
 
 
     // ======================================================
-    // 21. DOM READY
+    // 19. DOM READY
     // ======================================================
 
     if (document.readyState === "loading") {
-
         document.addEventListener("DOMContentLoaded", initializeThemeSystem);
-
     } else {
-
         initializeThemeSystem();
-
     }
 
 })();
