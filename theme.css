@@ -1,0 +1,700 @@
+/* =========================================================
+   NOVELVERSE — PREMIUM 8-THEME SYSTEM
+   File: theme.css
+   Apply a theme by setting data-theme on <html>:
+   original-dark | lavender-dream | emerald-forest |
+   midnight-ocean | vintage-parchment | silver-minimal |
+   royal-burgundy | neon-cyberpunk
+
+   Example:
+   <html lang="my" data-theme="original-dark">
+   ========================================================= */
+
+/* ---------- 1. DEFAULT / SIGNATURE: OBSIDIAN MIDNIGHT ---------- */
+:root,
+:root[data-theme="original-dark"],
+:root[data-theme="obsidian-midnight"] {
+    color-scheme: dark;
+
+    --nv-bg: #12111A;
+    --nv-bg-soft: #171521;
+    --nv-surface: #1C1926;
+    --nv-surface-2: #242130;
+    --nv-surface-3: #2D293B;
+    --nv-header: rgba(18, 17, 26, 0.88);
+    --nv-nav: rgba(28, 25, 38, 0.92);
+
+    --nv-text: #F4F0FA;
+    --nv-text-soft: #C5BED2;
+    --nv-muted: #91899F;
+    --nv-text-on-accent: #FFFFFF;
+
+    --nv-primary: #8B5CF6;
+    --nv-primary-hover: #A17AFB;
+    --nv-primary-soft: rgba(139, 92, 246, 0.16);
+    --nv-secondary: #D6B36A;
+    --nv-secondary-soft: rgba(214, 179, 106, 0.14);
+
+    --nv-border: rgba(196, 181, 220, 0.13);
+    --nv-border-strong: rgba(196, 181, 220, 0.24);
+    --nv-divider: rgba(196, 181, 220, 0.10);
+
+    --nv-success: #45C995;
+    --nv-warning: #E9B65D;
+    --nv-danger: #F06C7A;
+    --nv-info: #65B9F5;
+
+    --nv-input-bg: #171521;
+    --nv-input-border: rgba(196, 181, 220, 0.19);
+    --nv-input-focus: #8B5CF6;
+
+    --nv-overlay: rgba(8, 7, 13, 0.72);
+    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+    --nv-shadow-accent: 0 8px 28px rgba(139, 92, 246, 0.17);
+    --nv-glow: rgba(139, 92, 246, 0.16);
+
+    --nv-scrollbar: #514765;
+    --nv-scrollbar-track: #171521;
+
+    --nv-radius-sm: 8px;
+    --nv-radius-md: 14px;
+    --nv-radius-lg: 20px;
+    --nv-radius-xl: 26px;
+
+    --nv-transition: 180ms ease;
+}
+
+/* ---------- 2. LAVENDER DREAM ---------- */
+:root[data-theme="lavender-dream"] {
+    color-scheme: dark;
+
+    --nv-bg: #24212B;
+    --nv-bg-soft: #2B2734;
+    --nv-surface: #332E3E;
+    --nv-surface-2: #3D374A;
+    --nv-surface-3: #494157;
+    --nv-header: rgba(36, 33, 43, 0.90);
+    --nv-nav: rgba(51, 46, 62, 0.94);
+
+    --nv-text: #FBF7FF;
+    --nv-text-soft: #DED3EB;
+    --nv-muted: #B0A2C0;
+    --nv-text-on-accent: #241B31;
+
+    --nv-primary: #C4A7FF;
+    --nv-primary-hover: #D4C0FF;
+    --nv-primary-soft: rgba(196, 167, 255, 0.17);
+    --nv-secondary: #F0B9D4;
+    --nv-secondary-soft: rgba(240, 185, 212, 0.14);
+
+    --nv-border: rgba(222, 211, 235, 0.15);
+    --nv-border-strong: rgba(222, 211, 235, 0.27);
+    --nv-divider: rgba(222, 211, 235, 0.11);
+
+    --nv-success: #78D6B0;
+    --nv-warning: #F0C77D;
+    --nv-danger: #F28CA6;
+    --nv-info: #9DCBFA;
+
+    --nv-input-bg: #2B2734;
+    --nv-input-border: rgba(222, 211, 235, 0.21);
+    --nv-input-focus: #C4A7FF;
+
+    --nv-overlay: rgba(16, 12, 23, 0.72);
+    --nv-shadow: 0 12px 34px rgba(10, 7, 18, 0.30);
+    --nv-shadow-accent: 0 8px 28px rgba(196, 167, 255, 0.18);
+    --nv-glow: rgba(196, 167, 255, 0.17);
+
+    --nv-scrollbar: #75658C;
+    --nv-scrollbar-track: #2B2734;
+}
+
+/* ---------- 3. EMERALD FOREST ---------- */
+:root[data-theme="emerald-forest"] {
+    color-scheme: dark;
+
+    --nv-bg: #17231F;
+    --nv-bg-soft: #1B2B25;
+    --nv-surface: #21352D;
+    --nv-surface-2: #2A4036;
+    --nv-surface-3: #354F43;
+    --nv-header: rgba(23, 35, 31, 0.90);
+    --nv-nav: rgba(33, 53, 45, 0.94);
+
+    --nv-text: #F0F8F2;
+    --nv-text-soft: #C5D8CC;
+    --nv-muted: #91AA9B;
+    --nv-text-on-accent: #092219;
+
+    --nv-primary: #36B88A;
+    --nv-primary-hover: #55D0A2;
+    --nv-primary-soft: rgba(54, 184, 138, 0.16);
+    --nv-secondary: #D4B879;
+    --nv-secondary-soft: rgba(212, 184, 121, 0.14);
+
+    --nv-border: rgba(190, 224, 204, 0.14);
+    --nv-border-strong: rgba(190, 224, 204, 0.25);
+    --nv-divider: rgba(190, 224, 204, 0.10);
+
+    --nv-success: #63D6A0;
+    --nv-warning: #E8C16E;
+    --nv-danger: #F07B79;
+    --nv-info: #77C7D8;
+
+    --nv-input-bg: #1B2B25;
+    --nv-input-border: rgba(190, 224, 204, 0.20);
+    --nv-input-focus: #36B88A;
+
+    --nv-overlay: rgba(5, 16, 11, 0.74);
+    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.30);
+    --nv-shadow-accent: 0 8px 28px rgba(54, 184, 138, 0.16);
+    --nv-glow: rgba(54, 184, 138, 0.15);
+
+    --nv-scrollbar: #4C7964;
+    --nv-scrollbar-track: #1B2B25;
+}
+
+/* ---------- 4. MIDNIGHT OCEAN ---------- */
+:root[data-theme="midnight-ocean"] {
+    color-scheme: dark;
+
+    --nv-bg: #172333;
+    --nv-bg-soft: #1B2B3E;
+    --nv-surface: #22364B;
+    --nv-surface-2: #2B435B;
+    --nv-surface-3: #36536E;
+    --nv-header: rgba(23, 35, 51, 0.91);
+    --nv-nav: rgba(34, 54, 75, 0.94);
+
+    --nv-text: #F1F7FC;
+    --nv-text-soft: #C5D8E8;
+    --nv-muted: #91A9BE;
+    --nv-text-on-accent: #082033;
+
+    --nv-primary: #38BDF8;
+    --nv-primary-hover: #69D0FF;
+    --nv-primary-soft: rgba(56, 189, 248, 0.16);
+    --nv-secondary: #72A7D8;
+    --nv-secondary-soft: rgba(114, 167, 216, 0.15);
+
+    --nv-border: rgba(190, 218, 240, 0.14);
+    --nv-border-strong: rgba(190, 218, 240, 0.25);
+    --nv-divider: rgba(190, 218, 240, 0.10);
+
+    --nv-success: #55D6B0;
+    --nv-warning: #F0C36D;
+    --nv-danger: #F17C8C;
+    --nv-info: #65C8F5;
+
+    --nv-input-bg: #1B2B3E;
+    --nv-input-border: rgba(190, 218, 240, 0.20);
+    --nv-input-focus: #38BDF8;
+
+    --nv-overlay: rgba(5, 13, 24, 0.75);
+    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.30);
+    --nv-shadow-accent: 0 8px 28px rgba(56, 189, 248, 0.16);
+    --nv-glow: rgba(56, 189, 248, 0.15);
+
+    --nv-scrollbar: #4D718F;
+    --nv-scrollbar-track: #1B2B3E;
+}
+
+/* ---------- 5. VINTAGE PARCHMENT ---------- */
+:root[data-theme="vintage-parchment"] {
+    color-scheme: light;
+
+    --nv-bg: #F2EEE5;
+    --nv-bg-soft: #EAE3D6;
+    --nv-surface: #FBF8F0;
+    --nv-surface-2: #E8DFD0;
+    --nv-surface-3: #DCD0BC;
+    --nv-header: rgba(242, 238, 229, 0.92);
+    --nv-nav: rgba(251, 248, 240, 0.96);
+
+    --nv-text: #35291F;
+    --nv-text-soft: #5D4A39;
+    --nv-muted: #897662;
+    --nv-text-on-accent: #FFFDF8;
+
+    --nv-primary: #9B7048;
+    --nv-primary-hover: #805A38;
+    --nv-primary-soft: rgba(155, 112, 72, 0.13);
+    --nv-secondary: #B18A55;
+    --nv-secondary-soft: rgba(177, 138, 85, 0.14);
+
+    --nv-border: rgba(91, 67, 43, 0.15);
+    --nv-border-strong: rgba(91, 67, 43, 0.27);
+    --nv-divider: rgba(91, 67, 43, 0.12);
+
+    --nv-success: #397B57;
+    --nv-warning: #A97728;
+    --nv-danger: #B64E4A;
+    --nv-info: #477C9C;
+
+    --nv-input-bg: #FFFDF8;
+    --nv-input-border: rgba(91, 67, 43, 0.22);
+    --nv-input-focus: #9B7048;
+
+    --nv-overlay: rgba(38, 27, 17, 0.48);
+    --nv-shadow: 0 10px 28px rgba(74, 52, 31, 0.10);
+    --nv-shadow-accent: 0 8px 24px rgba(155, 112, 72, 0.15);
+    --nv-glow: rgba(177, 138, 85, 0.13);
+
+    --nv-scrollbar: #B5A187;
+    --nv-scrollbar-track: #EAE3D6;
+}
+
+/* ---------- 6. SILVER MINIMAL ---------- */
+:root[data-theme="silver-minimal"] {
+    color-scheme: light;
+
+    --nv-bg: #EAE8E2;
+    --nv-bg-soft: #E1E0DC;
+    --nv-surface: #F7F7F4;
+    --nv-surface-2: #DDDFE0;
+    --nv-surface-3: #CFD3D5;
+    --nv-header: rgba(234, 232, 226, 0.93);
+    --nv-nav: rgba(247, 247, 244, 0.96);
+
+    --nv-text: #252A30;
+    --nv-text-soft: #4E5862;
+    --nv-muted: #78818A;
+    --nv-text-on-accent: #FFFFFF;
+
+    --nv-primary: #64748B;
+    --nv-primary-hover: #4D5D73;
+    --nv-primary-soft: rgba(100, 116, 139, 0.14);
+    --nv-secondary: #8B929B;
+    --nv-secondary-soft: rgba(139, 146, 155, 0.15);
+
+    --nv-border: rgba(54, 65, 76, 0.13);
+    --nv-border-strong: rgba(54, 65, 76, 0.24);
+    --nv-divider: rgba(54, 65, 76, 0.10);
+
+    --nv-success: #348565;
+    --nv-warning: #A8792D;
+    --nv-danger: #C0525C;
+    --nv-info: #477FA8;
+
+    --nv-input-bg: #FFFFFF;
+    --nv-input-border: rgba(54, 65, 76, 0.19);
+    --nv-input-focus: #64748B;
+
+    --nv-overlay: rgba(26, 31, 37, 0.48);
+    --nv-shadow: 0 10px 28px rgba(38, 45, 52, 0.09);
+    --nv-shadow-accent: 0 8px 24px rgba(100, 116, 139, 0.14);
+    --nv-glow: rgba(100, 116, 139, 0.12);
+
+    --nv-scrollbar: #A7ADB4;
+    --nv-scrollbar-track: #E1E0DC;
+}
+
+/* ---------- 7. ROYAL BURGUNDY ---------- */
+:root[data-theme="royal-burgundy"] {
+    color-scheme: dark;
+
+    --nv-bg: #24151D;
+    --nv-bg-soft: #2D1A25;
+    --nv-surface: #38212E;
+    --nv-surface-2: #462838;
+    --nv-surface-3: #573347;
+    --nv-header: rgba(36, 21, 29, 0.91);
+    --nv-nav: rgba(56, 33, 46, 0.95);
+
+    --nv-text: #FFF2F5;
+    --nv-text-soft: #E7C9D2;
+    --nv-muted: #B894A1;
+    --nv-text-on-accent: #FFFFFF;
+
+    --nv-primary: #C45B78;
+    --nv-primary-hover: #DE7894;
+    --nv-primary-soft: rgba(196, 91, 120, 0.17);
+    --nv-secondary: #D6A0A8;
+    --nv-secondary-soft: rgba(214, 160, 168, 0.14);
+
+    --nv-border: rgba(235, 194, 207, 0.15);
+    --nv-border-strong: rgba(235, 194, 207, 0.27);
+    --nv-divider: rgba(235, 194, 207, 0.11);
+
+    --nv-success: #68C99B;
+    --nv-warning: #E8B96D;
+    --nv-danger: #F17C8B;
+    --nv-info: #83BDE0;
+
+    --nv-input-bg: #2D1A25;
+    --nv-input-border: rgba(235, 194, 207, 0.21);
+    --nv-input-focus: #C45B78;
+
+    --nv-overlay: rgba(15, 5, 10, 0.76);
+    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.32);
+    --nv-shadow-accent: 0 8px 28px rgba(196, 91, 120, 0.18);
+    --nv-glow: rgba(196, 91, 120, 0.16);
+
+    --nv-scrollbar: #805064;
+    --nv-scrollbar-track: #2D1A25;
+}
+
+/* ---------- 8. NEON CYBERPUNK ---------- */
+:root[data-theme="neon-cyberpunk"] {
+    color-scheme: dark;
+
+    --nv-bg: #101018;
+    --nv-bg-soft: #151522;
+    --nv-surface: #1C1C2B;
+    --nv-surface-2: #25253A;
+    --nv-surface-3: #30304A;
+    --nv-header: rgba(16, 16, 24, 0.92);
+    --nv-nav: rgba(28, 28, 43, 0.95);
+
+    --nv-text: #F7F5FF;
+    --nv-text-soft: #D0CEE6;
+    --nv-muted: #9694B5;
+    --nv-text-on-accent: #160D1C;
+
+    --nv-primary: #FF3D9A;
+    --nv-primary-hover: #FF69B2;
+    --nv-primary-soft: rgba(255, 61, 154, 0.16);
+    --nv-secondary: #35E6E0;
+    --nv-secondary-soft: rgba(53, 230, 224, 0.14);
+
+    --nv-border: rgba(190, 180, 255, 0.16);
+    --nv-border-strong: rgba(190, 180, 255, 0.30);
+    --nv-divider: rgba(190, 180, 255, 0.12);
+
+    --nv-success: #47E6A5;
+    --nv-warning: #FFD166;
+    --nv-danger: #FF5470;
+    --nv-info: #35E6E0;
+
+    --nv-input-bg: #151522;
+    --nv-input-border: rgba(190, 180, 255, 0.23);
+    --nv-input-focus: #35E6E0;
+
+    --nv-overlay: rgba(5, 5, 14, 0.78);
+    --nv-shadow: 0 12px 34px rgba(0, 0, 0, 0.38);
+    --nv-shadow-accent: 0 8px 30px rgba(255, 61, 154, 0.20);
+    --nv-glow: rgba(255, 61, 154, 0.17);
+
+    --nv-scrollbar: #66518A;
+    --nv-scrollbar-track: #151522;
+}
+
+/* ---------- SHARED THEME APPLICATION ---------- */
+html {
+    background: var(--nv-bg);
+    color-scheme: inherit;
+    transition: background-color var(--nv-transition), color var(--nv-transition);
+}
+
+body {
+    background-color: var(--nv-bg);
+    color: var(--nv-text);
+    transition:
+        background-color var(--nv-transition),
+        color var(--nv-transition);
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    accent-color: var(--nv-primary);
+}
+
+::selection {
+    color: var(--nv-text-on-accent);
+    background: var(--nv-primary);
+}
+
+hr,
+.divider,
+.section-divider {
+    border-color: var(--nv-divider);
+}
+
+/* Surfaces and common layout elements */
+.top-header,
+.site-header,
+.header,
+.bottom-nav,
+.mobile-bottom-nav {
+    color: var(--nv-text);
+    background: var(--nv-header);
+    border-color: var(--nv-border);
+}
+
+.bottom-nav,
+.mobile-bottom-nav {
+    background: var(--nv-nav);
+    box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.08);
+}
+
+.main-container,
+.page-container,
+.content-container {
+    color: var(--nv-text);
+}
+
+.card,
+.novel-card,
+.continue-card,
+.popular-item,
+.section-card,
+.panel,
+.modal-content,
+.dropdown-menu,
+.menu-panel,
+.profile-card,
+.topup-card,
+.admin-card,
+.reader-settings,
+.chapter-list,
+.search-panel {
+    color: var(--nv-text);
+    background: var(--nv-surface);
+    border: 1px solid var(--nv-border);
+    box-shadow: var(--nv-shadow);
+}
+
+.card:hover,
+.novel-card:hover,
+.continue-card:hover,
+.popular-item:hover {
+    border-color: var(--nv-border-strong);
+}
+
+/* Text */
+h1, h2, h3, h4, h5, h6,
+.logo-title,
+.section-title,
+.novel-title,
+.card-title {
+    color: var(--nv-text);
+}
+
+p,
+.description,
+.novel-description,
+.section-description {
+    color: var(--nv-text-soft);
+}
+
+small,
+.muted,
+.text-muted,
+.meta,
+.novel-meta,
+.chapter-meta,
+.ad-label {
+    color: var(--nv-muted);
+}
+
+/* Links */
+a {
+    color: var(--nv-primary);
+    transition: color var(--nv-transition);
+}
+
+a:hover {
+    color: var(--nv-primary-hover);
+}
+
+/* Buttons */
+button,
+.btn,
+.btn-primary,
+button.primary,
+.button-primary {
+    transition:
+        color var(--nv-transition),
+        background-color var(--nv-transition),
+        border-color var(--nv-transition),
+        box-shadow var(--nv-transition),
+        transform var(--nv-transition);
+}
+
+.btn-primary,
+button.primary,
+.button-primary {
+    color: var(--nv-text-on-accent);
+    background: var(--nv-primary);
+    border: 1px solid transparent;
+    box-shadow: var(--nv-shadow-accent);
+}
+
+.btn-primary:hover,
+button.primary:hover,
+.button-primary:hover {
+    color: var(--nv-text-on-accent);
+    background: var(--nv-primary-hover);
+    box-shadow: var(--nv-shadow-accent);
+}
+
+.btn-secondary,
+button.secondary,
+.button-secondary,
+.icon-btn,
+.account-btn {
+    color: var(--nv-text);
+    background: var(--nv-surface-2);
+    border: 1px solid var(--nv-border);
+}
+
+.btn-secondary:hover,
+button.secondary:hover,
+.button-secondary:hover,
+.icon-btn:hover,
+.account-btn:hover {
+    background: var(--nv-surface-3);
+    border-color: var(--nv-border-strong);
+}
+
+/* Inputs */
+input,
+select,
+textarea,
+.form-control {
+    color: var(--nv-text);
+    background: var(--nv-input-bg);
+    border: 1px solid var(--nv-input-border);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--nv-muted);
+    opacity: 0.85;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.form-control:focus {
+    outline: none;
+    border-color: var(--nv-input-focus);
+    box-shadow: 0 0 0 3px var(--nv-primary-soft);
+}
+
+/* Tabs, filters, active navigation */
+.nav-item,
+.tab-button,
+.filter-button,
+.category-chip,
+.filter-chip {
+    color: var(--nv-text-soft);
+    background: transparent;
+    border-color: transparent;
+    transition: all var(--nv-transition);
+}
+
+.nav-item:hover,
+.tab-button:hover,
+.filter-button:hover,
+.category-chip:hover,
+.filter-chip:hover {
+    color: var(--nv-text);
+    background: var(--nv-primary-soft);
+}
+
+.nav-item.active,
+.tab-button.active,
+.filter-button.active,
+.category-chip.active,
+.filter-chip.active {
+    color: var(--nv-primary);
+    background: var(--nv-primary-soft);
+    border-color: var(--nv-border);
+}
+
+/* Badges and status */
+.badge,
+.tag,
+.status-badge,
+.chapter-badge {
+    color: var(--nv-primary);
+    background: var(--nv-primary-soft);
+    border: 1px solid var(--nv-border);
+}
+
+.success,
+.status-success {
+    color: var(--nv-success);
+}
+
+.warning,
+.status-warning {
+    color: var(--nv-warning);
+}
+
+.danger,
+.error,
+.status-danger {
+    color: var(--nv-danger);
+}
+
+.info,
+.status-info {
+    color: var(--nv-info);
+}
+
+/* Reader */
+.reader-page,
+.reader-container,
+.reader-content,
+.chapter-content {
+    color: var(--nv-text);
+    background: var(--nv-bg);
+}
+
+.reader-toolbar,
+.reader-settings-panel {
+    color: var(--nv-text);
+    background: var(--nv-surface);
+    border-color: var(--nv-border);
+}
+
+/* Ads and placeholders */
+.ad-container,
+.ad-placeholder,
+.novel-card-skeleton,
+.skeleton {
+    background-color: var(--nv-surface-2);
+    border-color: var(--nv-border);
+}
+
+/* Scrollbar */
+* {
+    scrollbar-color: var(--nv-scrollbar) var(--nv-scrollbar-track);
+}
+
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--nv-scrollbar-track);
+}
+
+*::-webkit-scrollbar-thumb {
+    background: var(--nv-scrollbar);
+    border-radius: 99px;
+}
+
+/* Focus visibility */
+:focus-visible {
+    outline: 2px solid var(--nv-primary);
+    outline-offset: 3px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
