@@ -4161,63 +4161,176 @@ textarea {
     }
 }
 
-/* Novel detail: Title & info side-by-side with cover across screen sizes */
+
+/* ==========================================
+   NOVEL DETAIL — PREMIUM INFORMATION LAYOUT
+========================================== */
+
+/* Cover + Information Layout */
 .novel-detail-header {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: flex-start !important;
-    gap: 18px;
+    display: flex;
+    align-items: center;
+    gap: clamp(22px, 4vw, 42px);
+    padding: clamp(22px, 4vw, 38px);
+
+    background:
+        radial-gradient(
+            ellipse at top left,
+            rgba(155,120,255,.13),
+            transparent 65%
+        ),
+        linear-gradient(145deg, #1b182a, #11101a);
+
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 24px;
+    box-shadow: 0 20px 55px rgba(0,0,0,.28);
 }
 
+/* Novel Cover */
 .novel-detail-header img,
 .novel-detail-cover,
 .novel-cover-large {
-    flex: 0 0 auto;
-    width: clamp(110px, 24vw, 200px);
-    height: auto;
+    width: clamp(150px, 22vw, 230px);
     aspect-ratio: 3 / 4;
+    height: auto;
+    max-height: none;
+    flex: 0 0 auto;
+    object-fit: cover;
+    border-radius: 17px;
+    border: 1px solid rgba(255,255,255,.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,.38);
 }
 
+/* Information Area */
 .novel-detail-info,
 .novel-header-info,
 .novel-information {
-    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
     min-width: 0;
 }
 
-
-/* Refined Title & Meta Text Styling */
+/* Novel Title */
 .novel-detail-header h1,
 .novel-detail-title,
 .novel-header-title {
-    margin: 0 0 10px;
-    font-size: clamp(18px, 3vw, 30px);
+    margin: 0 0 13px;
+    color: #f7f3ff;
+    font-size: clamp(23px, 3vw, 34px);
     font-weight: 800;
-    line-height: 1.5;
-    background: linear-gradient(90deg, #ffffff 0%, #e4d9ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    line-height: 1.55;
+    letter-spacing: -.4px;
 }
 
+/* Description Text */
+.novel-detail-header p,
+.novel-detail-description,
+.novel-header-description {
+    margin: 10px 0;
+    color: #c9c2d9;
+    font-size: 13px;
+    line-height: 2.15;
+}
+
+/* Novel Metadata */
 .novel-detail-meta,
 .novel-meta-list,
 .novel-information-meta {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin: 8px 0 12px;
-    font-size: 12px;
+    gap: 9px 15px;
+    margin: 15px 0;
+    color: #a79dbb;
+    font-size: 11px;
+    line-height: 1.8;
 }
 
-.novel-detail-meta > span,
-.novel-meta-list > span {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    color: var(--text-soft);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border);
-    border-radius: 999px;
+/* Synopsis Box */
+.synopsis-box {
+    margin-top: 22px;
+    padding: 24px 26px;
+    color: #d4cde3;
+    background:
+        linear-gradient(145deg, rgba(155,120,255,.055), transparent),
+        #151321;
+    border: 1px solid rgba(155,120,255,.12);
+    border-radius: 18px;
+    font-size: 13px;
+    line-height: 2.25;
+}
+
+/* Mobile Layout */
+@media (max-width: 600px) {
+
+    .novel-detail-header {
+        display: grid;
+        grid-template-columns: 118px minmax(0, 1fr);
+        align-items: start;
+        gap: 17px;
+        padding: 17px;
+        border-radius: 19px;
+    }
+
+    .novel-detail-header img,
+    .novel-detail-cover,
+    .novel-cover-large {
+        width: 118px;
+        max-height: none;
+        border-radius: 12px;
+    }
+
+    .novel-detail-header h1,
+    .novel-detail-title,
+    .novel-header-title {
+        margin-bottom: 8px;
+        font-size: 18px;
+        line-height: 1.7;
+    }
+
+    .novel-detail-header p,
+    .novel-detail-description,
+    .novel-header-description {
+        font-size: 11px;
+        line-height: 1.95;
+    }
+
+    .novel-detail-meta,
+    .novel-meta-list,
+    .novel-information-meta {
+        gap: 6px 9px;
+        margin: 9px 0;
+        font-size: 10px;
+    }
+
+    .synopsis-box {
+        margin-top: 16px;
+        padding: 17px;
+        font-size: 12px;
+        line-height: 2.15;
+        border-radius: 15px;
+    }
+}
+
+/* Very Small Phones */
+@media (max-width: 360px) {
+
+    .novel-detail-header {
+        grid-template-columns: 100px minmax(0, 1fr);
+        gap: 12px;
+        padding: 13px;
+    }
+
+    .novel-detail-header img,
+    .novel-detail-cover,
+    .novel-cover-large {
+        width: 100px;
+    }
+
+    .novel-detail-header h1,
+    .novel-detail-title,
+    .novel-header-title {
+        font-size: 16px;
+    }
 }
