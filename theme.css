@@ -1,6 +1,6 @@
 /* ==========================================================
    NOVELVERSE MM — THEME SYSTEM
-   Theme: Dark / Light / Light-Dark
+   Theme Modes: DARK / LIGHT / LIGHT-DARK
    File: theme.css
 ========================================================== */
 
@@ -9,227 +9,371 @@
 ========================================================== */
 
 :root,
-html[data-theme="dark"] {
+html[data-theme="dark"],
+html[data-theme-mode="dark"] {
+
+    --nv-bg: #12111A;
+    --nv-bg-secondary: #181621;
+
+    --nv-surface: #1B1925;
+    --nv-surface-2: #242130;
+    --nv-surface-3: #302B40;
+
+    --nv-card: #1B1925;
+    --nv-card-hover: #242130;
+
+    --nv-header: #15131D;
+    --nv-navbar: #181621;
+
+    --nv-text: #F0EDF8;
+    --nv-text-primary: #F0EDF8;
+    --nv-muted: #A7A0B6;
+    --nv-text-secondary: #A7A0B6;
+
+    --nv-accent: #8B5CF6;
+    --nv-accent-hover: #A78BFA;
+    --nv-accent-soft: rgba(139, 92, 246, 0.15);
+
+    --nv-border: #302A40;
+    --nv-border-light: #3A334B;
+
+    --nv-input: #242130;
+    --nv-input-bg: #242130;
+
+    --nv-button-bg: #8B5CF6;
+    --nv-button-text: #FFFFFF;
+
+    --nv-success: #4ADE80;
+    --nv-danger: #FB7185;
+    --nv-warning: #FBBF24;
+
+    --nv-overlay: rgba(0, 0, 0, 0.70);
+
+    --nv-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --nv-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --nv-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+    --nv-scrollbar: #3A334B;
+    --nv-scrollbar-hover: #8B5CF6;
+
+    --nv-radius-sm: 8px;
+    --nv-radius-md: 12px;
+    --nv-radius-lg: 18px;
+    --nv-radius-xl: 24px;
+
+    --nv-transition: 0.25s ease;
+
     color-scheme: dark;
-
-    --theme-bg: #12111A;
-    --theme-bg-secondary: #181621;
-
-    --theme-surface: #1D1A27;
-    --theme-surface-2: #252130;
-    --theme-surface-3: #302B3D;
-
-    --theme-card: #1D1A27;
-    --theme-card-hover: #252130;
-
-    --theme-header: #17141E;
-    --theme-nav: #17141E;
-
-    --theme-text: #F1EDF8;
-    --theme-text-secondary: #C1B9CF;
-    --theme-muted: #938AA5;
-
-    --theme-accent: #A78BFA;
-    --theme-accent-hover: #B99CFF;
-    --theme-accent-soft: rgba(167, 139, 250, 0.14);
-
-    --theme-border: #332C41;
-    --theme-border-strong: #463A58;
-
-    --theme-input-bg: #252130;
-    --theme-input-text: #F1EDF8;
-    --theme-placeholder: #827990;
-
-    --theme-overlay: rgba(0, 0, 0, 0.72);
-
-    --theme-success: #4ADE80;
-    --theme-danger: #FB7185;
-    --theme-warning: #FBBF24;
-
-    --theme-shadow: rgba(0, 0, 0, 0.25);
-
-    --theme-scrollbar: #413750;
-    --theme-scrollbar-hover: #655575;
 }
+
 
 /* ==========================================================
    02. LIGHT THEME
 ========================================================== */
 
 html[data-theme="light"] {
+
+    --nv-bg: #F5F5F7;
+    --nv-bg-secondary: #EEEEF2;
+
+    --nv-surface: #FFFFFF;
+    --nv-surface-2: #F0F0F4;
+    --nv-surface-3: #E5E5EB;
+
+    --nv-card: #FFFFFF;
+    --nv-card-hover: #F8F8FA;
+
+    --nv-header: #FFFFFF;
+    --nv-navbar: #FFFFFF;
+
+    --nv-text: #24232C;
+    --nv-text-primary: #24232C;
+    --nv-muted: #777583;
+    --nv-text-secondary: #777583;
+
+    --nv-accent: #7650C9;
+    --nv-accent-hover: #8B68DC;
+    --nv-accent-soft: rgba(118, 80, 201, 0.10);
+
+    --nv-border: #E2E0E8;
+    --nv-border-light: #D4D1DE;
+
+    --nv-input: #F0F0F4;
+    --nv-input-bg: #F0F0F4;
+
+    --nv-button-bg: #7650C9;
+    --nv-button-text: #FFFFFF;
+
+    --nv-success: #21864B;
+    --nv-danger: #D94159;
+    --nv-warning: #C58A16;
+
+    --nv-overlay: rgba(25, 20, 35, 0.55);
+
+    --nv-shadow-sm: 0 2px 8px rgba(20, 20, 30, 0.05);
+    --nv-shadow-md: 0 8px 24px rgba(20, 20, 30, 0.08);
+    --nv-shadow-lg: 0 20px 60px rgba(20, 20, 30, 0.15);
+
+    --nv-scrollbar: #D4D1DE;
+    --nv-scrollbar-hover: #7650C9;
+
     color-scheme: light;
-
-    --theme-bg: #F5F4F8;
-    --theme-bg-secondary: #EFEDF4;
-
-    --theme-surface: #FFFFFF;
-    --theme-surface-2: #F2EFF7;
-    --theme-surface-3: #E8E3F0;
-
-    --theme-card: #FFFFFF;
-    --theme-card-hover: #F8F6FC;
-
-    --theme-header: #FFFFFF;
-    --theme-nav: #FFFFFF;
-
-    --theme-text: #292432;
-    --theme-text-secondary: #51485E;
-    --theme-muted: #81788D;
-
-    --theme-accent: #8055C8;
-    --theme-accent-hover: #6F45B8;
-    --theme-accent-soft: rgba(128, 85, 200, 0.10);
-
-    --theme-border: #E4DFEC;
-    --theme-border-strong: #D0C6DF;
-
-    --theme-input-bg: #FFFFFF;
-    --theme-input-text: #292432;
-    --theme-placeholder: #9B92A9;
-
-    --theme-overlay: rgba(30, 22, 40, 0.48);
-
-    --theme-success: #21844D;
-    --theme-danger: #D6455D;
-    --theme-warning: #B98412;
-
-    --theme-shadow: rgba(35, 25, 50, 0.07);
-
-    --theme-scrollbar: #D5CCDF;
-    --theme-scrollbar-hover: #B7A8CE;
 }
 
+
 /* ==========================================================
-   03. LIGHT-DARK THEME (MIXED)
-   Light background + dark surfaces
+   03. LIGHT-DARK THEME
+   Light outer background + dark surfaces
 ========================================================== */
 
 html[data-theme="light-dark"] {
-    color-scheme: light;
 
-    --theme-bg: #F1EFF5;
-    --theme-bg-secondary: #E8E5EF;
+    --nv-bg: #F0EFF4;
+    --nv-bg-secondary: #E7E5EC;
 
-    --theme-surface: #201C2B;
-    --theme-surface-2: #2A2536;
-    --theme-surface-3: #373047;
+    --nv-surface: #1C1A25;
+    --nv-surface-2: #262331;
+    --nv-surface-3: #322D40;
 
-    --theme-card: #201C2B;
-    --theme-card-hover: #2A2536;
+    --nv-card: #1C1A25;
+    --nv-card-hover: #262331;
 
-    --theme-header: #201C2B;
-    --theme-nav: #201C2B;
+    --nv-header: #1C1A25;
+    --nv-navbar: #1C1A25;
 
-    --theme-text: #F3EDF9;
-    --theme-text-secondary: #D0C6DF;
-    --theme-muted: #A69AB8;
+    --nv-text: #F0EDF8;
+    --nv-text-primary: #F0EDF8;
+    --nv-muted: #AAA3B8;
+    --nv-text-secondary: #AAA3B8;
 
-    --theme-accent: #B99AFF;
-    --theme-accent-hover: #C9B1FF;
-    --theme-accent-soft: rgba(185, 154, 255, 0.15);
+    --nv-accent: #A78BFA;
+    --nv-accent-hover: #C4A7FF;
+    --nv-accent-soft: rgba(167, 139, 250, 0.15);
 
-    --theme-border: #40364E;
-    --theme-border-strong: #574969;
+    --nv-border: #373143;
+    --nv-border-light: #494158;
 
-    --theme-input-bg: #2A2536;
-    --theme-input-text: #F3EDF9;
-    --theme-placeholder: #9A8EAD;
+    --nv-input: #262331;
+    --nv-input-bg: #262331;
 
-    --theme-overlay: rgba(20, 15, 30, 0.65);
+    --nv-button-bg: #8B5CF6;
+    --nv-button-text: #FFFFFF;
 
-    --theme-success: #4ADE80;
-    --theme-danger: #FB7185;
-    --theme-warning: #FBBF24;
+    --nv-success: #4ADE80;
+    --nv-danger: #FB7185;
+    --nv-warning: #FBBF24;
 
-    --theme-shadow: rgba(30, 20, 45, 0.14);
+    --nv-overlay: rgba(0, 0, 0, 0.70);
 
-    --theme-scrollbar: #4A405B;
-    --theme-scrollbar-hover: #685A7E;
+    --nv-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.10);
+    --nv-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --nv-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.25);
+
+    --nv-scrollbar: #494158;
+    --nv-scrollbar-hover: #A78BFA;
+
+    color-scheme: dark;
 }
 
+
 /* ==========================================================
-   04. GLOBAL BASE
+   04. BASE HTML
 ========================================================== */
 
 html {
-    background: var(--theme-bg);
-    color: var(--theme-text);
+    min-height: 100%;
+    background: var(--nv-bg);
+    color: var(--nv-text);
+    scroll-behavior: smooth;
+
     transition:
-        background-color 0.25s ease,
-        color 0.25s ease;
+        background-color var(--nv-transition),
+        color var(--nv-transition);
 }
 
 body {
-    background: var(--theme-bg);
-    color: var(--theme-text);
+    min-height: 100vh;
+    margin: 0;
+
+    background: var(--nv-bg);
+    color: var(--nv-text);
 
     transition:
-        background-color 0.25s ease,
-        color 0.25s ease;
+        background-color var(--nv-transition),
+        color var(--nv-transition);
 }
 
 * {
-    scrollbar-color:
-        var(--theme-scrollbar)
-        var(--theme-bg);
+    box-sizing: border-box;
 }
 
-::selection {
-    background: var(--theme-accent-soft);
-    color: var(--theme-text);
+body,
+button,
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+button {
+    color: var(--nv-text);
+}
+
+img {
+    max-width: 100%;
 }
 
 a {
-    color: var(--theme-accent);
-    transition: color 0.2s ease;
+    color: var(--nv-accent);
+    text-decoration: none;
+    transition: color var(--nv-transition);
 }
 
 a:hover {
-    color: var(--theme-accent-hover);
+    color: var(--nv-accent-hover);
 }
 
-hr {
-    border-color: var(--theme-border);
+::selection {
+    background: var(--nv-accent);
+    color: #FFFFFF;
 }
+
 
 /* ==========================================================
-   05. HEADER & NAVIGATION
+   05. TEXT
+========================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--nv-text);
+}
+
+p {
+    color: var(--nv-text);
+}
+
+small,
+.small-text,
+.muted,
+.text-muted {
+    color: var(--nv-muted);
+}
+
+.text-primary {
+    color: var(--nv-text-primary);
+}
+
+.text-accent {
+    color: var(--nv-accent);
+}
+
+.text-success {
+    color: var(--nv-success);
+}
+
+.text-danger {
+    color: var(--nv-danger);
+}
+
+.text-warning {
+    color: var(--nv-warning);
+}
+
+
+/* ==========================================================
+   06. MAIN CONTAINERS
+========================================================== */
+
+main,
+.main-content,
+.page-content,
+.content-wrapper {
+    color: var(--nv-text);
+}
+
+.section,
+.content-section {
+    color: var(--nv-text);
+}
+
+.page-container {
+    background: transparent;
+}
+
+
+/* ==========================================================
+   07. HEADER
 ========================================================== */
 
 header,
 .top-header,
-.navbar,
-.top-nav,
-.header-container {
-    background: var(--theme-header);
-    color: var(--theme-text);
-    border-color: var(--theme-border);
+.site-header,
+.header,
+.navbar {
+    color: var(--nv-text);
+    border-color: var(--nv-border);
 }
 
-.bottom-nav,
-.mobile-nav,
-.bottom-navigation {
-    background: var(--theme-nav);
-    color: var(--theme-text);
-    border-color: var(--theme-border);
+.top-header,
+.site-header {
+    background: var(--nv-header);
 }
 
-header a,
-.top-header a,
-.navbar a,
-.bottom-nav a,
-.mobile-nav a {
-    color: var(--theme-text);
+.header-inner,
+.header-content {
+    color: var(--nv-text);
 }
 
-header a:hover,
-.top-header a:hover,
-.navbar a:hover {
-    color: var(--theme-accent);
+.header-title,
+.logo-text {
+    color: var(--nv-text);
 }
+
+.header-actions {
+    color: var(--nv-text);
+}
+
 
 /* ==========================================================
-   06. CARDS & SURFACES
+   08. NAVIGATION
+========================================================== */
+
+nav,
+.main-nav,
+.bottom-nav,
+.mobile-nav {
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+}
+
+nav a,
+.main-nav a,
+.bottom-nav a,
+.mobile-nav a {
+    color: var(--nv-muted);
+    transition: color var(--nv-transition);
+}
+
+nav a:hover,
+.main-nav a:hover,
+.bottom-nav a:hover,
+.mobile-nav a:hover {
+    color: var(--nv-accent);
+}
+
+.nav-link.active,
+.nav-item.active,
+.active-nav {
+    color: var(--nv-accent);
+}
+
+
+/* ==========================================================
+   09. CARDS / SURFACES
 ========================================================== */
 
 .card,
@@ -237,592 +381,595 @@ header a:hover,
 .book-card,
 .profile-card,
 .section-card,
-.content-card {
-    background: var(--theme-card);
-    color: var(--theme-text);
-    border-color: var(--theme-border);
+.content-card,
+.panel,
+.surface {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+
     transition:
-        background-color 0.25s ease,
-        border-color 0.25s ease,
-        color 0.25s ease,
-        box-shadow 0.25s ease;
+        background-color var(--nv-transition),
+        border-color var(--nv-transition),
+        color var(--nv-transition);
 }
 
 .card:hover,
 .novel-card:hover,
 .book-card:hover {
-    background: var(--theme-card-hover);
+    background: var(--nv-card-hover);
 }
 
 .card-title,
 .novel-title,
-.book-title,
-.section-title {
-    color: var(--theme-text);
+.book-title {
+    color: var(--nv-text);
 }
 
 .card-description,
 .novel-description,
 .book-description {
-    color: var(--theme-text-secondary);
+    color: var(--nv-muted);
 }
 
+
 /* ==========================================================
-   07. BUTTONS
+   10. BUTTONS
 ========================================================== */
 
 button,
-.button,
 .btn {
     transition:
-        background-color 0.2s ease,
-        color 0.2s ease,
-        border-color 0.2s ease,
-        opacity 0.2s ease;
+        background-color var(--nv-transition),
+        color var(--nv-transition),
+        border-color var(--nv-transition);
 }
 
 .btn-primary,
 .primary-btn,
 button.primary {
-    background: var(--theme-accent);
-    color: #FFFFFF;
-    border-color: var(--theme-accent);
+    background: var(--nv-button-bg);
+    color: var(--nv-button-text);
+    border-color: var(--nv-button-bg);
 }
 
 .btn-primary:hover,
 .primary-btn:hover,
 button.primary:hover {
-    background: var(--theme-accent-hover);
-    border-color: var(--theme-accent-hover);
+    background: var(--nv-accent-hover);
+    border-color: var(--nv-accent-hover);
 }
 
 .btn-secondary,
 .secondary-btn,
 button.secondary {
-    background: var(--theme-surface-2);
-    color: var(--theme-text);
-    border-color: var(--theme-border);
+    background: var(--nv-surface-2);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
 }
 
 .btn-secondary:hover,
 .secondary-btn:hover,
 button.secondary:hover {
-    background: var(--theme-surface-3);
+    background: var(--nv-surface-3);
+}
+
+.btn-outline,
+.outline-btn {
+    background: transparent;
+    color: var(--nv-accent);
+    border: 1px solid var(--nv-accent);
+}
+
+.btn-outline:hover,
+.outline-btn:hover {
+    background: var(--nv-accent-soft);
 }
 
 button:disabled,
 .btn:disabled {
-    opacity: 0.5;
+    opacity: 0.55;
     cursor: not-allowed;
 }
 
+
 /* ==========================================================
-   08. INPUTS & FORMS
+   11. INPUT / SEARCH / FORM
 ========================================================== */
 
 input,
 textarea,
-select,
-.form-control {
-    background: var(--theme-input-bg);
-    color: var(--theme-input-text);
-    border-color: var(--theme-border);
+select {
+    background: var(--nv-input-bg);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+    outline-color: var(--nv-accent);
     transition:
-        background-color 0.2s ease,
-        border-color 0.2s ease,
-        color 0.2s ease;
+        background-color var(--nv-transition),
+        color var(--nv-transition),
+        border-color var(--nv-transition);
 }
 
 input:focus,
 textarea:focus,
-select:focus,
-.form-control:focus {
-    border-color: var(--theme-accent);
-    outline-color: var(--theme-accent);
+select:focus {
+    border-color: var(--nv-accent);
+    outline: none;
+    box-shadow: 0 0 0 3px var(--nv-accent-soft);
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: var(--theme-placeholder);
+    color: var(--nv-muted);
+    opacity: 0.8;
 }
 
-option {
-    background: var(--theme-surface);
-    color: var(--theme-text);
+.search-box,
+.search-container,
+.search-input {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+}
+
+
+/* ==========================================================
+   12. BADGES / TAGS
+========================================================== */
+
+.badge,
+.tag,
+.status-badge {
+    background: var(--nv-surface-2);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+}
+
+.badge-accent,
+.tag-accent {
+    background: var(--nv-accent-soft);
+    color: var(--nv-accent);
+}
+
+.badge-success {
+    background: rgba(74, 222, 128, 0.12);
+    color: var(--nv-success);
+}
+
+.badge-danger {
+    background: rgba(251, 113, 133, 0.12);
+    color: var(--nv-danger);
+}
+
+
+/* ==========================================================
+   13. DIVIDERS
+========================================================== */
+
+hr,
+.divider,
+.border-line {
+    border-color: var(--nv-border);
 }
 
 /* ==========================================================
-   09. MODALS & OVERLAYS
+   14. MODALS / POPUPS
 ========================================================== */
 
 .modal,
 .modal-content,
 .popup,
-.dialog,
-.dropdown-menu {
-    background: var(--theme-surface);
-    color: var(--theme-text);
-    border-color: var(--theme-border);
+.popup-content,
+.dialog {
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+}
+
+.modal-content,
+.popup-content,
+.dialog-content {
+    background: var(--nv-surface);
 }
 
 .modal-overlay,
 .popup-overlay,
 .overlay {
-    background: var(--theme-overlay);
+    background: var(--nv-overlay);
 }
 
-.modal-header,
-.modal-footer {
-    border-color: var(--theme-border);
-}
-
-.modal-title {
-    color: var(--theme-text);
-}
-
-.modal-description,
-.modal-text {
-    color: var(--theme-text-secondary);
-}
 
 /* ==========================================================
-   10. TABS & ACTIVE STATES
+   15. DROPDOWN
 ========================================================== */
 
-.tab,
-.nav-tab,
-.tab-button {
-    color: var(--theme-text-secondary);
-    background: transparent;
-    border-color: transparent;
+.dropdown,
+.dropdown-menu,
+.menu-dropdown {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+    box-shadow: var(--nv-shadow-md);
 }
 
-.tab.active,
-.nav-tab.active,
-.tab-button.active,
-.tab[aria-selected="true"] {
-    color: var(--theme-accent);
-    background: var(--theme-accent-soft);
-    border-color: var(--theme-accent);
+.dropdown-item,
+.menu-item {
+    color: var(--nv-text);
 }
+
+.dropdown-item:hover,
+.menu-item:hover {
+    background: var(--nv-surface-2);
+}
+
 
 /* ==========================================================
-   11. BADGES & LABELS
+   16. PROFILE
 ========================================================== */
 
-.badge,
-.tag,
-.label {
-    background: var(--theme-surface-2);
-    color: var(--theme-text-secondary);
-    border-color: var(--theme-border);
+.profile-container,
+.profile-content,
+.profile-section {
+    color: var(--nv-text);
 }
 
-.badge-primary {
-    background: var(--theme-accent-soft);
-    color: var(--theme-accent);
+.profile-card {
+    background: var(--nv-surface);
+    border: 1px solid var(--nv-border);
 }
 
-.badge-success {
-    color: var(--theme-success);
+.profile-name,
+.username,
+.user-name {
+    color: var(--nv-text);
 }
 
-.badge-danger {
-    color: var(--theme-danger);
+.profile-info,
+.user-info {
+    color: var(--nv-muted);
 }
+
+.profile-tabs {
+    border-color: var(--nv-border);
+}
+
+.profile-tab {
+    color: var(--nv-muted);
+}
+
+.profile-tab.active {
+    color: var(--nv-accent);
+    border-color: var(--nv-accent);
+}
+
 
 /* ==========================================================
-   12. SEPARATORS
+   17. READER PAGE
 ========================================================== */
 
-.divider,
-.separator,
-.border-bottom {
-    border-color: var(--theme-border);
-}
-
-/* ==========================================================
-   13. EMPTY STATES
-========================================================== */
-
-.empty-state,
-.no-results,
-.empty-message {
-    color: var(--theme-muted);
-}
-
-.empty-state i,
-.no-results i {
-    color: var(--theme-accent);
-}
-
-/* ==========================================================
-   14. ICONS
-========================================================== */
-
-.icon,
-i {
-    transition: color 0.2s ease;
-}
-
-/* ==========================================================
-   15. TEXT COLORS
-========================================================== */
-
-.text-primary {
-    color: var(--theme-text);
-}
-
-.text-secondary {
-    color: var(--theme-text-secondary);
-}
-
-.text-muted {
-    color: var(--theme-muted);
-}
-
-.text-accent {
-    color: var(--theme-accent);
-}
-
-/* ==========================================================
-   16. SHADOWS
-========================================================== */
-
-.card,
-.modal,
-.popup,
-.dropdown-menu {
-    box-shadow: 0 4px 16px var(--theme-shadow);
-}
-
-/* ==========================================================
-   17. READER CONTENT
-========================================================== */
-
+.reader-page,
 .reader-container,
-.reader-content,
-.chapter-content {
-    color: var(--theme-text);
+.reader-wrapper {
+    color: var(--nv-text);
 }
 
-.reader-content p,
-.chapter-content p {
-    color: inherit;
+.reader-header,
+.reader-toolbar,
+.reader-controls {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
 }
+
+.reader-content,
+.chapter-content,
+#chapter-content {
+    color: var(--nv-text);
+}
+
+.chapter-content p,
+#chapter-content p {
+    color: var(--nv-text);
+}
+
+.chapter-content h1,
+.chapter-content h2,
+.chapter-content h3,
+#chapter-content h1,
+#chapter-content h2,
+#chapter-content h3 {
+    color: var(--nv-text);
+}
+
+.chapter-content blockquote,
+#chapter-content blockquote {
+    background: var(--nv-surface-2);
+    border-left-color: var(--nv-accent);
+    color: var(--nv-muted);
+}
+
+.chapter-content a,
+#chapter-content a {
+    color: var(--nv-accent);
+}
+
 
 /* ==========================================================
-   18. TABLES
+   18. READER SETTINGS
 ========================================================== */
 
-table,
-.table {
-    color: var(--theme-text);
-    background: var(--theme-surface);
+.reader-settings,
+.reader-settings-panel,
+.reading-settings {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
 }
 
-th,
-td {
-    border-color: var(--theme-border);
+.reader-setting-item {
+    border-color: var(--nv-border);
+}
+
+.reader-setting-label {
+    color: var(--nv-text);
+}
+
+.reader-setting-description {
+    color: var(--nv-muted);
+}
+
+
+/* ==========================================================
+   19. LOCKED CHAPTER / PREMIUM
+========================================================== */
+
+.locked-chapter,
+.chapter-locked,
+.premium-lock {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+}
+
+.lock-icon {
+    color: var(--nv-accent);
+}
+
+.locked-description {
+    color: var(--nv-muted);
+}
+
+
+/* ==========================================================
+   20. TOAST / NOTIFICATION
+========================================================== */
+
+.toast,
+.notification,
+.alert {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
+    box-shadow: var(--nv-shadow-md);
+}
+
+.toast-success,
+.alert-success {
+    border-left: 4px solid var(--nv-success);
+}
+
+.toast-error,
+.alert-error {
+    border-left: 4px solid var(--nv-danger);
+}
+
+.toast-warning,
+.alert-warning {
+    border-left: 4px solid var(--nv-warning);
+}
+
+
+/* ==========================================================
+   21. TABLE
+========================================================== */
+
+table {
+    color: var(--nv-text);
 }
 
 thead,
-.table-header {
-    background: var(--theme-surface-2);
+th {
+    background: var(--nv-surface-2);
+    color: var(--nv-text);
 }
 
-/* ==========================================================
-   19. TOOLTIP
-========================================================== */
-
-.tooltip,
-[role="tooltip"] {
-    background: var(--theme-surface-3);
-    color: var(--theme-text);
-    border-color: var(--theme-border);
+td {
+    color: var(--nv-text);
+    border-color: var(--nv-border);
 }
 
+tr {
+    border-color: var(--nv-border);
+}
+
+tbody tr:hover {
+    background: var(--nv-surface-2);
+}
+
+
 /* ==========================================================
-   20. SCROLLBAR
+   22. ICONS
 ========================================================== */
+
+.icon,
+i,
+svg {
+    transition: color var(--nv-transition);
+}
+
+.accent-icon {
+    color: var(--nv-accent);
+}
+
+
+/* ==========================================================
+   23. SCROLLBAR
+========================================================== */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--nv-scrollbar) var(--nv-bg);
+}
 
 ::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--theme-bg);
+    background: var(--nv-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--theme-scrollbar);
+    background: var(--nv-scrollbar);
     border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--theme-scrollbar-hover);
+    background: var(--nv-scrollbar-hover);
 }
+
 
 /* ==========================================================
-   21. THEME SELECTOR PANEL
+   24. SELECTION
 ========================================================== */
 
-.theme-settings,
-.theme-selector,
-.theme-panel {
-    background: var(--theme-surface);
-    color: var(--theme-text);
-    border: 1px solid var(--theme-border);
-    border-radius: 16px;
-    padding: 18px;
+.nv-selected,
+.selected,
+.active-item {
+    background: var(--nv-accent-soft);
+    color: var(--nv-accent);
 }
 
-.theme-settings-title,
-.theme-selector-title {
-    color: var(--theme-text);
-    font-size: 17px;
-    font-weight: 700;
-}
-
-.theme-settings-description,
-.theme-selector-description {
-    color: var(--theme-muted);
-    font-size: 13px;
-    line-height: 1.7;
-}
 
 /* ==========================================================
-   22. THEME CHOICES
+   25. THEME TRANSITIONS
 ========================================================== */
 
-.theme-options,
-.theme-choice-grid,
-.theme-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-}
-
-.theme-option,
-.theme-choice,
-.theme-card {
-    background: var(--theme-bg);
-    color: var(--theme-text);
-    border: 1px solid var(--theme-border);
-    border-radius: 13px;
-    padding: 12px;
-    cursor: pointer;
+body,
+header,
+.top-header,
+.card,
+.novel-card,
+.profile-card,
+.section-card,
+.modal-content,
+.reader-header,
+.reader-settings,
+button,
+input,
+textarea,
+select {
     transition:
-        border-color 0.2s ease,
         background-color 0.2s ease,
-        transform 0.2s ease;
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.theme-option:hover,
-.theme-choice:hover,
-.theme-card:hover {
-    border-color: var(--theme-accent);
-    transform: translateY(-2px);
-}
-
-.theme-option.active,
-.theme-choice.active,
-.theme-card.active,
-.theme-option.selected,
-.theme-choice.selected,
-.theme-card.selected {
-    border: 2px solid var(--theme-accent);
-    background: var(--theme-accent-soft);
-}
-
-.theme-option-name,
-.theme-choice-name,
-.theme-card-name {
-    color: var(--theme-text);
-    font-weight: 700;
-    font-size: 13px;
-}
-
-.theme-option-description,
-.theme-choice-description,
-.theme-card-description {
-    color: var(--theme-muted);
-    font-size: 11px;
-}
 
 /* ==========================================================
-   23. THEME PREVIEW
+   26. LIGHT THEME EXTRA FIXES
 ========================================================== */
 
-.theme-preview {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    height: 75px;
-    border-radius: 9px;
-    border: 1px solid var(--theme-border);
-    margin-bottom: 10px;
+html[data-theme="light"] .card,
+html[data-theme="light"] .novel-card,
+html[data-theme="light"] .book-card,
+html[data-theme="light"] .profile-card {
+    box-shadow: var(--nv-shadow-sm);
 }
 
-.theme-preview-header {
-    height: 22px;
-    padding: 5px 8px;
+html[data-theme="light"] .modal-content {
+    box-shadow: var(--nv-shadow-lg);
 }
 
-.theme-preview-body {
-    display: flex;
-    flex: 1;
-    padding: 7px;
-    gap: 6px;
-}
-
-.theme-preview-block {
-    flex: 1;
-    border-radius: 4px;
-}
-
-.theme-preview-text {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-}
-
-.theme-preview-line {
-    width: 90%;
-    height: 4px;
-    border-radius: 5px;
-}
-
-.theme-preview-line.short {
-    width: 55%;
-}
 
 /* ==========================================================
-   24. THEME MODE TOGGLE
+   27. LIGHT-DARK THEME EXTRA FIXES
 ========================================================== */
 
-.theme-mode-toggle,
-.mode-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-
-    background: var(--theme-surface-2);
-    color: var(--theme-text);
-
-    border: 1px solid var(--theme-border);
-    border-radius: 10px;
-
-    padding: 10px 14px;
-    cursor: pointer;
+/* Outer page stays light */
+html[data-theme="light-dark"] body {
+    background: var(--nv-bg);
 }
 
-.theme-mode-toggle:hover,
-.mode-toggle:hover {
-    background: var(--theme-surface-3);
-    border-color: var(--theme-accent);
+/* Main content surfaces stay dark */
+html[data-theme="light-dark"] .card,
+html[data-theme="light-dark"] .novel-card,
+html[data-theme="light-dark"] .book-card,
+html[data-theme="light-dark"] .profile-card,
+html[data-theme="light-dark"] .section-card,
+html[data-theme="light-dark"] .modal-content {
+    background: var(--nv-surface);
+    color: var(--nv-text);
+    border-color: var(--nv-border);
 }
+
 
 /* ==========================================================
-   25. THEME CHECK MARK
+   28. MOBILE RESPONSIVE
 ========================================================== */
 
-.theme-check,
-.theme-selected-icon {
-    display: none;
-    align-items: center;
-    justify-content: center;
+@media (max-width: 768px) {
 
-    width: 22px;
-    height: 22px;
+    body {
+        font-size: 14px;
+    }
 
-    background: var(--theme-accent);
-    color: #FFFFFF;
-    border-radius: 50%;
+    .card,
+    .novel-card,
+    .book-card {
+        border-radius: var(--nv-radius-md);
+    }
+
+    .modal-content,
+    .popup-content {
+        border-radius: var(--nv-radius-lg);
+    }
+
 }
 
-.theme-option.active .theme-check,
-.theme-choice.active .theme-check,
-.theme-card.active .theme-check,
-.theme-option.selected .theme-check,
-.theme-choice.selected .theme-check,
-.theme-card.selected .theme-check {
-    display: inline-flex;
+@media (max-width: 480px) {
+
+    :root {
+        --nv-radius-lg: 15px;
+        --nv-radius-xl: 20px;
+    }
+
+    .card,
+    .novel-card,
+    .book-card {
+        border-radius: 12px;
+    }
+
 }
+
 
 /* ==========================================================
-   26. FOCUS ACCESSIBILITY
-========================================================== */
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-    outline: 2px solid var(--theme-accent);
-    outline-offset: 3px;
-}
-
-/* ==========================================================
-   27. RESPONSIVE
-========================================================== */
-
-@media (max-width: 600px) {
-    .theme-settings,
-    .theme-selector,
-    .theme-panel {
-        padding: 14px;
-        border-radius: 14px;
-    }
-
-    .theme-options,
-    .theme-choice-grid,
-    .theme-grid {
-        gap: 8px;
-    }
-
-    .theme-option,
-    .theme-choice,
-    .theme-card {
-        padding: 9px;
-        border-radius: 11px;
-    }
-
-    .theme-preview {
-        height: 62px;
-    }
-
-    .theme-option-name,
-    .theme-choice-name,
-    .theme-card-name {
-        font-size: 11px;
-    }
-
-    .theme-option-description,
-    .theme-choice-description,
-    .theme-card-description {
-        font-size: 10px;
-    }
-}
-
-/* ==========================================================
-   28. REDUCED MOTION
+   29. REDUCED MOTION
 ========================================================== */
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
+        scroll-behavior: auto !important;
         transition: none !important;
         animation: none !important;
-        scroll-behavior: auto !important;
     }
+
 }
 
+
 /* ==========================================================
-   END — NOVELVERSE MM THEME CSS
+   30. END OF NOVELVERSE THEME CSS
 ========================================================== */
